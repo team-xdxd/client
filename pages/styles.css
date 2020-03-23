@@ -1,3 +1,41 @@
+@import url("https://fonts.googleapis.com/css?family=Montserrat&display=swap");
+
+:root {
+  /* Colors */
+  --color-prim-navy: #08135e;
+  --color-prim-wine: #800356;
+  --color-prim-magenta: #c70c4a;
+  --color-prim-red: #fa373d;
+  --color-prim-organge: #ff7438;
+  --color-prim-yellow: #ffb638;
+  --color-prim-turquoise: #10bda5;
+  --color-prim-turquoise-hover: #00a38d;
+
+  --color-sec-blue: #aeb0c2;
+  --color-sec-lightblue: #e9eefa;
+  --color-sec-ivory: #f6efe4;
+  --color-sec-lightivory: #faf8f5;
+  --color-sec-lightwine: #fae0f1;
+  --color-sec-lightred: #fae1e2;
+  --color-sec-lightorange: #ffe3d6;
+  --color-sec-lightyellow: #fae7c5;
+  --color-sec-lightturquoise: #cee6e0;
+
+  --color-nav: var(--color-prim-turquoise);
+  --color-nav-icon: var(--color-prim-turquoise-hover);
+  --color-nav-hover: var(--color-prim-turquoise-hover);
+  --color-nav-icon-hover: #00806e;
+
+  --color-secondary-border: #dedad4;
+  --color-secondary-hover: var(--color-sec-lightivory);
+
+  --color-ghost-text: #9597a6;
+}
+
+::placeholder {
+  color: var(--color-ghost-text);
+}
+
 html {
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
@@ -5,11 +43,15 @@ html {
   font-family: "Roboto", sans-serif;
 }
 
+body {
+  font-family: "Montserrat", sans-serif;
+  font-size: 14px;
+}
+
 h1,
 h2,
 h3,
 h4 {
-
 }
 
 *,
@@ -18,4 +60,58 @@ h4 {
   -webkit-box-sizing: inherit;
   -moz-box-sizing: inherit;
   box-sizing: inherit;
+}
+
+button,
+input,
+optgroup,
+select,
+textarea {
+  font-family: inherit; /* 1 */
+  font-size: 100%; /* 1 */
+  line-height: 1.15; /* 1 */
+  margin: 0; /* 2 */
+}
+
+/**
+ * Show the overflow in IE.
+ * 1. Show the overflow in Edge.
+ */
+
+button,
+input {
+  /* 1 */
+  overflow: visible;
+}
+
+/**
+ * Remove the inheritance of text transform in Edge, Firefox, and IE.
+ * 1. Remove the inheritance of text transform in Firefox.
+ */
+
+button,
+select {
+  /* 1 */
+  text-transform: none;
+}
+
+/**
+ * Correct the inability to style clickable types in iOS and Safari.
+ */
+
+button,
+[type="button"],
+[type="reset"],
+[type="submit"] {
+  -webkit-appearance: button;
+}
+
+button {
+  border: none;
+}
+
+input {
+  outline: none;
+  box-shadow: none;
+  -webkit-appearance: none;
 }
