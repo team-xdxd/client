@@ -1,9 +1,9 @@
 import styles from './index.module.css'
 
-const Login = () => (
+const SignIn = () => (
   <div className={styles.container}>
 
   </div>
 )
 
-export default Login
+export default SignIn

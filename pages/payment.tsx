@@ -1,6 +1,6 @@
 import Head from 'next/head'
 
-import Login from '../components/login'
+import Login from '../components/signin'
 
 const LoginPage = () => (
   <>

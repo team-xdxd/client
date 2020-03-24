@@ -1,0 +1,90 @@
+.button {
+  border: none;
+  outline: none;
+  display: flex;
+  text-align: center;
+  white-space: nowrap;
+  vertical-align: middle;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  font-size: 0.9rem;
+  line-height: 1.5;
+  border-radius: 0.25rem;
+  transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, opacity 0.15s ease-in-out;
+  color: black;
+  background-color: white;
+  font-weight: bold;
+  width: 100%;
+  padding: 0;
+  align-items: center;
+  cursor: pointer;
+}
+
+.button img {
+  width: 25px;
+}
+
+.button .btn-icon {
+  display: flex;
+  align-items: center;
+  padding: 0 8px;
+  height: 40px;
+  border: 1px solid black;
+  border-width: 1.5px;
+  border-radius: 0.25rem 0 0 0.25rem;
+}
+
+.button .btn-text {
+  display: flex;
+  align-items: center;
+  padding-left: 16px;
+  padding-right: 8px;
+  height: 40px;
+  width: 100%;
+  border-radius: 0 0.25rem 0.25rem 0;
+}
+
+.button.google .btn-icon {
+  border-color: #4285f4;
+}
+
+.button.linkedin .btn-icon {
+  color: white;
+  border-color: rgb(0, 119, 181);
+}
+
+.button.facebook .btn-icon {
+  color: white;
+  border-color: rgb(66, 103, 178);
+}
+
+.button.microsoft .btn-icon {
+  border: 1px solid rgb(110, 110, 110);
+}
+
+.button.google .btn-text {
+  color: white;
+  background-color: #4285f4;
+}
+
+.button.linkedin .btn-text {
+  color: white;
+  background-color: rgb(0, 119, 181);
+}
+
+.button.facebook .btn-text {
+  color: white;
+  background-color: rgb(66, 103, 178);
+}
+
+.button.microsoft .btn-text {
+  color: rgb(110, 110, 110);
+  border: 1px solid rgb(110, 110, 110);
+  border-left: 0;
+}
+
+.button:hover {
+  opacity: 0.5;
+}

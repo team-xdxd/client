@@ -1,11 +1,11 @@
 import Head from 'next/head'
 
-import Login from '../components/login'
+import Login from '../components/signin'
 
 const LoginPage = () => (
   <>
     <Head>
-      <title>Login</title>
+      <title>Sign In</title>
       <link rel="icon" href="/favicon.ico" />
     </Head>
     <Login />
