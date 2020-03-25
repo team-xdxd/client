@@ -1,14 +1,18 @@
 import Head from 'next/head'
 
-import Login from '../components/signin'
+// Components
+import AuthLayout from '../components/common/auth-layout'
+import Payment from '../components/payment'
 
 const LoginPage = () => (
   <>
     <Head>
-      <title>Login</title>
+      <title>Payment</title>
       <link rel="icon" href="/favicon.ico" />
     </Head>
-    <Login />
+    <AuthLayout>
+      <Payment />
+    </AuthLayout>
   </>
 )
 

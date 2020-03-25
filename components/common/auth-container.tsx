@@ -8,7 +8,7 @@ const AuthContainer = ({ title, subtitle, children }) => (
     <h4>
       {subtitle}
     </h4>
-    <div className={styles.content}>
+    <div className='card-content'>
       {children}
     </div>
   </section>

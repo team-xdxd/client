@@ -4,6 +4,6 @@ const userUrl = `${process.env.SERVER_BASE_URL}/users`
 
 export default {
   getUserData: () => axios.get(userUrl),
-  signIn: (data) => axios.post(`${userUrl}/signIn`, data),
-  register: (data) => axios.post(`${userUrl}/register`, data)
+  signIn: (data) => axios.post(`${userUrl}/signin`, data),
+  signUp: (data) => axios.post(`${userUrl}/signup`, data)
 }

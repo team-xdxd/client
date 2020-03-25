@@ -1,14 +1,13 @@
 import styles from './select.module.css'
+import ReactSelect from 'react-select'
 
 const Select = ({ options, placeholder }) => (
-  <select
+  <ReactSelect
+    placeholder={placeholder}
+    options={options}
     className={styles.container}
-  >
-    <option value='' disabled selected>{placeholder}</option>
-    {options.map((option, index) => (
-      <option key={index} value={option.value}>{option.label}</option>
-    ))}
-  </select>
+    classNamePrefix='select-prefix'
+  />
 )
 
 export default Select

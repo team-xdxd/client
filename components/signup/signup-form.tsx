@@ -1,5 +1,7 @@
-import { useForm, Controller } from 'react-hook-form'
+import { useForm } from 'react-hook-form'
 import styles from './signup-form.module.css'
+
+import userApi from '../../server-api/user'
 
 // Components
 import Button from '../common/button'
@@ -9,7 +11,22 @@ import Select from '../common/select'
 
 const SignupForm = ({ }) => {
   const { control, handleSubmit, errors } = useForm()
-  const onSubmit = data => console.log(data)
+  const onSubmit = async data => {
+    try {
+      const createData = {
+        email: data.email,
+        name: data.name,
+        phone: data.phone,
+        password: data.password
+      }
+      const createdUser = await userApi.signUp(createData)
+      console.log(createdUser)
+    } catch (err) {
+      console.log(err)
+    }
+
+    // TODO: Redirect to next step
+  }
   console.log(errors)
 
   return (
@@ -71,17 +88,9 @@ const SignupForm = ({ }) => {
         />
       </div>
       <div>
-        <FormInput
-          InputComponent={
-            <Select
-              placeholder='Company Size...'
-              options={[]}
-            />
-          }
-          name='companySize'
-          control={control}
-          rules={{ required: true }}
-          error={errors.companySize}
+        <Select
+          placeholder='Company Size...'
+          options={[]}
         />
       </div>
       <div>
