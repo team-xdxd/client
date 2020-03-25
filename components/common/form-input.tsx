@@ -2,8 +2,11 @@ import { Controller } from 'react-hook-form'
 
 import styles from './form-input.module.css'
 
-const FormInput = ({ name, control, rules, InputComponent, error = '' }) => (
+const FormInput = ({ label = '', labId = '', name, control, rules, InputComponent, error = '' }) => (
   <>
+    {label &&
+      <label htmlFor={labId}>{label}</label>
+    }
     <Controller as={InputComponent}
       name={name}
       control={control}

@@ -1,11 +1,12 @@
-.form > div {
-  margin-bottom: 12px;
-}
-
 .container {
   padding: 35px 25px;
   width: 400px;
   max-width: 400px;
+  margin-bottom: 3rem;
+}
+
+.form > div {
+  margin-bottom: 12px;
 }
 
 .stripe-elem-wrapper {
@@ -19,6 +20,11 @@
 
 .stripe-elem-expiry{
   margin-right: 1rem;
+  width: 100%;
+}
+
+.stripe-elem-security{
+  width: 100%;
 }
 
 .expiry-cvc,
@@ -32,4 +38,19 @@
 
 .state{
   margin-right: 1rem;
+}
+
+.zip{
+  width: 150px;
+}
+
+.subscribe{
+  margin-top: 2rem;
+  text-align: center;
+}
+
+.container label{
+  font-weight: 500;
+  display: block;
+  margin-bottom: 8px;
 }

@@ -54,13 +54,16 @@ const CreditCardForm = () => {
 
   return (
     <section className={`${styles.container} card-content`}>
+      <h3>Credit Card Information</h3>
       <form onSubmit={handleSubmit(onSubmit)} className={styles.form}>
         <div>
           <FormInput
+            labId='name-form'
+            label='Name on Card'
             InputComponent={
               <Input
                 type='text'
-                placeholder='Name on card'
+                id='name-form'
               />
             }
             name='name'
@@ -69,30 +72,45 @@ const CreditCardForm = () => {
             error={errors.name}
           />
         </div>
-        <div className={styles['stripe-elem-wrapper']}>
-          <CardNumberElement
-            options={elemOptions}
-          />
-        </div>
-        <div className={styles['expiry-cvc']}>
-          <div className={`${styles['stripe-elem-wrapper']} ${styles['stripe-elem-expiry']}`}>
-            <CardExpiryElement
-              options={elemOptions} />
-          </div>
+
+        <div>
+          <label>Credit Card Number</label>
           <div className={styles['stripe-elem-wrapper']}>
-            <CardCvcElement
-              options={elemOptions} />
+            <CardNumberElement
+              options={elemOptions}
+            />
           </div>
+        </div>
+
+        <div className={styles['expiry-cvc']}>
+          <div className={styles['stripe-elem-expiry']}>
+            <label>Expiration Date</label>
+            <div className={styles['stripe-elem-wrapper']}>
+              <CardExpiryElement
+                options={elemOptions} />
+            </div>
+          </div>
+
+          <div className={styles['stripe-elem-security']}>
+            <label>Security Code</label>
+            <div className={styles['stripe-elem-wrapper']}>
+              <CardCvcElement
+                options={elemOptions} />
+            </div>
+          </div>
+
         </div>
         <div>
           <FormInput
+            labId='address-form'
+            label='Address'
             InputComponent={
               <Input
                 type='text'
-                placeholder='Address'
+                id='address-form'
               />
             }
-            name='name'
+            name='address'
             control={control}
             rules={{ required: true }}
             error={errors.name}
@@ -100,24 +118,28 @@ const CreditCardForm = () => {
         </div>
         <div className={styles['city-state']}>
           <div className={styles.state}>
+            <label>State</label>
             <Select
-              placeholder='State'
+              placeholder='Select State'
               options={[]}
             />
           </div>
           <div >
+            <label>City</label>
             <Select
-              placeholder='City'
+              placeholder='Select City'
               options={[]}
             />
           </div>
         </div>
-        <div>
+        <div className={styles.zip}>
           <FormInput
+            labId='zip-form'
+            label='Zip Code'
             InputComponent={
               <Input
                 type='text'
-                placeholder='Zip code'
+                id='zip-form'
               />
             }
             name='name'
@@ -126,10 +148,12 @@ const CreditCardForm = () => {
             error={errors.name}
           />
         </div>
-        <Button
-          text='Subscribe'
-          type='submit'
-        />
+        <div className={styles.subscribe}>
+          <Button
+            text='Subscribe'
+            type='submit'
+          />
+        </div>
       </form>
     </section>
   )
