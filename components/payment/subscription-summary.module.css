@@ -6,6 +6,26 @@
   height: fit-content;
 }
 
+.container h5{
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.container p{
+  color: var(--color-ghost-text)
+}
+
+.due, .savings{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-weight: 500;
+}
+
+.savings{
+  color: var(--color-prim-turquoise)
+}
+
 @media screen and (max-width: 1000px) {
   .container {
     margin-right: 0;

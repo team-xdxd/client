@@ -1,4 +1,7 @@
 import styles from './credit-card-form.module.css'
+
+import { useState } from 'react'
+
 import {
   Elements,
   CardNumberElement,
@@ -8,6 +11,8 @@ import {
   useElements
 } from '@stripe/react-stripe-js'
 import { useForm } from 'react-hook-form'
+
+import states from '../../resources/data/states.json'
 
 // Components
 import Button from '../common/button'
@@ -28,8 +33,11 @@ const elemOptions = {
   }
 }
 
-const CreditCardForm = () => {
+const stateOptions = states.map(state => ({ label: state.label, value: state.value }))
+
+const CreditCardForm = ({ subscribe }) => {
   const { control, handleSubmit, errors } = useForm()
+  const [state, setState] = useState({ label: '', value: '' })
   const stripe = useStripe()
   const elements = useElements()
 
@@ -38,18 +46,26 @@ const CreditCardForm = () => {
   const onSubmit = async data => {
     try {
       const cardNumberElement = elements.getElement(CardNumberElement)
-      const cardExpiryElement = elements.getElement(CardExpiryElement)
-      const cardCvcElement = elements.getElement(CardCvcElement)
 
-      console.log(cardNumberElement)
-      console.log(cardExpiryElement)
-      console.log(cardCvcElement)
+      const method = await stripe.createPaymentMethod({
+        type: 'card',
+        card: cardNumberElement,
+        billing_details: {
+          address: {
+            city: data.city,
+            state: state.label,
+            postal_code: data.zip,
+            line1: data.address
+          },
+          name: data.name
+        }
+      })
+      subscribe(method.paymentMethod.id)
 
     } catch (err) {
+      // TODO: Handle error
       console.log(err)
     }
-
-    // TODO: Redirect to next step
   }
 
   return (
@@ -117,18 +133,29 @@ const CreditCardForm = () => {
           />
         </div>
         <div className={styles['city-state']}>
-          <div className={styles.state}>
-            <label>State</label>
-            <Select
-              placeholder='Select State'
-              options={[]}
+          <div className={styles.city}>
+            <FormInput
+              labId='city-form'
+              label='City'
+              InputComponent={
+                <Input
+                  type='text'
+                  id='city-form'
+                />
+              }
+              name='city'
+              control={control}
+              rules={{ required: true }}
+              error={errors.name}
             />
           </div>
           <div >
-            <label>City</label>
+            <label>State</label>
             <Select
-              placeholder='Select City'
-              options={[]}
+              placeholder='Select State'
+              options={stateOptions}
+              onChange={(selected) => setState(selected)}
+              value={state}
             />
           </div>
         </div>
@@ -142,7 +169,7 @@ const CreditCardForm = () => {
                 id='zip-form'
               />
             }
-            name='name'
+            name='zip'
             control={control}
             rules={{ required: true }}
             error={errors.name}
