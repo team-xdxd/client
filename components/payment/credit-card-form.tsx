@@ -3,7 +3,6 @@ import styles from './credit-card-form.module.css'
 import { useState } from 'react'
 
 import {
-  Elements,
   CardNumberElement,
   CardExpiryElement,
   CardCvcElement,
@@ -35,13 +34,12 @@ const elemOptions = {
 
 const stateOptions = states.map(state => ({ label: state.label, value: state.value }))
 
-const CreditCardForm = ({ subscribe }) => {
+const CreditCardForm = ({ subscribe, buttonDisabled }) => {
   const { control, handleSubmit, errors } = useForm()
   const [state, setState] = useState({ label: '', value: '' })
+  const [submitError, setSubmitError] = useState('')
   const stripe = useStripe()
   const elements = useElements()
-
-
 
   const onSubmit = async data => {
     try {
@@ -60,11 +58,18 @@ const CreditCardForm = ({ subscribe }) => {
           name: data.name
         }
       })
-      subscribe(method.paymentMethod.id)
+      if (method.error) {
+        setSubmitError(`We could not process your payment: ${method.error.message}`)
+      }
+      else {
+        console.log(method.paymentMethod)
+        subscribe(method.paymentMethod.id)
+      }
 
     } catch (err) {
       // TODO: Handle error
       console.log(err)
+      setSubmitError('We could not process your payment, please choose a different payment method')
     }
   }
 
@@ -84,8 +89,9 @@ const CreditCardForm = ({ subscribe }) => {
             }
             name='name'
             control={control}
-            rules={{ required: true }}
-            error={errors.name}
+            rules={{ minLength: 4, maxLength: 30, required: true }}
+            errors={errors}
+            message={'This field should be between 4 and 30 characters long'}
           />
         </div>
 
@@ -128,8 +134,9 @@ const CreditCardForm = ({ subscribe }) => {
             }
             name='address'
             control={control}
-            rules={{ required: true }}
-            error={errors.name}
+            rules={{ minLength: 4, maxLength: 120, required: true }}
+            errors={errors}
+            message={'This field should be between 4 and 120 characters long'}
           />
         </div>
         <div className={styles['city-state']}>
@@ -145,8 +152,9 @@ const CreditCardForm = ({ subscribe }) => {
               }
               name='city'
               control={control}
-              rules={{ required: true }}
-              error={errors.name}
+              rules={{ minLength: 2, maxLength: 25, required: true }}
+              errors={errors}
+              message={'This field should be between 2 and 25 characters long'}
             />
           </div>
           <div >
@@ -171,14 +179,18 @@ const CreditCardForm = ({ subscribe }) => {
             }
             name='zip'
             control={control}
-            rules={{ required: true }}
-            error={errors.name}
+            rules={{}}
+            errors={errors}
           />
         </div>
+        {submitError &&
+          <p className={styles['payment-error']}>{submitError}</p>
+        }
         <div className={styles.subscribe}>
           <Button
             text='Subscribe'
             type='submit'
+            disabled={buttonDisabled}
           />
         </div>
       </form>

@@ -18,12 +18,12 @@
   background-color: var(--color-sec-ivory);
 }
 
-.stripe-elem-expiry{
+.stripe-elem-expiry {
   margin-right: 1rem;
   width: 100%;
 }
 
-.stripe-elem-security{
+.stripe-elem-security {
   width: 100%;
 }
 
@@ -36,21 +36,26 @@
   width: 100%;
 }
 
-.city{
+.city {
   margin-right: 1rem;
 }
 
-.zip{
+.zip {
   width: 150px;
 }
 
-.subscribe{
+.subscribe {
   margin-top: 2rem;
   text-align: center;
 }
 
-.container label{
+.container label {
   font-weight: 500;
   display: block;
   margin-bottom: 8px;
+}
+
+.payment-error {
+  margin-top: 6px;
+  color: var(--color-prim-red);
 }

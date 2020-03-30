@@ -2,7 +2,7 @@
   border-radius: 50px;
   min-height: 35px;
   max-height: 48px;
-  max-width: 250px;
+  /* max-width: 250px; */
   padding: 12px 40px;
   color: white;
   text-transform: uppercase;
@@ -13,4 +13,9 @@
 
 .container:hover {
   background-color: var(--color-prim-turquoise-hover);
+}
+
+.container:disabled {
+  background-color: var(--color-prim-turquoise-hover);
+  cursor: default;
 }

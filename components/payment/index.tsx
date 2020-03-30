@@ -17,7 +17,6 @@ const productId = 'prod_Gykl2A2BewZhJW'
 const Payment = () => {
 
   const [plans, setPlans] = useState([])
-  const [customerId, setCustomerId] = useState('')
   const [selectedPlan, setSelectedPlan] = useState(null)
 
   useEffect(() => {
@@ -28,7 +27,6 @@ const Payment = () => {
     try {
       const { data } = await paymentApi.getPlans(productId)
       setPlans(data)
-      setSelectedPlan(data[0])
     } catch (err) {
       // TODO: Handle error
       console.log(err)
@@ -38,16 +36,12 @@ const Payment = () => {
   const subscribe = async (paymentMethodId) => {
     try {
       const subscriptionResponse = await paymentApi.createSubscripcion({
-        customerId: customerId,
         paymentMethodId: paymentMethodId,
         planId: selectedPlan.id
       })
-      // TODO: redirect
+      alert('Subscription successful!')
     } catch (err) {
-      // TODO: Error handling
-      if (err.response?.status === 402) {
-        setCustomerId(err.response.data.customerId)
-      }
+      Promise.reject(err)
     }
   }
 
@@ -62,6 +56,7 @@ const Payment = () => {
         <Elements stripe={stripePromise}>
           <CreditCardForm
             subscribe={subscribe}
+            buttonDisabled={!selectedPlan}
           />
         </Elements>
       </div>

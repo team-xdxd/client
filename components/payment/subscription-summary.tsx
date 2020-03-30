@@ -46,8 +46,8 @@ const SubscriptionSummary = ({ plans, setSelectedPlan, selectedPlan }) => {
 
       <p>
         By clicking on subscribe, you agree to our subscriber terms.
-        Your plan starts immediately. You will be billed on {formattedToday} and each {'year'} after.
-        Sparkfive subscriptions auto-renew {'yearly'} until you cancel.
+        Your plan starts immediately. You will be billed on {formattedToday} and each {selectedPlan?.interval ? selectedPlan?.interval : 'month'} after.
+        Sparkfive subscriptions auto-renew {selectedPlan?.interval === 'year' ? 'yearly' : 'monthly'} until you cancel.
        </p>
     </section>
   )

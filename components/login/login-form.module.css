@@ -1,0 +1,23 @@
+.container > div {
+  margin-bottom: 12px;
+}
+
+.button-wrapper {
+  margin-top: 24px;
+}
+
+.forgot {
+  text-align: right;
+  font-size: 12px;
+  cursor: pointer;
+  text-decoration: underline;
+}
+
+.forgot:hover {
+  opacity: 0.5;
+}
+
+.login-error {
+  margin-top: 6px;
+  color: var(--color-prim-red);
+}
