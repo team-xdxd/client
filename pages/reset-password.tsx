@@ -2,18 +2,18 @@ import Head from 'next/head'
 
 // Components
 import AuthLayout from '../components/common/auth-layout'
-import Payment from '../components/payment'
+import ResetPassword from '../components/reset-password'
 
-const PaymentPage = () => (
+const ResetPasswordPage = () => (
   <>
     <Head>
-      <title>Payment</title>
+      <title>Reset Password</title>
       <link rel="icon" href="/favicon.ico" />
     </Head>
     <AuthLayout>
-      <Payment />
+      <ResetPassword />
     </AuthLayout>
   </>
 )
 
-export default PaymentPage
+export default ResetPasswordPage

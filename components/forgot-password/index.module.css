@@ -29,3 +29,9 @@
   cursor: pointer;
   text-decoration: underline;
 }
+
+
+.submit-error{
+  margin-top: 6px;
+  color: var(--color-prim-red);
+}

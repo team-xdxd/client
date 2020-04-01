@@ -3,8 +3,6 @@ import styles from './index.module.css'
 import Link from 'next/link'
 import { useForm } from 'react-hook-form'
 
-import userApi from '../../server-api/user'
-
 // Container
 import AuthContainer from '../common/auth-container'
 import Button from '../common/button'
@@ -14,15 +12,12 @@ import Input from '../common/input'
 const ForgotPassword = () => {
   const { control, handleSubmit, errors } = useForm()
   const [instructionsSent, setInstructionsSent] = useState(false)
-  const [submitError, setSubmitError] = useState('')
 
   const onSubmit = async forgotData => {
     try {
-      await userApi.requestPasswordreset({ email: forgotData.email })
       setInstructionsSent(true)
     } catch (err) {
       // TODO: Show error message
-      setSubmitError('An error occured, please try again later')
     }
   }
 
@@ -49,9 +44,6 @@ const ForgotPassword = () => {
                 errors={errors}
               />
             </div>
-            {submitError &&
-              <p className={styles['submit-error']}>{submitError}</p>
-            }
             <div className={styles['button-wrapper']}>
               <Button
                 type={'submit'}
