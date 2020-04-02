@@ -68,7 +68,7 @@ const Form = () => {
         <Link href='/forgot-password'><span>Forgot Your password?</span></Link>
       </div>
       {submitError &&
-        <p className={styles['login-error']}>{submitError}</p>
+        <p className='submit-error'>{submitError}</p>
       }
       <div className={styles['button-wrapper']}>
         <Button

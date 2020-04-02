@@ -7,4 +7,5 @@ export default {
   signIn: (data) => axios.post(`${userUrl}/signin`, data),
   signUp: (data) => axios.post(`${userUrl}/signup`, data),
   requestPasswordreset: (data) => axios.post(`${userUrl}/generate-password-reset`, data),
+  passwordReset: (data) => axios.post(`${userUrl}/password-reset`, data),
 }

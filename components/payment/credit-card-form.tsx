@@ -184,7 +184,7 @@ const CreditCardForm = ({ subscribe, buttonDisabled }) => {
           />
         </div>
         {submitError &&
-          <p className={styles['payment-error']}>{submitError}</p>
+          <p className='submit-error'>{submitError}</p>
         }
         <div className={styles.subscribe}>
           <Button

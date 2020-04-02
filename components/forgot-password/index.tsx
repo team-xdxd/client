@@ -18,8 +18,8 @@ const ForgotPassword = () => {
 
   const onSubmit = async forgotData => {
     try {
-      await userApi.requestPasswordreset({ email: forgotData.email })
       setInstructionsSent(true)
+      userApi.requestPasswordreset({ email: forgotData.email })
     } catch (err) {
       // TODO: Show error message
       setSubmitError('An error occured, please try again later')
@@ -27,7 +27,7 @@ const ForgotPassword = () => {
   }
 
   return (
-    <main className={styles.container}>
+    <main className={`${styles.container} container-centered`}>
       {!instructionsSent ?
         <AuthContainer
           title='Forgot Your Password?'
@@ -50,7 +50,7 @@ const ForgotPassword = () => {
               />
             </div>
             {submitError &&
-              <p className={styles['submit-error']}>{submitError}</p>
+              <p className='submit-error'>{submitError}</p>
             }
             <div className={styles['button-wrapper']}>
               <Button
@@ -69,7 +69,7 @@ const ForgotPassword = () => {
           </p>
         </AuthContainer>
       }
-      <p className={styles.login}>Back to <Link href='/login'><span>Log In</span></Link></p>
+      <p className='nav-text'>Back to <Link href='/login'><span>Log In</span></Link></p>
     </main>
   )
 }

@@ -5,8 +5,3 @@
 .button-wrapper {
   margin-top: 24px;
 }
-
-.signup-error {
-  margin-top: 6px;
-  color: var(--color-prim-red);
-}

@@ -46,7 +46,7 @@ const Payment = () => {
   }
 
   return (
-    <main className={styles.container}>
+    <main className={`${styles.container} container-centered`}>
       <div>
         <SubscriptionSummary
           plans={plans}

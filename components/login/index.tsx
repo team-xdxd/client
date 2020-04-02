@@ -7,7 +7,7 @@ import LoginForm from './login-form'
 import ProvidersAuth from '../common/providers-auth'
 
 const SignIn = () => (
-  <main className={styles.container}>
+  <main className={`${styles.container} container-centered`}>
     <AuthContainer
       title='Welcome Back!'
       subtitle='Log In to Sparkfive'
@@ -16,7 +16,7 @@ const SignIn = () => (
       <div className={styles.or}>OR</div>
       <ProvidersAuth />
     </AuthContainer>
-    <p className={styles.signup}>Don't have an account? <Link href='/signup'><span>Sign Up</span></Link></p>
+    <p className='nav-text'>Don't have an account? <Link href='/signup'><span>Sign Up</span></Link></p>
   </main>
 )
 

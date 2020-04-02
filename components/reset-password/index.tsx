@@ -2,6 +2,7 @@ import { useState } from 'react'
 import styles from './index.module.css'
 import Link from 'next/link'
 import { useForm } from 'react-hook-form'
+import userApi from '../../server-api/user'
 
 // Container
 import AuthContainer from '../common/auth-container'
@@ -10,58 +11,92 @@ import FormInput from '../common/form-input'
 import Input from '../common/input'
 
 const ForgotPassword = () => {
-  const { control, handleSubmit, errors } = useForm()
-  const [instructionsSent, setInstructionsSent] = useState(false)
+  const { control, handleSubmit, errors, getValues } = useForm()
+  const [passwordReset, setPasswordReset] = useState(false)
+  const [submitError, setSubmitError] = useState('')
 
-  const onSubmit = async forgotData => {
+  const onSubmit = async resetData => {
     try {
-      setInstructionsSent(true)
+      const queryParams = window.location.search
+      if (queryParams) {
+        const token = queryParams.substring(queryParams.indexOf('=') + 1, queryParams.length)
+        await userApi.passwordReset({
+          resetToken: token,
+          password: resetData.password
+        })
+        setPasswordReset(true)
+      } else {
+        setSubmitError('Invalid password reset link')
+      }
+
     } catch (err) {
       // TODO: Show error message
+      if (err.response?.status === 401) {
+        setSubmitError(err.response.data.message)
+      } else {
+        setSubmitError('An error occured, please try again later')
+      }
     }
   }
 
   return (
-    <main className={styles.container}>
-      {!instructionsSent ?
+    <main className={`${styles.container} container-centered`}>
+      {!passwordReset ?
         <AuthContainer
-          title='Forgot Your Password?'
-          subtitle='We are here to help!'
+          title='Password Reset'
+          subtitle='Enter your new password'
         >
           <form onSubmit={handleSubmit(onSubmit)} className={styles.form}>
             <div>
               <FormInput
                 InputComponent={
                   <Input
-                    type='text'
-                    placeholder='Email Address'
+                    type='password'
+                    placeholder='New Password'
                   />
                 }
-                name='email'
+                name='password'
                 control={control}
-                rules={{ required: true, pattern: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i }}
-                message={'Invalid email address'}
+                message={'This field should be minimun 8 characters long'}
+                rules={{ minLength: 8, maxLength: 80, required: true }}
                 errors={errors}
               />
             </div>
+            <div>
+              <FormInput
+                InputComponent={
+                  <Input
+                    type='password'
+                    placeholder='Confirm New Password'
+                  />
+                }
+                name='passwordConfirm'
+                control={control}
+                rules={{ validate: value => value === getValues().password }}
+                message={'Passwords must match'}
+                errors={errors}
+              />
+            </div>
+            {submitError &&
+              <p className='submit-error'>{submitError}</p>
+            }
             <div className={styles['button-wrapper']}>
               <Button
                 type={'submit'}
-                text={'Send Password Reset Email'}
+                text={'Reset PAssword'}
               />
             </div>
           </form>
         </AuthContainer>
         :
         <AuthContainer
-          title='Instructions were Sent!'
+          title='Password Reset'
         >
-          <p className={styles.instructions}>
-            If it's not in your inbox in a few minutes, double check your spam folder or <span onClick={() => setInstructionsSent(false)}>try sending again.</span>
+          <p className='nav-text'>
+            Password reset was successful! <Link href='/login'><span>Back to Log In.</span></Link>
           </p>
         </AuthContainer>
       }
-      <p className={styles.login}>Back to <Link href='/login'><span>Log In</span></Link></p>
     </main>
   )
 }

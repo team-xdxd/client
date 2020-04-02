@@ -1,5 +1,6 @@
 // Import global css
-import './styles.css'
+import '../styles/general.css'
+import '../styles/auth.css'
 // Import stripe as a side effect so it helps detect fraudulent activy
 import '@stripe/stripe-js';
 import { useState } from 'react'

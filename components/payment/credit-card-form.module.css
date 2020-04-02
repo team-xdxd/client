@@ -54,8 +54,3 @@
   display: block;
   margin-bottom: 8px;
 }
-
-.payment-error {
-  margin-top: 6px;
-  color: var(--color-prim-red);
-}

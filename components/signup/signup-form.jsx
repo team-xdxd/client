@@ -164,7 +164,7 @@ const SignupForm = ({ }) => {
         />
       </div>
       {submitError &&
-        <p className={styles['signup-error']}>{submitError}</p>
+        <p className='submit-error'>{submitError}</p>
       }
       <div className={styles['button-wrapper']}>
         <Button
