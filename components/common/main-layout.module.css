@@ -1,0 +1,39 @@
+.header {
+  background-color: var(--color-prim-navy);
+  padding: 30px 32px;
+  display: flex;
+}
+
+.logo-img {
+  height: 48px;
+  width: auto;
+  margin-right: 48px;
+}
+
+.navigation-links {
+  display: flex;
+  flex: 1;
+}
+
+.notifications-wrapper {
+  display: flex;
+  align-items: center;
+  margin-right: 20px;
+}
+
+.notifications {
+  width: 18px;
+  height: auto;
+}
+
+.user {
+  color: white;
+  display: flex;
+  align-items: center;
+}
+
+.profile {
+  width: 25px;
+  height: auto;
+  margin-right: 10px;
+}

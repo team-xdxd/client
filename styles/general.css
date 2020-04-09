@@ -46,6 +46,8 @@ body {
   font-family: "Montserrat", sans-serif;
   font-size: 14px;
   color: var(--color-prim-navy);
+  margin: 0;
+  padding: 0;
 }
 
 h1,
@@ -123,6 +125,11 @@ input {
   outline: none;
   box-shadow: none;
   -webkit-appearance: none;
+}
+
+ul{
+  list-style: none;
+  padding: 0;
 }
 
 /* Card content */

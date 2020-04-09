@@ -1,12 +1,13 @@
-import { useEffect } from 'react'
+import { useEffect, useContext } from 'react'
 import Router from 'next/router'
-
+import { UserContext } from '../context'
 import authApi from '../server-api/auth'
 import cookiesUtil from '../utils/cookies'
 
 // Simple redirect page
 const OauthCbPage = () => {
 
+  const { fetchUser } = useContext(UserContext)
   useEffect(() => {
     // TODO: Include state string verification
     const queryParams = window.location.search.substr(1).split('&')
@@ -19,6 +20,7 @@ const OauthCbPage = () => {
       const provider = cookiesUtil.get('oauthProvider')
       const { data } = await authApi.signIn(provider, accessCode)
       cookiesUtil.setUserJWT(data.token)
+      fetchUser()
     } catch (err) {
       console.log(err)
     } finally {
