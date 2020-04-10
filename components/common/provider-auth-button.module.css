@@ -65,8 +65,7 @@
 }
 
 .button.google .btn-text {
-  color: white;
-  background-color: #4285f4;
+  background-image: url('../../assets/login/btn_google_signin_light_normal_web@2x.png');
 }
 
 .button.linkedin .btn-text {
@@ -87,4 +86,8 @@
 
 .button:hover {
   opacity: 0.5;
+}
+
+.google {
+  height: 3.2rem;
 }
