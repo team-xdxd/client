@@ -6,7 +6,7 @@ import userApi from '../../server-api/user'
 
 // Container
 import AuthContainer from '../common/auth-container'
-import Button from '../common/button'
+import AuthButton from '../common/auth-button'
 import FormInput from '../common/form-input'
 import Input from '../common/input'
 
@@ -81,7 +81,7 @@ const ForgotPassword = () => {
               <p className='submit-error'>{submitError}</p>
             }
             <div className={styles['button-wrapper']}>
-              <Button
+              <AuthButton
                 type={'submit'}
                 text={'Reset PAssword'}
               />

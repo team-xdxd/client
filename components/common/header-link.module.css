@@ -1,0 +1,15 @@
+.link {
+  color: white;
+  display: flex;
+  align-items: center;
+  margin-right: 40px;
+}
+
+.icon {
+  width: 20px;
+  height: auto;
+}
+
+.text {
+  padding-left: 10px;
+} 

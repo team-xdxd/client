@@ -1,0 +1,10 @@
+.container {
+  display: flex;
+  align-items: center;
+  padding: 5px 32px 30px 32px;
+  background-color: var(--color-prim-navy);
+}
+
+.container h1 {  
+  color: var(--color-sec-ivory);  
+}

@@ -1,17 +1,16 @@
-import { useState } from 'react'
+import { useState, useContext } from 'react'
 import Router from 'next/router'
 import { useForm } from 'react-hook-form'
 import styles from './signup-form.module.css'
-
+import { UserContext } from '../../context'
 import userApi from '../../server-api/user'
 import cookiesUtils from '../../utils/cookies'
 
 // Components
-import Button from '../common/button'
+import AuthButton from '../common/auth-button'
 import FormInput from '../common/form-input'
 import Input from '../common/input'
 import Select from '../common/select'
-import { get } from 'http'
 
 const companySizeOptions = [
   {
@@ -40,7 +39,7 @@ const SignupForm = ({ }) => {
   const { control, handleSubmit, errors, getValues } = useForm()
   const [companySize, setCompanySize] = useState()
   const [submitError, setSubmitError] = useState('')
-
+  const { fetchUser } = useContext(UserContext)
   const onSubmit = async fieldData => {
     try {
       const createData = {
@@ -53,7 +52,7 @@ const SignupForm = ({ }) => {
       }
       const { data } = await userApi.signUp(createData)
       cookiesUtils.setUserJWT(data.token)
-      Router.replace('/')
+      fetchUser()
     } catch (err) {
       if (err.response?.data?.message) {
         setSubmitError(err.response.data.message)
@@ -167,7 +166,7 @@ const SignupForm = ({ }) => {
         <p className='submit-error'>{submitError}</p>
       }
       <div className={styles['button-wrapper']}>
-        <Button
+        <AuthButton
           type={'submit'}
           text={'Sign Up'}
         />

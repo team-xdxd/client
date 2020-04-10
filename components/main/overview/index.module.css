@@ -1,0 +1,18 @@
+.container{
+  display: flex;
+  justify-content: center;  
+  font-weight: 500;
+}
+
+.first-section, .second-section {
+  margin-top: 40px;
+}
+
+.first-section {
+  width: 60rem;
+  margin-right: 35px;
+}
+
+.second-section {
+  width: 25rem;
+}
