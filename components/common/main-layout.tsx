@@ -9,7 +9,6 @@ import HeaderLink from './header-link'
 
 const AuthLayout = ({ children }) => {
   const { user } = useContext(UserContext)
-
   return (
     <>
       <header className={styles.header}>
@@ -49,7 +48,7 @@ const AuthLayout = ({ children }) => {
           <img
             className={styles.profile}
             src={GeneralImg.logo} />
-          {user.name}
+          {user?.name}
         </div>
       </header>
       {children}

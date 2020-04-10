@@ -23,8 +23,6 @@ const OauthCbPage = () => {
       fetchUser()
     } catch (err) {
       console.log(err)
-    } finally {
-      Router.replace('/')
     }
   }
 

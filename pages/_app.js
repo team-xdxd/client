@@ -1,3 +1,4 @@
+import Router from 'next/router'
 // Import global css
 import '../styles/general.css'
 import '../styles/auth.css'
@@ -22,10 +23,12 @@ export default function MyApp ({ Component, pageProps }) {
       try {
         const { data } = await userApi.getUserData()
         setUser(data)
+        Router.replace('/main/overview')
       } catch (err) {
         console.log(err)
+        Router.replace('/signup')
       }
-    }
+    } else Router.replace('/signup')
   }
 
   const userValue = { user, setUser, fetchUser }

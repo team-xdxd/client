@@ -53,7 +53,6 @@ const SignupForm = ({ }) => {
       const { data } = await userApi.signUp(createData)
       cookiesUtils.setUserJWT(data.token)
       fetchUser()
-      Router.replace('/')
     } catch (err) {
       if (err.response?.data?.message) {
         setSubmitError(err.response.data.message)

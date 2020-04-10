@@ -23,24 +23,27 @@ const NavDropdownButton = ({ text, onClick = () => { }, disabled = false, option
         <span className={styles.text}>
           {text}
         </span>
-        <span className={styles.dropdown} onClick={toggleIsOpen}>
+        <span className={styles.dropdown} onClick={(e) => {
+          e.stopPropagation()
+          toggleIsOpen()
+        }}>
           <img src={GeneralImg.logo} />
         </span>
+        {isOpen &&
+          <ul className={styles.menu}>
+            {options.map((option, index) => (
+              <li key={index} onClick={option.onClick}>
+                <span>
+                  <img src={option.icon} />
+                </span>
+                <span>
+                  {option.label}
+                </span>
+              </li>
+            ))}
+          </ul>
+        }
       </button>
-      {isOpen &&
-        <ul className={styles.menu}>
-          {options.map((option, index) => (
-            <li key={index} onClick={option.onClick}>
-              <span>
-                <img src={option.icon} />
-              </span>
-              <span>
-                {option.label}
-              </span>
-            </li>
-          ))}
-        </ul>
-      }
     </>
   )
 }

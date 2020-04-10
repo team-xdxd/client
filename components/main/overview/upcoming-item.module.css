@@ -1,3 +1,52 @@
-.actions{
+.container {
   display: flex;
+  align-items: center;
+  padding: 20px;
+  border: 1px solid var(--color-secondary-border);
+  border-radius: 7px;
+  margin-bottom: 15px;
+}
+
+.name {
+  width: 33.3%;
+}
+
+.user {
+  width: 22.6%;
+}
+
+
+.date {
+  width: 14.6%;
+}
+
+.badge {
+  width: 14.6%;
+}
+
+.actions {
+  display: flex;
+  width: 14.6%;
+  justify-content: flex-end;
+}
+
+.single-user{
+  display: flex;
+  align-items: center;
+}
+
+.container span {
+  display: inline-flex;
+}
+
+.single-user img {
+  width: 20px;
+  height: auto;
+  margin-right: 5px;
+}
+
+.actions img {
+  width: 20px;
+  height: auto;
+  margin-right: 5px;
 }

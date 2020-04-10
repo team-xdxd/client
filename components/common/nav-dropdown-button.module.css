@@ -10,6 +10,7 @@
   font-weight: bold;
   cursor: pointer;
   outline: none;
+  position: relative;
 }
 
 .container:hover {
@@ -62,6 +63,8 @@
 
 .menu {
   position: absolute;
+  top: 50px;
+  left: 0;
   z-index: 900;
   background-color: white;
   border: 1px solid var(--color-secondary-border);
@@ -82,6 +85,7 @@
 
 .menu li span {
   display: inline-flex;
+  color: var(--color-prim-navy);
 }
 
 .menu li span:first-child {

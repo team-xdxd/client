@@ -1,23 +1,42 @@
 import styles from './upcoming-item.module.css'
 import { GeneralImg } from '../../../assets'
-
+import { format } from 'date-fns'
 
 // Component
 import StatusBadge from '../../common/status-badge'
 
-const UpcomingItem = ({ status = '' }) => (
+const UpcomingItem = ({ name, date, status, users, userPhoto = GeneralImg.logo }) => (
   <li className={`${styles.container}`}>
-    <span>
-
+    <span className={styles.name}>
+      {name}
     </span>
-    <div>
-      <img />
-      <span></span>
+
+    <div className={styles.user}>
+      {users.length <= 1 ?
+        <div className={styles['single-user']}>
+          <img src={userPhoto} />
+          <span>{users[0].name}</span>
+        </div>
+        :
+        <ul>
+          {users.map((user, index) => {
+            if (index < 3)
+              return (
+                <li>
+                  <img src={userPhoto} />
+                </li>
+              )
+          })}
+        </ul>
+      }
     </div>
-    <span>
 
+    <span className={styles.date}>
+      {format(new Date(date), 'd MMM yyyy')}
     </span>
-    <StatusBadge status={status} />
+    <div className={styles.badge}>
+      <StatusBadge status={status} />
+    </div>
     <div className={styles.actions}>
       <img src={GeneralImg.logo} />
       <img src={GeneralImg.logo} />

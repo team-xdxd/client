@@ -18,7 +18,13 @@ const Upcoming = ({ type, items = [] }) => (
     </div>
     <ul>
       {items.map((item, index) => (
-        <UpcomingItem key={index} />
+        <UpcomingItem
+          key={index}
+          date={type === 'project' ? item.publishDate : item.endDate}
+          name={item.name}
+          status={item.status}
+          users={item.users}
+        />
       ))}
     </ul>
   </div>

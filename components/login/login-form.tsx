@@ -25,7 +25,6 @@ const Form = () => {
       const { data } = await userApi.signIn(signInData)
       cookiesUtils.setUserJWT(data.token)
       fetchUser()
-      Router.replace('/')
     } catch (err) {
       // TODO: Show error message
       if (err.response?.data?.message) {
