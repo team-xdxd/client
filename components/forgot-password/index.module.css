@@ -1,0 +1,14 @@
+.button-wrapper {
+  margin-top: 34px;
+}
+
+.instructions {
+  text-align: left;
+  color: var(--color-sec-blue);
+}
+
+.instructions span {
+  font-weight: bold;
+  cursor: pointer;
+  text-decoration: underline;
+}

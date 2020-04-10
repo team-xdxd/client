@@ -1,0 +1,5 @@
+.error{
+  text-align: left;
+  margin-top: 6px;
+  color: var(--color-prim-red);
+}

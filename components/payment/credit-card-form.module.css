@@ -1,0 +1,56 @@
+.container {
+  padding: 35px 25px;
+  width: 400px;
+  max-width: 400px;
+  margin-bottom: 3rem;
+}
+
+.form > div {
+  margin-bottom: 12px;
+}
+
+.stripe-elem-wrapper {
+  width: 100%;
+  min-height: 48px;
+  padding: 8px 12px;
+  border-radius: 5px;
+  border: 1px solid var(--color-secondary-border);
+  background-color: var(--color-sec-ivory);
+}
+
+.stripe-elem-expiry {
+  margin-right: 1rem;
+  width: 100%;
+}
+
+.stripe-elem-security {
+  width: 100%;
+}
+
+.expiry-cvc,
+.city-state {
+  display: flex;
+}
+
+.city-state > div {
+  width: 100%;
+}
+
+.city {
+  margin-right: 1rem;
+}
+
+.zip {
+  width: 150px;
+}
+
+.subscribe {
+  margin-top: 2rem;
+  text-align: center;
+}
+
+.container label {
+  font-weight: 500;
+  display: block;
+  margin-bottom: 8px;
+}

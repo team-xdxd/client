@@ -1,14 +1,18 @@
 import Head from 'next/head'
 
+// Components
+import AuthLayout from '../components/common/auth-layout'
 import Login from '../components/login'
 
 const LoginPage = () => (
   <>
     <Head>
-      <title>Login</title>
+      <title>Log In</title>
       <link rel="icon" href="/favicon.ico" />
     </Head>
-    <Login />
+    <AuthLayout>
+      <Login />
+    </AuthLayout>
   </>
 )
 

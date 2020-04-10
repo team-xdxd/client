@@ -1,0 +1,35 @@
+.container {
+  margin-bottom: 45px;
+}
+
+.heading {
+  display: flex;
+  align-items: center;
+  margin-bottom: 25px;
+}
+
+.heading h4 {
+  font-weight: bold;
+  color: var(--color-prim-navy);
+  margin: 0;
+  padding: 0;
+  flex: 1;
+}
+
+.action{
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+}
+
+.action:hover{
+  opacity: 0.7;
+}
+
+.action img {
+  width: 20px;
+  height: auto;
+  margin-right: 10px;
+}
+

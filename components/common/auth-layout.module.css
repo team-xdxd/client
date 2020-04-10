@@ -1,0 +1,9 @@
+.header {
+  margin: 15px 5%;
+}
+
+.logo-img {
+  width: 13rem;
+  height: auto;
+  cursor: pointer;
+}
