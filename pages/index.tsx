@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 import Head from 'next/head'
 import Link from 'next/link'
 
-import Button from '../components/common/button'
+import AuthButton from '../components/common/auth-button'
 
 import userApi from '../server-api/user'
 
@@ -48,13 +48,13 @@ const Home = () => {
         {!user?.id ?
           <>
             <Link href="/signup">
-              <Button
+              <AuthButton
                 text='Sign Up'
                 type='button'
               />
             </Link>
             <Link href="/login">
-              <Button
+              <AuthButton
                 text='Log In'
                 type='button'
               />
@@ -92,12 +92,12 @@ const Home = () => {
               </div>
             </div>
             <Link href="/payment">
-              <Button
+              <AuthButton
                 text='Payment'
                 type='button'
               />
             </Link>
-            <Button
+            <AuthButton
               text='Log Out'
               type='button'
               onClick={() => {

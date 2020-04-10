@@ -8,7 +8,7 @@ import userApi from '../../server-api/user'
 import cookiesUtils from '../../utils/cookies'
 
 // Components
-import Button from '../common/button'
+import AuthButton from '../common/auth-button'
 import FormInput from '../common/form-input'
 import Input from '../common/input'
 
@@ -73,7 +73,7 @@ const Form = () => {
         <p className='submit-error'>{submitError}</p>
       }
       <div className={styles['button-wrapper']}>
-        <Button
+        <AuthButton
           type={'submit'}
           text={'Log In'}
         />
