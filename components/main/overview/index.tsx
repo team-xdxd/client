@@ -1,11 +1,13 @@
 import styles from './index.module.css'
 import Link from 'next/link'
+import { useState } from 'react'
 
 // Components
 import OverviewSubHeader from './overview-subheader'
 import Banner from './banner'
 import Upcoming from './upcoming'
 import UpcomingTasks from './upcoming-tasks'
+import CreateOverlay from '../create-overlay'
 
 const campaigns = [
   {
@@ -68,30 +70,49 @@ const tasks = [
 ]
 
 
-const Overview = () => (
-  <>
-    <OverviewSubHeader />
-    <main className={`${styles.container}`}>
-      <section className={styles['first-section']}>
-        <Banner />
-        {/* TODO: Add Chart in a future milestone */}
-        <Upcoming
-          type='campaign'
-          items={campaigns}
+const Overview = () => {
+  const [createVisible, setCreateVisible] = useState(false)
+  const [createType, setCreateType] = useState('')
+
+  const openCreateOVerlay = (type) => {
+    setCreateVisible(true)
+    setCreateType(type)
+  }
+
+  return (
+    <>
+      <OverviewSubHeader
+        openCreateOVerlay={openCreateOVerlay}
+      />
+      <main className={`${styles.container}`}>
+        <section className={styles['first-section']}>
+          <Banner />
+          {/* TODO: Add Chart in a future milestone */}
+          <Upcoming
+            type='campaign'
+            items={campaigns}
+          />
+          <Upcoming
+            type='project'
+            items={projects}
+          />
+        </section>
+        <section className={styles['second-section']}>
+          <UpcomingTasks
+            tasks={tasks}
+          />
+          {/* TODO: Add help section in a future milestone */}
+        </section>
+      </main>
+      {createVisible &&
+        <CreateOverlay
+          type={createType}
+          setType={setCreateType}
+          closeOverlay={() => setCreateVisible(false)}
         />
-        <Upcoming
-          type='project'
-          items={projects}
-        />
-      </section>
-      <section className={styles['second-section']}>
-        <UpcomingTasks
-          tasks={tasks}
-        />
-        {/* TODO: Add help section in a future milestone */}
-      </section>
-    </main>
-  </>
-)
+      }
+    </>
+  )
+}
 
 export default Overview
