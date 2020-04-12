@@ -1,6 +1,6 @@
 import styles from './upcoming.module.css'
 import { capitalCase } from 'change-case'
-import { GeneralImg } from '../../../assets'
+import { GeneralImg, Utilities } from '../../../assets'
 
 // Components
 import UpcomingItem from './upcoming-item'
@@ -10,7 +10,7 @@ const Upcoming = ({ type, items = [] }) => (
     <div className={styles.heading}>
       <h4>Upcoming {capitalCase(`${type}s`)}</h4>
       <div className={styles.action}>
-        <img src={GeneralImg.logo} />
+        <img src={Utilities.add} />
         <span>
           Add {capitalCase(type)}
         </span>

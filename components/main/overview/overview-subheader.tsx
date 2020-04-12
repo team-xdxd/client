@@ -2,7 +2,7 @@ import styles from './overview-subheader.module.css'
 import Router from 'next/router'
 import Link from 'next/link'
 
-import { GeneralImg } from '../../../assets'
+import { ProjectTypes } from '../../../assets'
 
 // Components
 import SubHeader from '../../common/sub-header'
@@ -13,17 +13,17 @@ const dropdownOptions = [
   {
     label: 'Campaign',
     onClick: () => Router.replace('/main/create?type=campaign'),
-    icon: GeneralImg.logo
+    icon: ProjectTypes.campaign
   },
   {
     label: 'Project',
     onClick: () => Router.replace('/main/create?type=project'),
-    icon: GeneralImg.logo
+    icon: ProjectTypes.project
   },
   {
     label: 'Task',
     onClick: () => Router.replace('/main/create?type=task'),
-    icon: GeneralImg.logo
+    icon: ProjectTypes.task
   }
 ]
 

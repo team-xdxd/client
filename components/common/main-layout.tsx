@@ -1,7 +1,8 @@
 import { useContext } from 'react'
 import styles from './main-layout.module.css'
 import Link from 'next/link'
-import { GeneralImg } from '../../assets'
+import overview from '../../assets/Icons/Navigation/icn-nav-dashboard.svg'
+import { GeneralImg, Navigation, Placeholders } from '../../assets'
 import { UserContext } from '../../context'
 
 // Components
@@ -20,34 +21,34 @@ const AuthLayout = ({ children }) => {
         <ul className={styles['navigation-links']}>
           <HeaderLink
             href='/main/overview'
-            img={GeneralImg.logo}
+            img={Navigation.overview}
             text='Overview'
           />
           <HeaderLink
             href='/main/overview'
-            img={GeneralImg.logo}
+            img={Navigation.schedule}
             text='Schedule'
           />
           <HeaderLink
             href='/main/overview'
-            img={GeneralImg.logo}
+            img={Navigation.assets}
             text='Assets'
           />
           <HeaderLink
             href='/main/overview'
-            img={GeneralImg.logo}
+            img={Navigation.reports}
             text='Reports'
           />
         </ul>
         <div className={styles['notifications-wrapper']}>
           <img
             className={styles.notifications}
-            src={GeneralImg.logo} />
+            src={Navigation.alert} />
         </div>
         <div className={styles.user}>
           <img
             className={styles.profile}
-            src={GeneralImg.logo} />
+            src={Placeholders.profile} />
           {user?.name}
         </div>
       </header>
