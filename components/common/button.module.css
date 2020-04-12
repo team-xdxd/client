@@ -1,0 +1,43 @@
+.container {
+  border-radius: 5px;
+  height: 34px;
+  /* max-width: 250px; */
+  padding: 0 40px;
+  
+  
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.primary{
+  background-color: var(--color-prim-turquoise);
+  color: white;
+}
+
+.secondary{
+  background-color: white;
+  border: 1px solid var(--color-secondary-border);
+
+}
+
+.primary:hover {
+  background-color: var(--color-prim-turquoise-hover);
+}
+
+.primary:disabled {
+  background-color: var(--color-prim-turquoise-hover);
+  cursor: default;
+}
+
+.secondary:hover {
+  background-color: var(--color-sec-lightivory);
+}
+
+.secondary:disabled {
+  background-color: var(--color-sec-lightivory);
+  cursor: default;
+}
+
+.submit{
+  min-height: 70px;
+}

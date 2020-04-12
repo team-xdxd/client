@@ -1,0 +1,22 @@
+[
+  {
+    "label": "Email",
+    "value": "email"
+  },
+  {
+    "label": "Social",
+    "value": "social"
+  },
+  {
+    "label": "Ads",
+    "value": "ads"
+  },
+  {
+    "label": "Articles",
+    "value": "articles"
+  },
+  {
+    "label": "Web Banners",
+    "value": "banners"
+  }
+]

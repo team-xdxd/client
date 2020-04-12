@@ -3,7 +3,7 @@ import styles from './input.module.css'
 const Input = (props) => (
   <input
     {...props}
-    className={styles.container}
+    className={`${styles.container} ${props.styleType && styles[props.styleType]}`}
 
   />
 )

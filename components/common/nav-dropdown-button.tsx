@@ -32,7 +32,11 @@ const NavDropdownButton = ({ text, onClick = () => { }, disabled = false, option
         {isOpen &&
           <ul className={styles.menu}>
             {options.map((option, index) => (
-              <li key={index} onClick={option.onClick}>
+              <li key={index} onClick={(e) => {
+                e.stopPropagation()
+                option.onClick()
+                setIsOpen(false)
+              }}>
                 <span>
                   <img src={option.icon} />
                 </span>

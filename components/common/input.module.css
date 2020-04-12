@@ -7,3 +7,8 @@
   background-color: var(--color-sec-ivory);
   color: var(--color-prim-navy);  
 }
+
+.regular{
+  background-color: var(--color-sec-lightivory);
+  min-height: 70px;
+}
