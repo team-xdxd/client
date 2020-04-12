@@ -14,7 +14,7 @@ import { useForm } from 'react-hook-form'
 import states from '../../resources/data/states.json'
 
 // Components
-import Button from '../common/button'
+import AuthButton from '../common/auth-button'
 import FormInput from '../common/form-input'
 import Input from '../common/input'
 import Select from '../common/select'
@@ -187,7 +187,7 @@ const CreditCardForm = ({ subscribe, buttonDisabled }) => {
           <p className='submit-error'>{submitError}</p>
         }
         <div className={styles.subscribe}>
-          <Button
+          <AuthButton
             text='Subscribe'
             type='submit'
             disabled={buttonDisabled}
