@@ -9,7 +9,7 @@ import SubHeader from '../../common/sub-header'
 import NavDropdownButton from '../../common/nav-dropdown-button'
 import StatusBadge from '../../common/status-badge'
 
-const OverviewSubHeader = ({ status = '', isDraft = false, openCreateOVerlay }) => {
+const OverviewSubHeader = ({ status = '', openCreateOVerlay }) => {
 
   const dropdownOptions = [
     {
@@ -32,20 +32,7 @@ const OverviewSubHeader = ({ status = '', isDraft = false, openCreateOVerlay }) 
   return (
     <SubHeader pageTitle='Dashboard'>
       <div className={styles['header-additional']}>
-        {status &&
-          <StatusBadge status='draft' />
-        }
       </div>
-      {isDraft &&
-        <>
-          <button className={styles['draft-action']}>
-            Cancel
-      </button>
-          <button className={styles['draft-action']}>
-            Save Draft
-      </button>
-        </>
-      }
       <NavDropdownButton
         text='Create New'
         onClick={() => openCreateOVerlay()}

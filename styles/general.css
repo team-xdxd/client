@@ -160,9 +160,19 @@ ul {
   color: var(--color-prim-navy);
 }
 
+.regular .select-prefix__value-container {
+  background-color: var(--color-sec-lightivory);
+  padding: 0 12px;
+  min-height: 70px;
+}
+
 .select-prefix__indicators {
   background-color: var(--color-sec-ivory);
   color: var(--color-prim-navy);
+}
+
+.regular .select-prefix__indicators {
+  background-color: var(--color-sec-lightivory);
 }
 
 .select-prefix__menu {
@@ -172,6 +182,10 @@ ul {
   background-color: var(--color-sec-ivory);
   color: var(--color-prim-navy);
   text-align: left;
+}
+
+.regular .select-prefix__menu-list {
+  background-color: var(--color-sec-lightivory);
 }
 
 .select-prefix__option {

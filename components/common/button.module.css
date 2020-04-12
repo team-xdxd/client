@@ -1,8 +1,8 @@
 .container {
-  border-radius: 10px;
+  border-radius: 5px;
   height: 34px;
   /* max-width: 250px; */
-  padding: 12px 40px;
+  padding: 0 40px;
   
   
   font-weight: bold;
@@ -36,4 +36,8 @@
 .secondary:disabled {
   background-color: var(--color-sec-lightivory);
   cursor: default;
+}
+
+.submit{
+  min-height: 70px;
 }

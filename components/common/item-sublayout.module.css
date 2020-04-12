@@ -1,0 +1,36 @@
+.container {
+  display: flex;
+  min-height: calc(100vh - 195px); /* Fallback for browsers that do not support Custom Properties */
+  min-height: calc(calc(var(--vh, 1vh) * 100) - 195px);  
+}
+
+.heading {
+  display: flex;
+}
+
+.heading h4 {
+  margin: 0;
+  padding-bottom: 5px;
+  border-bottom: 2px solid var(--color-prim-turquoise);
+}
+
+.main-component {
+  flex: 1;
+  padding: 30px 32px;
+}
+
+.side-component {
+  border-left: 1px solid var(--color-secondary-border);
+}
+
+.side-bar {
+  text-align: center;
+  background-color: var(--color-sec-lightivory);
+  border-left: 1px solid var(--color-secondary-border);
+  width: 45px;
+}
+
+.side-bar img{
+  width: 20px;
+  height: auto;
+}

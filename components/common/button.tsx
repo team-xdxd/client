@@ -1,8 +1,8 @@
-import styles from './nav-button.module.css'
+import styles from './button.module.css'
 
-const Button = ({ text, type, onClick = () => { }, disabled = false }) => (
+const Button = ({ text, type, onClick = () => { }, disabled = false, styleType = '' }) => (
   <button
-    className={styles.container}
+    className={`${styles.container} ${styles[styleType]} ${styles[type]}`}
     type={type}
     onClick={onClick}
     disabled={disabled}

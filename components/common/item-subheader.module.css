@@ -1,0 +1,16 @@
+.draft-action {
+  margin-right: 25px;
+  color: var(--color-sec-ivory);
+  background-color: inherit;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.draft-action:hover {
+  opacity: 0.5
+}
+
+.header-additional {
+  margin-left: 25px;
+  flex: 1;
+}

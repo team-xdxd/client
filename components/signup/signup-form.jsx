@@ -12,28 +12,7 @@ import FormInput from '../common/form-input'
 import Input from '../common/input'
 import Select from '../common/select'
 
-const companySizeOptions = [
-  {
-    label: '1-24 employees',
-    value: '1-24 employees',
-  },
-  {
-    label: '25-49 employees',
-    value: '25-49 employees',
-  },
-  {
-    label: '50-249 employees',
-    value: '50-249 employees',
-  },
-  {
-    label: '250-999 employees',
-    value: '250-999 employees',
-  },
-  {
-    label: '1000+ employees',
-    value: '1000+ employees',
-  }
-]
+import companySizeOptions from '../../parameters/company-sizes.json'
 
 const SignupForm = ({ }) => {
   const { control, handleSubmit, errors, getValues } = useForm()

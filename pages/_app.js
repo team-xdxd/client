@@ -23,7 +23,8 @@ export default function MyApp ({ Component, pageProps }) {
       try {
         const { data } = await userApi.getUserData()
         setUser(data)
-        Router.replace('/main/overview')
+        if (Router.pathname.indexOf('/main') === -1)
+          Router.replace('/main/overview')
       } catch (err) {
         console.log(err)
         Router.replace('/signup')
@@ -41,7 +42,16 @@ export default function MyApp ({ Component, pageProps }) {
 
   const [initialLoadFinished, setInitialLoadFinished] = useState(false)
 
+  const resizeWindow = () => {
+    let vh = window.innerHeight * 0.01
+    document.documentElement.style.setProperty('--vh', `${vh}px`)
+  }
+
   useEffect(() => {
+    resizeWindow()
+    window.addEventListener('resize', () => {
+      resizeWindow()
+    })
     getUserData()
   }, [])
 

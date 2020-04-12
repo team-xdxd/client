@@ -26,32 +26,32 @@ const CreateCampaign = () => {
 
   return (
     <div className={`${styles.container}`}>
-      <h2>
-        <form onSubmit={handleSubmit(onSubmit)} className={styles.container}>
-          <div>
-            <FormInput
-              InputComponent={
-                <Input
-                  type='text'
-                  placeholder='Name'
-                />
-              }
-              name='name'
-              control={control}
-              message={'This field should be minimun 8 characters long'}
-              rules={{ minLength: 2, maxLength: 20, required: true }}
-              errors={errors}
-            />
-          </div>
-          <div className={styles['button-wrapper']}>
-            <Button
-              type={'submit'}
-              text={'Next'}
-            />
-          </div>
-        </form>
-      </h2>
-
+      <h2>Create New Campaign</h2>
+      <form onSubmit={handleSubmit(onSubmit)}>
+        <div className={styles['input-wrapper']}>
+          <FormInput
+            InputComponent={
+              <Input
+                type='text'
+                placeholder='Name your Campaign'
+                styleType='regular'
+              />
+            }
+            name='name'
+            control={control}
+            message={'This field should be minimun 8 characters long'}
+            rules={{ minLength: 2, maxLength: 20, required: true }}
+            errors={errors}
+          />
+        </div>
+        <div className={styles['button-wrapper']}>
+          <Button
+            type={'submit'}
+            text={'Next'}
+            styleType='primary'
+          />
+        </div>
+      </form>
     </div>
   )
 }
