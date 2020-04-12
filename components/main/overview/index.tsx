@@ -1,6 +1,9 @@
 import styles from './index.module.css'
 import Link from 'next/link'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
+
+import campaignApi from '../../../server-api/campaign'
+import projectApi from '../../../server-api/project'
 
 // Components
 import OverviewSubHeader from './overview-subheader'
@@ -9,7 +12,7 @@ import Upcoming from './upcoming'
 import UpcomingTasks from './upcoming-tasks'
 import CreateOverlay from '../create-overlay'
 
-const campaigns = [
+const defCampaigns = [
   {
     name: 'New Fall',
     endDate: new Date(),
@@ -32,7 +35,7 @@ const campaigns = [
   }
 ]
 
-const projects = [
+const defProjects = [
   {
     name: 'New Fall',
     publishDate: new Date(),
@@ -56,7 +59,7 @@ const projects = [
 ]
 
 // name, status, date
-const tasks = [
+const defTasks = [
   {
     name: 'New Fall',
     endDate: new Date(),
@@ -74,9 +77,36 @@ const Overview = () => {
   const [createVisible, setCreateVisible] = useState(false)
   const [createType, setCreateType] = useState('')
 
+  const [campaigns, setCampaigns] = useState([])
+  const [projects, setProjects] = useState([])
+  const [tasks, setTasks] = useState(defTasks)
+
   const openCreateOVerlay = (type) => {
     setCreateVisible(true)
     setCreateType(type)
+  }
+
+  useEffect(() => {
+    getCampaigns()
+    getProjects()
+  }, [])
+
+  const getCampaigns = async () => {
+    try {
+      const { data } = await campaignApi.getCampaigns()
+      setCampaigns(data)
+    } catch (err) {
+      // TODO: Display error or something
+    }
+  }
+
+  const getProjects = async () => {
+    try {
+      const { data } = await projectApi.getProjects()
+      setProjects(data)
+    } catch (err) {
+      // TODO: Display error or something
+    }
   }
 
   return (
