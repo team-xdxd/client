@@ -17,7 +17,7 @@ export const Navigation = {
 }
 
 export const Utilities = {
-  edit: require('./Icons/Utilities/Description:Edit/icn-utilities-description_edit-fill.svg'),
+  edit: require('./Icons/Utilities/Description-Edit/icn-utilities-description_edit-fill.svg'),
   add: require('./Icons/Utilities/Add +/icn-utilities-add+.svg'),
   comment: require('./Icons/Utilities/Comments/icn-utilities-comments.svg'),
   assignMember: require('./Icons/Utilities/Assign Member/icn-utilities-assignmember.svg'),
