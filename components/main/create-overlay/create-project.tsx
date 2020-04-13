@@ -1,6 +1,8 @@
 import styles from './create-project.module.css'
 import { useState } from 'react'
 import { useForm } from 'react-hook-form'
+import Router from 'next/router'
+import projectApi from '../../../server-api/project'
 
 // Components
 import Button from '../../common/button'
@@ -17,7 +19,8 @@ const CreateProject = () => {
 
   const onSubmit = async projectData => {
     try {
-
+      const { data } = await projectApi.createProject({ ...projectData, type })
+      Router.replace(`/main/projects/${data.id}`)
     } catch (err) {
       // TODO: Show error message
       if (err.response?.data?.message) {

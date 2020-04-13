@@ -28,9 +28,11 @@
   background-color: var(--color-sec-lightivory);
   border-left: 1px solid var(--color-secondary-border);
   width: 45px;
+  padding: 30px 0;
 }
 
 .side-bar img{
   width: 20px;
   height: auto;
+  margin-bottom: 2rem;
 }

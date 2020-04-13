@@ -7,5 +7,6 @@ export default {
   getCampaigns: () => axios.get(campaignUrl),
   createCampaign: (data) => axios.post(campaignUrl, data),
   updateCampaign: (id, data) => axios.patch(`${campaignUrl}/${id}`, data),
-  addProject: (id, data) => axios.post(`${campaignUrl}/${id}/projects`, data)
+  addProject: (id, data) => axios.post(`${campaignUrl}/${id}/projects`, data),
+  addTag: (id, data) => axios.post(`${campaignUrl}/${id}/tags`, data)
 }
