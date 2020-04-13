@@ -19,7 +19,7 @@ const CreateProject = () => {
 
   const onSubmit = async projectData => {
     try {
-      const { data } = await projectApi.createProject({ ...projectData, type })
+      const { data } = await projectApi.createProject({ ...projectData, type: type.value })
       Router.replace(`/main/projects/${data.id}`)
     } catch (err) {
       // TODO: Show error message
