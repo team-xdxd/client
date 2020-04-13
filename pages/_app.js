@@ -2,6 +2,7 @@ import Router from 'next/router'
 // Import global css
 import '../styles/general.css'
 import '../styles/auth.css'
+import 'react-day-picker/lib/style.css';
 // Import stripe as a side effect so it helps detect fraudulent activy
 import '@stripe/stripe-js';
 import { useState, useEffect } from 'react'
@@ -10,6 +11,11 @@ import cookiesUtils from '../utils/cookies'
 import requestsUtils from '../utils/requests'
 
 import userApi from '../server-api/user'
+
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
+toast.configure()
 
 // This default export is required in a new `pages/_app.js` file.
 export default function MyApp ({ Component, pageProps }) {

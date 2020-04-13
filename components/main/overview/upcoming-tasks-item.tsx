@@ -1,6 +1,6 @@
 import styles from './upcoming-tasks-item.module.css'
 import { capitalCase } from 'change-case'
-import { GeneralImg } from '../../../assets'
+import { GeneralImg, Navigation } from '../../../assets'
 
 import { format } from 'date-fns'
 
@@ -16,7 +16,7 @@ const UpcomingTasksItem = ({ name, status, date }) => (
       </span>
     </div>
     <div className={styles.date}>
-      <img src={GeneralImg.logo} />
+      <img src={Navigation.scheduleBlack} />
       <span>
         {format(new Date(date), 'd MMM yyyy')}
       </span>

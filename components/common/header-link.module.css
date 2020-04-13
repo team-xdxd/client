@@ -3,11 +3,14 @@
   display: flex;
   align-items: center;
   margin-right: 40px;
+  cursor: pointer;
+}
+
+.link:hover{
+  opacity: 0.7
 }
 
 .icon {
-  width: 20px;
-  height: auto;
 }
 
 .text {

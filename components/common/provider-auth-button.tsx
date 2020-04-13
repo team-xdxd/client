@@ -6,6 +6,7 @@ const ProviderAuthButton = ({ provider, onClick, icon }) => (
   <>
     {provider === 'google' ?
       <button
+        className={styles['button-google']}
         onClick={onClick}>
         <img src={logo} className={styles.google} />
       </button>

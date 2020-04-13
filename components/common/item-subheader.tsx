@@ -7,7 +7,7 @@ import SubHeader from './sub-header'
 import NavButton from './nav-button'
 import StatusBadge from './status-badge'
 
-const ItemSubHeader = ({ title, status = 'draft' }) => {
+const ItemSubHeader = ({ title, status = 'draft', saveDraft = () => { } }) => {
   return (
     <SubHeader pageTitle={title}>
       <div className={styles['header-additional']}>
@@ -17,10 +17,10 @@ const ItemSubHeader = ({ title, status = 'draft' }) => {
       </div>
       {status === 'draft' &&
         <>
-          <button className={styles['draft-action']}>
+          <button className={styles['draft-action']} onClick={() => Router.replace('/main/overview')}>
             Cancel
       </button>
-          <button className={styles['draft-action']}>
+          <button className={styles['draft-action']} onClick={saveDraft}>
             Save Draft
       </button>
         </>

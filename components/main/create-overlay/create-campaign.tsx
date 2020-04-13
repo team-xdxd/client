@@ -1,7 +1,7 @@
 import styles from './create-campaign.module.css'
 import { useState } from 'react'
 import { useForm } from 'react-hook-form'
-
+import Router from 'next/router'
 import campaignApi from '../../../server-api/campaign'
 
 // Components
@@ -15,7 +15,8 @@ const CreateCampaign = () => {
 
   const onSubmit = async campaignData => {
     try {
-        await campaignApi.createCampaign(campaignData)
+      const { data } = await campaignApi.createCampaign(campaignData)
+      Router.replace(`/main/campaigns/${data.id}`)
     } catch (err) {
       // TODO: Show error message
       if (err.response?.data?.message) {

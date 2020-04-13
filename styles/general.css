@@ -166,6 +166,10 @@ ul {
   min-height: 70px;
 }
 
+.item .select-prefix__value-container{
+  min-height: 48px;
+}
+
 .select-prefix__indicators {
   background-color: var(--color-sec-ivory);
   color: var(--color-prim-navy);

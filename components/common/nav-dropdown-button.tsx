@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import styles from './nav-dropdown-button.module.css'
-import { GeneralImg } from '../../assets'
+import { GeneralImg, Utilities } from '../../assets'
 
 const NavDropdownButton = ({ text, onClick = () => { }, disabled = false, options = [] }) => {
 
@@ -18,7 +18,7 @@ const NavDropdownButton = ({ text, onClick = () => { }, disabled = false, option
         disabled={disabled}
       >
         <span className={styles.icon}>
-          <img src={GeneralImg.logo} />
+          <img src={Utilities.edit} />
         </span>
         <span className={styles.text}>
           {text}

@@ -1,11 +1,11 @@
 import styles from './item-sublayout.module.css'
 import Router from 'next/router'
 import Link from 'next/link'
-import { GeneralImg } from '../../assets'
+import { Utilities } from '../../assets'
 
 // Components
 
-const ItemSublayout = ({ SideComponent = null, navElements = [], children }) => {
+const ItemSublayout = ({ SideComponent = null, sideActive = false, navElements = [], children }) => {
   return (
     <div className={styles.container}>
       <div className={styles['main-component']}>
@@ -17,7 +17,7 @@ const ItemSublayout = ({ SideComponent = null, navElements = [], children }) => 
         </div>
       </div>
 
-      {SideComponent &&
+      {SideComponent && sideActive &&
         <div className={styles['side-component']}>
           {SideComponent}
         </div>
@@ -25,7 +25,7 @@ const ItemSublayout = ({ SideComponent = null, navElements = [], children }) => 
 
       <div className={styles['side-bar']}>
         <div>
-          <img src={GeneralImg.logo} />
+          <img src={Utilities.closePanel} />
         </div>
         <div>
           {navElements.map((navElement, index) => (
@@ -33,7 +33,7 @@ const ItemSublayout = ({ SideComponent = null, navElements = [], children }) => 
           ))}
         </div>
         <div>
-          <img src={GeneralImg.logo} />
+          <img src={Utilities.more} />
         </div>
       </div>
     </div>

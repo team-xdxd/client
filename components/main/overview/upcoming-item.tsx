@@ -1,13 +1,14 @@
 import styles from './upcoming-item.module.css'
-import { GeneralImg } from '../../../assets'
+import { GeneralImg, Utilities, Navigation } from '../../../assets'
 import { format } from 'date-fns'
+import Router from 'next/router'
 
 // Component
 import StatusBadge from '../../common/status-badge'
 
-const UpcomingItem = ({ name, date, status, users, userPhoto = GeneralImg.logo }) => (
+const UpcomingItem = ({ name, date, status, users, userPhoto = GeneralImg.logo, detailUrl }) => (
   <li className={`${styles.container}`}>
-    <span className={styles.name}>
+    <span className={styles.name} onClick={() => Router.replace(detailUrl)}>
       {name}
     </span>
 
@@ -32,16 +33,16 @@ const UpcomingItem = ({ name, date, status, users, userPhoto = GeneralImg.logo }
     </div>
 
     <span className={styles.date}>
-      {format(new Date(date), 'd MMM yyyy')}
+      {date && format(new Date(date), 'd MMM yyyy')}
     </span>
     <div className={styles.badge}>
       <StatusBadge status={status} />
     </div>
     <div className={styles.actions}>
-      <img src={GeneralImg.logo} />
-      <img src={GeneralImg.logo} />
-      <img src={GeneralImg.logo} />
-      <img src={GeneralImg.logo} />
+      <img src={Utilities.comment} />
+      <img src={Navigation.scheduleBlack} />
+      <img src={Utilities.assignMember} />
+      <img src={Utilities.more} />
     </div>
   </li>
 )

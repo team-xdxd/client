@@ -1,6 +1,9 @@
 import styles from './index.module.css'
 import Link from 'next/link'
-import { useState } from 'react'
+import { useState, useEffect, useContext } from 'react'
+import { UserContext } from '../../../context'
+import campaignApi from '../../../server-api/campaign'
+import projectApi from '../../../server-api/project'
 
 // Components
 import OverviewSubHeader from './overview-subheader'
@@ -9,54 +12,8 @@ import Upcoming from './upcoming'
 import UpcomingTasks from './upcoming-tasks'
 import CreateOverlay from '../create-overlay'
 
-const campaigns = [
-  {
-    name: 'New Fall',
-    endDate: new Date(),
-    users: [
-      {
-        name: 'Diana Prince'
-      }
-    ],
-    status: 'draft'
-  },
-  {
-    name: 'top Sellers',
-    endDate: new Date(),
-    users: [
-      {
-        name: 'Spencer Moss'
-      }
-    ],
-    status: 'completed'
-  }
-]
-
-const projects = [
-  {
-    name: 'New Fall',
-    publishDate: new Date(),
-    users: [
-      {
-        name: 'Diana Prince'
-      }
-    ],
-    status: 'draft'
-  },
-  {
-    name: 'top Sellers',
-    publishDate: new Date(),
-    users: [
-      {
-        name: 'Spencer Moss'
-      }
-    ],
-    status: 'completed'
-  }
-]
-
 // name, status, date
-const tasks = [
+const defTasks = [
   {
     name: 'New Fall',
     endDate: new Date(),
@@ -74,9 +31,38 @@ const Overview = () => {
   const [createVisible, setCreateVisible] = useState(false)
   const [createType, setCreateType] = useState('')
 
+  const [campaigns, setCampaigns] = useState([])
+  const [projects, setProjects] = useState([])
+  const [tasks, setTasks] = useState(defTasks)
+
+  const { user } = useContext(UserContext)
+
   const openCreateOVerlay = (type) => {
     setCreateVisible(true)
     setCreateType(type)
+  }
+
+  useEffect(() => {
+    getCampaigns()
+    getProjects()
+  }, [])
+
+  const getCampaigns = async () => {
+    try {
+      const { data } = await campaignApi.getCampaigns()
+      setCampaigns(data)
+    } catch (err) {
+      // TODO: Display error or something
+    }
+  }
+
+  const getProjects = async () => {
+    try {
+      const { data } = await projectApi.getProjects()
+      setProjects(data)
+    } catch (err) {
+      // TODO: Display error or something
+    }
   }
 
   return (
@@ -86,15 +72,19 @@ const Overview = () => {
       />
       <main className={`${styles.container}`}>
         <section className={styles['first-section']}>
-          <Banner />
+          <Banner
+            userName={user?.name}
+          />
           {/* TODO: Add Chart in a future milestone */}
           <Upcoming
             type='campaign'
             items={campaigns}
+            addOnClick={() => openCreateOVerlay('campaign')}
           />
           <Upcoming
             type='project'
             items={projects}
+            addOnClick={() => openCreateOVerlay('project')}
           />
         </section>
         <section className={styles['second-section']}>
