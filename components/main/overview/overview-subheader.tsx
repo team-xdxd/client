@@ -2,7 +2,7 @@ import styles from './overview-subheader.module.css'
 import Router from 'next/router'
 import Link from 'next/link'
 
-import { GeneralImg } from '../../../assets'
+import { ProjectTypes } from '../../../assets'
 
 // Components
 import SubHeader from '../../common/sub-header'
@@ -14,18 +14,18 @@ const OverviewSubHeader = ({ status = '', openCreateOVerlay }) => {
   const dropdownOptions = [
     {
       label: 'Campaign',
-      onClick: () => openCreateOVerlay('campaign'),
-      icon: GeneralImg.logo
+      onClick: () => Router.replace('/main/create?type=campaign'),
+      icon: ProjectTypes.campaign
     },
     {
       label: 'Project',
-      onClick: () => openCreateOVerlay('project'),
-      icon: GeneralImg.logo
+      onClick: () => Router.replace('/main/create?type=project'),
+      icon: ProjectTypes.project
     },
     {
       label: 'Task',
-      onClick: () => openCreateOVerlay('task'),
-      icon: GeneralImg.logo
+      onClick: () => Router.replace('/main/create?type=task'),
+      icon: ProjectTypes.task
     }
   ]
 

@@ -1,5 +1,5 @@
 import styles from './upcoming-item.module.css'
-import { GeneralImg } from '../../../assets'
+import { GeneralImg, Utilities, Navigation } from '../../../assets'
 import { format } from 'date-fns'
 import Router from 'next/router'
 
@@ -39,10 +39,10 @@ const UpcomingItem = ({ name, date, status, users, userPhoto = GeneralImg.logo, 
       <StatusBadge status={status} />
     </div>
     <div className={styles.actions}>
-      <img src={GeneralImg.logo} />
-      <img src={GeneralImg.logo} />
-      <img src={GeneralImg.logo} />
-      <img src={GeneralImg.logo} />
+      <img src={Utilities.comment} />
+      <img src={Navigation.scheduleBlack} />
+      <img src={Utilities.assignMember} />
+      <img src={Utilities.more} />
     </div>
   </li>
 )
