@@ -9,8 +9,8 @@ import toastUtils from '../../../../utils/toast'
 // Components
 import ItemSubheader from '../../../common/item-subheader'
 import ItemSublayout from '../../../common/item-sublayout'
+import TasksList from './tasks-list'
 import Fields from './project-fields'
-import { set } from 'date-fns'
 
 const ProjectDetail = () => {
 
@@ -18,10 +18,11 @@ const ProjectDetail = () => {
 
   const [collaborators, setCollaborators] = useState([])
   const [description, setDescription] = useState('')
-  const [campaign, seCampaign] = useState()
+  const [campaign, setCampaign] = useState()
   const [publishDate, setPublishDate] = useState(new Date())
   const [owner, setOwner] = useState()
   const [tags, setTags] = useState([])
+  const [type, setType] = useState('')
 
   useEffect(() => {
     getProject()
@@ -34,17 +35,19 @@ const ProjectDetail = () => {
       setProjectData(data)
       setProject(data)
     } catch (err) {
+      console.log(err)
       // TODO: Error handling
     }
   }
 
   const saveProject = async () => {
     try {
-      const saveDate = {
+      const saveData = {
         description,
-        endDate
+        publishDate,
+        campaignId: campaign.id
       }
-      await projectApi.updateProject(project.id, saveDate)
+      await projectApi.updateProject(project.id, saveData)
       toastUtils.success('Project saved sucesfully')
     } catch (err) {
       // TODO: Error handling
@@ -56,7 +59,9 @@ const ProjectDetail = () => {
     setOwner(data.users[0])
     setCollaborators(data.users)
     setDescription(data.description)
-    setEndDate(data.endDate)
+    setPublishDate(data.publishDate)
+    setCampaign(data.campaign)
+    setType(data.type)
     setTags(data.tags)
   }
 
@@ -85,12 +90,20 @@ const ProjectDetail = () => {
         saveDraft={saveProject}
       />
       <main className={`${styles.container}`}>
-        <ItemSublayout >
+        <ItemSublayout
+          SideComponent={
+            <TasksList
+              tasks={project?.tasks}
+            />
+          }
+        >
           {project &&
             <Fields
               collaborators={collaborators}
               campaign={campaign}
-              seCampaign={seCampaign}
+              setCampaign={setCampaign}
+              type={type}
+              setType={setType}
               description={description}
               setDescription={setDescription}
               publishDate={publishDate}

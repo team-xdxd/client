@@ -1,0 +1,29 @@
+.container span {
+  display: inline-flex;
+}
+
+.add {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+}
+
+.add:hover {
+  color: var(--color-sec-blue);
+}
+
+.add img {
+  margin-right: 8px;
+}
+
+.add span {
+  display: inline-flex;
+}
+
+.container ul li {
+  display: flex;
+}
+
+.detail {
+  display: flex;
+}

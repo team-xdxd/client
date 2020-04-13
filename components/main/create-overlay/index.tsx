@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import styles from './index.module.css'
 import Link from 'next/link'
-import { GeneralImg } from '../../../assets'
+import { GeneralImg, ProjectTypes } from '../../../assets'
 
 // Components
 import CreateCampaign from './create-campaign'
@@ -17,13 +17,15 @@ const CreateOverlay = ({ type = '', setType, closeOverlay }) => {
           {
             type &&
             <>
-              <img src={GeneralImg.logo} />
+              {/* <img src={GeneralImg.logo} /> */}
+              <span>{'<'}</span>
               <span>Back</span>
             </>
           }
         </div>
         <div className={styles.close} onClick={closeOverlay}>
-          <img src={GeneralImg.logo} />
+          {/* <img src={GeneralImg.logo} /> */}
+          <span>X</span>
           <span>esc</span>
         </div>
       </div>
@@ -37,19 +39,19 @@ const CreateOverlay = ({ type = '', setType, closeOverlay }) => {
             <CreateItem
               type='campaign'
               description='Lorep ipsum dolor sit amet, consectetur edil, sed do eiusmod tempor.'
-              icon={GeneralImg.logo}
+              icon={ProjectTypes.campaign}
               onClick={() => setType('campaign')}
             />
             <CreateItem
               type='project'
               description='Lorep ipsum dolor sit amet, consectetur edil, sed do eiusmod tempor.'
-              icon={GeneralImg.logo}
+              icon={ProjectTypes.project}
               onClick={() => setType('project')}
             />
             <CreateItem
               type='task'
               description='Lorep ipsum dolor sit amet, consectetur edil, sed do eiusmod tempor.'
-              icon={GeneralImg.logo}
+              icon={ProjectTypes.task}
               onClick={() => setType('task')}
             />
           </ul>

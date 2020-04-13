@@ -14,17 +14,17 @@ const OverviewSubHeader = ({ status = '', openCreateOVerlay }) => {
   const dropdownOptions = [
     {
       label: 'Campaign',
-      onClick: () => Router.replace('/main/create?type=campaign'),
+      onClick: () => openCreateOVerlay('campaign'),
       icon: ProjectTypes.campaign
     },
     {
       label: 'Project',
-      onClick: () => Router.replace('/main/create?type=project'),
+      onClick: () => openCreateOVerlay('project'),
       icon: ProjectTypes.project
     },
     {
       label: 'Task',
-      onClick: () => Router.replace('/main/create?type=task'),
+      onClick: () => openCreateOVerlay('task'),
       icon: ProjectTypes.task
     }
   ]

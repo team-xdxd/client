@@ -15,7 +15,7 @@ const ItemFieldWrapper = ({ image, title, children, hasOption = false, optionOnC
     </div>
     {hasOption &&
       <div className={styles.option} onClick={optionOnClick}>
-        <img src={image} />
+        <img src={GeneralImg.logo} />
       </div>
     }
   </div>

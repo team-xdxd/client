@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 import CreatableSelect from 'react-select/creatable';
 import styles from './campaign-fields.module.css'
-import { GeneralImg } from '../../../../assets'
+import { GeneralImg, ItemFields, Utilities } from '../../../../assets'
 import DayPicker from 'react-day-picker'
 import { format } from 'date-fns'
 import update from 'immutability-helper'
@@ -65,7 +65,7 @@ const CampaignFields = ({
       <div className={styles.field}>
         <ItemFieldWrapper
           title='Owner'
-          image={GeneralImg.logo}
+          image={ItemFields.member}
         >
           <span>{owner?.name}</span>
         </ItemFieldWrapper>
@@ -73,7 +73,7 @@ const CampaignFields = ({
       <div className={styles.field}>
         <ItemFieldWrapper
           title='End Date'
-          image={GeneralImg.logo}
+          image={ItemFields.date}
           hasOption={true}
           optionOnClick={() => toggleActiveInput('endDate')}
         >
@@ -90,11 +90,11 @@ const CampaignFields = ({
       <div onClick={() => toggleActiveInput('collaborators')} className={styles.field}>
         <ItemFieldWrapper
           title='Collaborators'
-          image={GeneralImg.logo}
+          image={ItemFields.member}
         >
           {/* TODO: Add images of collaborators when teams are implemented */}
           <div className={styles.add}>
-            <img src={GeneralImg.logo} />
+            <img src={Utilities.add} />
             <span>Add Collaborator</span>
           </div>
         </ItemFieldWrapper>
@@ -102,7 +102,7 @@ const CampaignFields = ({
       <div className={styles.field}>
         <ItemFieldWrapper
           title='Tags'
-          image={GeneralImg.logo}
+          image={ItemFields.tag}
         >
           <span>{tags.map(tag => tag.name).join(', ')}</span>
 
@@ -118,7 +118,7 @@ const CampaignFields = ({
             </div>
             :
             <div className={styles.add} onClick={() => toggleActiveInput('tags')}>
-              <img src={GeneralImg.logo} />
+              <img src={Utilities.add} />
               <span>Add Tag</span>
             </div>
           }
@@ -127,7 +127,7 @@ const CampaignFields = ({
       <div className={styles.field}>
         <ItemFieldWrapper
           title='Description'
-          image={GeneralImg.logo}
+          image={ItemFields.description}
         >
           <input
             value={description}
