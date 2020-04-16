@@ -33,9 +33,15 @@ export default function MyApp ({ Component, pageProps }) {
           Router.replace('/main/overview')
       } catch (err) {
         console.log(err)
-        Router.replace('/signup')
+        initialRedirect()
       }
-    } else Router.replace('/signup')
+    } else initialRedirect()
+  }
+
+  const initialRedirect = () => {
+    if (Router.pathname.indexOf('/signup') === -1) {
+      Router.replace('/login')
+    }
   }
 
   const userValue = { user, setUser, fetchUser }
