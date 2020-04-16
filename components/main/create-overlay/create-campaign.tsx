@@ -5,9 +5,9 @@ import Router from 'next/router'
 import campaignApi from '../../../server-api/campaign'
 
 // Components
-import Button from '../../common/button'
-import FormInput from '../../common/form-input'
-import Input from '../../common/input'
+import Button from '../../common/buttons/button'
+import FormInput from '../../common/inputs/form-input'
+import Input from '../../common/inputs/input'
 
 const CreateCampaign = () => {
   const { control, handleSubmit, errors } = useForm()

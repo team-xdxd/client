@@ -1,6 +1,6 @@
 import { capitalCase } from 'change-case'
 import styles from './provider-auth-button.module.css'
-import logo from '../../assets/login/btn_google_signin_light_normal_web@2x.png'
+import logo from '../../../assets/login/btn_google_signin_light_normal_web@2x.png'
 
 const ProviderAuthButton = ({ provider, onClick, icon }) => (
   <>

@@ -8,12 +8,14 @@ import update from 'immutability-helper'
 import tagApi from '../../../../server-api/tag'
 
 // Components
-import ItemFieldWrapper from '../../../common/item-field-wrapper'
+import ItemFieldWrapper from '../../../common/items/item-field-wrapper'
 
 const CampaignFields = ({
   owner,
   endDate,
   setEndDate,
+  startDate,
+  setStartDate,
   collaborators,
   setCollaborators,
   description,
@@ -47,10 +49,17 @@ const CampaignFields = ({
       setActiveInput(input)
   }
 
-  const handleDayClick = (day, { selected }) => {
+  const handleStartDayClick = (day, { selected }) => {
+    setStartDate(selected ? undefined : day)
+    setActiveInput('')
+  }
+
+  const handleEndDayClick = (day, { selected }) => {
     setEndDate(selected ? undefined : day)
     setActiveInput('')
   }
+
+
 
   const handleTagChange = async (selected, actionMeta) => {
     const newTag = await addTag(selected, actionMeta.action === 'create-option')
@@ -61,8 +70,8 @@ const CampaignFields = ({
   }
 
   return (
-    <div className={styles.container}>
-      <div className={styles.field}>
+    <div className='item-detail-cont'>
+      <div className='field'>
         <ItemFieldWrapper
           title='Owner'
           image={ItemFields.member}
@@ -70,7 +79,30 @@ const CampaignFields = ({
           <span>{owner?.name}</span>
         </ItemFieldWrapper>
       </div>
-      <div className={styles.field}>
+      <div className={`field field-row-last`}>
+        <ItemFieldWrapper
+          title='Start Date'
+          image={ItemFields.date}
+          hasOption={true}
+          optionOnClick={() => toggleActiveInput('startDate')}
+        >
+          <span>{startDate ? format(new Date(startDate), 'MMM d, yyyy') : 'No Start Date'}</span>
+        </ItemFieldWrapper>
+        {activeInput === 'startDate' &&
+          <div className={'day-picker'}>
+            <DayPicker
+              selectedDays={new Date(startDate)}
+              disabledDays={
+                {
+                  after: new Date(endDate),
+                }
+              }
+              onDayClick={handleStartDayClick} />
+          </div>
+        }
+      </div>
+      <hr />
+      <div className={`field`}>
         <ItemFieldWrapper
           title='End Date'
           image={ItemFields.date}
@@ -80,26 +112,33 @@ const CampaignFields = ({
           <span>{endDate ? format(new Date(endDate), 'MMM d, yyyy') : 'No End Date'}</span>
         </ItemFieldWrapper>
         {activeInput === 'endDate' &&
-          <div className={styles['day-picker']}>
+          <div className={'day-picker'}>
             <DayPicker
-              selectedDays={endDate}
-              onDayClick={handleDayClick} />
+              selectedDays={new Date(endDate)}
+              disabledDays={
+                {
+                  before: new Date(startDate),
+                }
+              }
+              onDayClick={handleEndDayClick} />
           </div>
         }
       </div>
-      <div onClick={() => toggleActiveInput('collaborators')} className={styles.field}>
+
+      <div onClick={() => toggleActiveInput('collaborators')} className='field field-row-last'>
         <ItemFieldWrapper
           title='Collaborators'
           image={ItemFields.member}
         >
           {/* TODO: Add images of collaborators when teams are implemented */}
-          <div className={styles.add}>
+          <div className='add'>
             <img src={Utilities.add} />
             <span>Add Collaborator</span>
           </div>
         </ItemFieldWrapper>
       </div>
-      <div className={styles.field}>
+      <hr />
+      <div className={`field`}>
         <ItemFieldWrapper
           title='Tags'
           image={ItemFields.tag}
@@ -107,7 +146,7 @@ const CampaignFields = ({
           <span>{tags.map(tag => tag.name).join(', ')}</span>
 
           {activeInput === 'tags' ?
-            <div className={styles['tag-select']}>
+            <div className={'tag-select'}>
               <CreatableSelect
                 placeholder={'Enter a new tag or select an existing one'}
                 options={inputTags.map(tag => ({ label: tag.name, value: tag.id }))}
@@ -117,14 +156,16 @@ const CampaignFields = ({
               />
             </div>
             :
-            <div className={styles.add} onClick={() => toggleActiveInput('tags')}>
+            <div className='add' onClick={() => toggleActiveInput('tags')}>
               <img src={Utilities.add} />
               <span>Add Tag</span>
             </div>
           }
         </ItemFieldWrapper>
       </div>
-      <div className={styles.field}>
+      <div className={`field field-row-last`}></div>
+      <hr />
+      <div className={`field field-wide`}>
         <ItemFieldWrapper
           title='Description'
           image={ItemFields.description}

@@ -1,7 +1,7 @@
 import Head from 'next/head'
 
 // Components
-import MainLayout from '../../../../components/common/main-layout'
+import MainLayout from '../../../../components/common/layouts/main-layout'
 import CampaignDetail from '../../../../components/main/campaign/detail'
 
 const CampaignDetailPage = () => (

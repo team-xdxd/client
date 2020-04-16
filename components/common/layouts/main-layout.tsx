@@ -1,12 +1,11 @@
 import { useContext } from 'react'
 import styles from './main-layout.module.css'
 import Link from 'next/link'
-import overview from '../../assets/Icons/Navigation/icn-nav-dashboard.svg'
-import { GeneralImg, Navigation, Placeholders } from '../../assets'
-import { UserContext } from '../../context'
+import { GeneralImg, Navigation, Placeholders } from '../../../assets'
+import { UserContext } from '../../../context'
 
 // Components
-import HeaderLink from './header-link'
+import HeaderLink from '../layouts/header-link'
 
 const AuthLayout = ({ children }) => {
   const { user } = useContext(UserContext)

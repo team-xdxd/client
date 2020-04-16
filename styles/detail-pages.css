@@ -1,0 +1,69 @@
+.item-detail-cont {
+  display: flex;
+  padding-top: 15px;
+  flex-flow: row wrap;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.item-detail-cont hr {
+  flex-basis: 100%;
+  height: 0;
+  margin: 0;
+  border: 0;
+}
+
+.item-detail-cont img {
+  width: 20px;
+  height: 20px;
+}
+
+.item-detail-cont .field {
+  width: 30rem;
+  padding: 35px 25px;
+  border: 1px solid var(--color-secondary-border);
+  border-right: none;
+  border-bottom: none;
+}
+
+.item-detail-cont .field-row-last {
+  border-right: 1px solid var(--color-secondary-border);
+}
+
+.item-detail-cont .field-wide {
+  width: 60rem;
+  border-right: 1px solid var(--color-secondary-border);
+  border-bottom: 1px solid var(--color-secondary-border);
+}
+
+.item-detail-cont .day-picker {
+  position: absolute;
+  border: 1px solid var(--color-secondary-border);
+  z-index: 500;
+  background-color: white;
+  border-radius: 10px;
+}
+
+.item-detail-cont .tag-select,
+.item-detail-cont .campaign-select,
+.item-detail-cont .add {
+  margin-top: 10px;
+}
+
+.item-detail-cont .add {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+}
+
+.item-detail-cont .add:hover {
+  color: var(--color-sec-blue);
+}
+
+.item-detail-cont .add img {
+  margin-right: 8px;
+}
+
+.item-detail-cont .add span {
+  display: inline-flex;
+}

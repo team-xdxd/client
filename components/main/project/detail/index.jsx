@@ -7,8 +7,8 @@ import projectApi from '../../../../server-api/project'
 import toastUtils from '../../../../utils/toast'
 
 // Components
-import ItemSubheader from '../../../common/item-subheader'
-import ItemSublayout from '../../../common/item-sublayout'
+import ItemSubheader from '../../../common/items/item-subheader'
+import ItemSublayout from '../../../common/layouts/item-sublayout'
 import TasksList from './tasks-list'
 import Fields from './project-fields'
 

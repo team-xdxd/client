@@ -1,7 +1,7 @@
 import styles from './item-sublayout.module.css'
 import Router from 'next/router'
 import Link from 'next/link'
-import { Utilities } from '../../assets'
+import { Utilities } from '../../../assets'
 
 // Components
 

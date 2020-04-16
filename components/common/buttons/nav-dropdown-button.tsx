@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import styles from './nav-dropdown-button.module.css'
-import { GeneralImg, Utilities } from '../../assets'
+import { GeneralImg, Utilities } from '../../../assets'
 
 const NavDropdownButton = ({ text, onClick = () => { }, disabled = false, options = [] }) => {
 
