@@ -1,6 +1,6 @@
 import styles from './item-field-wrapper.module.css'
 
-import { GeneralImg } from '../../assets'
+import { GeneralImg } from '../../../assets'
 
 const ItemFieldWrapper = ({ image, title, children, hasOption = false, optionOnClick = () => { } }) => (
   <div className={styles.container}>

@@ -1,7 +1,7 @@
 import Head from 'next/head'
 
 // Components
-import AuthLayout from '../components/common/auth-layout'
+import AuthLayout from '../components/common/layouts/auth-layout'
 import Login from '../components/login'
 
 const LoginPage = () => (

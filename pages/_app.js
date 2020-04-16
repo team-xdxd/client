@@ -2,6 +2,7 @@ import Router from 'next/router'
 // Import global css
 import '../styles/general.css'
 import '../styles/auth.css'
+import '../styles/detail-pages.css'
 import 'react-day-picker/lib/style.css';
 // Import stripe as a side effect so it helps detect fraudulent activy
 import '@stripe/stripe-js';

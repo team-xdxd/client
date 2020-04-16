@@ -1,7 +1,7 @@
 import styles from './subscription-summary.module.css'
 
 // Components
-import Select from '../common/select'
+import Select from '../common/inputs/select'
 
 const SubscriptionSummary = ({ plans, setSelectedPlan, selectedPlan }) => {
   const formattedToday = '2020-03-24'

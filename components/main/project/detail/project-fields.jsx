@@ -10,7 +10,7 @@ import campaignApi from '../../../../server-api/campaign'
 import { capitalCase } from 'change-case'
 
 // Components
-import ItemFieldWrapper from '../../../common/item-field-wrapper'
+import ItemFieldWrapper from '../../../common/items/item-field-wrapper'
 import Select from '../../../common/select'
 
 const ProjectFields = ({
@@ -84,8 +84,8 @@ const ProjectFields = ({
   }
 
   return (
-    <div className={styles.container}>
-      <div className={styles.field}>
+    <div className='item-detail-cont'>
+      <div className={'field'}>
         <ItemFieldWrapper
           title='Owner'
           image={ItemFields.member}
@@ -93,7 +93,7 @@ const ProjectFields = ({
           <span>{owner?.name}</span>
         </ItemFieldWrapper>
       </div>
-      <div className={`${styles.field} ${styles['field-row-last']}`}>
+      <div className={`field field-row-last`}>
         <ItemFieldWrapper
           title='End Date'
           image={ItemFields.date}
@@ -103,7 +103,7 @@ const ProjectFields = ({
           <span>{publishDate ? format(new Date(publishDate), 'MMM d, yyyy') : 'No End Date'}</span>
         </ItemFieldWrapper>
         {activeInput === 'endDate' &&
-          <div className={styles['day-picker']}>
+          <div className={'day-picker'}>
             <DayPicker
               selectedDays={publishDate}
               onDayClick={handleDayClick} />
@@ -111,7 +111,7 @@ const ProjectFields = ({
         }
       </div>
       <hr />
-      <div className={styles.field}>
+      <div className={'field'}>
         <ItemFieldWrapper
           title='Social Channel'
           image={ProjectTypeChannel.social}
@@ -119,7 +119,7 @@ const ProjectFields = ({
           <span>{capitalCase('Facebook')}</span>
         </ItemFieldWrapper>
       </div>
-      <div className={`${styles.field} ${styles['field-row-last']}`}>
+      <div className={`field field-row-last`}>
         <ItemFieldWrapper
           title='Time'
           image={Utilities.time}
@@ -128,14 +128,14 @@ const ProjectFields = ({
         </ItemFieldWrapper>
       </div>
       <hr />
-      <div className={styles.field}>
+      <div className='field'>
         <ItemFieldWrapper
           title='Campaign'
           image={ProjectType.campaign}
         >
           <span>{campaign?.name}</span>
           {activeInput === 'campaign' ?
-            <div className={styles['tag-select']}>
+            <div className={'tag-select'}>
               <Select
                 options={inputCampaigns.map(campaign => ({ ...campaign, label: campaign.name, value: campaign.id }))}
                 placeholder={'Select a campaign'}
@@ -145,14 +145,14 @@ const ProjectFields = ({
               />
             </div>
             :
-            <div className={styles.add} onClick={() => toggleActiveInput('campaign')}>
+            <div className={'add'} onClick={() => toggleActiveInput('campaign')}>
               <img src={Utilities.add} />
               <span>Add to a Campaign</span>
             </div>
           }
         </ItemFieldWrapper>
       </div>
-      <div className={`${styles.field} ${styles['field-row-last']}`}>
+      <div className={`field field-row-last`}>
         <ItemFieldWrapper
           title='Tags'
           image={ItemFields.tag}
@@ -160,7 +160,7 @@ const ProjectFields = ({
           <span>{tags.map(tag => tag.name).join(', ')}</span>
 
           {activeInput === 'tags' ?
-            <div className={styles['campaign-select']}>
+            <div className={'campaign-select'}>
               <CreatableSelect
                 placeholder={'Enter a new tag or select an existing one'}
                 options={inputTags.map(tag => ({ label: tag.name, value: tag.id }))}
@@ -170,7 +170,7 @@ const ProjectFields = ({
               />
             </div>
             :
-            <div className={styles.add} onClick={() => toggleActiveInput('tags')}>
+            <div className={'add'} onClick={() => toggleActiveInput('tags')}>
               <img src={Utilities.add} />
               <span>Add Tag</span>
             </div>
@@ -178,21 +178,21 @@ const ProjectFields = ({
         </ItemFieldWrapper>
       </div>
       <hr />
-      <div onClick={() => toggleActiveInput('collaborators')} className={styles.field}>
+      <div onClick={() => toggleActiveInput('collaborators')} className={'field'}>
         <ItemFieldWrapper
           title='Collaborators'
           image={ItemFields.member}
         >
           {/* TODO: Add images of collaborators when teams are implemented */}
-          <div className={styles.add}>
+          <div className={'add'}>
             <img src={Utilities.add} />
             <span>Add Collaborator</span>
           </div>
         </ItemFieldWrapper>
       </div>
-      <div className={`${styles.field} ${styles['field-row-last']}`}></div>
+      <div className={`field field-row-last`}></div>
       <hr />
-      <div className={`${styles.field} ${styles['field-wide']}`}>
+      <div className={`field field-wide`}>
         <ItemFieldWrapper
           title='Description'
           image={ItemFields.description}

@@ -5,10 +5,10 @@ import Router from 'next/router'
 import projectApi from '../../../server-api/project'
 
 // Components
-import Button from '../../common/button'
-import FormInput from '../../common/form-input'
-import Input from '../../common/input'
-import Select from '../../common/select'
+import Button from '../../common/buttons/button'
+import FormInput from '../../common/inputs/form-input'
+import Input from '../../common/inputs/input'
+import Select from '../../common/inputs/select'
 
 import projectTypeOptions from '../../../parameters/project-types.json'
 

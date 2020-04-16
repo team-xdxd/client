@@ -8,9 +8,9 @@ import userApi from '../../server-api/user'
 import cookiesUtils from '../../utils/cookies'
 
 // Components
-import AuthButton from '../common/auth-button'
-import FormInput from '../common/form-input'
-import Input from '../common/input'
+import AuthButton from '../common/buttons/auth-button'
+import FormInput from '../common/inputs/form-input'
+import Input from '../common/inputs/input'
 
 const Form = () => {
   const { control, handleSubmit, errors } = useForm()

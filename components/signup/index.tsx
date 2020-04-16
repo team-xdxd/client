@@ -2,9 +2,9 @@ import styles from './index.module.css'
 import Link from 'next/link'
 
 // Components
-import AuthContainer from '../common/auth-container'
+import AuthContainer from '../common/containers/auth-container'
 import SignupForm from './signup-form'
-import ProvidersAuth from '../common/providers-auth'
+import ProvidersAuth from '../common/containers/providers-auth'
 
 const Signup = () => {
 

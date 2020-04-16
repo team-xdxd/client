@@ -4,7 +4,7 @@ import { format } from 'date-fns'
 import Router from 'next/router'
 
 // Component
-import StatusBadge from '../../common/status-badge'
+import StatusBadge from '../../common/misc/status-badge'
 
 const UpcomingItem = ({ name, date, status, users, userPhoto = GeneralImg.logo, detailUrl }) => (
   <li className={`${styles.container}`}>
