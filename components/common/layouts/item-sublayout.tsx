@@ -12,7 +12,7 @@ const ItemSublayout = ({ SideComponent = null, sideActive = false, navElements =
         <div className={styles.heading}>
           <h4>Details</h4>
         </div>
-        <div>
+        <div className={styles.children}>
           {children}
         </div>
       </div>

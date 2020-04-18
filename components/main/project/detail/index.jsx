@@ -16,13 +16,16 @@ const ProjectDetail = () => {
 
   const [project, setProject] = useState()
 
-  const [collaborators, setCollaborators] = useState([])
-  const [description, setDescription] = useState('')
-  const [campaign, setCampaign] = useState()
-  const [publishDate, setPublishDate] = useState(new Date())
-  const [owner, setOwner] = useState()
-  const [tags, setTags] = useState([])
-  const [type, setType] = useState('')
+  const [editableFields, setEditableFields] = useState({
+    collaborators: [],
+    description: '',
+    campaign: null,
+    startDate: null,
+    publishDate: null,
+    owner: null,
+    tags: [],
+    channel: null
+  })
 
   useEffect(() => {
     getProject()
@@ -43,44 +46,61 @@ const ProjectDetail = () => {
   const saveProject = async () => {
     try {
       const saveData = {
-        description,
-        publishDate,
-        campaignId: campaign.id
+        description: editableFields.description,
+        startDate: editableFields.startDate,
+        publishDate: editableFields.publishDate,
+        channel: editableFields.channel,
+        campaignId: editableFields.campaign?.id
       }
       await projectApi.updateProject(project.id, saveData)
       toastUtils.success('Project saved sucesfully')
     } catch (err) {
       // TODO: Error handling
+      console.log(err)
     }
   }
 
   const setProjectData = (data) => {
     // TODO: get the correct owner
-    setOwner(data.users[0])
-    setCollaborators(data.users)
-    setDescription(data.description)
-    setPublishDate(data.publishDate)
-    setCampaign(data.campaign)
-    setType(data.type)
-    setTags(data.tags)
+    setEditableFields({
+      ...editableFields,
+      ...data,
+      owner: data.users[0]
+    })
   }
 
   const addTag = async (tag, isNew = false) => {
-    if (tags.findIndex(projectTag => tag.label === projectTag.name) === -1) {
+    if (editableFields.tags.findIndex(projectTag => tag.label === projectTag.name) === -1) {
       const newTag = { name: tag.label }
       if (!isNew) newTag.id = tag.value
       try {
         const { data } = await projectApi.addTag(project.id, newTag)
         if (!isNew) {
-          setTags(update(tags, { $push: [newTag] }))
+          editFields('tags', update(editableFields.tags, { $push: [newTag] }))
         } else {
-          setTags(update(tags, { $push: [data] }))
+          editFields('tags', update(editableFields.tags, { $push: [data] }))
         }
         return data
       } catch (err) {
         // TODO: Error if failure for whatever reason
       }
     }
+  }
+
+  const removeTag = async (index) => {
+    try {
+      editFields('tags', update(editableFields.tags, { $splice: [[index, 1]] }))
+      await projectApi.removeTag(project.id, editableFields.tags[index].id)
+    } catch (err) {
+      // TODO: Error if failure for whatever reason
+    }
+  }
+
+  const editFields = (field, value) => {
+    setEditableFields({
+      ...editableFields,
+      [field]: value
+    })
   }
 
   return (
@@ -99,20 +119,11 @@ const ProjectDetail = () => {
         >
           {project &&
             <Fields
-              collaborators={collaborators}
-              campaign={campaign}
-              setCampaign={setCampaign}
-              type={type}
-              setType={setType}
-              description={description}
-              setDescription={setDescription}
-              publishDate={publishDate}
-              setPublishDate={setPublishDate}
-              owner={owner}
-              tags={tags}
-              setTags={setTags}
-              setCollaborators={setCollaborators}
+              project={project}
+              editableFields={editableFields}
+              editFields={editFields}
               addTag={addTag}
+              removeTag={removeTag}
             />
           }
         </ItemSublayout>

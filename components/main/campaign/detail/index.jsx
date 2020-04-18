@@ -80,6 +80,15 @@ const CampaignDetail = () => {
     }
   }
 
+  const removeTag = async (index) => {
+    try {
+      setTags(update(tags, { $splice: [[index, 1]] }))
+      await campaignApi.removeTag(campaign.id, tags[index].id)
+    } catch (err) {
+      // TODO: Error if failure for whatever reason
+    }
+  }
+
   return (
     <>
       <ItemSubheader
@@ -102,6 +111,7 @@ const CampaignDetail = () => {
               setTags={setTags}
               setCollaborators={setCollaborators}
               addTag={addTag}
+              removeTag={removeTag}
             />
           }
         </ItemSublayout>

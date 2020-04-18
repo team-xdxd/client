@@ -1,6 +1,6 @@
 import { capitalCase } from 'change-case'
 import styles from './provider-auth-button.module.css'
-import logo from '../../../assets/login/btn_google_signin_light_normal_web@2x.png'
+import { LoginImg } from '../../../assets'
 
 const ProviderAuthButton = ({ provider, onClick, icon }) => (
   <>
@@ -8,7 +8,7 @@ const ProviderAuthButton = ({ provider, onClick, icon }) => (
       <button
         className={styles['button-google']}
         onClick={onClick}>
-        <img src={logo} className={styles.google} />
+        <img src={LoginImg.googleAlt} className={styles.google} />
       </button>
       :
       <button

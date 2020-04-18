@@ -9,6 +9,7 @@ import tagApi from '../../../../server-api/tag'
 
 // Components
 import ItemFieldWrapper from '../../../common/items/item-field-wrapper'
+import Tag from '../../../common/misc/tag'
 
 const CampaignFields = ({
   owner,
@@ -21,6 +22,7 @@ const CampaignFields = ({
   description,
   setDescription,
   addTag,
+  removeTag,
   tags
 }) => {
 
@@ -79,7 +81,7 @@ const CampaignFields = ({
           <span>{owner?.name}</span>
         </ItemFieldWrapper>
       </div>
-      <div className={`field field-row-last`}>
+      <div className={`field`}>
         <ItemFieldWrapper
           title='Start Date'
           image={ItemFields.date}
@@ -94,14 +96,13 @@ const CampaignFields = ({
               selectedDays={new Date(startDate)}
               disabledDays={
                 {
-                  after: new Date(endDate),
+                  after: endDate && new Date(endDate),
                 }
               }
               onDayClick={handleStartDayClick} />
           </div>
         }
       </div>
-      <hr />
       <div className={`field`}>
         <ItemFieldWrapper
           title='End Date'
@@ -117,7 +118,7 @@ const CampaignFields = ({
               selectedDays={new Date(endDate)}
               disabledDays={
                 {
-                  before: new Date(startDate),
+                  before: startDate && new Date(startDate),
                 }
               }
               onDayClick={handleEndDayClick} />
@@ -137,14 +138,22 @@ const CampaignFields = ({
           </div>
         </ItemFieldWrapper>
       </div>
-      <hr />
       <div className={`field`}>
         <ItemFieldWrapper
           title='Tags'
           image={ItemFields.tag}
         >
-          <span>{tags.map(tag => tag.name).join(', ')}</span>
-
+          <ul className={'tags-list'}>
+            {tags.map((tag, index) => (
+              <li>
+                <Tag
+                  tag={tag.name}
+                  canRemove={true}
+                  removeFunction={() => removeTag(index)}
+                />
+              </li>
+            ))}
+          </ul>
           {activeInput === 'tags' ?
             <div className={'tag-select'}>
               <CreatableSelect
@@ -163,8 +172,7 @@ const CampaignFields = ({
           }
         </ItemFieldWrapper>
       </div>
-      <div className={`field field-row-last`}></div>
-      <hr />
+      <div className={`field pad-div`}></div>
       <div className={`field field-wide`}>
         <ItemFieldWrapper
           title='Description'
