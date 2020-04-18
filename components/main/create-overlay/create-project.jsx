@@ -10,7 +10,7 @@ import FormInput from '../../common/inputs/form-input'
 import Input from '../../common/inputs/input'
 import Select from '../../common/inputs/select'
 
-import projectTypeOptions from '../../../parameters/project-types.json'
+import projectTypeOptions from '../../../resources/data/project-types.json'
 
 const CreateProject = () => {
   const { control, handleSubmit, errors } = useForm()

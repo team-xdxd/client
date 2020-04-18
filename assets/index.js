@@ -4,7 +4,8 @@ export const GeneralImg = {
 }
 
 export const LoginImg = {
-  google: require('./login/g-logo.png')
+  google: require('./login/g-logo.png'),
+  googleAlt: require('./login/btn_google_signin_light_normal_web@2x.png')
 }
 
 export const Navigation = {

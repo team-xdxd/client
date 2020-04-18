@@ -12,7 +12,7 @@ import FormInput from '../common/inputs/form-input'
 import Input from '../common/inputs/input'
 import Select from '../common/inputs/select'
 
-import companySizeOptions from '../../parameters/company-sizes.json'
+import companySizeOptions from '../../resources/data/company-sizes.json'
 
 const SignupForm = ({ }) => {
   const { control, handleSubmit, errors, getValues } = useForm()
