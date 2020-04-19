@@ -3,9 +3,9 @@ import Router from 'next/router'
 import Link from 'next/link'
 
 // Components
-import SubHeader from './sub-header'
-import NavButton from './nav-button'
-import StatusBadge from './status-badge'
+import SubHeader from '../layouts/sub-header'
+import NavButton from '../buttons/nav-button'
+import StatusBadge from '../misc/status-badge'
 
 const ItemSubHeader = ({ title, status = 'draft', saveDraft = () => { } }) => {
   return (

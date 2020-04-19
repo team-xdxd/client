@@ -1,6 +1,6 @@
 import styles from './auth-layout.module.css'
 import Link from 'next/link'
-import { GeneralImg } from '../../assets'
+import { GeneralImg } from '../../../assets'
 
 const AuthLayout = ({ children }) => (
   <>

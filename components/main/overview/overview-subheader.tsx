@@ -5,9 +5,9 @@ import Link from 'next/link'
 import { ProjectTypes } from '../../../assets'
 
 // Components
-import SubHeader from '../../common/sub-header'
-import NavDropdownButton from '../../common/nav-dropdown-button'
-import StatusBadge from '../../common/status-badge'
+import SubHeader from '../../common/layouts/sub-header'
+import NavDropdownButton from '../../common/buttons/nav-dropdown-button'
+import StatusBadge from '../../common/misc/status-badge'
 
 const OverviewSubHeader = ({ status = '', openCreateOVerlay }) => {
 

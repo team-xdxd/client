@@ -7,8 +7,8 @@ import campaignApi from '../../../../server-api/campaign'
 import toastUtils from '../../../../utils/toast'
 
 // Components
-import ItemSubheader from '../../../common/item-subheader'
-import ItemSublayout from '../../../common/item-sublayout'
+import ItemSubheader from '../../../common/items/item-subheader'
+import ItemSublayout from '../../../common/layouts/item-sublayout'
 import Fields from './campaign-fields'
 import { set } from 'date-fns'
 
@@ -18,7 +18,8 @@ const CampaignDetail = () => {
 
   const [collaborators, setCollaborators] = useState([])
   const [description, setDescription] = useState('')
-  const [endDate, setEndDate] = useState(new Date())
+  const [startDate, setStartDate] = useState()
+  const [endDate, setEndDate] = useState()
   const [owner, setOwner] = useState()
   const [tags, setTags] = useState([])
 
@@ -41,7 +42,8 @@ const CampaignDetail = () => {
     try {
       const saveDate = {
         description,
-        endDate
+        endDate,
+        startDate
       }
       await campaignApi.updateCampaign(campaign.id, saveDate)
       toastUtils.success('Campaign saved sucesfully')
@@ -55,6 +57,7 @@ const CampaignDetail = () => {
     setOwner(data.users[0])
     setCollaborators(data.users)
     setDescription(data.description)
+    setStartDate(data.startDate)
     setEndDate(data.endDate)
     setTags(data.tags)
   }
@@ -77,6 +80,15 @@ const CampaignDetail = () => {
     }
   }
 
+  const removeTag = async (index) => {
+    try {
+      setTags(update(tags, { $splice: [[index, 1]] }))
+      await campaignApi.removeTag(campaign.id, tags[index].id)
+    } catch (err) {
+      // TODO: Error if failure for whatever reason
+    }
+  }
+
   return (
     <>
       <ItemSubheader
@@ -92,11 +104,14 @@ const CampaignDetail = () => {
               setDescription={setDescription}
               endDate={endDate}
               setEndDate={setEndDate}
+              startDate={startDate}
+              setStartDate={setStartDate}
               owner={owner}
               tags={tags}
               setTags={setTags}
               setCollaborators={setCollaborators}
               addTag={addTag}
+              removeTag={removeTag}
             />
           }
         </ItemSublayout>

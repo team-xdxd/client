@@ -9,24 +9,30 @@ import tagApi from '../../../../server-api/tag'
 import campaignApi from '../../../../server-api/campaign'
 import { capitalCase } from 'change-case'
 
+import channelSocialOptions from '../../../../resources/data/channels-social.json'
+import channelAdsOptions from '../../../../resources/data/channels-ads.json'
+
 // Components
-import ItemFieldWrapper from '../../../common/item-field-wrapper'
-import Select from '../../../common/select'
+import ItemFieldWrapper from '../../../common/items/item-field-wrapper'
+import Select from '../../../common/inputs/select'
+import Dropdown from '../../../common/inputs/dropdown'
+import Tag from '../../../common/misc/tag'
 
 const ProjectFields = ({
-  owner,
-  publishDate,
-  setPublishDate,
-  campaign,
-  setCampaign,
-  type,
-  setType,
-  collaborators,
-  setCollaborators,
-  description,
-  setDescription,
+  editableFields: {
+    owner,
+    startDate,
+    publishDate,
+    campaign,
+    collaborators,
+    description,
+    tags,
+    channel
+  },
   addTag,
-  tags
+  removeTag,
+  editFields,
+  project
 }) => {
 
   const [activeInput, setActiveInput] = useState('')
@@ -64,9 +70,13 @@ const ProjectFields = ({
     else
       setActiveInput(input)
   }
+  const handleStartDayClick = (day, { selected }) => {
+    editFields('startDate', selected ? undefined : day)
+    setActiveInput('')
+  }
 
-  const handleDayClick = (day, { selected }) => {
-    setPublishDate(selected ? undefined : day)
+  const handlePublishDayClick = (day, { selected }) => {
+    editFields('publishDate', selected ? undefined : day)
     setActiveInput('')
   }
 
@@ -79,13 +89,18 @@ const ProjectFields = ({
   }
 
   const handleCampaignChange = (selected) => {
-    setCampaign(selected)
+    editFields('campaign', selected)
     toggleActiveInput('campaign')
   }
 
+  const handleChannelChange = (selected) => {
+    editFields('channel', selected.label)
+    toggleActiveInput('channel')
+  }
+
   return (
-    <div className={styles.container}>
-      <div className={styles.field}>
+    <div className='item-detail-cont'>
+      <div className={'field'}>
         <ItemFieldWrapper
           title='Owner'
           image={ItemFields.member}
@@ -93,33 +108,78 @@ const ProjectFields = ({
           <span>{owner?.name}</span>
         </ItemFieldWrapper>
       </div>
-      <div className={`${styles.field} ${styles['field-row-last']}`}>
+      {(project.type === 'ads' || project.type === 'banners') &&
+        <div className={`field`}>
+          <ItemFieldWrapper
+            title='Start Date'
+            image={ItemFields.date}
+            hasOption={true}
+            optionOnClick={() => toggleActiveInput('startDate')}
+          >
+            <span>{startDate ? format(new Date(startDate), 'MMM d, yyyy') : 'No Start Date'}</span>
+          </ItemFieldWrapper>
+          {activeInput === 'startDate' &&
+            <div className={'day-picker'}>
+              <DayPicker
+                selectedDays={startDate}
+                disabledDays={
+                  {
+                    after: publishDate && new Date(publishDate),
+                  }
+                }
+                onDayClick={handleStartDayClick} />
+            </div>
+          }
+        </div>
+      }
+      <div className={`field`}>
         <ItemFieldWrapper
-          title='End Date'
+          title='Publish Date'
           image={ItemFields.date}
           hasOption={true}
-          optionOnClick={() => toggleActiveInput('endDate')}
+          optionOnClick={() => toggleActiveInput('publishDate')}
         >
-          <span>{publishDate ? format(new Date(publishDate), 'MMM d, yyyy') : 'No End Date'}</span>
+          <span>{publishDate ? format(new Date(publishDate), 'MMM d, yyyy') : 'No Publish Date'}</span>
         </ItemFieldWrapper>
-        {activeInput === 'endDate' &&
-          <div className={styles['day-picker']}>
+        {activeInput === 'publishDate' &&
+          <div className={'day-picker'}>
             <DayPicker
               selectedDays={publishDate}
-              onDayClick={handleDayClick} />
+              disabledDays={
+                {
+                  after: startDate && new Date(startDate),
+                }
+              }
+              onDayClick={handlePublishDayClick} />
           </div>
         }
       </div>
-      <hr />
-      <div className={styles.field}>
-        <ItemFieldWrapper
-          title='Social Channel'
-          image={ProjectTypeChannel.social}
-        >
-          <span>{capitalCase('Facebook')}</span>
-        </ItemFieldWrapper>
-      </div>
-      <div className={`${styles.field} ${styles['field-row-last']}`}>
+
+      {(project.type === 'social' || project.type === 'ads') &&
+        <div className={'field'}>
+          <ItemFieldWrapper
+            title='Social Channel'
+            image={ProjectTypeChannel.social}
+            hasOption={true}
+            optionOnClick={() => toggleActiveInput('channel')}
+          >
+            <span>{channel && capitalCase(channel)}</span>
+            {activeInput === 'channel' &&
+              <div className={'dropdown'}>
+                <Dropdown
+                  options={project.type === 'social' ?
+                    channelSocialOptions.map(option => ({ label: capitalCase(option) }))
+                    :
+                    channelAdsOptions.map(option => ({ label: capitalCase(option) }))
+                  }
+                  onClick={handleChannelChange}
+                />
+              </div>
+            }
+          </ItemFieldWrapper>
+        </div>
+      }
+      <div className={`field`}>
         <ItemFieldWrapper
           title='Time'
           image={Utilities.time}
@@ -127,15 +187,14 @@ const ProjectFields = ({
           <span>{''}</span>
         </ItemFieldWrapper>
       </div>
-      <hr />
-      <div className={styles.field}>
+      <div className='field'>
         <ItemFieldWrapper
           title='Campaign'
           image={ProjectType.campaign}
         >
           <span>{campaign?.name}</span>
           {activeInput === 'campaign' ?
-            <div className={styles['tag-select']}>
+            <div className={'tag-select'}>
               <Select
                 options={inputCampaigns.map(campaign => ({ ...campaign, label: campaign.name, value: campaign.id }))}
                 placeholder={'Select a campaign'}
@@ -145,22 +204,32 @@ const ProjectFields = ({
               />
             </div>
             :
-            <div className={styles.add} onClick={() => toggleActiveInput('campaign')}>
+            <div className={'add'} onClick={() => toggleActiveInput('campaign')}>
               <img src={Utilities.add} />
               <span>Add to a Campaign</span>
             </div>
           }
         </ItemFieldWrapper>
       </div>
-      <div className={`${styles.field} ${styles['field-row-last']}`}>
+      <div className={`field`}>
         <ItemFieldWrapper
           title='Tags'
           image={ItemFields.tag}
         >
-          <span>{tags.map(tag => tag.name).join(', ')}</span>
+          <ul className={'tags-list'}>
+            {tags.map((tag, index) => (
+              <li>
+                <Tag
+                  tag={tag.name}
+                  canRemove={true}
+                  removeFunction={() => removeTag(index)}
+                />
+              </li>
+            ))}
+          </ul>
 
           {activeInput === 'tags' ?
-            <div className={styles['campaign-select']}>
+            <div className={'campaign-select'}>
               <CreatableSelect
                 placeholder={'Enter a new tag or select an existing one'}
                 options={inputTags.map(tag => ({ label: tag.name, value: tag.id }))}
@@ -170,36 +239,34 @@ const ProjectFields = ({
               />
             </div>
             :
-            <div className={styles.add} onClick={() => toggleActiveInput('tags')}>
+            <div className={'add'} onClick={() => toggleActiveInput('tags')}>
               <img src={Utilities.add} />
               <span>Add Tag</span>
             </div>
           }
         </ItemFieldWrapper>
       </div>
-      <hr />
-      <div onClick={() => toggleActiveInput('collaborators')} className={styles.field}>
+      <div onClick={() => toggleActiveInput('collaborators')} className={'field'}>
         <ItemFieldWrapper
           title='Collaborators'
           image={ItemFields.member}
         >
           {/* TODO: Add images of collaborators when teams are implemented */}
-          <div className={styles.add}>
+          <div className={'add'}>
             <img src={Utilities.add} />
             <span>Add Collaborator</span>
           </div>
         </ItemFieldWrapper>
       </div>
-      <div className={`${styles.field} ${styles['field-row-last']}`}></div>
-      <hr />
-      <div className={`${styles.field} ${styles['field-wide']}`}>
+      <div className={`field pad-div`}></div>
+      <div className={`field field-wide`}>
         <ItemFieldWrapper
           title='Description'
           image={ItemFields.description}
         >
           <input
             value={description}
-            onChange={(e) => setDescription(e.target.value)}
+            onChange={(e) => editFields('description', e.target.value)}
             placeholder='Enter Description'
             onClick={() => toggleActiveInput('description')}
             onBlur={() => toggleActiveInput('description')}

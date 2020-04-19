@@ -64,9 +64,9 @@
   border: 1px solid rgb(110, 110, 110);
 }
 
-.button.google .btn-text {
-  background-image: url('../../assets/login/btn_google_signin_light_normal_web@2x.png');
-}
+/* .button.google .btn-text {
+  background-image: url('../../../assets/login/btn_google_signin_light_normal_web@2x.png');
+} */
 
 .button.linkedin .btn-text {
   color: white;

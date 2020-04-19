@@ -1,11 +1,11 @@
 import styles from './providers-auth.module.css';
-import { LoginImg } from '../../assets'
+import { LoginImg } from '../../../assets'
 
-import authApi from '../../server-api/auth'
-import cookiesUtil from '../../utils/cookies'
+import authApi from '../../../server-api/auth'
+import cookiesUtil from '../../../utils/cookies'
 
 // Components
-import ProviderAuthButton from './provider-auth-button'
+import ProviderAuthButton from '../buttons/provider-auth-button'
 
 let ProvidersAuth = () => {
 

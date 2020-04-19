@@ -1,7 +1,7 @@
 import styles from './item-sublayout.module.css'
 import Router from 'next/router'
 import Link from 'next/link'
-import { Utilities } from '../../assets'
+import { Utilities } from '../../../assets'
 
 // Components
 
@@ -12,7 +12,7 @@ const ItemSublayout = ({ SideComponent = null, sideActive = false, navElements =
         <div className={styles.heading}>
           <h4>Details</h4>
         </div>
-        <div>
+        <div className={styles.children}>
           {children}
         </div>
       </div>

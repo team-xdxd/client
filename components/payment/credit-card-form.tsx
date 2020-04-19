@@ -14,10 +14,10 @@ import { useForm } from 'react-hook-form'
 import states from '../../resources/data/states.json'
 
 // Components
-import AuthButton from '../common/auth-button'
-import FormInput from '../common/form-input'
-import Input from '../common/input'
-import Select from '../common/select'
+import AuthButton from '../common/buttons/auth-button'
+import FormInput from '../common/inputs/form-input'
+import Input from '../common/inputs/input'
+import Select from '../common/inputs/select'
 
 const elemOptions = {
   style: {

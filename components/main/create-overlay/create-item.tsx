@@ -2,7 +2,7 @@ import styles from './create-item.module.css'
 import { capitalCase } from 'change-case'
 
 // Components
-import Button from '../../common/button'
+import Button from '../../common/buttons/button'
 
 const CreateItem = ({ icon, type, description, onClick }) => (
   <div className={`${styles.container}`}>
