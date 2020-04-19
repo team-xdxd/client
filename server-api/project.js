@@ -8,6 +8,7 @@ export default {
   createProject: (data) => axios.post(projectUrl, data),
   updateProject: (id, data) => axios.patch(`${projectUrl}/${id}`, data),
   addtask: (id, data) => axios.post(`${projectUrl}/${id}/tasks`, data),
+  removeTask: (id, taskId) => axios.delete(`${projectUrl}/${id}/task/${taskId}`),
   addTag: (id, data) => axios.post(`${projectUrl}/${id}/tags`, data),
   removeTag: (id, tagId) => axios.delete(`${projectUrl}/${id}/tags/${tagId}`)
 }

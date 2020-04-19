@@ -1,5 +1,25 @@
+.container {
+  width: 25rem;
+  padding: 1.5rem 1rem;
+}
+
+.container .title {
+  display: flex;
+  align-items: center;
+}
+
+.container h2 {
+  margin: 0;
+  flex: 1;
+}
+
 .container span {
   display: inline-flex;
+}
+
+.list img {
+  width: 20px;
+  height: 20px;
 }
 
 .add {
@@ -13,11 +33,17 @@
 }
 
 .add img {
+  width: 20px;
+  height: 20px;
   margin-right: 8px;
 }
 
 .add span {
   display: inline-flex;
+}
+
+.container ul {
+  margin-top: 2rem;
 }
 
 .container ul li {
@@ -26,4 +52,9 @@
 
 .detail {
   display: flex;
+}
+
+.actions button {
+  margin-top: 8px;
+  margin-right: 8px;
 }

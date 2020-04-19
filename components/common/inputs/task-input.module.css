@@ -1,0 +1,76 @@
+.container {
+  position: relative;
+  display: flex;
+  min-height: 38px;
+  padding: 0 12px;
+  border-radius: 5px;
+  border: 1px solid var(--color-secondary-border);
+}
+
+.date-icon {
+  align-self: center;
+}
+
+.date-icon img {
+  width: 20px;
+  height: 20px;
+}
+
+.container span {
+  display: inline-flex;
+  margin-left: 8px;
+}
+
+.container .selected{
+  align-self: center;
+}
+
+.date-icon {
+  cursor: pointer;
+}
+
+.input {
+  font-weight: 500;
+  padding: 8px 0;
+  flex: 1;
+  border: none;
+  background-color: inherit;
+  color: var(--color-prim-navy);
+}
+
+.time {
+  position: absolute;
+  background-color: white;
+  right: 0;
+  top: 38px;
+}
+
+.time ul {
+  border: 1px solid var(--color-secondary-border);
+
+  margin: 0;
+  padding: 0;
+}
+
+.day-picker {
+  border: 1px solid var(--color-secondary-border);
+  border-top: 0;
+  z-index: 500;
+  background-color: white;
+  border-radius: 10px;
+}
+
+.time ul {
+  list-style: none;
+}
+
+.time ul li {
+  padding: 0.5em 1em;
+  display: flex;
+  justify-content: space-between;
+  cursor: pointer;
+}
+
+.time ul li span:first-child{
+  font-weight: 500;
+}
