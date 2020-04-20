@@ -2,6 +2,7 @@ import styles from './tasks-list.module.css'
 import { Utilities, ProjectTypes, ItemFields } from '../../../../assets'
 import { useState } from 'react'
 import { format } from 'date-fns'
+import Router from 'next/router'
 
 // Components
 import TaskInput from '../../../common/inputs/task-input'
@@ -9,7 +10,7 @@ import Button from '../../../common/buttons/button'
 
 const TasksList = ({ tasks, createTask, removeTask }) => {
 
-  const [inputVisible, setInputVisible] = useState(true)
+  const [inputVisible, setInputVisible] = useState(false)
   const [date, setDate] = useState()
   const [name, setName] = useState('')
 
@@ -31,8 +32,8 @@ const TasksList = ({ tasks, createTask, removeTask }) => {
         {tasks?.map((task, index) => (
           <li key={index}>
             <img src={ProjectTypes.task} />
-            <div>
-              <span>{task.name}</span>
+            <div className={styles['task-content']}>
+              <span onClick={() => Router.replace(`/main/tasks/${task.id}`)}>{task.name}</span>
               <div className={styles.detail}>
                 <img src={ItemFields.date} />
                 <span>{`${task.endDate ? format(new Date(task.endDate), 'EEE MMM d') : 'No date'}`}</span>

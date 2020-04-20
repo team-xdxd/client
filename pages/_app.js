@@ -45,7 +45,13 @@ export default function MyApp ({ Component, pageProps }) {
     }
   }
 
-  const userValue = { user, setUser, fetchUser }
+  const logOut = () => {
+    cookiesUtils.remove('jwt')
+    requestsUtils.removeAuthToken()
+    Router.replace('/login')
+  }
+
+  const userValue = { user, setUser, fetchUser, logOut }
 
   const [language, setLanguage] = useState("en")
   const languageValue = { language, setLanguage }

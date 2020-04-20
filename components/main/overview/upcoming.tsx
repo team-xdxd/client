@@ -5,7 +5,7 @@ import { GeneralImg, Utilities } from '../../../assets'
 // Components
 import UpcomingItem from './upcoming-item'
 
-const Upcoming = ({ type, items = [], addOnClick = () => { } }) => (
+const Upcoming = ({ type, items = [], addOnClick = () => { }, deleteItem }) => (
   <div className={`${styles.container}`}>
     <div className={styles.heading}>
       <h4>Upcoming {capitalCase(`${type}s`)}</h4>
@@ -25,6 +25,7 @@ const Upcoming = ({ type, items = [], addOnClick = () => { } }) => (
             name={item.name}
             status={item.status}
             users={item.users}
+            deleteItem={() => deleteItem(index)}
             detailUrl={`/main/${type}s/${item.id}`}
           />
         ))}

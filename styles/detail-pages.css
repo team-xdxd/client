@@ -55,7 +55,7 @@
   position: absolute;
 }
 
-.item-detail-cont .tag-select,
+.tag-select,
 .item-detail-cont .campaign-select,
 .item-detail-cont .add {
   margin-top: 10px;
@@ -79,12 +79,12 @@
   display: inline-flex;
 }
 
-.item-detail-cont .tags-list{
+.tags-list{
   display: flex;
   flex-wrap: wrap;
 }
 
-.item-detail-cont .tags-list li{
+.tags-list li{
   margin-left: 8px;
   margin-bottom: 10px;
 }

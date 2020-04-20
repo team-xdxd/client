@@ -4,6 +4,8 @@ import { useState, useEffect, useContext } from 'react'
 import { UserContext } from '../../../context'
 import campaignApi from '../../../server-api/campaign'
 import projectApi from '../../../server-api/project'
+import taskApi from '../../../server-api/task'
+import update from 'immutability-helper'
 
 // Components
 import OverviewSubHeader from './overview-subheader'
@@ -13,19 +15,6 @@ import UpcomingTasks from './upcoming-tasks'
 import CreateOverlay from '../create-overlay'
 
 // name, status, date
-const defTasks = [
-  {
-    name: 'New Fall',
-    endDate: new Date(),
-    status: 'draft'
-  },
-  {
-    name: 'top Sellers',
-    endDate: new Date(),
-    status: 'completed'
-  }
-]
-
 
 const Overview = () => {
   const [createVisible, setCreateVisible] = useState(false)
@@ -33,7 +22,7 @@ const Overview = () => {
 
   const [campaigns, setCampaigns] = useState([])
   const [projects, setProjects] = useState([])
-  const [tasks, setTasks] = useState(defTasks)
+  const [tasks, setTasks] = useState([])
 
   const { user } = useContext(UserContext)
 
@@ -45,7 +34,26 @@ const Overview = () => {
   useEffect(() => {
     getCampaigns()
     getProjects()
+    getTasks()
   }, [])
+
+  const deleteCampaign = async (index) => {
+    try {
+      await campaignApi.deleteCampaign(campaigns[index].id)
+      setCampaigns(update(campaigns, { $splice: [[index, 1]] }))
+    } catch (err) {
+      // TODO: Handle error
+    }
+  }
+
+  const deleteProject = async (index) => {
+    try {
+      await projectApi.deleteProject(projects[index].id)
+      setProjects(update(projects, { $splice: [[index, 1]] }))
+    } catch (err) {
+      // TODO: Handle error
+    }
+  }
 
   const getCampaigns = async () => {
     try {
@@ -60,6 +68,15 @@ const Overview = () => {
     try {
       const { data } = await projectApi.getProjects()
       setProjects(data)
+    } catch (err) {
+      // TODO: Display error or something
+    }
+  }
+
+  const getTasks = async () => {
+    try {
+      const { data } = await taskApi.getTasks()
+      setTasks(data)
     } catch (err) {
       // TODO: Display error or something
     }
@@ -80,11 +97,13 @@ const Overview = () => {
             type='campaign'
             items={campaigns}
             addOnClick={() => openCreateOVerlay('campaign')}
+            deleteItem={deleteCampaign}
           />
           <Upcoming
             type='project'
             items={projects}
             addOnClick={() => openCreateOVerlay('project')}
+            deleteItem={deleteProject}
           />
         </section>
         <section className={styles['second-section']}>
