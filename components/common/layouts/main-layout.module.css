@@ -31,6 +31,14 @@
   color: white;
   display: flex;
   align-items: center;
+  cursor: pointer;
+  position: relative;
+}
+
+.user-dropdown {
+  position: absolute;
+  top: 3rem;
+  right: 0;
 }
 
 .profile {

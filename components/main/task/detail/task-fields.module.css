@@ -1,0 +1,56 @@
+.container {
+    display: flex;
+    padding-top: 15px;
+    padding-bottom: 15px;
+    flex-direction: column;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+  
+  .container img {
+    width: 20px;
+    height: 20px;
+  }
+  
+  .field {
+    width: 25rem;
+    padding: 30px 25px;
+    border: 1px solid var(--color-secondary-border);
+    border-bottom: none;
+  }
+  
+  .field-column-last {
+    border-bottom: 1px solid var(--color-secondary-border);
+  }
+  
+  .day-picker {
+    position: absolute;
+    border: 1px solid var(--color-secondary-border);
+    z-index: 500;
+    background-color: white;
+    border-radius: 10px;
+  }
+  
+  .tag-select,
+  .add {
+    margin-top: 10px;
+  }
+  
+  .add {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+  }
+  
+  .add:hover {
+    color: var(--color-sec-blue);
+  }
+  
+  .add img {
+    margin-right: 8px;
+  }
+  
+  .add span {
+    display: inline-flex;
+  }
+  
