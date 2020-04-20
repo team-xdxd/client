@@ -8,19 +8,20 @@ import taskApi from '../../../../server-api/task'
 import toastUtils from '../../../../utils/toast'
 
 // Components
-import ItemSubheader from '../../../common/item-subheader'
-import ItemSublayout from '../../../common/item-sublayout'
+import ItemSubheader from '../../../common/items/item-subheader'
+import ItemSublayout from '../../../common/layouts/item-sublayout'
 import Fields from './task-fields'
 
 const TaskDetail = () => {
 
   const [task, setTask] = useState()
 
-  const [assignedTo, setAssignedTo] = useState()
-  const [description, setDescription] = useState('')
-  const [project, setProject] = useState()
-  const [deadlineDate, setDeadlineDate] = useState(new Date())
-  const [tags, setTags] = useState([])
+  const [editableFields, setEditableFields] = useState({
+    description: '',
+    project: null,
+    endDate: null,
+    tags: []
+  })
 
   useEffect(() => {
     getTask()
@@ -30,6 +31,8 @@ const TaskDetail = () => {
     try {
       const splitPath = window.location.pathname.split('/')
       const { data } = await taskApi.getTaskById(splitPath[splitPath.length - 1])
+      console.log(data);
+            
       setTaskData(data)
       setTask(data)
     } catch (err) {
@@ -41,11 +44,11 @@ const TaskDetail = () => {
   const saveTask = async () => {
     try {
       const saveData = {
-        description,
-        deadlineDate,
-        projectId: project.id
+        description: editableFields.description,
+        endDate: editableFields.endDate,
+        projectId: editableFields.project?.id
       }
-      await taskApi.updateTask(task.id, saveData)
+      await taskApi.updateTask(task?.id, saveData)
       toastUtils.success('Task saved sucesfully')
     } catch (err) {
       // TODO: Error handling
@@ -54,23 +57,22 @@ const TaskDetail = () => {
 
   const setTaskData = (data) => {
     // TODO: get the correct owner
-    setAssignedTo(data.user)
-    setDescription(data.description)
-    setDeadlineDate(data.end_date)
-    setProject(data.project)
-    setTags(data.tags)
+    setEditableFields({
+      ...editableFields,
+      ...data
+    })
   }
 
   const addTag = async (tag, isNew = false) => {
-    if (tags.findIndex(taskTag => tag.label === taskTag.name) === -1) {
+    if (editableFields.tags.findIndex(projectTag => tag.label === projectTag.name) === -1) {
       const newTag = { name: tag.label }
       if (!isNew) newTag.id = tag.value
       try {
-        const { data } = await taskApi.addTag(task.id, newTag)
+        const { data } = await taskApi.addTag(task?.id, newTag)
         if (!isNew) {
-          setTags(update(tags, { $push: [newTag] }))
+          editFields('tags', update(editableFields.tags, { $push: [newTag] }))
         } else {
-          setTags(update(tags, { $push: [data] }))
+          editFields('tags', update(editableFields.tags, { $push: [data] }))
         }
         return data
       } catch (err) {
@@ -79,6 +81,21 @@ const TaskDetail = () => {
     }
   }
 
+  const removeTag = async (index) => {
+    try {
+      editFields('tags', update(editableFields.tags, { $splice: [[index, 1]] }))
+      await taskApi.removeTag(task?.id, editableFields.tags[index].id)
+    } catch (err) {
+      // TODO: Error if failure for whatever reason
+    }
+  }
+
+  const editFields = (field, value) => {
+    setEditableFields({
+      ...editableFields,
+      [field]: value
+    })
+  }
 
   return (
     <>
@@ -90,15 +107,11 @@ const TaskDetail = () => {
         <ItemSublayout>
           {task &&
             <Fields
-              assignedTo={assignedTo}
-              project={project}
-              setProject={setProject}
-              description={description}
-              setDescription={setDescription}
-              deadlineDate={deadlineDate}
-              setDeadlineDate={setDeadlineDate}
-              tags={tags}
-              addTag={addTag}
+            task={task}
+            editableFields={editableFields}
+            editFields={editFields}
+            addTag={addTag}
+            removeTag={removeTag}
             />
           }
         </ItemSublayout>

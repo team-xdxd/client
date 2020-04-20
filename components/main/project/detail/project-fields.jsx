@@ -218,7 +218,7 @@ const ProjectFields = ({
         >
           <ul className={'tags-list'}>
             {tags.map((tag, index) => (
-              <li>
+              <li key={index}>
                 <Tag
                   tag={tag.name}
                   canRemove={true}

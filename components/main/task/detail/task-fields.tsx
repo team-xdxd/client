@@ -9,19 +9,21 @@ import tagApi from '../../../../server-api/tag'
 import projectApi from '../../../../server-api/project'
 
 // Components
-import ItemFieldWrapper from '../../../common/item-field-wrapper'
-import Select from '../../../common/select'
+import ItemFieldWrapper from '../../../common/items/item-field-wrapper'
+import Select from '../../../common/inputs/select'
+import Tag from '../../../common/misc/tag'
 
 const TaskFields = ({
-  assignedTo,
-  deadlineDate,
-  setDeadlineDate,
-  project,
-  setProject,
-  description,
-  setDescription,
+  editableFields: {
+    endDate,
+    project,
+    description,
+    tags
+  },
   addTag,
-  tags
+  removeTag,
+  editFields,
+  task
 }) => {
 
   const [activeInput, setActiveInput] = useState('')
@@ -61,7 +63,7 @@ const TaskFields = ({
   }
 
   const handleDayClick = (day, { selected }) => {
-    setDeadlineDate(selected ? undefined : day)
+    editFields('endDate', selected ? undefined : day)
     setActiveInput('')
   }
 
@@ -74,7 +76,7 @@ const TaskFields = ({
   }
 
   const handleProjectChange = (selected) => {
-    setProject(selected)
+    editFields('project', selected)
     toggleActiveInput('project')
   }
 
@@ -85,27 +87,26 @@ const TaskFields = ({
           title='Assigned To'
           image={ItemFields.member}
         >
-          <span>{assignedTo?.name}</span>
+          <span>{task?.users[0].name}</span>
         </ItemFieldWrapper>
       </div>
-      <div className={`${styles.field} ${styles['field-row-last']}`}>
+      <div className={styles.field}>
         <ItemFieldWrapper
           title='Deadline Date'
           image={ItemFields.date}
           hasOption={true}
-          optionOnClick={() => toggleActiveInput('deadlineDate')}
+          optionOnClick={() => toggleActiveInput('endDate')}
         >
-          <span>{deadlineDate ? format(new Date(deadlineDate), 'MMM d, yyyy') : 'No Deadline Date'}</span>
+          <span>{endDate ? format(new Date(endDate), 'MMM d, yyyy') : 'No Deadline Date'}</span>
         </ItemFieldWrapper>
-        {activeInput === 'deadlineDate' &&
+        {activeInput === 'endDate' &&
           <div className={styles['day-picker']}>
             <DayPicker
-              selectedDays={deadlineDate}
-              onDayClick={handleDayClick} />
+              selectedDays={endDate}
+              onDayClick={handleDayClick} /> />
           </div>
         }
       </div>
-      <hr />
       <div className={styles.field}>
         <ItemFieldWrapper
           title='Project'
@@ -130,15 +131,25 @@ const TaskFields = ({
           }
         </ItemFieldWrapper>
       </div>
-      <div className={`${styles.field} ${styles['field-row-last']}`}>
+      <div className={styles.field}>
         <ItemFieldWrapper
           title='Tags'
           image={ItemFields.tag}
         >
-          <span>{tags.map(tag => tag.name).join(', ')}</span>
+          <ul className={'tags-list'}>
+            {tags.map((tag, index) => (
+              <li key={index}>
+                <Tag
+                  tag={tag.name}
+                  canRemove={true}
+                  removeFunction={() => removeTag(index)}
+                />
+              </li>
+            ))}
+          </ul>
 
           {activeInput === 'tags' ?
-            <div className={styles['campaign-select']}>
+            <div className={'campaign-select'}>
               <CreatableSelect
                 placeholder={'Enter a new tag or select an existing one'}
                 options={inputTags.map(tag => ({ label: tag.name, value: tag.id }))}
@@ -148,22 +159,21 @@ const TaskFields = ({
               />
             </div>
             :
-            <div className={styles.add} onClick={() => toggleActiveInput('tags')}>
+            <div className={'add'} onClick={() => toggleActiveInput('tags')}>
               <img src={Utilities.add} />
               <span>Add Tag</span>
             </div>
           }
         </ItemFieldWrapper>
       </div>
-      <hr />
-      <div className={`${styles.field} ${styles['field-wide']}`}>
+      <div className={`${styles['field-column-last']} ${styles['field']}`}>
         <ItemFieldWrapper
           title='Description'
           image={ItemFields.description}
         >
           <input
             value={description}
-            onChange={(e) => setDescription(e.target.value)}
+            onChange={(e) => editFields('description', e.target.value)}
             placeholder='Enter Description'
             onClick={() => toggleActiveInput('description')}
             onBlur={() => toggleActiveInput('description')}
