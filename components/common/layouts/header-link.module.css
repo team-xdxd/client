@@ -1,13 +1,15 @@
 .link {
-  color: white;
+  color: var(--color-sec-blue);
   display: flex;
   align-items: center;
   margin-right: 40px;
   cursor: pointer;
+  font-weight: 600;
 }
 
-.link:hover{
-  opacity: 0.7
+.active,
+.link:hover {
+  color: white;
 }
 
 .icon {
@@ -15,4 +17,4 @@
 
 .text {
   padding-left: 10px;
-} 
+}

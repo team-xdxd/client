@@ -10,6 +10,7 @@ const UpcomingTasks = ({ tasks = [] }) => (
       <ul>
         {tasks.map((task, index) => (
           <UpcomingTasksItem
+            key={index}
             date={task.endDate}
             name={task.name}
             status={task.status}
