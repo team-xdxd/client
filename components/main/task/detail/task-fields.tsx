@@ -102,8 +102,8 @@ const TaskFields = ({
         {activeInput === 'endDate' &&
           <div className={styles['day-picker']}>
             <DayPicker
-              selectedDays={endDate}
-              onDayClick={handleDayClick} /> />
+              selectedDays={new Date(endDate)}
+              onDayClick={handleDayClick} />
           </div>
         }
       </div>

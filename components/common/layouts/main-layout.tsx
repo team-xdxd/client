@@ -3,6 +3,7 @@ import styles from './main-layout.module.css'
 import Link from 'next/link'
 import { GeneralImg, Navigation, Placeholders } from '../../../assets'
 import { UserContext } from '../../../context'
+import Router from 'next/router'
 
 // Components
 import HeaderLink from '../layouts/header-link'
@@ -26,22 +27,26 @@ const AuthLayout = ({ children }) => {
         </Link>
         <ul className={styles['navigation-links']}>
           <HeaderLink
+            active={Router.pathname.indexOf('overview') !== -1}
             href='/main/overview'
             img={Navigation.overview}
             text='Overview'
           />
           <HeaderLink
-            href='/main/overview'
+            active={Router.pathname.indexOf('schedule') !== -1}
+            href='/main/schedule'
             img={Navigation.schedule}
             text='Schedule'
           />
           <HeaderLink
-            href='/main/overview'
+            active={Router.pathname.indexOf('assets') !== -1}
+            href='/main/assets'
             img={Navigation.assets}
             text='Assets'
           />
           <HeaderLink
-            href='/main/overview'
+            active={Router.pathname.indexOf('reports') !== -1}
+            href='/main/reports'
             img={Navigation.reports}
             text='Reports'
           />

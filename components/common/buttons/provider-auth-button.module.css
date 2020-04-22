@@ -15,7 +15,7 @@
   transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, opacity 0.15s ease-in-out;
   color: black;
   background-color: white;
-  font-weight: bold;
+  font-weight: 600;
   width: 100%;
   padding: 0;
   align-items: center;
