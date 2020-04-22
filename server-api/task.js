@@ -7,5 +7,7 @@ export default {
   getTasks: () => axios.get(taskUrl),
   createTask: (data) => axios.post(taskUrl, data),
   updateTask: (id, data) => axios.patch(`${taskUrl}/${id}`, data),
-  addTag: (id, data) => axios.post(`${taskUrl}/${id}/tags`, data)
+  deleteTask: (id) => axios.delete(`${taskUrl}/${id}`),
+  addTag: (id, data) => axios.post(`${taskUrl}/${id}/tags`, data),
+  removeTag: (id, tagId) => axios.delete(`${taskUrl}/${id}/tags/${tagId}`)
 }

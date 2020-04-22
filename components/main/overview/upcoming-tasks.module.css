@@ -5,9 +5,15 @@
 }
 
 .container h4 {
-  font-weight: bold;
+  font-weight: 600;
   color: var(--color-prim-navy);
   margin: 0;
   padding: 0;
   margin-bottom: 35px;
+}
+
+.empty {
+  padding-left: 20px;
+  font-weight: 500;
+  color: var(--color-sec-blue);
 }

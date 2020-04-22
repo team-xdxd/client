@@ -121,7 +121,7 @@ const ProjectFields = ({
           {activeInput === 'startDate' &&
             <div className={'day-picker'}>
               <DayPicker
-                selectedDays={startDate}
+                selectedDays={new Date(startDate)}
                 disabledDays={
                   {
                     after: publishDate && new Date(publishDate),

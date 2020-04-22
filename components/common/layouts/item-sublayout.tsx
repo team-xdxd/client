@@ -5,7 +5,7 @@ import { Utilities } from '../../../assets'
 
 // Components
 
-const ItemSublayout = ({ SideComponent = null, sideActive = false, navElements = [], children }) => {
+const ItemSublayout = ({ SideComponent = null, sideActive = true, navElements = [], children }) => {
   return (
     <div className={styles.container}>
       <div className={styles['main-component']}>

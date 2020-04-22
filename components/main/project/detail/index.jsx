@@ -16,6 +16,8 @@ const ProjectDetail = () => {
 
   const [project, setProject] = useState()
 
+  const [tasks, setTasks] = useState([])
+
   const [editableFields, setEditableFields] = useState({
     collaborators: [],
     description: '',
@@ -67,6 +69,7 @@ const ProjectDetail = () => {
       ...data,
       owner: data.users[0]
     })
+    setTasks(data.tasks)
   }
 
   const addTag = async (tag, isNew = false) => {
@@ -96,6 +99,23 @@ const ProjectDetail = () => {
     }
   }
 
+  const createTask = async (data) => {
+    try {
+      const newTaskResponse = await projectApi.addtask(project.id, data)
+      setTasks(update(tasks, { $push: [newTaskResponse.data] }))
+    } catch (err) {
+      // TODO: Error if failure for whatever reason
+    }
+  }
+
+  const removeTask = async (taskId) => {
+    try {
+      await projectApi.removeTask(project.id, taskId)
+    } catch (err) {
+      // TODO: Error if failure for whatever reason
+    }
+  }
+
   const editFields = (field, value) => {
     setEditableFields({
       ...editableFields,
@@ -113,7 +133,9 @@ const ProjectDetail = () => {
         <ItemSublayout
           SideComponent={
             <TasksList
-              tasks={project?.tasks}
+              tasks={tasks}
+              createTask={createTask}
+              removeTask={removeTask}
             />
           }
         >

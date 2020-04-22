@@ -102,8 +102,8 @@ const TaskFields = ({
         {activeInput === 'endDate' &&
           <div className={styles['day-picker']}>
             <DayPicker
-              selectedDays={endDate}
-              onDayClick={handleDayClick} /> />
+              selectedDays={new Date(endDate)}
+              onDayClick={handleDayClick} />
           </div>
         }
       </div>
@@ -151,7 +151,7 @@ const TaskFields = ({
           {activeInput === 'tags' ?
             <div className={'campaign-select'}>
               <CreatableSelect
-                placeholder={'Enter a new tag or select an existing one'}
+                placeholder={'Enter a new tag or select...'}
                 options={inputTags.map(tag => ({ label: tag.name, value: tag.id }))}
                 className={`regular item`}
                 onChange={handleTagChange}
@@ -159,7 +159,7 @@ const TaskFields = ({
               />
             </div>
             :
-            <div className={'add'} onClick={() => toggleActiveInput('tags')}>
+            <div className={styles.add} onClick={() => toggleActiveInput('tags')}>
               <img src={Utilities.add} />
               <span>Add Tag</span>
             </div>

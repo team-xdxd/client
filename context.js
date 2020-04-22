@@ -3,7 +3,8 @@ import { createContext } from 'react'
 export const UserContext = createContext({
   user: null,
   setUser: (user) => { },
-  fetchUser: () => { }
+  fetchUser: () => { },
+  logOut: () => { }
 })
 
 export const ThemeContext = createContext({
