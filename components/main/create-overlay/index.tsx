@@ -25,14 +25,14 @@ const CreateOverlay = ({ type = '', setType, closeOverlay }) => {
         </div>
         <div className={styles.close} onClick={closeOverlay}>
           {/* <img src={GeneralImg.logo} /> */}
-          <span>X</span>
+          <span className={styles.x}>X</span>
           <span>esc</span>
         </div>
       </div>
       {
         !type &&
         <div >
-          <h2>
+          <h2 className={styles.chooseTitle}>
             Choose Type
         </h2>
           <ul className={styles.types}>
