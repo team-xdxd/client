@@ -19,6 +19,7 @@ const ProjectDetail = () => {
   const [tasks, setTasks] = useState([])
 
   const [editableFields, setEditableFields] = useState({
+    name: '',
     collaborators: [],
     description: '',
     campaign: null,
@@ -48,6 +49,7 @@ const ProjectDetail = () => {
   const saveProject = async () => {
     try {
       const saveData = {
+        name: editableFields.name,
         description: editableFields.description,
         startDate: editableFields.startDate,
         publishDate: editableFields.publishDate,
@@ -126,8 +128,9 @@ const ProjectDetail = () => {
   return (
     <>
       <ItemSubheader
-        title={project?.name}
+        title={editableFields.name}
         saveDraft={saveProject}
+        changeName={(name) => editFields('name', name)}
       />
       <main className={`${styles.container}`}>
         <ItemSublayout

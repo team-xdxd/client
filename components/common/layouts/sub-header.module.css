@@ -8,3 +8,10 @@
 .container h1 {  
   color: var(--color-sec-ivory);  
 }
+
+.container input {
+  border: none;
+  background-color: inherit;
+  color: inherit;
+  width: fit-content;
+}

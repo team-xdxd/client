@@ -7,9 +7,12 @@ import SubHeader from '../layouts/sub-header'
 import NavButton from '../buttons/nav-button'
 import StatusBadge from '../misc/status-badge'
 
-const ItemSubHeader = ({ title, status = 'draft', saveDraft = () => { } }) => {
+const ItemSubHeader = ({ title, status = 'draft', saveDraft = () => { }, changeName }) => {
   return (
-    <SubHeader pageTitle={title}>
+    <SubHeader
+      pageTitle={title}
+      titleOnchange={(e) => changeName(e.target.value)}
+    >
       <div className={styles['header-additional']}>
         {status &&
           <StatusBadge status={status} />
