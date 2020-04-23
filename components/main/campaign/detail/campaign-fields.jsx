@@ -178,7 +178,8 @@ const CampaignFields = ({
           title='Description'
           image={ItemFields.description}
         >
-          <input
+          <textarea
+            rows={description?.length > 0 ? Math.ceil(description.length / 50) : 1}
             value={description}
             onChange={(e) => setDescription(e.target.value)}
             placeholder='Enter Description'

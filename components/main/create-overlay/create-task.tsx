@@ -45,8 +45,8 @@ const CreateTask = () => {
               }
               name='name'
               control={control}
-              message={'This field should be minimun 2 characters long'}
-              rules={{ minLength: 2, maxLength: 20, required: true }}
+              message={'This field should be between 1 and 30 characters long'}
+              rules={{ minLength: 1, maxLength: 30, required: true }}
               errors={errors}
             />
           </div>

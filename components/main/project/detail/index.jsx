@@ -19,6 +19,10 @@ const ProjectDetail = () => {
   const [tasks, setTasks] = useState([])
 
   const [editableFields, setEditableFields] = useState({
+    name: '',
+    headline: '',
+    subject: '',
+    preheader: '',
     collaborators: [],
     description: '',
     campaign: null,
@@ -48,11 +52,16 @@ const ProjectDetail = () => {
   const saveProject = async () => {
     try {
       const saveData = {
+        name: editableFields.name,
         description: editableFields.description,
         startDate: editableFields.startDate,
         publishDate: editableFields.publishDate,
         channel: editableFields.channel,
-        campaignId: editableFields.campaign?.id
+        campaignId: editableFields.campaign?.id,
+
+        headline: editableFields.headline,
+        subject: editableFields.subject,
+        preheader: editableFields.preheader
       }
       await projectApi.updateProject(project.id, saveData)
       toastUtils.success('Project saved sucesfully')
@@ -126,8 +135,9 @@ const ProjectDetail = () => {
   return (
     <>
       <ItemSubheader
-        title={project?.name}
+        title={editableFields.name}
         saveDraft={saveProject}
+        changeName={(name) => editFields('name', name)}
       />
       <main className={`${styles.container}`}>
         <ItemSublayout

@@ -5,12 +5,14 @@ import { Utilities } from '../../../assets'
 
 // Components
 
-const ItemSublayout = ({ SideComponent = null, sideActive = true, navElements = [], children }) => {
+const ItemSublayout = ({ SideComponent = null, sideActive = true, navElements = [], children, layout = 'double' }) => {
   return (
     <div className={styles.container}>
       <div className={styles['main-component']}>
         <div className={styles.heading}>
-          <h4>Details</h4>
+          <div className={styles[layout]}>
+            <h4>Details</h4>
+          </div>
         </div>
         <div className={styles.children}>
           {children}

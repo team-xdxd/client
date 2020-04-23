@@ -2,7 +2,7 @@ import styles from './item-field-wrapper.module.css'
 
 import { GeneralImg } from '../../../assets'
 
-const ItemFieldWrapper = ({ image, title, children, hasOption = false, optionOnClick = () => { } }) => (
+const ItemFieldWrapper = ({ image, title, children, hasOption = false, optionOnClick = () => { }, error }) => (
   <div className={styles.container}>
     <img src={image} />
     <div className={styles.main}>

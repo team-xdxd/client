@@ -32,7 +32,7 @@ const TaskDetail = () => {
       const splitPath = window.location.pathname.split('/')
       const { data } = await taskApi.getTaskById(splitPath[splitPath.length - 1])
       console.log(data);
-            
+
       setTaskData(data)
       setTask(data)
     } catch (err) {
@@ -104,14 +104,16 @@ const TaskDetail = () => {
         saveDraft={saveTask}
       />
       <main className={`${styles.container}`}>
-        <ItemSublayout>
+        <ItemSublayout
+          layout='single'
+        >
           {task &&
             <Fields
-            task={task}
-            editableFields={editableFields}
-            editFields={editFields}
-            addTag={addTag}
-            removeTag={removeTag}
+              task={task}
+              editableFields={editableFields}
+              editFields={editFields}
+              addTag={addTag}
+              removeTag={removeTag}
             />
           }
         </ItemSublayout>

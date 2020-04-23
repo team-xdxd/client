@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 import CreatableSelect from 'react-select/creatable';
 import styles from './project-fields.module.css'
-import { ItemFields, Utilities, ProjectTypeChannel, ProjectType } from '../../../../assets'
+import { ItemFields, Utilities, ProjectTypeChannel, ProjectTypes } from '../../../../assets'
 import DayPicker from 'react-day-picker'
 import { format } from 'date-fns'
 import update from 'immutability-helper'
@@ -26,8 +26,11 @@ const ProjectFields = ({
     campaign,
     collaborators,
     description,
+    subject,
     tags,
-    channel
+    channel,
+    headline,
+    preheader
   },
   addTag,
   removeTag,
@@ -134,12 +137,12 @@ const ProjectFields = ({
       }
       <div className={`field`}>
         <ItemFieldWrapper
-          title='Publish Date'
+          title='Deadline Date'
           image={ItemFields.date}
           hasOption={true}
           optionOnClick={() => toggleActiveInput('publishDate')}
         >
-          <span>{publishDate ? format(new Date(publishDate), 'MMM d, yyyy') : 'No Publish Date'}</span>
+          <span>{publishDate ? format(new Date(publishDate), 'MMM d, yyyy') : 'No Deadline Date'}</span>
         </ItemFieldWrapper>
         {activeInput === 'publishDate' &&
           <div className={'day-picker'}>
@@ -154,7 +157,54 @@ const ProjectFields = ({
           </div>
         }
       </div>
-
+      {project.type === 'email' &&
+        <>
+          <div className={`field`}>
+            <ItemFieldWrapper
+              title='Subject'
+              image={ItemFields.description}
+            >
+              <input
+                value={subject}
+                onChange={(e) => editFields('subject', e.target.value)}
+                placeholder='Enter Subject'
+                onClick={() => toggleActiveInput('subject')}
+                onBlur={() => toggleActiveInput('subject')}
+              />
+            </ItemFieldWrapper>
+          </div>
+          <div className={`field`}>
+            <ItemFieldWrapper
+              title='Preheader'
+              image={ItemFields.description}
+            >
+              <input
+                value={preheader}
+                onChange={(e) => editFields('preheader', e.target.value)}
+                placeholder='Enter Preheader'
+                onClick={() => toggleActiveInput('preheader')}
+                onBlur={() => toggleActiveInput('preheader')}
+              />
+            </ItemFieldWrapper>
+          </div>
+        </>
+      }
+      {project.type === 'articles' &&
+        <div className={`field`}>
+          <ItemFieldWrapper
+            title='Headline'
+            image={ItemFields.description}
+          >
+            <input
+              value={headline}
+              onChange={(e) => editFields('headline', e.target.value)}
+              placeholder='Enter Headline'
+              onClick={() => toggleActiveInput('headline')}
+              onBlur={() => toggleActiveInput('headline')}
+            />
+          </ItemFieldWrapper>
+        </div>
+      }
       {(project.type === 'social' || project.type === 'ads') &&
         <div className={'field'}>
           <ItemFieldWrapper
@@ -179,18 +229,19 @@ const ProjectFields = ({
           </ItemFieldWrapper>
         </div>
       }
-      <div className={`field`}>
+      {/* TODO: Create input for this thing */}
+      {/* <div className={`field`}>
         <ItemFieldWrapper
           title='Time'
           image={Utilities.time}
         >
           <span>{''}</span>
         </ItemFieldWrapper>
-      </div>
+      </div> */}
       <div className='field'>
         <ItemFieldWrapper
           title='Campaign'
-          image={ProjectType.campaign}
+          image={ProjectTypes.campaign}
         >
           <span>{campaign?.name}</span>
           {activeInput === 'campaign' ?
@@ -264,7 +315,8 @@ const ProjectFields = ({
           title='Description'
           image={ItemFields.description}
         >
-          <input
+          <textarea
+            rows={description?.length > 0 ? Math.ceil(description.length / 50) : 1}
             value={description}
             onChange={(e) => editFields('description', e.target.value)}
             placeholder='Enter Description'
