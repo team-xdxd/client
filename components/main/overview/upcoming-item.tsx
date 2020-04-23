@@ -50,7 +50,7 @@ const UpcomingItem = ({ name, date, status, users, userPhoto = ItemFields.member
       </div>
       <div className={styles.actions}>
         <img src={Utilities.comment} />
-        <img src={Navigation.scheduleBlack} />
+        <img src={Navigation.scheduleSelected} />
         <img src={Utilities.assignMember} />
         <img className={styles['more-icon']} src={Utilities.more} onClick={toggleVisible} />
         {moreVisible &&

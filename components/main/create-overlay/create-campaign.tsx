@@ -1,8 +1,9 @@
 import styles from './create-campaign.module.css'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { useForm } from 'react-hook-form'
 import Router from 'next/router'
 import campaignApi from '../../../server-api/campaign'
+import toastUtils from '../../../utils/toast'
 
 // Components
 import Button from '../../common/buttons/button'
@@ -13,7 +14,16 @@ const CreateCampaign = () => {
   const { control, handleSubmit, errors } = useForm()
   const [submitError, setSubmitError] = useState('')
 
+  const [campaignNames, setCampaignNames] = useState([])
+
+  useEffect(() => {
+    getCampaignNames()
+  }, [])
+
   const onSubmit = async campaignData => {
+    if (campaignNames.includes(campaignData.name)) {
+      return toastUtils.error('A campaign with that name already exists')
+    }
     try {
       const { data } = await campaignApi.createCampaign(campaignData)
       Router.replace(`/main/campaigns/${data.id}`)
@@ -24,6 +34,15 @@ const CreateCampaign = () => {
       } else {
         setSubmitError('Something went wrong, please try again later')
       }
+    }
+  }
+
+  const getCampaignNames = async () => {
+    try {
+      const { data } = await campaignApi.getCampaigns()
+      setCampaignNames(data.map(campaign => campaign.name))
+    } catch (err) {
+      // TODO: Error handling
     }
   }
 

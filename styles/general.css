@@ -10,6 +10,7 @@
   --color-prim-yellow: #ffb638;
   --color-prim-turquoise: #10bda5;
   --color-prim-turquoise-hover: #00a38d;
+  --color-sec-text: #817d9d;
 
   --color-sec-blue: #aeb0c2;
   --color-sec-lightblue: #e9eefa;
@@ -166,7 +167,7 @@ ul {
   min-height: 70px;
 }
 
-.item .select-prefix__value-container{
+.item .select-prefix__value-container {
   min-height: 48px;
 }
 

@@ -14,7 +14,7 @@ export const Navigation = {
   overviewSelected: require('./Icons/Navigation/icn-nav-dashboard-white.svg'),
   schedule: require('./Icons/Navigation/icn-nav-schedule-#E9EEFA.svg'),
   scheduleSelected: require('./Icons/Navigation/icn-nav-schedule-white.svg'),
-  scheduleBlack: require('./Icons/Navigation/icn-nav-schedule.svg'),
+  scheduleBlack: require('./Icons/Navigation/icn-nav-schedule-black.svg'),
   assets: require('./Icons/Navigation/icn-nav-assets-#E9EEFA.svg'),
   assetsSelected: require('./Icons/Navigation/icn-nav-assets-white.svg'),
   reports: require('./Icons/Navigation/icn-nav-reports-#E9EEFA.svg'),
