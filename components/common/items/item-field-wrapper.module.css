@@ -27,10 +27,11 @@
   cursor: pointer;
 }
 
-.content input {
+.content input, .content textarea  {
   font-weight: 500;
   width: 100%;  
   border: none;
+  padding: 10px;
   background-color: inherit;
   color: var(--color-prim-navy);
 }

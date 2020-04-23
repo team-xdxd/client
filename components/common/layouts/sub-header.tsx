@@ -6,10 +6,11 @@ const SubHeader = ({ pageTitle, titleOnchange = (e) => { }, children }) => {
   const resizeFn = () => { inputRef.current.style.width = ((pageTitle.length + 1) * 24) + 'px'; }
 
   useEffect(() => {
-    resizeFn()
+    if (pageTitle)
+      resizeFn()
   }, [pageTitle]);
 
-  
+
 
   return (
     <section className={styles.container}>

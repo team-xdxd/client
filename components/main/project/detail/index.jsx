@@ -20,6 +20,9 @@ const ProjectDetail = () => {
 
   const [editableFields, setEditableFields] = useState({
     name: '',
+    headline: '',
+    subject: '',
+    preheader: '',
     collaborators: [],
     description: '',
     campaign: null,
@@ -54,7 +57,11 @@ const ProjectDetail = () => {
         startDate: editableFields.startDate,
         publishDate: editableFields.publishDate,
         channel: editableFields.channel,
-        campaignId: editableFields.campaign?.id
+        campaignId: editableFields.campaign?.id,
+
+        headline: editableFields.headline,
+        subject: editableFields.subject,
+        preheader: editableFields.preheader
       }
       await projectApi.updateProject(project.id, saveData)
       toastUtils.success('Project saved sucesfully')
