@@ -9,12 +9,16 @@ export const LoginImg = {
 }
 
 export const Navigation = {
-  alert: require('./Icons/Navigation/icn-nav-alert-ivory@2x.png'),
-  overview: require('./Icons/Navigation/icn-nav-dashboard.png'),
-  schedule: require('./Icons/Navigation/icn-nav-schedule-ivory@2x.png'),
+  alert: require('./Icons/Navigation/icn-nav-alert-white.svg'),
+  overview: require('./Icons/Navigation/icn-nav-dashboard-#E9EEFA.svg'),
+  overviewSelected: require('./Icons/Navigation/icn-nav-dashboard-white.svg'),
+  schedule: require('./Icons/Navigation/icn-nav-schedule-#E9EEFA.svg'),
+  scheduleSelected: require('./Icons/Navigation/icn-nav-schedule-white.svg'),
   scheduleBlack: require('./Icons/Navigation/icn-nav-schedule.svg'),
-  assets: require('./Icons/Navigation/icn-nav-assets-ivory@2x.png'),
-  reports: require('./Icons/Navigation/icn-nav-reports-ivory@2x.png')
+  assets: require('./Icons/Navigation/icn-nav-assets-#E9EEFA.svg'),
+  assetsSelected: require('./Icons/Navigation/icn-nav-assets-white.svg'),
+  reports: require('./Icons/Navigation/icn-nav-reports-#E9EEFA.svg'),
+  reportsSelected: require('./Icons/Navigation/icn-nav-reports-white.svg')
 }
 
 export const Utilities = {
@@ -24,7 +28,8 @@ export const Utilities = {
   assignMember: require('./Icons/Utilities/Assign Member/icn-utilities-assignmember.svg'),
   more: require('./Icons/Utilities/More/icn-utilities-more.svg'),
   closePanel: require('./Icons/Utilities/Close Panel/icn-utilities-closepanel.svg'),
-  time: require('./Icons/Utilities/Time/icn-utilities-time.svg')
+  time: require('./Icons/Utilities/Time/icn-utilities-time.svg'),
+  arrow: require('./Icons/Utilities/arrow/arrow-down-white.svg')
 }
 
 export const ProjectTypes = {

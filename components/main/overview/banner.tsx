@@ -1,5 +1,5 @@
 import styles from './banner.module.css'
-const defaultBanner = require('../../../assets/images/banner-default-scaled.jpg')
+const defaultBanner = require('../../../assets/Images/banner-default-scaled.jpg')
 
 const Banner = ({ userName }) => (
   <div className={`${styles.container}`}>
