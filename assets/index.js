@@ -39,7 +39,7 @@ export const ProjectTypes = {
 }
 
 export const Placeholders = {
-  profile: require('./Images/ben-parker-OhKElOkQ3RE-unsplash.jpg')
+  profile: require('./images/ben-parker-OhKElOkQ3RE-unsplash.jpg')
 }
 
 export const ItemFields = {
