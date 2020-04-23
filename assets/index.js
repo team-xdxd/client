@@ -23,13 +23,15 @@ export const Navigation = {
 
 export const Utilities = {
   edit: require('./Icons/Utilities/Description-Edit/icn-utilities-description_edit-fill.svg'),
+  editWhite: require('./Icons/Utilities/Description-Edit/icn-utilities-description_edit-fill-white.svg'),
   add: require('./Icons/Utilities/Add +/icn-utilities-add+.svg'),
   comment: require('./Icons/Utilities/Comments/icn-utilities-comments.svg'),
   assignMember: require('./Icons/Utilities/Assign Member/icn-utilities-assignmember.svg'),
   more: require('./Icons/Utilities/More/icn-utilities-more.svg'),
   closePanel: require('./Icons/Utilities/Close Panel/icn-utilities-closepanel.svg'),
   time: require('./Icons/Utilities/Time/icn-utilities-time.svg'),
-  arrow: require('./Icons/Utilities/arrow/arrow-down-white.svg')
+  arrow: require('./Icons/Utilities/arrow/arrow-down-white.svg'),
+  arrowBlue: require('./Icons/Utilities/arrow/arrow-down-blue.svg')
 }
 
 export const ProjectTypes = {
@@ -39,7 +41,7 @@ export const ProjectTypes = {
 }
 
 export const Placeholders = {
-  profile: require('./app-images/ben-parker-OhKElOkQ3RE-unsplash.jpg')
+  profile: require('./Icons/Utilities/Member/icn-utilities-member-white.svg')
 }
 
 export const ItemFields = {

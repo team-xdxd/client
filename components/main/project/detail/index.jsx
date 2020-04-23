@@ -16,6 +16,8 @@ const ProjectDetail = () => {
 
   const [project, setProject] = useState()
 
+  const [projectNames, setProjectNames] = useState([])
+
   const [tasks, setTasks] = useState([])
 
   const [editableFields, setEditableFields] = useState({
@@ -35,6 +37,7 @@ const ProjectDetail = () => {
 
   useEffect(() => {
     getProject()
+    getProjectNames()
   }, [])
 
   const getProject = async () => {
@@ -49,7 +52,19 @@ const ProjectDetail = () => {
     }
   }
 
+  const getProjectNames = async () => {
+    try {
+      const { data } = await projectApi.getProjects()
+      setProjectNames(data.map(project => project.name))
+    } catch (err) {
+      // TODO: Error handling
+    }
+  }
+
   const saveProject = async () => {
+    if (editableFields.name !== project.name && projectNames.includes(editableFields.name)) {
+      return toastUtils.error('A project with that name already exists')
+    }
     try {
       const saveData = {
         name: editableFields.name,
@@ -63,7 +78,9 @@ const ProjectDetail = () => {
         subject: editableFields.subject,
         preheader: editableFields.preheader
       }
-      await projectApi.updateProject(project.id, saveData)
+      const { data } = await projectApi.updateProject(project.id, saveData)
+      getProjectNames()
+      setProject(data)
       toastUtils.success('Project saved sucesfully')
     } catch (err) {
       // TODO: Error handling

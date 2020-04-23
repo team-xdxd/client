@@ -16,6 +16,8 @@ const TaskDetail = () => {
 
   const [task, setTask] = useState()
 
+  const [taskNames, setTaskNames] = useState([])
+
   const [editableFields, setEditableFields] = useState({
     description: '',
     project: null,
@@ -25,6 +27,7 @@ const TaskDetail = () => {
 
   useEffect(() => {
     getTask()
+    getProjectTasks()
   }, [])
 
   const getTask = async () => {
@@ -37,6 +40,15 @@ const TaskDetail = () => {
       setTask(data)
     } catch (err) {
       console.log(err)
+      // TODO: Error handling
+    }
+  }
+
+  const getProjectTasks = async () => {
+    try {
+      const { data } = await taskApi.getTasks()
+      setTaskNames(data.map(task => task.name))
+    } catch (err) {
       // TODO: Error handling
     }
   }

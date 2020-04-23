@@ -27,6 +27,11 @@
   cursor: pointer;
 }
 
+.option img{
+  width: 12px;
+  height: 12px;
+}
+
 .content input, .content textarea  {
   font-weight: 500;
   width: 100%;  

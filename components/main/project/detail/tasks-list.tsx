@@ -1,5 +1,5 @@
 import styles from './tasks-list.module.css'
-import { Utilities, ProjectTypes, ItemFields } from '../../../../assets'
+import { Utilities, ProjectTypes, ItemFields, Navigation } from '../../../../assets'
 import { useState } from 'react'
 import { format } from 'date-fns'
 import Router from 'next/router'
@@ -35,7 +35,7 @@ const TasksList = ({ tasks, createTask, removeTask }) => {
             <div className={styles['task-content']}>
               <span onClick={() => Router.replace(`/main/tasks/${task.id}`)}>{task.name}</span>
               <div className={styles.detail}>
-                <img src={ItemFields.date} />
+                <img src={Navigation.schedule} />
                 <span>{`${task.endDate ? format(new Date(task.endDate), 'EEE MMM d') : 'No date'}`}</span>
               </div>
             </div>
