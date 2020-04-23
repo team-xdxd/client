@@ -30,6 +30,9 @@
 .back {
   display: flex;
   cursor: pointer;
+  padding-left: 12rem;
+  align-items: center;
+  font-weight: 600;
 }
 
 .back:hover {

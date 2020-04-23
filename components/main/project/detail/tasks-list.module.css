@@ -72,6 +72,12 @@
 .detail {
   display: flex;
   margin-top: 8px;
+  align-items: center;
+}
+
+.detail img{
+  width: 12px;
+  height: 12px;
 }
 
 .detail > span {

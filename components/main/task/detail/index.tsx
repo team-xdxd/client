@@ -16,6 +16,8 @@ const TaskDetail = () => {
 
   const [task, setTask] = useState()
 
+  const [taskNames, setTaskNames] = useState([])
+
   const [editableFields, setEditableFields] = useState({
     name: '',
     description: '',
@@ -26,6 +28,7 @@ const TaskDetail = () => {
 
   useEffect(() => {
     getTask()
+    getTaskNames()
   }, [])
 
   const getTask = async () => {
@@ -42,7 +45,19 @@ const TaskDetail = () => {
     }
   }
 
+  const getTaskNames = async () => {
+    try {
+      const { data } = await taskApi.getTasks()
+      setTaskNames(data.map(task => task.name))
+    } catch (err) {
+      // TODO: Error handling
+    }
+  }
+
   const saveTask = async () => {
+    if (editableFields.name !== task?.name && taskNames.includes(editableFields.name)) {
+      return toastUtils.error('A task with that name already exists')
+    }
     try {
       const saveData = {
         name: editableFields.name,
@@ -50,7 +65,9 @@ const TaskDetail = () => {
         endDate: editableFields.endDate,
         projectId: editableFields.project?.id
       }
-      await taskApi.updateTask(task?.id, saveData)
+      const { data } = await taskApi.updateTask(task?.id, saveData)
+      getTaskNames()
+      setTask(data)
       toastUtils.success('Task saved sucesfully')
     } catch (err) {
       // TODO: Error handling

@@ -1,5 +1,5 @@
 import styles from './upcoming-item.module.css'
-import { GeneralImg, Utilities, Navigation } from '../../../assets'
+import { Utilities, Navigation, ItemFields } from '../../../assets'
 import { format } from 'date-fns'
 import Router from 'next/router'
 import { useState } from 'react'
@@ -8,7 +8,7 @@ import { useState } from 'react'
 import StatusBadge from '../../common/misc/status-badge'
 import Dropdown from '../../common/inputs/dropdown'
 
-const UpcomingItem = ({ name, date, status, users, userPhoto = GeneralImg.logo, detailUrl, deleteItem }) => {
+const UpcomingItem = ({ name, date, status, users, userPhoto = ItemFields.member, detailUrl, deleteItem }) => {
 
   const [moreVisible, setMoreVisible] = useState(false)
 
@@ -50,7 +50,7 @@ const UpcomingItem = ({ name, date, status, users, userPhoto = GeneralImg.logo, 
       </div>
       <div className={styles.actions}>
         <img src={Utilities.comment} />
-        <img src={Navigation.scheduleBlack} />
+        <img src={Navigation.scheduleSelected} />
         <img src={Utilities.assignMember} />
         <img className={styles['more-icon']} src={Utilities.more} onClick={toggleVisible} />
         {moreVisible &&

@@ -1,8 +1,9 @@
 import styles from './create-project.module.css'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { useForm } from 'react-hook-form'
 import Router from 'next/router'
 import projectApi from '../../../server-api/project'
+import toastUtils from '../../../utils/toast'
 
 // Components
 import Button from '../../common/buttons/button'
@@ -17,7 +18,19 @@ const CreateProject = () => {
   const [submitError, setSubmitError] = useState('')
   const [type, setType] = useState()
 
+  const [projectNames, setProjectNames] = useState([])
+
+  useEffect(() => {
+    getProjectNames()
+  }, [])
+
   const onSubmit = async projectData => {
+    if (projectNames.includes(projectData.name)) {
+      return toastUtils.error('A project with that name already exists')
+    }
+    if(!type){
+      return toastUtils.error('The project mubst have a type')
+    }
     try {
       const { data } = await projectApi.createProject({ ...projectData, type: type.value })
       Router.replace(`/main/projects/${data.id}`)
@@ -28,6 +41,15 @@ const CreateProject = () => {
       } else {
         setSubmitError('Something went wrong, please try again later')
       }
+    }
+  }
+
+  const getProjectNames = async () => {
+    try {
+      const { data } = await projectApi.getProjects()
+      setProjectNames(data.map(project => project.name))
+    } catch (err) {
+      // TODO: Error handling
     }
   }
 

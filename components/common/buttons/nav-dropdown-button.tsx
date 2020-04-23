@@ -18,7 +18,7 @@ const NavDropdownButton = ({ text, onClick = () => { }, disabled = false, option
         disabled={disabled}
       >
         <span className={styles.icon}>
-          <img src={Utilities.edit} />
+          <img src={Utilities.editWhite} />
         </span>
         <span className={styles.text}>
           {text}

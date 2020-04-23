@@ -16,6 +16,9 @@ const CampaignDetail = () => {
 
   const [campaign, setCampaign] = useState()
 
+  const [campaignNames, setCampaignNames] = useState([])
+
+  const [name, setName] = useState([])
   const [collaborators, setCollaborators] = useState([])
   const [description, setDescription] = useState('')
   const [startDate, setStartDate] = useState()
@@ -25,6 +28,7 @@ const CampaignDetail = () => {
 
   useEffect(() => {
     getCampaign()
+    getCampaignNames()
   }, [])
 
   const getCampaign = async () => {
@@ -38,14 +42,29 @@ const CampaignDetail = () => {
     }
   }
 
-  const saveCampaign = async () => {
+  const getCampaignNames = async () => {
     try {
-      const saveDate = {
+      const { data } = await campaignApi.getCampaigns()
+      setCampaignNames(data.map(campaign => campaign.name))
+    } catch (err) {
+      // TODO: Error handling
+    }
+  }
+
+  const saveCampaign = async () => {
+    if (name !== campaign.name && campaignNames.includes(name)) {
+      return toastUtils.error('A campaign with that name already exists')
+    }
+    try {
+      const saveData = {
         description,
         endDate,
-        startDate
+        startDate,
+        name
       }
-      await campaignApi.updateCampaign(campaign.id, saveDate)
+      const { data } = await campaignApi.updateCampaign(campaign.id, saveData)
+      getCampaignNames()
+      setCampaign(data)
       toastUtils.success('Campaign saved sucesfully')
     } catch (err) {
       // TODO: Error handling
@@ -54,6 +73,7 @@ const CampaignDetail = () => {
 
   const setCampaignData = (data) => {
     // TODO: get the correct owner
+    setName(data.name)
     setOwner(data.users[0])
     setCollaborators(data.users)
     setDescription(data.description)
@@ -92,8 +112,9 @@ const CampaignDetail = () => {
   return (
     <>
       <ItemSubheader
-        title={campaign?.name}
+        title={name}
         saveDraft={saveCampaign}
+        changeName={(name) => setName(name)}
       />
       <main className={`${styles.container}`}>
         <ItemSublayout >

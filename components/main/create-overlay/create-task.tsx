@@ -1,8 +1,9 @@
 import styles from './create-task.module.css'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { useForm } from 'react-hook-form'
 import Router from 'next/router'
 import taskApi from '../../../server-api/task'
+import toastUtils from '../../../utils/toast'
 
 // Components
 import Button from '../../common/buttons/button'
@@ -13,9 +14,17 @@ const CreateTask = () => {
 
   const { control, handleSubmit, errors } = useForm()
   const [submitError, setSubmitError] = useState('')
-  const [type, setType] = useState()
+
+  const [taskNames, setTaskNames] = useState([])
+
+  useEffect(() => {
+    getTaskNames()
+  }, [])
 
   const onSubmit = async taskData => {
+    if (taskNames.includes(taskData.name)) {
+      return toastUtils.error('A task with that name already exists')
+    }
     try {
       const { data } = await taskApi.createTask(taskData)
       Router.replace(`/main/tasks/${data.id}`)
@@ -26,6 +35,15 @@ const CreateTask = () => {
       } else {
         setSubmitError('Something went wrong, please try again later')
       }
+    }
+  }
+
+  const getTaskNames = async () => {
+    try {
+      const { data } = await taskApi.getTasks()
+      setTaskNames(data.map(task => task.name))
+    } catch (err) {
+      // TODO: Error handling
     }
   }
 

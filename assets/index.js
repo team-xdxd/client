@@ -14,7 +14,7 @@ export const Navigation = {
   overviewSelected: require('./Icons/Navigation/icn-nav-dashboard-white.svg'),
   schedule: require('./Icons/Navigation/icn-nav-schedule-#E9EEFA.svg'),
   scheduleSelected: require('./Icons/Navigation/icn-nav-schedule-white.svg'),
-  scheduleBlack: require('./Icons/Navigation/icn-nav-schedule.svg'),
+  scheduleBlack: require('./Icons/Navigation/icn-nav-schedule-black.svg'),
   assets: require('./Icons/Navigation/icn-nav-assets-#E9EEFA.svg'),
   assetsSelected: require('./Icons/Navigation/icn-nav-assets-white.svg'),
   reports: require('./Icons/Navigation/icn-nav-reports-#E9EEFA.svg'),
@@ -23,6 +23,7 @@ export const Navigation = {
 
 export const Utilities = {
   edit: require('./Icons/Utilities/Description-Edit/icn-utilities-description_edit-fill.svg'),
+  editWhite: require('./Icons/Utilities/Description-Edit/icn-utilities-description_edit-fill-white.svg'),
   add: require('./Icons/Utilities/Add +/icn-utilities-add+.svg'),
   comment: require('./Icons/Utilities/Comments/icn-utilities-comments.svg'),
   assignMember: require('./Icons/Utilities/Assign Member/icn-utilities-assignmember.svg'),
@@ -30,6 +31,7 @@ export const Utilities = {
   closePanel: require('./Icons/Utilities/Close Panel/icn-utilities-closepanel.svg'),
   time: require('./Icons/Utilities/Time/icn-utilities-time.svg'),
   arrow: require('./Icons/Utilities/arrow/arrow-down-white.svg'),
+  arrowBlue: require('./Icons/Utilities/arrow/arrow-down-blue.svg'),
   arrowDark: require('./Icons/Utilities/arrow/arrow-down-dark.svg')
 }
 
@@ -40,7 +42,7 @@ export const ProjectTypes = {
 }
 
 export const Placeholders = {
-  profile: require('./app-images/ben-parker-OhKElOkQ3RE-unsplash.jpg')
+  profile: require('./Icons/Utilities/Member/icn-utilities-member-white.svg')
 }
 
 export const ItemFields = {
