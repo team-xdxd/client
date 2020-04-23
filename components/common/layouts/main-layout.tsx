@@ -29,25 +29,29 @@ const AuthLayout = ({ children }) => {
           <HeaderLink
             active={Router.pathname.indexOf('overview') !== -1}
             href='/main/overview'
-            img={Navigation.overview}
+            img={Router.pathname.indexOf('overview') !== -1 ? Navigation.overviewSelected : Navigation.overview }
+            imgHover={Navigation.overviewSelected}
             text='Overview'
           />
           <HeaderLink
             active={Router.pathname.indexOf('schedule') !== -1}
             href='/main/schedule'
-            img={Navigation.schedule}
+            img={Router.pathname.indexOf('schedule') !== -1 ? Navigation.scheduleSelected : Navigation.schedule}
+            imgHover={Navigation.scheduleSelected}
             text='Schedule'
           />
           <HeaderLink
             active={Router.pathname.indexOf('assets') !== -1}
             href='/main/assets'
-            img={Navigation.assets}
+            img={Router.pathname.indexOf('assets') !== -1 ? Navigation.assetsSelected : Navigation.assets}
+            imgHover={Navigation.assetsSelected}
             text='Assets'
           />
           <HeaderLink
             active={Router.pathname.indexOf('reports') !== -1}
             href='/main/reports'
-            img={Navigation.reports}
+            img={Router.pathname.indexOf('reports') !== -1 ? Navigation.reportsSelected : Navigation.reports}
+            imgHover={Navigation.reportsSelected}
             text='Reports'
           />
         </ul>

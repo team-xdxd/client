@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import styles from './nav-dropdown-button.module.css'
-import { GeneralImg, Utilities } from '../../../assets'
+import { Utilities } from '../../../assets'
 
 const NavDropdownButton = ({ text, onClick = () => { }, disabled = false, options = [] }) => {
 
@@ -27,7 +27,7 @@ const NavDropdownButton = ({ text, onClick = () => { }, disabled = false, option
           e.stopPropagation()
           toggleIsOpen()
         }}>
-          <img src={GeneralImg.logo} />
+          <img src={Utilities.arrow} />
         </span>
         {isOpen &&
           <ul className={styles.menu}>
