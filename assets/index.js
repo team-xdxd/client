@@ -31,7 +31,8 @@ export const Utilities = {
   closePanel: require('./Icons/Utilities/Close Panel/icn-utilities-closepanel.svg'),
   time: require('./Icons/Utilities/Time/icn-utilities-time.svg'),
   arrow: require('./Icons/Utilities/arrow/arrow-down-white.svg'),
-  arrowBlue: require('./Icons/Utilities/arrow/arrow-down-blue.svg')
+  arrowBlue: require('./Icons/Utilities/arrow/arrow-down-blue.svg'),
+  arrowDark: require('./Icons/Utilities/arrow/arrow-down-dark.svg')
 }
 
 export const ProjectTypes = {
