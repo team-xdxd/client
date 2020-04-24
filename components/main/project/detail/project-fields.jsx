@@ -97,7 +97,7 @@ const ProjectFields = ({
   }
 
   const handleChannelChange = (selected) => {
-    editFields('channel', selected.label)
+    editFields('channel', selected.value)
     toggleActiveInput('channel')
   }
 
@@ -209,7 +209,7 @@ const ProjectFields = ({
         <div className={'field'}>
           <ItemFieldWrapper
             title='Social Channel'
-            image={ProjectTypeChannel.social}
+            image={channel && ProjectTypeChannel[channel] ? ProjectTypeChannel[channel] : ProjectTypeChannel.social}
             hasOption={true}
             optionOnClick={() => toggleActiveInput('channel')}
           >
@@ -218,9 +218,9 @@ const ProjectFields = ({
               <div className={'dropdown'}>
                 <Dropdown
                   options={project.type === 'social' ?
-                    channelSocialOptions.map(option => ({ label: capitalCase(option) }))
+                    channelSocialOptions.map(option => ({ label: capitalCase(option), value: option }))
                     :
-                    channelAdsOptions.map(option => ({ label: capitalCase(option) }))
+                    channelAdsOptions.map(option => ({ label: capitalCase(option), value: option }))
                   }
                   onClick={handleChannelChange}
                 />

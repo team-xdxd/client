@@ -10,7 +10,7 @@ const Upcoming = ({ type, items = [], addOnClick = () => { }, deleteItem }) => (
     <div className={styles.heading}>
       <h4>Upcoming {capitalCase(`${type}s`)}</h4>
       <div className={styles.action}>
-        <img src={Utilities.add} />
+        <img src={Utilities.addLight} />
         <span onClick={addOnClick}>
           Add {capitalCase(type)}
         </span>

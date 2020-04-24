@@ -36,6 +36,8 @@
   font-weight: 500;
   width: 100%;  
   border: none;
+  outline: none;
+  cursor: pointer;
   padding: 10px;
   background-color: inherit;
   color: var(--color-prim-navy);

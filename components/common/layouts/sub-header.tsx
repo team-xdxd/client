@@ -18,6 +18,7 @@ const SubHeader = ({ pageTitle, titleOnchange = (e) => { }, children }) => {
         <input
           ref={inputRef}
           value={pageTitle}
+          minLength={1}
           maxLength={30}
           onChange={titleOnchange} />
       </h1>
