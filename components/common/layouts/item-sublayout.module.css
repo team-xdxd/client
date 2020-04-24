@@ -35,6 +35,7 @@
 }
 
 .side-component {
+  width: min-content;
   border-left: 1px solid var(--color-secondary-border);
 }
 
