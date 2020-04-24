@@ -55,6 +55,9 @@ const TaskDetail = () => {
   }
 
   const saveTask = async () => {
+    if (!editableFields.name) {
+      return toastUtils.error('The name cannot be empty')
+    }
     if (editableFields.name !== task?.name && taskNames.includes(editableFields.name)) {
       return toastUtils.error('A task with that name already exists')
     }

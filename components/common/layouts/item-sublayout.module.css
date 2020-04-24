@@ -19,7 +19,8 @@
 }
 
 .heading .double {
-  width: 70rem;
+  max-width: 70rem;
+  width: 70%;
 }
 
 .heading h4 {
@@ -38,17 +39,45 @@
 }
 
 .side-bar {
-  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   background-color: var(--color-sec-lightivory);
   border-left: 1px solid var(--color-secondary-border);
-  width: 45px;
+  width: 60px;
   padding: 30px 0;
+}
+
+.separator {
+  height: 1px;
+  width: 70%;
+  border-bottom: 1px solid var(--color-sec-blue);
 }
 
 .side-bar img {
   width: 20px;
-  height: auto;
-  margin-bottom: 2rem;
+  height: auto;  
+}
+
+.side-bar>div:first-child img {
+  padding-bottom: 15px;
+  margin-bottom: 15px;
+}
+
+.elements{
+  padding-top: 30px;
+}
+
+.elements img{
+  margin-bottom: 10px;
+}
+
+.elements img:last-child{
+  margin-bottom: 30px;
+}
+
+.more{
+  padding-top: 30px;
 }
 
 .children {

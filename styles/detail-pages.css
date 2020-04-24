@@ -4,6 +4,7 @@
   flex-flow: row wrap;
   justify-content: center;
   flex-wrap: wrap;
+  width: 70%;
   max-width: 70rem;
 }
 

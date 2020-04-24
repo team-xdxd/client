@@ -49,10 +49,10 @@ const UpcomingItem = ({ name, date, status, users, userPhoto = ItemFields.member
         <StatusBadge status={status} />
       </div>
       <div className={styles.actions}>
-        <img src={Utilities.comment} />
-        <img src={Navigation.scheduleSelected} />
-        <img src={Utilities.assignMember} />
-        <img className={styles['more-icon']} src={Utilities.more} onClick={toggleVisible} />
+        <img src={Utilities.commentLight} />
+        <img src={Navigation.scheduleLight} />
+        <img src={Utilities.assignMemberLight} />
+        <img className={styles['more-icon']} src={Utilities.moreLighter} onClick={toggleVisible} />
         {moreVisible &&
           <div className={styles.more}>
             <Dropdown

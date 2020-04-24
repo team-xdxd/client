@@ -4,7 +4,9 @@ import styles from './index.module.css'
 import Link from 'next/link'
 import update from 'immutability-helper'
 import projectApi from '../../../../server-api/project'
+import taskApi from '../../../../server-api/task'
 import toastUtils from '../../../../utils/toast'
+import { ProjectTypes } from '../../../../assets'
 
 // Components
 import ItemSubheader from '../../../common/items/item-subheader'
@@ -62,6 +64,9 @@ const ProjectDetail = () => {
   }
 
   const saveProject = async () => {
+    if (!editableFields.name) {
+      return toastUtils.error('The name cannot be empty')
+    }
     if (editableFields.name !== project.name && projectNames.includes(editableFields.name)) {
       return toastUtils.error('A project with that name already exists')
     }
@@ -134,9 +139,21 @@ const ProjectDetail = () => {
     }
   }
 
-  const removeTask = async (taskId) => {
+  const updateTask = async (index, data) => {
     try {
-      await projectApi.removeTask(project.id, taskId)
+      console.log(index)
+      console.log(data)
+      const updateResponse = await taskApi.updateTask(tasks[index].id, data)
+      setTasks(update(tasks, { [index]: { $set: updateResponse.data } }))
+    } catch (err) {
+      // TODO: Error if failure for whatever reason
+    }
+  }
+
+  const removeTask = async (index) => {
+    try {
+      await taskApi.deleteTask(tasks[index].id)
+      setTasks(update(tasks, { $splice: [[index, 1]] }))
     } catch (err) {
       // TODO: Error if failure for whatever reason
     }
@@ -158,11 +175,15 @@ const ProjectDetail = () => {
       />
       <main className={`${styles.container}`}>
         <ItemSublayout
+          navElements={[
+            { icon: ProjectTypes.task }
+          ]}
           SideComponent={
             <TasksList
               tasks={tasks}
               createTask={createTask}
               removeTask={removeTask}
+              updateTask={updateTask}
             />
           }
         >

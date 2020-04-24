@@ -52,6 +52,9 @@ const CampaignDetail = () => {
   }
 
   const saveCampaign = async () => {
+    if (!name) {
+      return toastUtils.error('The name cannot be empty')
+    }
     if (name !== campaign.name && campaignNames.includes(name)) {
       return toastUtils.error('A campaign with that name already exists')
     }

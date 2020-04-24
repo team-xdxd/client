@@ -27,15 +27,17 @@ const ItemSublayout = ({ SideComponent = null, sideActive = true, navElements = 
 
       <div className={styles['side-bar']}>
         <div>
-          <img src={Utilities.closePanel} />
+          <img src={Utilities.closePanelLight} />
         </div>
-        <div>
+        <div className={styles.separator}></div>
+        <div className={styles.elements}>
           {navElements.map((navElement, index) => (
             <img key={index} src={navElement.icon} onClick={navElement.onClick} />
           ))}
         </div>
-        <div>
-          <img src={Utilities.more} />
+        <div className={styles.separator}></div>
+        <div className={styles.more}>
+          <img src={Utilities.moreLight} />
         </div>
       </div>
     </div>
