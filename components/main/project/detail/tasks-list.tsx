@@ -89,8 +89,7 @@ const TasksList = ({ tasks = [], createTask, removeTask, updateTask }) => {
 
   const completedTasks = tasks.filter(task => task.status === 'complete')
   const completedPercentage = tasks.length > 0 ? completedTasks.length / tasks.length * 100 : 0
-  console.log(completedTasks)
-  console.log(completedPercentage)
+
   return (
     <div className={styles.container}>
       <div className={styles.title}>

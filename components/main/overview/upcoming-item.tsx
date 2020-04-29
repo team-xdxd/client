@@ -22,7 +22,9 @@ const UpcomingItem = ({ name, date, status, users, userPhoto = ItemFields.member
   }
 
   const setDropdownOpen = (e, visible) => {
-    e.stopPropagation()
+    if (e) {
+      e.stopPropagation()
+    }
     setMoreVisible(visible)
     if (visible) {
       document.addEventListener("mousedown", handleClickOutside);
@@ -73,8 +75,8 @@ const UpcomingItem = ({ name, date, status, users, userPhoto = ItemFields.member
           <div className={styles.more} ref={wrapperRef}>
             <Dropdown
               options={[{ label: 'Delete' }]}
-              onClick={(e) => {
-                setDropdownOpen(e, false)
+              onClick={() => {
+                setDropdownOpen(null, false)
                 deleteItem()
               }}
             />
