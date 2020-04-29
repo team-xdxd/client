@@ -9,7 +9,7 @@
 
 .menu li {
   text-align: left;
-  min-width: 175px;
+  min-width: 150px;
   display: flex;
   padding: 0 12px;
   cursor: pointer;
