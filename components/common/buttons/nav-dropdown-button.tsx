@@ -1,20 +1,38 @@
-import { useState } from 'react'
+import { useState, useRef } from 'react'
 import styles from './nav-dropdown-button.module.css'
 import { Utilities } from '../../../assets'
 
 const NavDropdownButton = ({ text, onClick = () => { }, disabled = false, options = [] }) => {
 
+  const buttonRef = useRef(null)
+  const wrapperRef = useRef(null)
+
   const [isOpen, setIsOpen] = useState(false)
 
-  const toggleIsOpen = () => {
-    setIsOpen(!isOpen)
+  const handleClickOutside = (event) => {
+    if (wrapperRef.current && !wrapperRef.current.contains(event.target) && !buttonRef.current.contains(event.target)) {
+      setIsOpen(false)
+    }
+  }
+
+  const setDropdownOpen = (e, visible) => {
+    e.stopPropagation()
+    setIsOpen(visible)
+    if (visible) {
+      document.addEventListener("mousedown", handleClickOutside);
+    } else {
+      document.removeEventListener("mousedown", handleClickOutside);
+    }
   }
 
   return (
     <>
       <button
         className={styles.container}
-        onClick={onClick}
+        ref={buttonRef}
+        onClick={(e) => {
+          setDropdownOpen(e, !isOpen)
+        }}
         disabled={disabled}
       >
         <span className={styles.icon}>
@@ -23,14 +41,11 @@ const NavDropdownButton = ({ text, onClick = () => { }, disabled = false, option
         <span className={styles.text}>
           {text}
         </span>
-        <span className={styles.dropdown} onClick={(e) => {
-          e.stopPropagation()
-          toggleIsOpen()
-        }}>
+        <span className={styles.dropdown} >
           <img src={Utilities.arrow} />
         </span>
         {isOpen &&
-          <ul className={styles.menu}>
+          <ul className={styles.menu} ref={wrapperRef}>
             {options.map((option, index) => (
               <li key={index} onClick={(e) => {
                 e.stopPropagation()

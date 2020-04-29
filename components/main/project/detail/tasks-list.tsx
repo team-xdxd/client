@@ -1,6 +1,6 @@
 import styles from './tasks-list.module.css'
 import { Utilities, ProjectTypes, ItemFields, Navigation } from '../../../../assets'
-import { useState } from 'react'
+import { useState, useRef } from 'react'
 import DayPicker from 'react-day-picker'
 import { format } from 'date-fns'
 import { Line } from 'rc-progress'
@@ -32,15 +32,50 @@ const TasksList = ({ tasks = [], createTask, removeTask, updateTask }) => {
     setVisibleTaskDateIndex(-1)
   }
 
-  const toggleVisibleTaskDateIndex = (index) => {
-    if (visibleTaskDateIndex === index) return setVisibleTaskDateIndex(-1)
-    setVisibleTaskDateIndex(index)
+
+
+  const buttonRefMore = useRef(null)
+  const wrapperRefMore = useRef(null)
+
+  const handleClickOutsideMore = (event) => {
+    if (wrapperRefMore.current && !wrapperRefMore.current.contains(event.target) && !buttonRefMore.current.contains(event.target)) {
+      setVisibleMoreIndex(-1)
+    }
   }
 
-  const toggleVisibleMoreIndex = (index) => {
-    if (visibleMoreIndex === index) return setVisibleMoreIndex(-1)
-    setVisibleMoreIndex(index)
+  const setVisibleMoreIndexAct = (e, index) => {
+    e.stopPropagation()
+    const newIndex = index === visibleMoreIndex ? -1 : index
+    setVisibleMoreIndex(newIndex)
+    if (index !== -1) {
+      document.addEventListener("mousedown", handleClickOutsideMore);
+    } else {
+      document.removeEventListener("mousedown", handleClickOutsideMore);
+    }
   }
+
+  const buttonRefDate = useRef(null)
+  const wrapperRefDate = useRef(null)
+
+  const handleClickOutsideDate = (event) => {
+    if (wrapperRefDate.current && !wrapperRefDate.current.contains(event.target) && !buttonRefDate.current.contains(event.target)) {
+      setVisibleTaskDateIndex(-1)
+    }
+  }
+
+  const setVisibleDateIndexAct = (e, index) => {
+    e.stopPropagation()    
+    const newIndex = index === visibleTaskDateIndex ? -1 : index
+    console.log(newIndex)
+    setVisibleTaskDateIndex(newIndex)
+    if (index !== -1) {
+      document.addEventListener("mousedown", handleClickOutsideDate);
+    } else {
+      document.removeEventListener("mousedown", handleClickOutsideDate);
+    }
+  }
+
+
 
   const completedTasks = tasks.filter(task => task.status === 'comleted')
   const completedPercentage = tasks.length > 0 ? completedTasks / tasks.length * 100 : 0
@@ -84,18 +119,18 @@ const TasksList = ({ tasks = [], createTask, removeTask, updateTask }) => {
                 visibleMoreIndex === index)
               && styles.visible}`}>
               <img src={Utilities.assignMember} />
-              <img src={Navigation.schedulePrimary} onClick={() => toggleVisibleTaskDateIndex(index)} />
-              <img src={Utilities.more} onClick={() => toggleVisibleMoreIndex(index)} />
+              <img ref={buttonRefDate} src={Navigation.schedulePrimary} onClick={(e) => setVisibleDateIndexAct(e, index)} />
+              <img ref={buttonRefMore} src={Utilities.more} onClick={(e) => setVisibleMoreIndexAct(e, index)} />
             </div>
             {visibleTaskDateIndex === index &&
-              <div className={styles['item-date']}>
+              <div className={styles['item-date']} ref={wrapperRefDate}>
                 <DayPicker
                   selectedDays={task.endDate && new Date(task.endDate)}
                   onDayClick={handleDayClick} />
               </div>
             }
             {visibleMoreIndex === index &&
-              <div className={styles['item-more']}>
+              <div className={styles['item-more']} ref={wrapperRefMore}>
                 <Dropdown
                   options={[{ label: 'Delete' }]}
                   onClick={() => {

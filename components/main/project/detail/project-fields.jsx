@@ -150,7 +150,7 @@ const ProjectFields = ({
               selectedDays={publishDate}
               disabledDays={
                 {
-                  after: startDate && new Date(startDate),
+                  before: startDate && new Date(startDate),
                 }
               }
               onDayClick={handlePublishDayClick} />
@@ -164,7 +164,8 @@ const ProjectFields = ({
               title='Subject'
               image={ItemFields.description}
             >
-              <input
+              <textarea
+                rows={subject?.length > 0 ? Math.ceil(subject.length / 25) : 1}
                 value={subject}
                 onChange={(e) => editFields('subject', e.target.value)}
                 placeholder='Enter Subject'
@@ -178,7 +179,8 @@ const ProjectFields = ({
               title='Preheader'
               image={ItemFields.description}
             >
-              <input
+              <textarea
+                rows={preheader?.length > 0 ? Math.ceil(preheader.length / 25) : 1}
                 value={preheader}
                 onChange={(e) => editFields('preheader', e.target.value)}
                 placeholder='Enter Preheader'
@@ -195,7 +197,8 @@ const ProjectFields = ({
             title='Headline'
             image={ItemFields.description}
           >
-            <input
+            <textarea
+              rows={headline?.length > 0 ? Math.ceil(headline.length / 25) : 1}
               value={headline}
               onChange={(e) => editFields('headline', e.target.value)}
               placeholder='Enter Headline'

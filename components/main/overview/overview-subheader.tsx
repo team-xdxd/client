@@ -30,7 +30,7 @@ const OverviewSubHeader = ({ status = '', openCreateOVerlay }) => {
   ]
 
   return (
-    <SubHeader pageTitle='Dashboard'>
+    <SubHeader pageTitle='Dashboard' inputDisabled={true}>
       <div className={styles['header-additional']}>
       </div>
       <NavDropdownButton
