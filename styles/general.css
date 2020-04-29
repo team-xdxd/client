@@ -201,3 +201,8 @@ ul {
 
 .select-prefix__option {
 }
+
+.ReactModal__Html--open,
+.ReactModal__Body--open {
+  overflow: hidden; /* prevents background page from scrolling when the modal is open */
+}

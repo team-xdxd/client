@@ -2,7 +2,7 @@ import styles from './upcoming-item.module.css'
 import { Utilities, Navigation, ItemFields } from '../../../assets'
 import { format } from 'date-fns'
 import Router from 'next/router'
-import { useState } from 'react'
+import { useState, useRef } from 'react'
 
 // Component
 import StatusBadge from '../../common/misc/status-badge'
@@ -12,8 +12,23 @@ const UpcomingItem = ({ name, date, status, users, userPhoto = ItemFields.member
 
   const [moreVisible, setMoreVisible] = useState(false)
 
-  const toggleVisible = () => {
-    setMoreVisible(!moreVisible)
+  const buttonRef = useRef(null)
+  const wrapperRef = useRef(null)
+
+  const handleClickOutside = (event) => {
+    if (wrapperRef.current && !wrapperRef.current.contains(event.target) && !buttonRef.current.contains(event.target)) {
+      setMoreVisible(false)
+    }
+  }
+
+  const setDropdownOpen = (e, visible) => {
+    e.stopPropagation()
+    setMoreVisible(visible)
+    if (visible) {
+      document.addEventListener("mousedown", handleClickOutside);
+    } else {
+      document.removeEventListener("mousedown", handleClickOutside);
+    }
   }
 
   return (
@@ -52,13 +67,14 @@ const UpcomingItem = ({ name, date, status, users, userPhoto = ItemFields.member
         <img src={Utilities.commentLight} />
         <img src={Navigation.scheduleLight} />
         <img src={Utilities.assignMemberLight} />
-        <img className={styles['more-icon']} src={Utilities.moreLighter} onClick={toggleVisible} />
+        <img ref={buttonRef} className={styles['more-icon']} src={Utilities.moreLighter}
+          onClick={(e) => setDropdownOpen(e, !moreVisible)} />
         {moreVisible &&
-          <div className={styles.more}>
+          <div className={styles.more} ref={wrapperRef}>
             <Dropdown
               options={[{ label: 'Delete' }]}
-              onClick={() => {
-                toggleVisible()
+              onClick={(e) => {
+                setDropdownOpen(e, false)
                 deleteItem()
               }}
             />

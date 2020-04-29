@@ -1,4 +1,4 @@
-import { useState, useContext } from 'react'
+import { useState, useContext, useRef } from 'react'
 import styles from './main-layout.module.css'
 import Link from 'next/link'
 import { GeneralImg, Navigation, Placeholders } from '../../../assets'
@@ -10,12 +10,29 @@ import HeaderLink from '../layouts/header-link'
 import Dropdown from '../inputs/dropdown'
 
 const AuthLayout = ({ children }) => {
-  const [userDropdownVisible, setUserDropdownVisible] = useState(false)
   const { user, logOut } = useContext(UserContext)
 
-  const toggleUserDropdown = () => {
-    setUserDropdownVisible(!userDropdownVisible)
+  const [dropdownVisible, setDropdownVisible] = useState(false)
+
+  const buttonRef = useRef(null)
+  const wrapperRef = useRef(null)
+
+  const handleClickOutside = (event) => {
+    if (wrapperRef.current && !wrapperRef.current.contains(event.target) && !buttonRef.current.contains(event.target)) {
+      setDropdownVisible(false)
+    }
   }
+
+  const setDropdownOpen = (e, visible) => {
+    e.stopPropagation()
+    setDropdownVisible(visible)
+    if (visible) {
+      document.addEventListener("mousedown", handleClickOutside);
+    } else {
+      document.removeEventListener("mousedown", handleClickOutside);
+    }
+  }
+
 
   return (
     <>
@@ -29,7 +46,7 @@ const AuthLayout = ({ children }) => {
           <HeaderLink
             active={Router.pathname.indexOf('overview') !== -1}
             href='/main/overview'
-            img={Router.pathname.indexOf('overview') !== -1 ? Navigation.overviewSelected : Navigation.overview }
+            img={Router.pathname.indexOf('overview') !== -1 ? Navigation.overviewSelected : Navigation.overview}
             imgHover={Navigation.overviewSelected}
             text='Overview'
           />
@@ -60,13 +77,15 @@ const AuthLayout = ({ children }) => {
             className={styles.notifications}
             src={Navigation.alert} />
         </div>
-        <div className={styles.user} onClick={toggleUserDropdown}>
+        <div className={styles.user}
+          ref={buttonRef}
+          onClick={(e) => setDropdownOpen(e, !dropdownVisible)}>
           <img
             className={styles.profile}
             src={Placeholders.profile} />
           {user?.name}
-          {userDropdownVisible &&
-            <div className={styles['user-dropdown']}>
+          {dropdownVisible &&
+            <div ref={wrapperRef} className={styles['user-dropdown']}>
               <Dropdown
                 options={[{ label: 'Log Out' }]}
                 onClick={logOut}

@@ -22,11 +22,11 @@
   color: var(--color-sec-blue);
 }
 
-.copleted {
+.completed {
   position: relative;
 }
 
-.copleted::after {
+.completed::after {
   content: "";
   border-bottom: 2px solid var(--color-prim-navy);
   position: absolute;

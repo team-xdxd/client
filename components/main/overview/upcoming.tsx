@@ -1,12 +1,16 @@
+import { useState } from 'react'
 import styles from './upcoming.module.css'
 import { capitalCase } from 'change-case'
 import { GeneralImg, Utilities } from '../../../assets'
 
 // Components
 import UpcomingItem from './upcoming-item'
+import ConfirmModal from '../../common/modals/confirm-modal'
 
-const Upcoming = ({ type, items = [], addOnClick = () => { }, deleteItem }) => (
-  <div className={`${styles.container}`}>
+const Upcoming = ({ type, items = [], addOnClick = () => { }, deleteItem }) => {
+  const [activeIndex, setActiveIndex] = useState(-1)
+
+  return <div className={`${styles.container}`}>
     <div className={styles.heading}>
       <h4>Upcoming {capitalCase(`${type}s`)}</h4>
       <div className={styles.action}>
@@ -25,7 +29,7 @@ const Upcoming = ({ type, items = [], addOnClick = () => { }, deleteItem }) => (
             name={item.name}
             status={item.status}
             users={item.users}
-            deleteItem={() => deleteItem(index)}
+            deleteItem={() => setActiveIndex(index)}
             detailUrl={`/main/${type}s/${item.id}`}
           />
         ))}
@@ -35,7 +39,21 @@ const Upcoming = ({ type, items = [], addOnClick = () => { }, deleteItem }) => (
         {`No ${capitalCase(type)}s`}
       </span>
     }
+    <ConfirmModal
+      closeModal={() => setActiveIndex(-1)}
+      confirmAction={() => {
+        deleteItem(activeIndex)
+        setActiveIndex(-1)
+      }}
+      confirmText={'Delete'}
+      message={
+        <span>
+          Are you sure you want to &nbsp;<strong>Delete</strong>&nbsp; 1 {type}?
+        </span>
+      }
+      modalIsOpen={activeIndex !== -1}
+    />
   </div>
-)
+}
 
 export default Upcoming
