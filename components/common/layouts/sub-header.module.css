@@ -5,8 +5,12 @@
   background-color: var(--color-prim-navy);
 }
 
-.container h1 {  
-  color: var(--color-sec-ivory);  
+.container h1 {
+  color: var(--color-sec-ivory);
+}
+
+.container h1 input {
+  font-weight: 600;
 }
 
 .container input {

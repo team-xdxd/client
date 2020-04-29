@@ -41,6 +41,23 @@
   height: 20px;
 }
 
+.task-status {
+  cursor: pointer;
+}
+
+.complete .task-content > span {
+  position: relative;
+}
+
+.complete .task-content > span::after {
+  content: "";
+  border-bottom: 2px solid var(--color-prim-navy);
+  position: absolute;
+  left: 0;
+  top: 45%;
+  width: 100%;
+}
+
 .add {
   display: flex;
   align-items: center;

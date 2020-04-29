@@ -165,10 +165,14 @@ ul {
   background-color: var(--color-sec-lightivory);
   padding: 0 12px;
   min-height: 70px;
+  border-top-left-radius: 5px;
+  border-bottom-left-radius: 5px;
 }
 
 .item .select-prefix__value-container {
   min-height: 48px;
+  border-top-left-radius: 5px;
+  border-bottom-left-radius: 5px;
 }
 
 .select-prefix__indicators {
@@ -178,6 +182,8 @@ ul {
 
 .regular .select-prefix__indicators {
   background-color: var(--color-sec-lightivory);
+  border-top-right-radius: 5px;
+  border-bottom-right-radius: 5px;
 }
 
 .select-prefix__menu {
@@ -194,4 +200,9 @@ ul {
 }
 
 .select-prefix__option {
+}
+
+.ReactModal__Html--open,
+.ReactModal__Body--open {
+  overflow: hidden; /* prevents background page from scrolling when the modal is open */
 }

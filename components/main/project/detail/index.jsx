@@ -126,6 +126,7 @@ const ProjectDetail = () => {
       editFields('tags', update(editableFields.tags, { $splice: [[index, 1]] }))
       await projectApi.removeTag(project.id, editableFields.tags[index].id)
     } catch (err) {
+      console.log(err)
       // TODO: Error if failure for whatever reason
     }
   }
@@ -135,6 +136,7 @@ const ProjectDetail = () => {
       const newTaskResponse = await projectApi.addtask(project.id, data)
       setTasks(update(tasks, { $push: [newTaskResponse.data] }))
     } catch (err) {
+      console.log(err)
       // TODO: Error if failure for whatever reason
     }
   }
@@ -142,10 +144,11 @@ const ProjectDetail = () => {
   const updateTask = async (index, data) => {
     try {
       console.log(index)
-      console.log(data)
       const updateResponse = await taskApi.updateTask(tasks[index].id, data)
+      console.log(updateResponse)
       setTasks(update(tasks, { [index]: { $set: updateResponse.data } }))
     } catch (err) {
+      console.log(err)
       // TODO: Error if failure for whatever reason
     }
   }

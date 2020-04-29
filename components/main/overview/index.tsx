@@ -94,16 +94,16 @@ const Overview = () => {
           />
           {/* TODO: Add Chart in a future milestone */}
           <Upcoming
-            type='campaign'
-            items={campaigns.slice(0, 5)}
-            addOnClick={() => openCreateOVerlay('campaign')}
-            deleteItem={deleteCampaign}
-          />
-          <Upcoming
             type='project'
             items={projects.slice(0, 5)}
             addOnClick={() => openCreateOVerlay('project')}
             deleteItem={deleteProject}
+          />
+          <Upcoming
+            type='campaign'
+            items={campaigns.slice(0, 5)}
+            addOnClick={() => openCreateOVerlay('campaign')}
+            deleteItem={deleteCampaign}
           />
         </section>
         <section className={styles['second-section']}>

@@ -1,7 +1,7 @@
 import styles from './sub-header.module.css'
 import { useRef, useEffect } from 'react'
 
-const SubHeader = ({ pageTitle, titleOnchange = (e) => { }, children }) => {
+const SubHeader = ({ pageTitle, titleOnchange = (e) => { }, children, inputDisabled = false }) => {
   const inputRef = useRef()
   const resizeFn = () => { inputRef.current.style.width = ((pageTitle.length + 1) * 24) + 'px'; }
 
@@ -20,6 +20,7 @@ const SubHeader = ({ pageTitle, titleOnchange = (e) => { }, children }) => {
           value={pageTitle}
           minLength={1}
           maxLength={30}
+          disabled={inputDisabled}
           onChange={titleOnchange} />
       </h1>
       {children}

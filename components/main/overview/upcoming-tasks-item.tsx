@@ -20,7 +20,7 @@ const UpcomingTasksItem = ({ name, status, date, detailUrl }) => {
       <div className={styles['name-status']}>
         <span
           onClick={() => Router.replace(detailUrl)}
-          className={`${styles.name} ${status === 'completed' && styles.copleted}`}>
+          className={`${styles.name} ${status === 'complete' && styles.completed}`}>
           {name}
         </span>
         <span className={styles.status}>
