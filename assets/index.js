@@ -73,4 +73,5 @@ export const ProjectTypeChannel = {
   instagram: require('./Icons/Project Type/Social/icn-social-instagram.svg'),
   pinterest: require('./Icons/Project Type/Social/icn-social-pinterest.svg'),
   twitter: require('./Icons/Project Type/Social/icn-social-twitter.svg'),
+  linkedin: require('./Icons/Project Type/Social/linkedin.svg')
 }
