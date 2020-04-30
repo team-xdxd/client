@@ -26,6 +26,9 @@ const TasksList = ({ tasks = [], createTask, removeTask, updateTask }) => {
 
   const sendCreateTask = () => {
     createTask({ name, endDate: date })
+    setDate(null)
+    setName('')
+    setInputVisible(false)
   }
 
   const toggleTaskState = (index) => {
@@ -107,7 +110,7 @@ const TasksList = ({ tasks = [], createTask, removeTask, updateTask }) => {
         />
       </div>
       <div className={styles['percentage-value']}>
-        {`${completedPercentage} %`}
+        {`${completedPercentage.toFixed()} %`}
       </div>
       <ul className={styles.list}>
         {tasks?.map((task, index) => (
