@@ -25,6 +25,7 @@ const CampaignDetail = () => {
   const [endDate, setEndDate] = useState()
   const [owner, setOwner] = useState()
   const [tags, setTags] = useState([])
+  const [status, setStatus] = useState('')
 
   useEffect(() => {
     getCampaign()
@@ -83,6 +84,7 @@ const CampaignDetail = () => {
     setStartDate(data.startDate)
     setEndDate(data.endDate)
     setTags(data.tags)
+    setStatus(data.status)
   }
 
   const addTag = async (tag, isNew = false) => {
@@ -112,11 +114,23 @@ const CampaignDetail = () => {
     }
   }
 
+  const changeStatus = async (newStatus) => {
+    try{
+      setStatus(newStatus)
+      await campaignApi.updateCampaign(campaign.id, {status: newStatus})
+      toastUtils.success('Campaign scheduled sucesfully')
+    } catch (err) {
+      // TODO: Error if failure for whatever reason
+    }
+  }
+
   return (
     <>
       <ItemSubheader
         title={name}
         saveDraft={saveCampaign}
+        status={status}
+        schedule={changeStatus}
         changeName={(name) => setName(name)}
       />
       <main className={`${styles.container}`}>

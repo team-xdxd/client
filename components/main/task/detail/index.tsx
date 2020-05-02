@@ -18,6 +18,8 @@ const TaskDetail = () => {
 
   const [taskNames, setTaskNames] = useState([])
 
+  const [status, setStatus] = useState('')
+
   const [editableFields, setEditableFields] = useState({
     name: '',
     description: '',
@@ -83,6 +85,7 @@ const TaskDetail = () => {
       ...editableFields,
       ...data
     })
+    setStatus(data.status)
   }
 
   const addTag = async (tag, isNew = false) => {
@@ -119,12 +122,24 @@ const TaskDetail = () => {
     })
   }
 
+  const changeStatus = async (newStatus) => {
+    try{
+      setStatus(newStatus)
+      await taskApi.updateTask(task.id, {status: newStatus})
+      toastUtils.success('Task scheduled sucesfully')
+    } catch (err) {
+      // TODO: Error if failure for whatever reason
+    }
+  }
+
   return (
     <>
       <ItemSubheader
         title={editableFields.name}
         saveDraft={saveTask}
         changeName={(name) => editFields('name', name)}
+        status={status}
+        schedule={changeStatus}
       />
       <main className={`${styles.container}`}>
         <ItemSublayout

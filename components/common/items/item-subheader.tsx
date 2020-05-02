@@ -7,13 +7,14 @@ import SubHeader from '../layouts/sub-header'
 import NavButton from '../buttons/nav-button'
 import StatusBadge from '../misc/status-badge'
 
-const ItemSubHeader = ({ title, status = 'draft', saveDraft = () => { }, changeName }) => {
+const ItemSubHeader = ({ title, status = 'draft', saveDraft = () => { }, changeName, schedule }) => {
   return (
     <SubHeader
       pageTitle={title}
       titleOnchange={(e) => changeName(e.target.value)}
     >
       <div className={styles['header-additional']}>
+        {console.log(status)}
         {status &&
           <StatusBadge status={status} />
         }
@@ -30,7 +31,7 @@ const ItemSubHeader = ({ title, status = 'draft', saveDraft = () => { }, changeN
       }
       <NavButton
         text='Schedule'
-        onClick={() => { }}
+        onClick={() => schedule('scheduled')}
         type='button'
       />
     </SubHeader>

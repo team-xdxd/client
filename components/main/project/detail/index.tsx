@@ -22,6 +22,8 @@ const ProjectDetail = () => {
 
   const [tasks, setTasks] = useState([])
 
+  const [status, setStatus] = useState('')
+
   const [editableFields, setEditableFields] = useState({
     name: '',
     headline: '',
@@ -100,6 +102,7 @@ const ProjectDetail = () => {
       ...data,
       owner: data.users[0]
     })
+    setStatus(data.status)
     setTasks(data.tasks)
   }
 
@@ -169,12 +172,25 @@ const ProjectDetail = () => {
     })
   }
 
+  const changeStatus = async (newStatus) => {
+    try{
+      setStatus(newStatus)
+      await projectApi.updateProject(project.id, {status: newStatus})
+      toastUtils.success('Project scheduled sucesfully')
+    } catch (err) {
+      // TODO: Error if failure for whatever reason
+      console.log(err);
+    }
+  }
+
   return (
     <>
       <ItemSubheader
         title={editableFields.name}
         saveDraft={saveProject}
+        status={status}
         changeName={(name) => editFields('name', name)}
+        schedule={changeStatus}
       />
       <main className={`${styles.container}`}>
         <ItemSublayout
