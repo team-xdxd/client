@@ -65,7 +65,7 @@ const Schedule = () => {
       // Handle undefined dates
       if (!itemA[aDateKey])
         return 1
-      else if (!itemA[bDateKey])
+      else if (!itemB[bDateKey])
         return -1
 
       const dateA = new Date(itemA[aDateKey])
@@ -79,6 +79,7 @@ const Schedule = () => {
         return 0
     })
     setMixedList(mixed)
+    
   }
 
   const getItemDateKey = (item) => {
@@ -111,7 +112,7 @@ const Schedule = () => {
     setCreateType(type)
   }
 
-  const [activeView, setActiveView] = useState('month')
+  const [activeView, setActiveView] = useState('list')
 
   return (
     <>
@@ -120,20 +121,27 @@ const Schedule = () => {
       />
       <main className={`${styles.container}`}>
         <TopBar />
-        <div className={styles.content}>
-          {activeView === 'list' || activeView === 'week' &&
-            <SidePanel />
-          }
-          {activeView === 'list' &&
-            <List />
-          }
-          {activeView === 'week' &&
-            <Week />
-          }
-          {activeView === 'month' &&
-            <Month />
-          }
-        </div>
+        {activeView !== 'month' ?
+          <div className={styles.content}>
+            <div className={styles['side-panel']}>
+              <SidePanel />
+            </div>
+            {activeView === 'list' &&
+              <div className={styles.schedule}>
+                <List
+                  mixedList={mixedList}
+                />
+              </div>
+            }
+            {activeView === 'week' &&
+              <div className={styles.schedule}>
+                <Week />
+              </div>
+            }
+          </div>
+        :
+          <Month />
+        }
       </main>
       {createVisible &&
         <CreateOverlay
