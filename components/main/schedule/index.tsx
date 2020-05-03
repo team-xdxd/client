@@ -20,6 +20,92 @@ const Schedule = () => {
   const [createVisible, setCreateVisible] = useState(false)
   const [createType, setCreateType] = useState('')
 
+  const [campaigns, setCampaigns] = useState([])
+  const [projects, setProjects] = useState([])
+  const [tasks, setTasks] = useState([])
+
+  const [mixedList, setMixedList] = useState([])
+
+  useEffect(() => {
+    getData()
+  }, [])
+
+  const getData = async () => {
+    try {
+      const campaignResponse = await campaignApi.getCampaigns()
+      const campaignsData = campaignResponse.data
+      setCampaigns(campaignsData)
+
+      const projectResponse = await projectApi.getProjects()
+      const projectsData = projectResponse.data
+      setProjects(projectsData)
+
+      const taskResponse = await taskApi.getTasks()
+      const tasksData = taskResponse.data
+      setTasks(tasksData)
+
+      mixAndOrderData(campaignsData, projectsData, tasksData)
+
+    } catch (err) {
+      // TODO: Handle this error
+      console.log(err)
+    }
+  }
+
+  const mixAndOrderData = (campaignsData = campaigns, projectsData = projects, tasksData = tasks) => {
+    const mixed = [
+      ...campaignsData.map(campaign => ({ ...campaign, itemType: 'campaign' })),
+      ...projectsData.map(project => ({ ...project, itemType: 'project' })),
+      ...tasksData.map(task => ({ ...task, itemType: 'task' })),
+    ]
+    mixed.sort((itemA, itemB) => {
+      const aDateKey = getItemDateKey(itemA)
+      const bDateKey = getItemDateKey(itemB)
+
+      // Handle undefined dates
+      if (!itemA[aDateKey])
+        return 1
+      else if (!itemA[bDateKey])
+        return -1
+
+      const dateA = new Date(itemA[aDateKey])
+      const dateB = new Date(itemB[bDateKey])
+
+      if (dateA > dateB)
+        return 1
+      else if (dateA < dateB)
+        return -1
+      else
+        return 0
+    })
+    setMixedList(mixed)
+  }
+
+  const getItemDateKey = (item) => {
+    switch (item.itemType) {
+      case 'campaign':
+        return 'endDate'
+      case 'project':
+        return 'publishDate'
+      case 'task':
+        return 'endDate'
+      default:
+        return
+    }
+  }
+
+  const getCampaigns = async () => {
+
+  }
+
+  const getProjects = async () => {
+
+  }
+
+  const getTasks = async () => {
+
+  }
+
   const openCreateOVerlay = (type) => {
     setCreateVisible(true)
     setCreateType(type)

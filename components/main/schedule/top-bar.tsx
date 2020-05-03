@@ -1,8 +1,10 @@
 import styles from './top-bar.module.css'
+
 // Components
 
 const TopBar = () => (
-  <section>
+  <section className={styles.container}>
+    
   </section>
 )
 
