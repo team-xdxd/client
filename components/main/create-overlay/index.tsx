@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import styles from './index.module.css'
 import Link from 'next/link'
-import { GeneralImg, ProjectTypes } from '../../../assets'
+import { Utilities, ProjectTypes } from '../../../assets'
 
 // Components
 import CreateCampaign from './create-campaign'
@@ -17,8 +17,7 @@ const CreateOverlay = ({ type = '', setType, closeOverlay }) => {
           {
             type &&
             <>
-              {/* <img src={GeneralImg.logo} /> */}
-              <span>{'<'}</span>
+              <img src={Utilities.back} />
               <span>Back</span>
             </>
           }

@@ -1,5 +1,5 @@
 import styles from './tasks-list.module.css'
-import { Utilities, ProjectTypes, ItemFields, Navigation } from '../../../../assets'
+import { Utilities, ProjectTypes, Navigation } from '../../../../assets'
 import { useState, useRef } from 'react'
 import DayPicker from 'react-day-picker'
 import { format } from 'date-fns'
@@ -120,7 +120,12 @@ const TasksList = ({ tasks = [], createTask, removeTask, updateTask }) => {
             onMouseOver={() => setHoverIndex(index)}
             onMouseOut={() => setHoverIndex(-1)}
           >
-            <img src={ProjectTypes.task}
+            <img src={
+              task.status === 'complete' ?
+                Utilities.radioButtonEnabled
+                :
+                Utilities.radioButtonNormal
+            }
               className={styles['task-status']}
               onClick={() => toggleTaskState(index)}
             />

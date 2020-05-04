@@ -146,10 +146,8 @@ const ProjectDetail = () => {
 
   const updateTask = async (index, data) => {
     try {
-      console.log(index)
-      const updateResponse = await taskApi.updateTask(tasks[index].id, data)
-      console.log(updateResponse)
-      setTasks(update(tasks, { [index]: { $set: updateResponse.data } }))
+      setTasks(update(tasks, { [index]: { $merge: data } }))
+      await taskApi.updateTask(tasks[index].id, data)
     } catch (err) {
       console.log(err)
       // TODO: Error if failure for whatever reason

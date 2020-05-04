@@ -1,7 +1,7 @@
 import { useState, useContext, useRef } from 'react'
 import styles from './main-layout.module.css'
 import Link from 'next/link'
-import { GeneralImg, Navigation, Placeholders } from '../../../assets'
+import { GeneralImg, Navigation, Utilities } from '../../../assets'
 import { UserContext } from '../../../context'
 import Router from 'next/router'
 
@@ -82,7 +82,7 @@ const AuthLayout = ({ children }) => {
           onClick={(e) => setDropdownOpen(e, !dropdownVisible)}>
           <img
             className={styles.profile}
-            src={Placeholders.profile} />
+            src={Utilities.memberProfile} />
           {user?.name}
           {dropdownVisible &&
             <div ref={wrapperRef} className={styles['user-dropdown']}>

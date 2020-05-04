@@ -90,6 +90,11 @@
   margin-bottom: 1rem;
 }
 
+.container .list > li > img {
+  width: 22px;
+  height: 22px;
+}
+
 .task-content {
   margin-left: 13px;
   flex: 1;
