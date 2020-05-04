@@ -1,5 +1,5 @@
 import styles from './upcoming-item.module.css'
-import { Utilities, Navigation, ItemFields } from '../../../assets'
+import { Utilities, Navigation } from '../../../assets'
 import { format } from 'date-fns'
 import Router from 'next/router'
 import { useState, useRef } from 'react'
@@ -8,7 +8,7 @@ import { useState, useRef } from 'react'
 import StatusBadge from '../../common/misc/status-badge'
 import Dropdown from '../../common/inputs/dropdown'
 
-const UpcomingItem = ({ name, date, status, users, userPhoto = ItemFields.member, detailUrl, deleteItem }) => {
+const UpcomingItem = ({ name, date, status, users, userPhoto = Utilities.memberProfile, detailUrl, deleteItem }) => {
 
   const [moreVisible, setMoreVisible] = useState(false)
 

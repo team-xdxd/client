@@ -40,12 +40,16 @@ export const Utilities = {
   time: require('./Icons/Utilities/Time/icn-utilities-time.svg'),
   arrow: require('./Icons/Utilities/arrow/arrow-down-white.svg'),
   arrowBlue: require('./Icons/Utilities/arrow/arrow-down-blue.svg'),
-  arrowDark: require('./Icons/Utilities/arrow/arrow-down-dark.svg')
+  arrowDark: require('./Icons/Utilities/arrow/arrow-down-dark.svg'),
+  back: require('./Icons/Utilities/Back/icn-utilities-back.svg'),
+  memberProfile: require('./Icons/Utilities/Member Profile/icn-nav-memberprofile.svg'),
+  radioButtonNormal: require('./Icons/Utilities/Radio Button/Normal/icn-utilities-radionormal.svg'),
+  radioButtonEnabled: require('./Icons/Utilities/Radio Button/Enabled/icn-utilities-radioenabled.svg'),
 }
 
 export const ProjectTypes = {
   campaign: require('./Icons/Project Type/Campaign/icn-projecttype-campaign.svg'),
-  project: require('./Icons/Project Type/Campaign/icn-projecttype-campaign.svg'),
+  project: require('./Icons/Project Type/Project/icn-project.svg'),
   task: require('./Icons/Project Type/Tasks/icn-projecttype-tasks.svg')
 }
 
@@ -73,5 +77,5 @@ export const ProjectTypeChannel = {
   instagram: require('./Icons/Project Type/Social/icn-social-instagram.svg'),
   pinterest: require('./Icons/Project Type/Social/icn-social-pinterest.svg'),
   twitter: require('./Icons/Project Type/Social/icn-social-twitter.svg'),
-  linkedin: require('./Icons/Project Type/Social/linkedin.svg')
+  linkedin: require('./Icons/Project Type/Social/icn-social-linkedin.svg')
 }
