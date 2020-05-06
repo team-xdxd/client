@@ -79,7 +79,7 @@ const Schedule = () => {
         return 0
     })
     setMixedList(mixed)
-    
+
   }
 
   const getItemDateKey = (item) => {
@@ -95,18 +95,6 @@ const Schedule = () => {
     }
   }
 
-  const getCampaigns = async () => {
-
-  }
-
-  const getProjects = async () => {
-
-  }
-
-  const getTasks = async () => {
-
-  }
-
   const openCreateOVerlay = (type) => {
     setCreateVisible(true)
     setCreateType(type)
@@ -120,7 +108,10 @@ const Schedule = () => {
         openCreateOVerlay={openCreateOVerlay}
       />
       <main className={`${styles.container}`}>
-        <TopBar />
+        <TopBar
+          activeView={activeView}
+          setActiveView={setActiveView}
+        />
         {activeView !== 'month' ?
           <div className={styles.content}>
             <div className={styles['side-panel']}>
@@ -139,7 +130,7 @@ const Schedule = () => {
               </div>
             }
           </div>
-        :
+          :
           <Month />
         }
       </main>

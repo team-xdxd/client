@@ -1,0 +1,21 @@
+.container {
+  outline: none;
+  background-color: inherit;
+  font-weight: 600;
+  color: var(--color-prim-navy);
+  cursor: pointer;
+  padding: 0 3px;
+  border-bottom: 3px solid white;
+}
+
+.container:hover {
+}
+
+.container:disabled {
+  background-color: var(--color-prim-turquoise-hover);
+  cursor: default;
+}
+
+.active {
+  border-color: var(--color-prim-turquoise);
+}

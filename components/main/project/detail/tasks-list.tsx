@@ -33,8 +33,8 @@ const TasksList = ({ tasks = [], createTask, removeTask, updateTask }) => {
 
   const toggleTaskState = (index) => {
     let newStatus
-    if (tasks[index].status !== 'complete') {
-      newStatus = 'complete'
+    if (tasks[index].status !== 'completed') {
+      newStatus = 'completed'
     } else {
       newStatus = 'draft'
     }
@@ -90,7 +90,7 @@ const TasksList = ({ tasks = [], createTask, removeTask, updateTask }) => {
 
 
 
-  const completedTasks = tasks.filter(task => task.status === 'complete')
+  const completedTasks = tasks.filter(task => task.status === 'completed')
   const completedPercentage = tasks.length > 0 ? completedTasks.length / tasks.length * 100 : 0
 
   return (
@@ -121,7 +121,7 @@ const TasksList = ({ tasks = [], createTask, removeTask, updateTask }) => {
             onMouseOut={() => setHoverIndex(-1)}
           >
             <img src={
-              task.status === 'complete' ?
+              task.status === 'completed' ?
                 Utilities.radioButtonEnabled
                 :
                 Utilities.radioButtonNormal

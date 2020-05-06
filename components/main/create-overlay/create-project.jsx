@@ -4,6 +4,7 @@ import { useForm } from 'react-hook-form'
 import Router from 'next/router'
 import projectApi from '../../../server-api/project'
 import toastUtils from '../../../utils/toast'
+import { capitalCase } from 'change-case'
 
 // Components
 import Button from '../../common/buttons/button'
@@ -11,7 +12,7 @@ import FormInput from '../../common/inputs/form-input'
 import Input from '../../common/inputs/input'
 import Select from '../../common/inputs/select'
 
-import projectTypeOptions from '../../../resources/data/project-types.json'
+import projectTypes from '../../../resources/data/project-types.json'
 
 const CreateProject = () => {
   const { control, handleSubmit, errors } = useForm()
@@ -28,7 +29,7 @@ const CreateProject = () => {
     if (projectNames.includes(projectData.name)) {
       return toastUtils.error('A project with that name already exists')
     }
-    if(!type){
+    if (!type) {
       return toastUtils.error('The project mubst have a type')
     }
     try {
@@ -77,7 +78,7 @@ const CreateProject = () => {
           <div className={styles.type}>
             <Select
               placeholder='Select Content Type...'
-              options={projectTypeOptions}
+              options={projectTypes.map(type => ({ value: type, label: capitalCase(type) }))}
               onChange={selected => setType(selected)}
               value={type}
               styleType='regular'
