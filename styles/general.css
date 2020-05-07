@@ -147,61 +147,6 @@ ul {
   box-shadow: 23px 24px 51px -16px var(--color-sec-lightblue);
 }
 
-/* Select prefix */
-
-.select-prefix__control {
-  border-style: none !important;
-}
-
-.select-prefix__value-container {
-  width: 100%;
-  min-height: 48px;
-  padding: 8px 12px;
-  background-color: var(--color-sec-ivory);
-  color: var(--color-prim-navy);
-}
-
-.regular .select-prefix__value-container {
-  background-color: var(--color-sec-lightivory);
-  padding: 0 12px;
-  min-height: 70px;
-  border-top-left-radius: 5px;
-  border-bottom-left-radius: 5px;
-}
-
-.item .select-prefix__value-container {
-  min-height: 48px;
-  border-top-left-radius: 5px;
-  border-bottom-left-radius: 5px;
-}
-
-.select-prefix__indicators {
-  background-color: var(--color-sec-ivory);
-  color: var(--color-prim-navy);
-}
-
-.regular .select-prefix__indicators {
-  background-color: var(--color-sec-lightivory);
-  border-top-right-radius: 5px;
-  border-bottom-right-radius: 5px;
-}
-
-.select-prefix__menu {
-}
-
-.select-prefix__menu-list {
-  background-color: var(--color-sec-ivory);
-  color: var(--color-prim-navy);
-  text-align: left;
-}
-
-.regular .select-prefix__menu-list {
-  background-color: var(--color-sec-lightivory);
-}
-
-.select-prefix__option {
-}
-
 .ReactModal__Html--open,
 .ReactModal__Body--open {
   overflow: hidden; /* prevents background page from scrolling when the modal is open */

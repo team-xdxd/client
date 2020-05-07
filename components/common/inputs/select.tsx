@@ -5,7 +5,7 @@ const Select = ({ options, placeholder, value = null, onChange = (selected) => {
   <ReactSelect
     placeholder={placeholder}
     options={options}
-    className={`${styles.container} ${styleType}`}
+    className={`${styles.container} ${styleType} ${styles[styleType]}`}
     value={value}
     onChange={onChange}
     classNamePrefix='select-prefix'

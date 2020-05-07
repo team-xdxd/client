@@ -1,3 +1,37 @@
-.container{
+.container {
   display: flex;
+  align-items: center;
+}
+
+.options {
+  display: flex;
+  flex: 1;
+}
+
+.options > img {
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+  margin: 0 15px;
+  align-self: center;
+}
+
+.options > button {
+  cursor: pointer;
+  margin: 0 15px;
+}
+
+.today {
+  background-color: inherit;
+  padding: 3px;
+  border: 2px solid var(--color-secondary-border);
+  border-radius: 5px;
+}
+
+.filters {
+  display: flex;
+}
+
+.filters>div{
+  margin: 0 5px;
 }

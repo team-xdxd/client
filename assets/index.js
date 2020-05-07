@@ -45,6 +45,8 @@ export const Utilities = {
   memberProfile: require('./Icons/Utilities/Member Profile/icn-nav-memberprofile.svg'),
   radioButtonNormal: require('./Icons/Utilities/Radio Button/Normal/icn-utilities-radionormal.svg'),
   radioButtonEnabled: require('./Icons/Utilities/Radio Button/Enabled/icn-utilities-radioenabled.svg'),
+  print: require('./Icons/Utilities/Print/icn-utilities-print.svg'),
+  search: require('./Icons/Utilities/Search/icn-utilities-search.svg')
 }
 
 export const ProjectTypes = {

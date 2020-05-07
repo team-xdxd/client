@@ -45,11 +45,11 @@
   cursor: pointer;
 }
 
-.complete .task-content > span {
+.completed .task-content > span {
   position: relative;
 }
 
-.complete .task-content > span::after {
+.completed .task-content > span::after {
   content: "";
   border-bottom: 2px solid var(--color-prim-navy);
   position: absolute;
