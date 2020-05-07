@@ -6,6 +6,7 @@ import campaignApi from '../../../server-api/campaign'
 import projectApi from '../../../server-api/project'
 import taskApi from '../../../server-api/task'
 import update from 'immutability-helper'
+import { format } from 'date-fns'
 
 // Components
 import ScheduleSubHeader from './schedule-subheader'
@@ -25,6 +26,8 @@ const Schedule = () => {
   const [tasks, setTasks] = useState([])
 
   const [mixedList, setMixedList] = useState([])
+
+  const [currentDate, setCurrentDate] = useState(new Date())
 
   useEffect(() => {
     getData()
@@ -100,11 +103,13 @@ const Schedule = () => {
     setCreateType(type)
   }
 
-  const [activeView, setActiveView] = useState('list')
+  const [activeView, setActiveView] = useState('month')
 
   return (
     <>
       <ScheduleSubHeader
+        currentDate={currentDate}
+        setCurrentDate={setCurrentDate}
         openCreateOVerlay={openCreateOVerlay}
       />
       <main className={`${styles.container}`}>
@@ -131,7 +136,9 @@ const Schedule = () => {
             }
           </div>
           :
-          <Month />
+          <Month
+            currentDate={currentDate}
+          />
         }
       </main>
       {createVisible &&

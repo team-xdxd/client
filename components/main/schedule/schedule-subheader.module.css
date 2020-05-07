@@ -1,4 +1,13 @@
 .header-additional {
-  margin-left: 25px;
+  margin-left: 10px;
   flex: 1;
+  display: flex;
+}
+
+.header-additional>div{
+  font-size: 24px;
+  color: var(--color-sec-blue);
+  font-family: monospace;
+  margin-right: 10px;
+  cursor: pointer;
 }

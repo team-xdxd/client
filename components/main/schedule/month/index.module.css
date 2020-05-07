@@ -1,0 +1,60 @@
+.container {
+  display: flex;
+  justify-content: center;
+}
+
+.calendar {
+  width: 100%;
+}
+
+.day-of-week,
+.date-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  grid-template-rows: 1fr;
+  column-gap: 1px;
+  row-gap: 1px;
+}
+
+.day-of-week {
+  margin-top: 1.25em;
+}
+
+.day-of-week > * {
+  font-weight: 700;
+  text-align: center;
+}
+
+/* Dates */
+.date-grid {
+  margin-top: 0.5em;
+  width: 100%;
+  background-color: var(--color-secondary-border);
+  border: 1px solid var(--color-secondary-border);
+}
+
+.day {
+  height: var(--day-width);
+  background-color: white;
+}
+
+.day-header{
+  display: flex;
+  align-items: center;
+}
+
+.diff-month {
+  color: var(--color-sec-blue);
+}
+
+.day-number {
+  margin: 6px 12px;
+  font-weight: 600;
+}
+
+.today-dot{
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background-color: var(--color-prim-turquoise);
+}
