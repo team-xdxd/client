@@ -1,0 +1,48 @@
+.container{
+  height: 40px;
+  width: 100%;
+  display: flex;
+  border-radius: 20px;
+  align-items: center;
+}
+
+.container img{
+  width: 20px;
+  height: 20px;
+  margin-left: 15px
+}
+
+.name{
+  color: var(--color-prim-navy);
+  font-weight: 600;
+  font-size: 12px;
+  margin-left: 10px;
+}
+
+.campaign{
+  background-color: var(--color-sec-lightturquoise);
+}
+
+.task{
+  background-color: var(--color-sec-lightblue);
+}
+
+.social{
+  background-color: var(--color-sec-lightivory);
+}
+
+.ad{
+  background-color: var(--color-sec-lightyellow);
+}
+
+.article{
+  background-color: var(---color-sec-lightwine);
+}
+
+.campaign{
+  background-color: var(--color-sec-lightblue);
+}
+
+.email{
+  background-color: var(--color-sec-lightorange);
+}

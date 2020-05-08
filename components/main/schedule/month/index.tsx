@@ -1,13 +1,19 @@
 import { useEffect, useRef, useState } from 'react'
-import { getWeeksInMonth, startOfMonth, startOfWeek, addDays, format } from 'date-fns'
+import { getWeeksInMonth, startOfMonth, startOfWeek, addDays } from 'date-fns'
 import styles from './index.module.css'
-// Components
 
-const Month = ({ currentDate }) => {
+// Components
+import DayCell from './day-cell'
+import TypeBadge from '../../../common/misc/type-badge'
+
+const Month = ({ currentDate, mixedList }) => {
 
   const dayRef = useRef()
 
   const [calendarDays, setCalendarDays] = useState([])
+
+  const [mappedItemsBadges, setMappedItemsBadges] = useState({})
+
 
   useEffect(() => {
     if (dayRef && dayRef.current) {
@@ -36,41 +42,75 @@ const Month = ({ currentDate }) => {
     }
   }, [currentDate])
 
-  const dateFormat = (date) => {
-    if (date.getDate() === 1)
-      return format(date, 'MMM d')
-    else
-      return format(date, 'd')
-  }
+  useEffect(() => {
+    const newMappedItemsBadges = {}
+    mixedList.forEach((item) => {
+      let type
+      let socialChannel
+      let date
+      if (item.itemType === 'campaign') {
+        type = item.itemType
+        date = item.endDate
+      }
+      else if (item.itemType === 'project') {
+        type = item.type
+        date = item.publishDate
+        if (type === 'social') {
+          socialChannel = item.channel
+        }
+      }
+      else {
+        type = item.itemType
+        date = item.endDate
+      }
 
-  const isSameMonth = (date) => {
-    return date.getMonth() === currentDate.getMonth()
-  }
+      if (date) {
+        const dayNumber = new Date(date).getDate()
+
+        if (!newMappedItemsBadges[dayNumber]) newMappedItemsBadges[dayNumber] = []
+
+        newMappedItemsBadges[dayNumber].push(
+          () => (
+            <div>
+              <TypeBadge
+                socialChannel={socialChannel}
+                type={type}
+                name={item.name}
+              />
+            </div>)
+        )
+      }
+    })
+    setMappedItemsBadges(newMappedItemsBadges)
+  }, [mixedList, currentDate])
 
   return (
     <section className={styles.container}>
       <div className={styles.calendar} >
         <div className={styles['day-of-week']}>
-          <div ref={dayRef}>Su</div>
-          <div>Mo</div>
-          <div>Tu</div>
-          <div>We</div>
-          <div>Th</div>
-          <div>Fr</div>
-          <div>Sa</div>
+          <div ref={dayRef}>Sun</div>
+          <div>Mon</div>
+          <div>Tue</div>
+          <div>Wed</div>
+          <div>Thu</div>
+          <div>Fri</div>
+          <div>Sat</div>
         </div>
         <div className={styles['date-grid']}>
 
-          {calendarDays.map((date, index) => (
-            <div className={`${styles['day']} ${!isSameMonth(date) && styles['diff-month']}`}>
-              <div className={styles['day-header']}>
-                <div className={styles['day-number']}>{dateFormat(date)}</div>
-                {date.getDate() === currentDate.getDate() && isSameMonth(date) &&
-                  <div className={styles['today-dot']}></div>
-                }
-              </div>
-            </div>
-          ))}
+          {calendarDays.map((date, index) => {
+            const badgeListForDate = mappedItemsBadges[date.getDate()]
+            const badgeList = badgeListForDate || []
+
+            return (
+              <DayCell
+                currentDate={currentDate}
+                date={date}
+                key={index}
+                badgeList={badgeList}
+              />
+            )
+          })}
         </div>
       </div>
     </section>

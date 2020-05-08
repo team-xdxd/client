@@ -1,0 +1,25 @@
+.day {
+  height: var(--day-width);
+  background-color: white;
+}
+
+.day-header{
+  display: flex;
+  align-items: center;
+}
+
+.diff-month {
+  color: var(--color-sec-blue);
+}
+
+.day-number {
+  margin: 6px 12px;
+  font-weight: 600;
+}
+
+.today-dot{
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background-color: var(--color-prim-turquoise);
+}

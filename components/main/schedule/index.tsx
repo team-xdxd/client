@@ -138,6 +138,7 @@ const Schedule = () => {
           :
           <Month
             currentDate={currentDate}
+            mixedList={mixedList}
           />
         }
       </main>
