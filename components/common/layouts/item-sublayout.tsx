@@ -4,6 +4,7 @@ import Link from 'next/link'
 import { Utilities } from '../../../assets'
 
 // Components
+import SectionButton from '../buttons/section-button'
 
 const ItemSublayout = ({ SideComponent = null, sideActive = true, navElements = [], children, layout = 'double' }) => {
   return (
@@ -11,7 +12,10 @@ const ItemSublayout = ({ SideComponent = null, sideActive = true, navElements = 
       <div className={styles['main-component']}>
         <div className={styles.heading}>
           <div className={styles[layout]}>
-            <h4>Details</h4>
+            <SectionButton
+              text='Details'
+              active={true}
+            />
           </div>
         </div>
         <div className={styles.children}>

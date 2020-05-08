@@ -1,5 +1,5 @@
 import styles from './tasks-list.module.css'
-import { Utilities, ProjectTypes, ItemFields, Navigation } from '../../../../assets'
+import { Utilities, ProjectTypes, Navigation } from '../../../../assets'
 import { useState, useRef } from 'react'
 import DayPicker from 'react-day-picker'
 import { format } from 'date-fns'
@@ -33,8 +33,8 @@ const TasksList = ({ tasks = [], createTask, removeTask, updateTask }) => {
 
   const toggleTaskState = (index) => {
     let newStatus
-    if (tasks[index].status !== 'complete') {
-      newStatus = 'complete'
+    if (tasks[index].status !== 'completed') {
+      newStatus = 'completed'
     } else {
       newStatus = 'draft'
     }
@@ -90,7 +90,7 @@ const TasksList = ({ tasks = [], createTask, removeTask, updateTask }) => {
 
 
 
-  const completedTasks = tasks.filter(task => task.status === 'complete')
+  const completedTasks = tasks.filter(task => task.status === 'completed')
   const completedPercentage = tasks.length > 0 ? completedTasks.length / tasks.length * 100 : 0
 
   return (
@@ -120,7 +120,12 @@ const TasksList = ({ tasks = [], createTask, removeTask, updateTask }) => {
             onMouseOver={() => setHoverIndex(index)}
             onMouseOut={() => setHoverIndex(-1)}
           >
-            <img src={ProjectTypes.task}
+            <img src={
+              task.status === 'completed' ?
+                Utilities.radioButtonEnabled
+                :
+                Utilities.radioButtonNormal
+            }
               className={styles['task-status']}
               onClick={() => toggleTaskState(index)}
             />

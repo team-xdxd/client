@@ -6,6 +6,7 @@ import campaignApi from '../../../server-api/campaign'
 import projectApi from '../../../server-api/project'
 import taskApi from '../../../server-api/task'
 import update from 'immutability-helper'
+import { format } from 'date-fns'
 
 // Components
 import ScheduleSubHeader from './schedule-subheader'
@@ -25,6 +26,8 @@ const Schedule = () => {
   const [tasks, setTasks] = useState([])
 
   const [mixedList, setMixedList] = useState([])
+
+  const [currentDate, setCurrentDate] = useState(new Date())
 
   useEffect(() => {
     getData()
@@ -79,7 +82,7 @@ const Schedule = () => {
         return 0
     })
     setMixedList(mixed)
-    
+
   }
 
   const getItemDateKey = (item) => {
@@ -95,32 +98,25 @@ const Schedule = () => {
     }
   }
 
-  const getCampaigns = async () => {
-
-  }
-
-  const getProjects = async () => {
-
-  }
-
-  const getTasks = async () => {
-
-  }
-
   const openCreateOVerlay = (type) => {
     setCreateVisible(true)
     setCreateType(type)
   }
 
-  const [activeView, setActiveView] = useState('list')
+  const [activeView, setActiveView] = useState('month')
 
   return (
     <>
       <ScheduleSubHeader
+        currentDate={currentDate}
+        setCurrentDate={setCurrentDate}
         openCreateOVerlay={openCreateOVerlay}
       />
       <main className={`${styles.container}`}>
-        <TopBar />
+        <TopBar
+          activeView={activeView}
+          setActiveView={setActiveView}
+        />
         {activeView !== 'month' ?
           <div className={styles.content}>
             <div className={styles['side-panel']}>
@@ -139,8 +135,10 @@ const Schedule = () => {
               </div>
             }
           </div>
-        :
-          <Month />
+          :
+          <Month
+            currentDate={currentDate}
+          />
         }
       </main>
       {createVisible &&
