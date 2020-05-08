@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from 'react'
 import { getWeeksInMonth, startOfMonth, startOfWeek, addDays } from 'date-fns'
+import Router from 'next/router'
 import styles from './index.module.css'
 
 // Components
@@ -45,6 +46,7 @@ const Month = ({ currentDate, mixedList }) => {
   useEffect(() => {
     const newMappedItemsBadges = {}
     mixedList.forEach((item) => {
+
       let type
       let socialChannel
       let date
@@ -56,7 +58,7 @@ const Month = ({ currentDate, mixedList }) => {
         type = item.type
         date = item.publishDate
         if (type === 'social') {
-          socialChannel = item.channel
+          socialChannel = item.channel || 'social'
         }
       }
       else {
@@ -71,7 +73,10 @@ const Month = ({ currentDate, mixedList }) => {
 
         newMappedItemsBadges[dayNumber].push(
           () => (
-            <div>
+            <div
+              className={styles.badge}
+              onClick={() => Router.replace(`/main/${item.itemType}s/${item.id}`)}
+            >
               <TypeBadge
                 socialChannel={socialChannel}
                 type={type}

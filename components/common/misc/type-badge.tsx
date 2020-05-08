@@ -1,15 +1,22 @@
 import { capitalCase } from 'change-case'
 import styles from './type-badge.module.css'
-import { ProjectTypeChannel, ProjectTypes } from '../../../assets'
+import { ProjectTypeChannel, ProjectTypes, ProjectType } from '../../../assets'
 
 
-const StatusBadge = ({ type, socialChannel, name }) => (
-  <div className={`${styles[type]} ${styles.container}`}>
-    <img src={socialChannel ? ProjectTypeChannel[socialChannel] : ProjectTypes[type]} />
-    <div className={styles.name}>
-      {name}
+const StatusBadge = ({ type, socialChannel, name }) => {
+  let icon = ProjectTypes[type]
+  if (type !== 'campaign' && type !== 'task') {
+    icon = ProjectType[type]
+  }
+  console.log()
+  return (
+    <div className={`${styles[type]} ${styles.container}`}>
+      <img src={socialChannel ? ProjectTypeChannel[socialChannel.toLowerCase()] : icon} />
+      <div className={styles.name}>
+        {name}
+      </div>
     </div>
-  </div>
-)
+  )
+}
 
 export default StatusBadge

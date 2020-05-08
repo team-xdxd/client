@@ -28,10 +28,10 @@
 }
 
 .social{
-  background-color: var(--color-sec-lightivory);
+  background-color: var(--color-sec-ivory);
 }
 
-.ad{
+.ads{
   background-color: var(--color-sec-lightyellow);
 }
 
@@ -39,7 +39,7 @@
   background-color: var(---color-sec-lightwine);
 }
 
-.campaign{
+.banner{
   background-color: var(--color-sec-lightblue);
 }
 
