@@ -10,7 +10,7 @@ const StatusBadge = ({ type, socialChannel, name }) => {
   }
   console.log()
   return (
-    <div className={`${styles[type]} ${styles.container}`}>
+    <div className={`${styles[type]} ${styles.container} type-badge`}>
       <img src={socialChannel ? ProjectTypeChannel[socialChannel.toLowerCase()] : icon} />
       <div className={styles.name}>
         {name}

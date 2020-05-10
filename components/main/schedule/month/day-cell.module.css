@@ -3,7 +3,7 @@
   background-color: white;
 }
 
-.day-header{
+.day-header {
   display: flex;
   align-items: center;
 }
@@ -17,9 +17,29 @@
   font-weight: 600;
 }
 
-.today-dot{
+.today-dot {
   width: 10px;
   height: 10px;
   border-radius: 50%;
   background-color: var(--color-prim-turquoise);
+}
+
+.filler {
+  margin-bottom: 5px;
+  height: 40px;
+  width: 100%;
+}
+
+/* Hide continuation badges */
+.continuation div div {
+  margin-left: -20%;
+  width: 120%;
+}
+
+.continuation div div img {
+  display: none;
+}
+
+.continuation div div div {
+  opacity: 0;
 }

@@ -61,26 +61,30 @@ const Schedule = () => {
       ...projectsData.map(project => ({ ...project, itemType: 'project' })),
       ...tasksData.map(task => ({ ...task, itemType: 'task' })),
     ]
-    mixed.sort((itemA, itemB) => {
-      const aDateKey = getItemDateKey(itemA)
-      const bDateKey = getItemDateKey(itemB)
+    mixed
+      .filter(item => (new Date(item[getItemDateKey(item)]).getMonth()) === currentDate.getMonth()
+        || (new Date(item.startDate).getMonth()) === currentDate.getMonth()
+      )
+      .sort((itemA, itemB) => {
+        const aDateKey = getItemDateKey(itemA)
+        const bDateKey = getItemDateKey(itemB)
 
-      // Handle undefined dates
-      if (!itemA[aDateKey])
-        return 1
-      else if (!itemB[bDateKey])
-        return -1
+        // Handle undefined dates
+        if (!itemA[aDateKey])
+          return 1
+        else if (!itemB[bDateKey])
+          return -1
 
-      const dateA = new Date(itemA[aDateKey])
-      const dateB = new Date(itemB[bDateKey])
+        const dateA = new Date(itemA[aDateKey])
+        const dateB = new Date(itemB[bDateKey])
 
-      if (dateA > dateB)
-        return 1
-      else if (dateA < dateB)
-        return -1
-      else
-        return 0
-    })
+        if (dateA > dateB)
+          return 1
+        else if (dateA < dateB)
+          return -1
+        else
+          return 0
+      })
     setMixedList(mixed)
 
   }

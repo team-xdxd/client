@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react'
-import { getWeeksInMonth, startOfMonth, startOfWeek, addDays } from 'date-fns'
+import { getWeeksInMonth, startOfMonth, startOfWeek, addDays, getDaysInMonth } from 'date-fns'
 import Router from 'next/router'
 import styles from './index.module.css'
 
@@ -35,7 +35,7 @@ const Month = ({ currentDate, mixedList }) => {
       let indDate = startOfWeek(startOfMonth(currentDate))
       for (let i = 0; i < weeksAmount; i++) {
         for (let j = 0; j < 7; j++) {
-          newCalendarDays.push(new Date(indDate))
+          newCalendarDays.push({ date: new Date(indDate), weekDay: j })
           indDate = addDays(indDate, 1)
         }
       }
@@ -69,25 +69,108 @@ const Month = ({ currentDate, mixedList }) => {
       if (date) {
         const dayNumber = new Date(date).getDate()
 
-        if (!newMappedItemsBadges[dayNumber]) newMappedItemsBadges[dayNumber] = []
-
-        newMappedItemsBadges[dayNumber].push(
-          () => (
-            <div
-              className={styles.badge}
-              onClick={() => Router.replace(`/main/${item.itemType}s/${item.id}`)}
-            >
-              <TypeBadge
-                socialChannel={socialChannel}
-                type={type}
-                name={item.name}
-              />
-            </div>)
-        )
+        if (item.startDate) {
+          const endDate = new Date(date)
+          let iterDate = new Date(item.startDate)
+          while (iterDate.getDate() < endDate.getDate() && iterDate.getDate() <= 31) {
+            const dateNumber = iterDate.getDate()
+            parseItem(item, type, socialChannel, dateNumber, newMappedItemsBadges)
+            iterDate = addDays(iterDate, 1)
+          }
+        }
+        parseItem(item, type, socialChannel, dayNumber, newMappedItemsBadges)
       }
     })
-    setMappedItemsBadges(newMappedItemsBadges)
+    reorderItemBadges(newMappedItemsBadges)
   }, [mixedList, currentDate])
+
+  const parseItem = (item, type, socialChannel, dayNumber, newMappedItemsBadges) => {
+    if (!newMappedItemsBadges[dayNumber]) newMappedItemsBadges[dayNumber] = []
+    newMappedItemsBadges[dayNumber].push({
+      id: item.id, Badge: () => (
+        <div
+          className={styles.badge}
+          onClick={() => Router.replace(`/main/${item.itemType}s/${item.id}`)}
+        >
+          <TypeBadge
+            socialChannel={socialChannel}
+            type={type}
+            name={item.name}
+          />
+        </div>
+      )
+    })
+  }
+
+  const reorderItemBadges = (itemBadges) => {
+    let currentWeekOrder = {}
+    let currentWeek = -1
+    calendarDays.forEach(day => {
+      if (day.weekDay === 0) {
+        currentWeek++
+      }
+      if (day.date.getMonth() !== currentDate.getMonth()) return
+      if (day.weekDay === 0) {
+        currentWeekOrder = {}
+      }
+      const dateNumber = day.date.getDate()
+      const mappedItems = itemBadges[dateNumber]
+      const nextDayItems = itemBadges[dateNumber + 1]
+      if (mappedItems) {
+        const newMappedItems = []
+        mappedItems.forEach(item => {
+          // Det if current week order needs to be preserved
+          const currentWeekPosition = currentWeekOrder[item.id]
+          if (day.weekDay < 6 && nextDayItems) {
+            const isInNextDay = nextDayItems.findIndex(nextItem => nextItem.id === item.id) !== -1
+
+            if (isInNextDay && currentWeekPosition === undefined) {
+              currentWeekOrder[item.id] = getAvailablePosition(currentWeekOrder)
+              newMappedItems.push({ data: item, currentWeekPosition: currentWeekOrder[item.id], currentWeek })
+
+            } else if (!isInNextDay && currentWeekPosition !== undefined) {
+              newMappedItems.push({ data: item, currentWeekPosition, currentWeek })
+              currentWeekOrder[item.id] = undefined
+
+            } else {
+              newMappedItems.push({ data: item, currentWeekPosition, currentWeek })
+            }
+          } else newMappedItems.push({ data: item, currentWeekPosition, currentWeek })
+        })
+        newMappedItems.sort((itema, itemb) => {
+          const posA = itema.currentWeekPosition
+          const posB = itemb.currentWeekPosition
+          if (posA > posB) {
+            return 1
+          } else if (posA < posB) {
+            return -1
+          } else return 0
+        })
+        itemBadges[dateNumber] = newMappedItems
+      }
+    })
+    setMappedItemsBadges(itemBadges)
+  }
+
+  const getAvailablePosition = (currentWeekOrder) => {
+    let position
+    const orderedWeekPos = Object.keys(currentWeekOrder).sort((keyA, keyB) => {
+      if (currentWeekOrder[keyA] > currentWeekOrder[keyB]) {
+        return 1
+      } else if (currentWeekOrder[keyA] > currentWeekOrder[keyB]) {
+        return -1
+      } else {
+        return 0
+      }
+    })
+    orderedWeekPos.forEach((key, index) => {
+      if (currentWeekOrder[key] !== index && !position) {
+        position = index
+      }
+    })
+
+    return position || orderedWeekPos.length
+  }
 
   return (
     <section className={styles.container}>
@@ -103,16 +186,26 @@ const Month = ({ currentDate, mixedList }) => {
         </div>
         <div className={styles['date-grid']}>
 
-          {calendarDays.map((date, index) => {
-            const badgeListForDate = mappedItemsBadges[date.getDate()]
+          {calendarDays.map((day, index) => {
+            const isSameMonth = day.date.getMonth() === currentDate.getMonth()
+            const badgeListForDate = isSameMonth ? mappedItemsBadges[day.date.getDate()] : []
             const badgeList = badgeListForDate || []
+
+            let badgeListPrevious = []
+            if (index > 0) {
+              const previousDay = calendarDays[index - 1]
+              const isSameMonthPrevious = previousDay.date.getMonth() === currentDate.getMonth()
+              const badgeListForDatePrevious = isSameMonthPrevious ? mappedItemsBadges[previousDay.date.getDate()] : []
+              badgeListPrevious = badgeListForDatePrevious || []
+            }
 
             return (
               <DayCell
                 currentDate={currentDate}
-                date={date}
+                date={day.date}
                 key={index}
                 badgeList={badgeList}
+                badgeListPrevious={badgeListPrevious}
               />
             )
           })}
