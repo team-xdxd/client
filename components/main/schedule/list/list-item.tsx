@@ -3,14 +3,23 @@ import styles from './list-item.module.css'
 const ListItem = ({item, key}) => {
   return (
     <>
+    {item.publishDate || item.endDate &&
       <div>
         <div>
           {item.name}
+          {item.itemType}
         </div>
         <div>
-          {item}
+            <div>
+              {item.itemType === 'project' ?
+                item.publishDate
+              :
+                item.endDate
+              }
+            </div>
         </div>
       </div>
+    }
     </>
   )
 }

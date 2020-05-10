@@ -10,14 +10,14 @@ import ListItem from './list-item'
 
 const List = ({mixedList}) => {
 
+  const [listItems, setListItems] = useState([])
+
   useEffect(() => {
-    groupByDate()
+    setListItems(Object.entries(groupByDate()))
   }, [])
 
   const groupByDate = () => {
-    let group = mixedList!.reduce((r, a) => {
-      console.log("a", a);
-      console.log('r', r);
+    let group = mixedList?.reduce((r, a) => {
       if (a.itemType === 'project') {
         r[a.publishDate] = [...r[a.publishDate] || [], a];  
       } else{
@@ -26,15 +26,16 @@ const List = ({mixedList}) => {
       return r;
      }, {});
      console.log("group", group);
+     return group
   }
 
   return (
     <section>
-      {mixedList.map((item, index) => (
-        <ListItem
-          key={index}
-          item={item}
-        />
+      {listItems.map((key, value) => (
+        <div key={key}>
+          {key}
+          {value}
+        </div>
       ))}
     </section>
   )
