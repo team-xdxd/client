@@ -67,7 +67,7 @@ export const ItemFields = {
 }
 
 export const ProjectType = {
-  ad: require('./Icons/Project Type/AD/icn-projecttype-ad.svg'),
+  ads: require('./Icons/Project Type/AD/icn-projecttype-ad.svg'),
   article: require('./Icons/Project Type/AD/icn-projecttype-ad.svg'),
   campaign: require('./Icons/Project Type/AD/icn-projecttype-ad.svg'),
   email: require('./Icons/Project Type/AD/icn-projecttype-ad.svg')

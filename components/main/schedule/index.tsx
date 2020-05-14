@@ -6,8 +6,8 @@ import campaignApi from '../../../server-api/campaign'
 import projectApi from '../../../server-api/project'
 import taskApi from '../../../server-api/task'
 import update from 'immutability-helper'
-import { format } from 'date-fns'
-
+import { format, startOfMonth, endOfMonth } from 'date-fns'
+import queryString from 'querystring'
 // Components
 import ScheduleSubHeader from './schedule-subheader'
 import CreateOverlay from '../create-overlay'
@@ -29,23 +29,64 @@ const Schedule = () => {
 
   const [currentDate, setCurrentDate] = useState(new Date())
 
+  const [allCampaigns, setAllCampaigns] = useState([])
+
+  // Filters
+  const [filters, setFilters] = useState({
+    campaign: null,
+    status: null,
+    type: null,
+    owner: null
+  })
+
   useEffect(() => {
-    getData()
+    getAllCampaigns()
   }, [])
 
-  const getData = async () => {
+  useEffect(() => {
+    getData()
+  }, [currentDate, filters])
+
+  const getAllCampaigns = async () => {
     try {
-      const campaignResponse = await campaignApi.getCampaigns()
-      const campaignsData = campaignResponse.data
-      setCampaigns(campaignsData)
+      const { data } = await campaignApi.getCampaigns()
+      setAllCampaigns(data)
+    } catch (err) {
+      // TODO: Handle this error
+      console.log(err)
+    }
+  }
 
-      const projectResponse = await projectApi.getProjects()
-      const projectsData = projectResponse.data
-      setProjects(projectsData)
+  const getData = async () => {
+    const commonFilters = getCommonFilters()
+    const campaignFilters = getCampaignFilters()
+    const projectFilters = getProjectFilters()
+    const taskFilters = getTaskFilters()
 
-      const taskResponse = await taskApi.getTasks()
-      const tasksData = taskResponse.data
-      setTasks(tasksData)
+    const typeFilter = filters.type?.value
+
+    try {
+
+      let campaignsData = []
+      if (!typeFilter || typeFilter === 'campaigns') {
+        const campaignResponse = await campaignApi.getCampaigns()
+        campaignsData = campaignResponse.data
+        setCampaigns(campaignsData)
+      }
+
+      let projectsData = []
+      if (!typeFilter || (typeFilter !== 'campaigns' && typeFilter !== 'tasks')) {
+        const projectResponse = await projectApi.getProjects({ ...commonFilters, ...projectFilters })
+        projectsData = projectResponse.data
+        setProjects(projectsData)
+      }
+
+      let tasksData = []
+      if (!typeFilter || typeFilter === 'tasks') {
+        const taskResponse = await taskApi.getTasks()
+        tasksData = taskResponse.data
+        setTasks(tasksData)
+      }
 
       mixAndOrderData(campaignsData, projectsData, tasksData)
 
@@ -61,28 +102,67 @@ const Schedule = () => {
       ...projectsData.map(project => ({ ...project, itemType: 'project' })),
       ...tasksData.map(task => ({ ...task, itemType: 'task' })),
     ]
-    mixed.sort((itemA, itemB) => {
-      const aDateKey = getItemDateKey(itemA)
-      const bDateKey = getItemDateKey(itemB)
+    mixed
+      .filter(item => (new Date(item[getItemDateKey(item)]).getMonth()) === currentDate.getMonth()
+        || (new Date(item.startDate).getMonth()) === currentDate.getMonth()
+      )
+      .sort((itemA, itemB) => {
+        const aDateKey = getItemDateKey(itemA)
+        const bDateKey = getItemDateKey(itemB)
 
-      // Handle undefined dates
-      if (!itemA[aDateKey])
-        return 1
-      else if (!itemB[bDateKey])
-        return -1
+        // Handle undefined dates
+        if (!itemA[aDateKey])
+          return 1
+        else if (!itemB[bDateKey])
+          return -1
 
-      const dateA = new Date(itemA[aDateKey])
-      const dateB = new Date(itemB[bDateKey])
+        const dateA = new Date(itemA[aDateKey])
+        const dateB = new Date(itemB[bDateKey])
 
-      if (dateA > dateB)
-        return 1
-      else if (dateA < dateB)
-        return -1
-      else
-        return 0
-    })
+        if (dateA > dateB)
+          return 1
+        else if (dateA < dateB)
+          return -1
+        else
+          return 0
+      })
     setMixedList(mixed)
+  }
 
+  const getCommonFilters = () => {
+    const startOfMonthDate = startOfMonth(currentDate)
+    const endOfMonthDate = endOfMonth(currentDate)
+    const filterObj = {
+      startOfMonth: startOfMonthDate.toISOString(),
+      endOfMonth: endOfMonthDate.toISOString()
+    }
+    if (filters.status)
+      filterObj.status = filters.status.value
+
+    if (filters.campaign)
+      filterObj.campaignId = filters.campaign.value
+
+    return filterObj
+  }
+
+  const getCampaignFilters = () => {
+    // No filters specific to campaign yet
+    const filterObj = {}
+    return filterObj
+  }
+
+  const getProjectFilters = () => {
+    const filterObj = {}
+    if (filters.type)
+      filterObj.type = filters.type.value
+
+    return filterObj
+  }
+
+  const getTaskFilters = () => {
+    // No filters specific to task yet
+    const filterObj = {}
+    return filterObj
   }
 
   const getItemDateKey = (item) => {
@@ -116,6 +196,10 @@ const Schedule = () => {
         <TopBar
           activeView={activeView}
           setActiveView={setActiveView}
+          setCurrentDate={setCurrentDate}
+          filters={filters}
+          setFilters={setFilters}
+          allCampaigns={allCampaigns}
         />
         {activeView !== 'month' ?
           <div className={styles.content}>
@@ -138,6 +222,7 @@ const Schedule = () => {
           :
           <Month
             currentDate={currentDate}
+            mixedList={mixedList}
           />
         }
       </main>

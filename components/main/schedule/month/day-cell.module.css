@@ -1,0 +1,55 @@
+.day {
+  height: var(--day-width);
+  background-color: white;
+  position: relative;
+}
+
+.day-header {
+  display: flex;
+  align-items: center;
+}
+
+.diff-month {
+  color: var(--color-sec-blue);
+}
+
+.day-number {
+  margin: 6px 12px;
+  font-weight: 600;
+}
+
+.today-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background-color: var(--color-prim-turquoise);
+}
+
+.filler {
+  margin-bottom: 5px;
+  height: 40px;
+  width: 100%;
+}
+
+.day ul li{
+  position: relative;
+  z-index: 100;
+}
+
+/* Hide continuation badges */
+.day ul .continuation{
+  z-index: 99;
+}
+
+.continuation div div {
+  margin-left: -50px;
+  width: calc(100% + 50px);
+}
+
+.continuation div div img {
+  display: none;
+}
+
+.continuation div div div {
+  opacity: 0;
+}
