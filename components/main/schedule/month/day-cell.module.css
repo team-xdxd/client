@@ -1,6 +1,7 @@
 .day {
   height: var(--day-width);
   background-color: white;
+  position: relative;
 }
 
 .day-header {
@@ -30,10 +31,19 @@
   width: 100%;
 }
 
+.day ul li{
+  position: relative;
+  z-index: 100;
+}
+
 /* Hide continuation badges */
+.day ul .continuation{
+  z-index: 99;
+}
+
 .continuation div div {
-  margin-left: -20%;
-  width: 120%;
+  margin-left: -50px;
+  width: calc(100% + 50px);
 }
 
 .continuation div div img {

@@ -13,6 +13,8 @@ const dateFormat = (date) => {
     return format(date, 'd')
 }
 
+const today = new Date()
+
 const DayCell = ({ date, currentDate, badgeList, badgeListPrevious }) => {
 
   const positionedBadges = badgeList.filter(badge => badge.currentWeekPosition !== undefined)
@@ -54,7 +56,7 @@ const DayCell = ({ date, currentDate, badgeList, badgeListPrevious }) => {
     <div className={`${styles['day']} ${!isSameMonth(date, currentDate) && styles['diff-month']}`}>
       <div className={styles['day-header']}>
         <div className={styles['day-number']}>{dateFormat(date)}</div>
-        {date.getDate() === currentDate.getDate() && isSameMonth(date, currentDate) &&
+        {date.getDate() === today.getDate() && isSameMonth(date, today) &&
           <div className={styles['today-dot']}></div>
         }
       </div>

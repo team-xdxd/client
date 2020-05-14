@@ -18,7 +18,7 @@ const typeOptions = [
   ...projectTypes
 ]
 
-const TopBar = ({ activeView, setActiveView }) => (
+const TopBar = ({ activeView, setActiveView, setCurrentDate, filters, setFilters, allCampaigns }) => (
   <section className={styles.container}>
     <div className={styles.options}>
       <img src={Utilities.search} />
@@ -42,14 +42,18 @@ const TopBar = ({ activeView, setActiveView }) => (
         text='Today'
         type='button'
         styleType='secondary'
+        onClick={() => setCurrentDate(new Date())}
       />
     </div>
     <div className={styles.filters}>
       <div>
         <Select
-          options={campaignPlaceholder}
+          options={allCampaigns.map(campaign => ({ label: campaign.name, value: campaign.id }))}
           placeholder='Campaign'
           styleType='filter'
+          onChange={(selected) => setFilters({ ...filters, campaign: selected })}
+          value={filters.campaign}
+          isClearable={true}
         />
       </div>
       <div>
@@ -57,13 +61,19 @@ const TopBar = ({ activeView, setActiveView }) => (
           options={itemStatus.map(status => ({ label: capitalCase(status), value: status }))}
           placeholder='Status'
           styleType='filter'
+          onChange={(selected) => setFilters({ ...filters, status: selected })}
+          value={filters.status}
+          isClearable={true}
         />
       </div>
       <div>
         <Select
-          options={typeOptions.map(type => ({ value: type, label: capitalCase(type) }))}
+          options={typeOptions.map(type => ({ label: capitalCase(type), value: type }))}
           placeholder='Type'
           styleType='filter'
+          onChange={(selected) => setFilters({ ...filters, type: selected })}
+          value={filters.type}
+          isClearable={true}
         />
       </div>
       <div>
@@ -71,6 +81,7 @@ const TopBar = ({ activeView, setActiveView }) => (
           options={ownerPlaceholder}
           placeholder='Owner'
           styleType='filter'
+          isClearable={true}
         />
       </div>
     </div>

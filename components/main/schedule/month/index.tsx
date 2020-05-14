@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react'
-import { getWeeksInMonth, startOfMonth, startOfWeek, addDays, getDaysInMonth } from 'date-fns'
+import { getWeeksInMonth, startOfMonth, startOfWeek, addDays } from 'date-fns'
 import Router from 'next/router'
 import styles from './index.module.css'
 
@@ -74,35 +74,38 @@ const Month = ({ currentDate, mixedList }) => {
           let iterDate = new Date(item.startDate)
           while (iterDate.getDate() < endDate.getDate() && iterDate.getDate() <= 31) {
             const dateNumber = iterDate.getDate()
-            parseItem(item, type, socialChannel, dateNumber, newMappedItemsBadges)
+            parseItem(item, iterDate, type, socialChannel, dateNumber, newMappedItemsBadges)
             iterDate = addDays(iterDate, 1)
           }
         }
-        parseItem(item, type, socialChannel, dayNumber, newMappedItemsBadges)
+        parseItem(item, new Date(date), type, socialChannel, dayNumber, newMappedItemsBadges)
       }
     })
     reorderItemBadges(newMappedItemsBadges)
-  }, [mixedList, currentDate])
+  }, [mixedList])
 
-  const parseItem = (item, type, socialChannel, dayNumber, newMappedItemsBadges) => {
-    if (!newMappedItemsBadges[dayNumber]) newMappedItemsBadges[dayNumber] = []
-    newMappedItemsBadges[dayNumber].push({
-      id: item.id, Badge: () => (
-        <div
-          className={styles.badge}
-          onClick={() => Router.replace(`/main/${item.itemType}s/${item.id}`)}
-        >
-          <TypeBadge
-            socialChannel={socialChannel}
-            type={type}
-            name={item.name}
-          />
-        </div>
-      )
-    })
+  const parseItem = (item, date, type, socialChannel, dayNumber, newMappedItemsBadges) => {
+    if (date.getMonth() === currentDate.getMonth()) {
+      if (!newMappedItemsBadges[dayNumber]) newMappedItemsBadges[dayNumber] = []
+      newMappedItemsBadges[dayNumber].push({
+        id: item.id, Badge: () => (
+          <div
+            className={styles.badge}
+            onClick={() => Router.replace(`/main/${item.itemType}s/${item.id}`)}
+          >
+            <TypeBadge
+              socialChannel={socialChannel}
+              type={type}
+              name={item.name}
+            />
+          </div>
+        )
+      })
+    }
   }
 
   const reorderItemBadges = (itemBadges) => {
+    const newItemBadges = {}
     let currentWeekOrder = {}
     let currentWeek = -1
     calendarDays.forEach(day => {
@@ -146,10 +149,10 @@ const Month = ({ currentDate, mixedList }) => {
             return -1
           } else return 0
         })
-        itemBadges[dateNumber] = newMappedItems
+        newItemBadges[dateNumber] = newMappedItems
       }
     })
-    setMappedItemsBadges(itemBadges)
+    setMappedItemsBadges(newItemBadges)
   }
 
   const getAvailablePosition = (currentWeekOrder) => {

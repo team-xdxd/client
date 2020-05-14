@@ -1,10 +1,11 @@
 import axios from 'axios'
+import queryString from 'querystring'
 
 const projectUrl = `${process.env.SERVER_BASE_URL}/projects`
 
 export default {
   getProjectById: (id) => axios.get(`${projectUrl}/${id}`),
-  getProjects: () => axios.get(projectUrl),
+  getProjects: (queryParams) => axios.get(`${projectUrl}?${queryString.stringify(queryParams)}`),
   createProject: (data) => axios.post(projectUrl, data),
   updateProject: (id, data) => axios.patch(`${projectUrl}/${id}`, data),
   deleteProject: (id) => axios.delete(`${projectUrl}/${id}`),
