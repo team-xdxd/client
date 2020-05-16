@@ -11,6 +11,7 @@
 
 .side-panel {
   grid-area: side-panel;
+  height: 80vh;
 }
 
 .schedule {

@@ -1,0 +1,17 @@
+/* Hide continuation badges */
+.day ul .continuation{
+  z-index: 99;
+}
+
+.continuation .type-badge {
+  margin-left: -50px;
+  width: calc(100% + 50px);
+}
+
+.continuation .type-badge img {
+  display: none;
+}
+
+.continuation .type-badge .name {
+  display: none;
+}

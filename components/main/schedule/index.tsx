@@ -183,7 +183,7 @@ const Schedule = () => {
     setCreateType(type)
   }
 
-  const [activeView, setActiveView] = useState('month')
+  const [activeView, setActiveView] = useState('week')
 
   return (
     <>
@@ -215,7 +215,10 @@ const Schedule = () => {
             }
             {activeView === 'week' &&
               <div className={styles.schedule}>
-                <Week />
+                <Week
+                  currentDate={currentDate}
+                  mixedList={mixedList}
+                />
               </div>
             }
           </div>
