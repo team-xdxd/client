@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react'
 import CreatableSelect from 'react-select/creatable'
 import styles from './task-fields.module.css'
+import TimePicker from 'react-time-picker/dist/entry.nostyle'
 import { ItemFields, Utilities, ProjectTypes } from '../../../../assets'
 import DayPicker from 'react-day-picker'
 import { format } from 'date-fns'
@@ -106,6 +107,31 @@ const TaskFields = ({
               onDayClick={handleDayClick} />
           </div>
         }
+      </div>
+      <div className={styles.field}>
+        <ItemFieldWrapper
+          title='Time'
+          image={Utilities.time}
+          optionOnClick={() => toggleActiveInput('time')}
+        >
+          {endDate ?
+            <div>
+              <TimePicker
+                disableClock={true}
+                className='detail-time'
+                onChange={(date) => {
+                  const splitInput = date.split(':')
+                  let currentDate = new Date(endDate)
+                  currentDate = new Date(currentDate.setHours(splitInput[0], splitInput[1]))
+                  editFields('endDate', currentDate)
+                }}
+                value={format(new Date(endDate), 'HH:mm')}
+              />
+            </div>
+            :
+            <span>No Deadline Date</span>
+          }
+        </ItemFieldWrapper>
       </div>
       <div className={styles.field}>
         <ItemFieldWrapper

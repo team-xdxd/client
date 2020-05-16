@@ -2,6 +2,7 @@ import Router from 'next/router'
 // Import global css
 import '../styles/general.css'
 import '../styles/auth.css'
+import '../styles/time-picker.css'
 import '../styles/detail-pages.css'
 import '../styles/select.css'
 import 'react-day-picker/lib/style.css';

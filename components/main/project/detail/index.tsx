@@ -84,7 +84,7 @@ const ProjectDetail = () => {
         headline: editableFields.headline,
         subject: editableFields.subject,
         preheader: editableFields.preheader
-      }
+      }      
       const { data } = await projectApi.updateProject(project.id, saveData)
       getProjectNames()
       setProject(data)
@@ -96,6 +96,7 @@ const ProjectDetail = () => {
   }
 
   const setProjectData = (data) => {
+    console.log(data)
     // TODO: get the correct owner
     setEditableFields({
       ...editableFields,
@@ -164,6 +165,7 @@ const ProjectDetail = () => {
   }
 
   const editFields = (field, value) => {
+    console.log(value)
     setEditableFields({
       ...editableFields,
       [field]: value
