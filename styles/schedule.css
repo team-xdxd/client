@@ -1,5 +1,5 @@
 /* Hide continuation badges */
-.day ul .continuation{
+.day ul .continuation {
   z-index: 99;
 }
 
@@ -14,4 +14,14 @@
 
 .continuation .type-badge .name {
   display: none;
+}
+
+.last .type-badge .type-icon {
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.last .type-badge .type-icon > img {
+  display: flex;
 }

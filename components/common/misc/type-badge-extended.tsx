@@ -2,7 +2,7 @@ import { capitalCase } from 'change-case'
 import styles from './type-badge-extended.module.css'
 import { ProjectTypeChannel, ProjectTypes, ProjectType, Utilities } from '../../../assets'
 
-const StatusBadge = ({ type, socialChannel, name, isMultiple = false, isLast = false }) => {
+const StatusBadge = ({ type, socialChannel, name, isMultiple = false, isLast = false, time }) => {
   let icon = ProjectTypes[type]
   if (type !== 'campaign' && type !== 'task') {
     icon = ProjectType[type]
@@ -15,14 +15,19 @@ const StatusBadge = ({ type, socialChannel, name, isMultiple = false, isLast = f
           <div className={`${styles.name} name`}>
             {name}
           </div>
-          <img className={isLast && 'last-image'} src={socialChannel ? ProjectTypeChannel[socialChannel.toLowerCase()] : icon} />
+          <div className={'type-icon'}>
+            <img src={socialChannel ? ProjectTypeChannel[socialChannel.toLowerCase()] : icon} />
+          </div>
         </>
         :
         <>
-          <div className={`${styles.name} name`}>
+          <div className={`${styles.name} ${styles['name-extended']} name`}>
             {name}
           </div>
           <div className={styles.hour}>
+            {time &&
+              <span>{time.toLowerCase()}</span>
+            }
           </div>
           <div className={styles.icons}>
             <img src={Utilities.memberProfile} />

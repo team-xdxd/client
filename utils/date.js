@@ -1,4 +1,4 @@
-import { addDays } from 'date-fns'
+import { addDays, format } from 'date-fns'
 
 export default {
   getSpecialDateString: (inputDate) => {
@@ -54,9 +54,6 @@ export default {
   },
 
   reorderItems: (items, currentDate, calendarDays) => {
-    console.log(items)
-    console.log(currentDate)
-    console.log(calendarDays)
     const newItems = {}
     let currentWeekOrder = {}
     let currentWeek = -1
@@ -119,6 +116,7 @@ const parseItem = (item, date, currentDate, type, socialChannel, dayNumber, mapp
           socialChannel={socialChannel}
           type={type}
           isMultiple={isMultiple}
+          time={format(date, 'hh:mm aa')}
         />
       )
     })

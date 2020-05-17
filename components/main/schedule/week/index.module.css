@@ -6,7 +6,7 @@
 .day-of-week,
 .date-row {
   display: grid;
-  grid-template-columns: repeat(7, 1fr);
+  grid-template-columns: repeat(7, minmax(0, 1fr));
   grid-template-rows: 1fr;
   column-gap: 1px;
   row-gap: 1px;

@@ -52,6 +52,13 @@ const Week = ({ currentDate, mixedList }) => {
             itemListPrevious = itemListForDatePrevious || []
           }
 
+          let itemListNext = []
+          if (index < weekDays.length - 1) {
+            const nextDay = weekDays[index + 1]
+            const itemListForDateNext = mappedItems[nextDay.date.getDate()]
+            itemListNext = itemListForDateNext || []
+          }
+
           return (
             <Day
               currentDate={currentDate}
@@ -59,6 +66,7 @@ const Week = ({ currentDate, mixedList }) => {
               key={index}
               itemList={itemList}
               itemListPrevious={itemListPrevious}
+              itemListNext={itemListNext}
               hasDayHeader={false}
               type={'week'}
             />

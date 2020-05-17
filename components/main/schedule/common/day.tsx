@@ -14,7 +14,7 @@ const dateFormat = (date) => {
 
 const today = new Date()
 
-const Day = ({ date, currentDate, itemList, itemListPrevious, hasDayHeader = true, type = '' }) => {
+const Day = ({ date, currentDate, itemList, itemListPrevious, itemListNext, hasDayHeader = true, type = '' }) => {
 
   const positionedItems = itemList.filter(item => item.currentWeekPosition !== undefined)
   const nonPositionedItems = itemList.filter(item => item.currentWeekPosition === undefined)
@@ -39,12 +39,20 @@ const Day = ({ date, currentDate, itemList, itemListPrevious, hasDayHeader = tru
     if (difference > 0) {
       fillPrevious(difference)
     }
-    let isContinuation
+
+    let isContinuation = false
     // Check if item is continuation
     if (itemListPrevious?.findIndex(previous => previous.currentWeek === item.currentWeek && previous.data.id === item.data.id) !== -1) {
       isContinuation = true
     }
-    preparedItemList.push({ Item: item.data.Item, isContinuation })
+
+    // Check if item is last iteration
+    let isLast = true
+    if (itemListNext?.findIndex(next => next.currentWeek === item.currentWeek && next.data.id === item.data.id) !== -1) {
+      isLast = false
+    }
+
+    preparedItemList.push({ Item: item.data.Item, isContinuation, isLast })
   })
 
   nonPositionedItems.forEach(item => {
@@ -62,8 +70,8 @@ const Day = ({ date, currentDate, itemList, itemListPrevious, hasDayHeader = tru
         </div>
       }
       <ul>
-        {preparedItemList.map(({ isContinuation, Item }, index) => (
-          <li key={index} className={isContinuation && 'continuation'}>
+        {preparedItemList.map(({ isContinuation, isLast, Item }, index) => (
+          <li key={index} className={`${isContinuation && 'continuation'} ${isLast && 'last'}`}>
             <Item
               key={index}
             />
