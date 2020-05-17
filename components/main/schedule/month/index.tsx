@@ -81,6 +81,7 @@ const Month = ({ currentDate, mixedList }) => {
                 key={index}
                 itemList={itemList}
                 itemListPrevious={itemListPrevious}
+                itemListNext={[]}
               />
             )
           })}
