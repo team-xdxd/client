@@ -1,4 +1,4 @@
-.container{
+.container {
   height: 40px;
   width: 100%;
   display: flex;
@@ -6,43 +6,44 @@
   align-items: center;
 }
 
-.container img{
-  width: 20px;
-  height: 20px;
-  margin-left: 15px
+.container img {
+  width: 17px;
+  height: 17px;
+  margin-left: 15px;
 }
 
-.name{
+.name {
   color: var(--color-prim-navy);
   font-weight: 600;
   font-size: 12px;
   margin-left: 10px;
+  white-space: nowrap;
 }
 
-.campaign{
+.campaign {
   background-color: var(--color-sec-lightturquoise);
 }
 
-.task{
+.task {
   background-color: var(--color-sec-lightblue);
 }
 
-.social{
+.social {
   background-color: var(--color-sec-ivory);
 }
 
-.ads{
+.ads {
   background-color: var(--color-sec-lightyellow);
 }
 
-.article{
+.article {
   background-color: var(---color-sec-lightwine);
 }
 
-.banner{
+.banner {
   background-color: var(--color-sec-lightblue);
 }
 
-.email{
+.email {
   background-color: var(--color-sec-lightorange);
 }

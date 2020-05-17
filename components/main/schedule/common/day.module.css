@@ -4,6 +4,10 @@
   position: relative;
 }
 
+.day.week{
+  height: 100%;
+}
+
 .day-header {
   display: flex;
   align-items: center;
@@ -34,22 +38,4 @@
 .day ul li{
   position: relative;
   z-index: 100;
-}
-
-/* Hide continuation badges */
-.day ul .continuation{
-  z-index: 99;
-}
-
-.continuation div div {
-  margin-left: -50px;
-  width: calc(100% + 50px);
-}
-
-.continuation div div img {
-  display: none;
-}
-
-.continuation div div div {
-  opacity: 0;
 }
