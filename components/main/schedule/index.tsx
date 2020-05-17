@@ -204,7 +204,10 @@ const Schedule = () => {
         {activeView !== 'month' ?
           <div className={styles.content}>
             <div className={styles['side-panel']}>
-              <SidePanel />
+              <SidePanel
+                currentDate={currentDate}
+                setCurrentDate={setCurrentDate}
+              />
             </div>
             {activeView === 'list' &&
               <div className={styles.schedule}>
