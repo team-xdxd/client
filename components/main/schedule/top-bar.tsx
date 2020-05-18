@@ -18,10 +18,10 @@ const typeOptions = [
   ...projectTypes
 ]
 
-const TopBar = ({ activeView, setActiveView, setCurrentDate, filters, setFilters, allCampaigns }) => (
+const TopBar = ({ activeView, setActiveView, setCurrentDate, filters, setFilters, allCampaigns, setSearchVisible }) => (
   <section className={styles.container}>
     <div className={styles.options}>
-      <img src={Utilities.search} />
+      <img src={Utilities.search} onClick={() => setSearchVisible(true)} />
       <img src={Utilities.print} />
       <SectionButton
         text='List'

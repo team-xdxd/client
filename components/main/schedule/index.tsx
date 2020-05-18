@@ -11,6 +11,7 @@ import queryString from 'querystring'
 // Components
 import ScheduleSubHeader from './schedule-subheader'
 import CreateOverlay from '../create-overlay'
+import SearchOverlay from '../search-overlay'
 import SidePanel from './side-panel'
 import TopBar from './top-bar'
 import List from './list'
@@ -19,6 +20,8 @@ import Month from './month'
 
 const Schedule = () => {
   const [createVisible, setCreateVisible] = useState(false)
+  const [searchVisible, setSearchVisible] = useState(false)
+
   const [createType, setCreateType] = useState('')
 
   const [campaigns, setCampaigns] = useState([])
@@ -211,6 +214,7 @@ const Schedule = () => {
           filters={filters}
           setFilters={setFilters}
           allCampaigns={allCampaigns}
+          setSearchVisible={setSearchVisible}
         />
         {activeView !== 'month' ?
           <div className={styles.content}>
@@ -250,6 +254,12 @@ const Schedule = () => {
           closeOverlay={() => setCreateVisible(false)}
         />
       }
+      {searchVisible &&
+        <SearchOverlay
+          closeOverlay={() => setSearchVisible(false)}
+        />
+      }
+
     </>
   )
 }
