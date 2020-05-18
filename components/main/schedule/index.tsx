@@ -197,7 +197,7 @@ const Schedule = () => {
     setCreateType(type)
   }
 
-  const [activeView, setActiveView] = useState('week')
+  const [activeView, setActiveView] = useState('month')
 
   return (
     <>

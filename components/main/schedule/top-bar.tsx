@@ -26,7 +26,7 @@ const TopBar = ({ activeView, setActiveView, setCurrentDate, filters, setFilters
       <SectionButton
         text='List'
         active={activeView === 'list'}
-        onClick={() => setActiveView('list')}
+        // onClick={() => setActiveView('list')}
       />
       <SectionButton
         text='Week'
