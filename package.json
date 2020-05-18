@@ -12,6 +12,7 @@
     "@stripe/stripe-js": "^1.2.0",
     "axios": "^0.19.2",
     "change-case": "^4.1.1",
+    "chart.js": "^2.9.3",
     "date-fns": "^2.12.0",
     "immutability-helper": "^3.0.2",
     "next": "9.2.2",
