@@ -79,6 +79,7 @@ const CalendarInput = ({ currentDate, setCurrentDate }) => {
           const isSameDay = isSameDayAsCurrent(day)
           return (
             <div
+              key={index}
               onClick={() => selectDate(day.date)}
               className={
                 `${styles.day} ${isSameMonth && styles['same-month']} ${isSameWeekDates && styles['same-week']} ${day.weekDay === 0 && styles['week-start']} ${day.weekDay === 6 && styles['week-end']}`

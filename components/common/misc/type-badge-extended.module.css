@@ -3,6 +3,7 @@
   width: 100%;
   border-radius: 5px;
   padding: 12px;
+  box-sizing: border-box;
 }
 
 .multiple {

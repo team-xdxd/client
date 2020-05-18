@@ -31,6 +31,8 @@ const Schedule = () => {
 
   const [allCampaigns, setAllCampaigns] = useState([])
 
+  const [initialLoaded, setInitialLoaded] = useState(false)
+
   // Filters
   const [filters, setFilters] = useState({
     campaign: null,
@@ -45,7 +47,13 @@ const Schedule = () => {
 
   useEffect(() => {
     getData()
-  }, [currentDate, filters])
+    setInitialLoaded(true)
+  }, [currentDate])
+
+  useEffect(() => {
+    if (initialLoaded)
+      applyLightFiltersAndOrder()
+  }, [filters])
 
   const getAllCampaigns = async () => {
     try {
@@ -59,36 +67,21 @@ const Schedule = () => {
 
   const getData = async () => {
     const commonFilters = getCommonFilters()
-    const campaignFilters = getCampaignFilters()
-    const projectFilters = getProjectFilters()
-    const taskFilters = getTaskFilters()
-
-    const typeFilter = filters.type?.value
-
     try {
 
-      let campaignsData = []
-      if (!typeFilter || typeFilter === 'campaigns') {
-        const campaignResponse = await campaignApi.getCampaigns()
-        campaignsData = campaignResponse.data
-        setCampaigns(campaignsData)
-      }
+      const campaignResponse = await campaignApi.getCampaigns(commonFilters)
+      const campaignsData = campaignResponse.data
+      setCampaigns(campaignsData)
 
-      let projectsData = []
-      if (!typeFilter || (typeFilter !== 'campaigns' && typeFilter !== 'tasks')) {
-        const projectResponse = await projectApi.getProjects({ ...commonFilters, ...projectFilters })
-        projectsData = projectResponse.data
-        setProjects(projectsData)
-      }
+      const projectResponse = await projectApi.getProjects(commonFilters)
+      const projectsData = projectResponse.data
+      setProjects(projectsData)
 
-      let tasksData = []
-      if (!typeFilter || typeFilter === 'tasks') {
-        const taskResponse = await taskApi.getTasks()
-        tasksData = taskResponse.data
-        setTasks(tasksData)
-      }
+      const taskResponse = await taskApi.getTasks(commonFilters)
+      const tasksData = taskResponse.data
+      setTasks(tasksData)
 
-      mixAndOrderData(campaignsData, projectsData, tasksData)
+      applyLightFiltersAndOrder(campaignsData, projectsData, tasksData)
 
     } catch (err) {
       // TODO: Handle this error
@@ -96,7 +89,28 @@ const Schedule = () => {
     }
   }
 
-  const mixAndOrderData = (campaignsData = campaigns, projectsData = projects, tasksData = tasks) => {
+  const applyLightFiltersAndOrder = (campaignsData = campaigns, projectsData = projects, tasksData = tasks) => {
+    const typeFilter = filters.type?.value
+
+    let filteredCampaigns = []
+    if (!typeFilter || typeFilter === 'campaigns') {
+      filteredCampaigns = campaignsData.filter(evalCampaignsWithFilters)
+    }
+
+    let filteredProjects = []
+    if (!typeFilter || (typeFilter !== 'campaigns' && typeFilter !== 'tasks')) {
+      filteredProjects = projectsData.filter(evalProjectsWithFilters)
+    }
+
+    let filteredTasks = []
+    if (!typeFilter || typeFilter === 'tasks') {
+      filteredTasks = tasksData.filter(evalTasksWithFilters)
+    }
+
+    mixAndOrderData(filteredCampaigns, filteredProjects, filteredTasks)
+  }
+
+  const mixAndOrderData = (campaignsData, projectsData, tasksData) => {
     const mixed = [
       ...campaignsData.map(campaign => ({ ...campaign, itemType: 'campaign' })),
       ...projectsData.map(project => ({ ...project, itemType: 'project' })),
@@ -136,33 +150,30 @@ const Schedule = () => {
       startOfMonth: startOfMonthDate.toISOString(),
       endOfMonth: endOfMonthDate.toISOString()
     }
-    if (filters.status)
-      filterObj.status = filters.status.value
-
-    if (filters.campaign)
-      filterObj.campaignId = filters.campaign.value
 
     return filterObj
   }
 
-  const getCampaignFilters = () => {
-    // No filters specific to campaign yet
-    const filterObj = {}
-    return filterObj
+  const evalCampaignsWithFilters = (campaign) => {
+    if (filters.campaign && campaign.id !== filters.campaign.value) return false
+    if (filters.status && campaign.status !== filters.status.value) return false
+
+    return true
   }
 
-  const getProjectFilters = () => {
-    const filterObj = {}
-    if (filters.type)
-      filterObj.type = filters.type.value
+  const evalProjectsWithFilters = (project) => {
+    if (filters.status && project.status !== filters.status.value) return false
+    if (filters.type && project.type !== filters.type.value) return false
+    if (filters.campaign && project.campaignId !== filters.campaign.value) return false
 
-    return filterObj
+    return true
   }
 
-  const getTaskFilters = () => {
-    // No filters specific to task yet
-    const filterObj = {}
-    return filterObj
+  const evalTasksWithFilters = (task) => {
+    if (filters.status && task.status !== filters.status.value) return false
+    if (filters.campaign && task.project?.campaignId !== filters.campaign.value) return false
+
+    return true
   }
 
   const getItemDateKey = (item) => {
