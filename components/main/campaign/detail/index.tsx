@@ -118,7 +118,7 @@ const CampaignDetail = () => {
     try{
       setStatus(newStatus)
       await campaignApi.updateCampaign(campaign.id, {status: newStatus})
-      toastUtils.success('Campaign scheduled sucesfully')
+      toastUtils.success('Campaign updated sucesfully')
     } catch (err) {
       // TODO: Error if failure for whatever reason
     }
@@ -130,7 +130,7 @@ const CampaignDetail = () => {
         title={name}
         saveDraft={saveCampaign}
         status={status}
-        schedule={changeStatus}
+        changeStatus={changeStatus}
         changeName={(name) => setName(name)}
       />
       <main className={`${styles.container}`}>
