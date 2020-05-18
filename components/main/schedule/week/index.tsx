@@ -37,7 +37,7 @@ const Week = ({ currentDate, mixedList }) => {
     <section className={styles.container}>
       <div className={styles['day-of-week']}>
         {weekDays.map((weekDay, index) => (
-          <div>{`${weekDaysLabel[index]} ${weekDay.date.getDate()}`}</div>
+          <div key={index}>{`${weekDaysLabel[index]} ${weekDay.date.getDate()}`}</div>
         ))}
       </div>
       <div className={styles['date-row']}>
