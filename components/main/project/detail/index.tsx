@@ -176,7 +176,7 @@ const ProjectDetail = () => {
     try{
       setStatus(newStatus)
       await projectApi.updateProject(project.id, {status: newStatus})
-      toastUtils.success('Project scheduled sucesfully')
+      toastUtils.success('Project updated sucesfully')
     } catch (err) {
       // TODO: Error if failure for whatever reason
       console.log(err);
@@ -190,7 +190,7 @@ const ProjectDetail = () => {
         saveDraft={saveProject}
         status={status}
         changeName={(name) => editFields('name', name)}
-        schedule={changeStatus}
+        changeStatus={changeStatus}
       />
       <main className={`${styles.container}`}>
         <ItemSublayout
