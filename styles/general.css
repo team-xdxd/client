@@ -71,6 +71,11 @@ h4 {
   color: var(--color-sec-blue);
 }
 
+mark {
+  background-color: white;
+  color: inherit;
+}
+
 *,
 *:before,
 *:after {
