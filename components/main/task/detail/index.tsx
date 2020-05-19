@@ -126,7 +126,7 @@ const TaskDetail = () => {
     try{
       setStatus(newStatus)
       await taskApi.updateTask(task.id, {status: newStatus})
-      toastUtils.success('Task scheduled sucesfully')
+      toastUtils.success('Task updated sucesfully')
     } catch (err) {
       // TODO: Error if failure for whatever reason
     }
@@ -139,7 +139,7 @@ const TaskDetail = () => {
         saveDraft={saveTask}
         changeName={(name) => editFields('name', name)}
         status={status}
-        schedule={changeStatus}
+        changeStatus={changeStatus}
       />
       <main className={`${styles.container}`}>
         <ItemSublayout

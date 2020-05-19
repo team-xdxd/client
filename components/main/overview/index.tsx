@@ -10,6 +10,7 @@ import update from 'immutability-helper'
 // Components
 import OverviewSubHeader from './overview-subheader'
 import Banner from './banner'
+import SchedulingReport from './scheduling-report'
 import Upcoming from './upcoming'
 import UpcomingTasks from './upcoming-tasks'
 import CreateOverlay from '../create-overlay'
@@ -92,7 +93,7 @@ const Overview = () => {
           <Banner
             userName={user?.name}
           />
-          {/* TODO: Add Chart in a future milestone */}
+          <SchedulingReport />
           <Upcoming
             type='project'
             items={projects.slice(0, 5)}

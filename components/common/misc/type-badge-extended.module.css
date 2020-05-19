@@ -1,0 +1,89 @@
+.container {
+  min-height: 40px;
+  width: 100%;
+  border-radius: 5px;
+  padding: 12px;
+  box-sizing: border-box;
+}
+
+.multiple {
+  padding: 8px 12px;
+  display: flex;
+  align-items: center;
+}
+
+.multiple .name {
+  white-space: nowrap;
+}
+
+.multiple img:first-child {
+  margin-right: 7px;
+}
+
+.name {
+  color: var(--color-prim-navy);
+  font-weight: 600;
+  font-size: 12px;
+  flex: 1;
+}
+
+.name-extended {
+  font-size: 14px;
+}
+
+.hour {
+  font-weight: 600;
+  font-size: 12px;
+  margin: 10px 0;
+}
+
+.icons {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.multiple img:first-child,
+.icons img:first-child {
+  width: 22px;
+  height: 22px;
+}
+
+.multiple *:last-child img {
+  display: none;
+}
+
+.multiple *:last-child img,
+.multiple img,
+.icons img {
+  width: 17px;
+  height: 17px;
+}
+
+.campaign {
+  background-color: var(--color-sec-lightturquoise);
+}
+
+.task {
+  background-color: var(--color-sec-lightblue);
+}
+
+.social {
+  background-color: var(--color-sec-ivory);
+}
+
+.ads {
+  background-color: var(--color-sec-lightyellow);
+}
+
+.article {
+  background-color: var(---color-sec-lightwine);
+}
+
+.banner {
+  background-color: var(--color-sec-lightblue);
+}
+
+.email {
+  background-color: var(--color-sec-lightorange);
+}

@@ -1,13 +1,18 @@
 import { useEffect, useRef, useState } from 'react'
-import { getWeeksInMonth, startOfMonth, startOfWeek, addDays, format } from 'date-fns'
-import styles from './index.module.css'
-// Components
+import { getWeeksInMonth, startOfMonth, startOfWeek, addDays } from 'date-fns'
 
-const Month = ({ currentDate }) => {
+import styles from './index.module.css'
+import dateUtils from '../../../../utils/date'
+
+// Components
+import Day from '../common/day'
+import DayMonth from './day-month'
+
+const Month = ({ currentDate, mixedList }) => {
 
   const dayRef = useRef()
-
   const [calendarDays, setCalendarDays] = useState([])
+  const [mappedItems, setMappedItems] = useState({})
 
   useEffect(() => {
     if (dayRef && dayRef.current) {
@@ -28,49 +33,58 @@ const Month = ({ currentDate }) => {
       let indDate = startOfWeek(startOfMonth(currentDate))
       for (let i = 0; i < weeksAmount; i++) {
         for (let j = 0; j < 7; j++) {
-          newCalendarDays.push(new Date(indDate))
+          newCalendarDays.push({ date: new Date(indDate), weekDay: j })
           indDate = addDays(indDate, 1)
         }
       }
       setCalendarDays(newCalendarDays)
+      const newMappedItems = {}
+      mixedList.forEach((item) => {
+        dateUtils.processDayItem(item, currentDate, newMappedItems, DayMonth)
+      })
+      const reorderedItems = dateUtils.reorderItems(newMappedItems, currentDate, newCalendarDays)
+      setMappedItems(reorderedItems)
     }
-  }, [currentDate])
-
-  const dateFormat = (date) => {
-    if (date.getDate() === 1)
-      return format(date, 'MMM d')
-    else
-      return format(date, 'd')
-  }
-
-  const isSameMonth = (date) => {
-    return date.getMonth() === currentDate.getMonth()
-  }
+  }, [mixedList])
 
   return (
     <section className={styles.container}>
       <div className={styles.calendar} >
         <div className={styles['day-of-week']}>
-          <div ref={dayRef}>Su</div>
-          <div>Mo</div>
-          <div>Tu</div>
-          <div>We</div>
-          <div>Th</div>
-          <div>Fr</div>
-          <div>Sa</div>
+          <div ref={dayRef}>Sun</div>
+          <div>Mon</div>
+          <div>Tue</div>
+          <div>Wed</div>
+          <div>Thu</div>
+          <div>Fri</div>
+          <div>Sat</div>
         </div>
         <div className={styles['date-grid']}>
 
-          {calendarDays.map((date, index) => (
-            <div className={`${styles['day']} ${!isSameMonth(date) && styles['diff-month']}`}>
-              <div className={styles['day-header']}>
-                <div className={styles['day-number']}>{dateFormat(date)}</div>
-                {date.getDate() === currentDate.getDate() && isSameMonth(date) &&
-                  <div className={styles['today-dot']}></div>
-                }
-              </div>
-            </div>
-          ))}
+          {calendarDays.map((day, index) => {
+            const isSameMonth = day.date.getMonth() === currentDate.getMonth()
+            const itemListForDate = isSameMonth ? mappedItems[day.date.getDate()] : []
+            const itemList = itemListForDate || []
+
+            let itemListPrevious = []
+            if (index > 0) {
+              const previousDay = calendarDays[index - 1]
+              const isSameMonthPrevious = previousDay.date.getMonth() === currentDate.getMonth()
+              const itemListForDatePrevious = isSameMonthPrevious ? mappedItems[previousDay.date.getDate()] : []
+              itemListPrevious = itemListForDatePrevious || []
+            }
+
+            return (
+              <Day
+                currentDate={currentDate}
+                date={day.date}
+                key={index}
+                itemList={itemList}
+                itemListPrevious={itemListPrevious}
+                itemListNext={[]}
+              />
+            )
+          })}
         </div>
       </div>
     </section>

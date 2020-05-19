@@ -15,4 +15,5 @@
 
 .schedule {
   grid-area: schedule;
+  box-sizing: content-box;
 }

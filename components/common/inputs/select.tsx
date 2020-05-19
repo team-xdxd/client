@@ -1,7 +1,7 @@
 import styles from './select.module.css'
 import ReactSelect from 'react-select'
 
-const Select = ({ options, placeholder, value = null, onChange = (selected) => { }, styleType = '' }) => (
+const Select = ({ options, placeholder, value = null, onChange = (selected) => { }, styleType = '', isClearable = false }) => (
   <ReactSelect
     placeholder={placeholder}
     options={options}
@@ -9,6 +9,7 @@ const Select = ({ options, placeholder, value = null, onChange = (selected) => {
     value={value}
     onChange={onChange}
     classNamePrefix='select-prefix'
+    isClearable={isClearable}
   />
 )
 

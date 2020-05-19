@@ -84,7 +84,7 @@ const ProjectDetail = () => {
         headline: editableFields.headline,
         subject: editableFields.subject,
         preheader: editableFields.preheader
-      }
+      }      
       const { data } = await projectApi.updateProject(project.id, saveData)
       getProjectNames()
       setProject(data)
@@ -96,6 +96,7 @@ const ProjectDetail = () => {
   }
 
   const setProjectData = (data) => {
+    console.log(data)
     // TODO: get the correct owner
     setEditableFields({
       ...editableFields,
@@ -164,6 +165,7 @@ const ProjectDetail = () => {
   }
 
   const editFields = (field, value) => {
+    console.log(value)
     setEditableFields({
       ...editableFields,
       [field]: value
@@ -174,7 +176,7 @@ const ProjectDetail = () => {
     try{
       setStatus(newStatus)
       await projectApi.updateProject(project.id, {status: newStatus})
-      toastUtils.success('Project scheduled sucesfully')
+      toastUtils.success('Project updated sucesfully')
     } catch (err) {
       // TODO: Error if failure for whatever reason
       console.log(err);
@@ -188,7 +190,7 @@ const ProjectDetail = () => {
         saveDraft={saveProject}
         status={status}
         changeName={(name) => editFields('name', name)}
-        schedule={changeStatus}
+        changeStatus={changeStatus}
       />
       <main className={`${styles.container}`}>
         <ItemSublayout

@@ -3,6 +3,7 @@ import CreatableSelect from 'react-select/creatable';
 import styles from './project-fields.module.css'
 import { ItemFields, Utilities, ProjectTypeChannel, ProjectTypes } from '../../../../assets'
 import DayPicker from 'react-day-picker'
+import TimePicker from 'react-time-picker/dist/entry.nostyle'
 import { format } from 'date-fns'
 import update from 'immutability-helper'
 import tagApi from '../../../../server-api/tag'
@@ -157,6 +158,33 @@ const ProjectFields = ({
           </div>
         }
       </div>
+      {(project.type !== 'ads' && project.type !== 'banners') &&
+        <div className={`field`}>
+          <ItemFieldWrapper
+            title='Time'
+            image={Utilities.time}
+            optionOnClick={() => toggleActiveInput('time')}
+          >
+            {publishDate ?
+              <div>
+                <TimePicker
+                  disableClock={true}
+                  className='detail-time'
+                  onChange={(date) => {
+                    const splitInput = date.split(':')
+                    let currentDate = new Date(publishDate)
+                    currentDate = new Date(currentDate.setHours(splitInput[0], splitInput[1]))
+                    editFields('publishDate', currentDate)
+                  }}
+                  value={format(new Date(publishDate), 'HH:mm')}
+                />
+              </div>
+              :
+              <span>No Deadline Date</span>
+            }
+          </ItemFieldWrapper>
+        </div>
+      }
       {project.type === 'email' &&
         <>
           <div className={`field`}>
