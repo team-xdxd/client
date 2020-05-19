@@ -51,8 +51,11 @@ export const Utilities = {
 
 export const ProjectTypes = {
   campaign: require('./Icons/Project Type/Campaign/icn-projecttype-campaign.svg'),
+  campaignLight: require('./Icons/Project Type/Campaign/icn-projecttype-campaign-light.svg'),
   project: require('./Icons/Project Type/Project/icn-project.svg'),
-  task: require('./Icons/Project Type/Tasks/icn-projecttype-tasks.svg')
+  projectLight: require('./Icons/Project Type/Project/icn-project-light.svg'),
+  task: require('./Icons/Project Type/Tasks/icn-projecttype-tasks.svg'),
+  taskLight: require('./Icons/Project Type/Tasks/icn-projecttype-tasks-light.svg')
 }
 
 export const Placeholders = {
@@ -68,16 +71,32 @@ export const ItemFields = {
 
 export const ProjectType = {
   ads: require('./Icons/Project Type/AD/icn-projecttype-ad.svg'),
-  article: require('./Icons/Project Type/AD/icn-projecttype-ad.svg'),
-  campaign: require('./Icons/Project Type/AD/icn-projecttype-ad.svg'),
-  email: require('./Icons/Project Type/AD/icn-projecttype-ad.svg')
+  adsLight: require('./Icons/Project Type/AD/icn-projecttype-ad-light.svg'),
+  articles: require('./Icons/Project Type/Article/icn-projecttype-article.svg'),
+  articlesLight: require('./Icons/Project Type/Article/icn-projecttype-article-light.svg'),
+  email: require('./Icons/Project Type/Email/icn-projecttype-email.svg'),
+  emailLight: require('./Icons/Project Type/Email/icn-projecttype-email-light.svg'),
+  banners: require('./Icons/Project Type/AD/icn-projecttype-ad.svg'),
+  bannersLight: require('./Icons/Project Type/AD/icn-projecttype-ad-light.svg')
 }
 
 export const ProjectTypeChannel = {
   social: require('./Icons/Project Type/Social/icn-projecttype-social.svg'),
+  socialLight: require('./Icons/Project Type/Social/icn-projecttype-social-light.svg'),
   facebook: require('./Icons/Project Type/Social/icn-social-facebook.svg'),
   instagram: require('./Icons/Project Type/Social/icn-social-instagram.svg'),
   pinterest: require('./Icons/Project Type/Social/icn-social-pinterest.svg'),
   twitter: require('./Icons/Project Type/Social/icn-social-twitter.svg'),
   linkedin: require('./Icons/Project Type/Social/icn-social-linkedin.svg')
+}
+
+export const Status = {
+  all: require('./Icons/Status/All/icn-status-all.svg'),
+  allLight: require('./Icons/Status/All/icn-status-all-light.svg'),
+  completed: require('./Icons/Status/Complete/icn-status-complete.svg'),
+  completedLight: require('./Icons/Status/Complete/icn-status-complete-light.svg'),
+  draft: require('./Icons/Status/Drafts/icn-status-drafts.svg'),
+  draftLight: require('./Icons/Status/Drafts/icn-status-drafts-light.svg'),
+  scheduled: require('./Icons/Status/Scheduled/icn-status-scheduled.svg'),
+  scheduledLight: require('./Icons/Status/Scheduled/icn-status-scheduled-light.svg')
 }

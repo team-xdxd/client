@@ -1,0 +1,33 @@
+.status,
+.type {
+  margin-top: 2.5rem;
+}
+
+.list {
+  margin-top: 2rem;
+}
+
+.item {
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  margin-bottom: 2rem;
+  font-size: 12px;
+  color: var(--color-sec-text);
+  cursor: pointer;
+}
+
+.item.selected {
+  color: var(--color-prim-navy);
+  font-weight: 600;
+}
+
+.item img {
+  height: 14px;
+  width: 14px;
+}
+
+.item span {
+  margin-left: 25px;
+  display: inline-flex;
+}
