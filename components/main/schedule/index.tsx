@@ -222,6 +222,8 @@ const Schedule = () => {
               <SidePanel
                 currentDate={currentDate}
                 setCurrentDate={setCurrentDate}
+                filters={filters}
+                setFilters={setFilters}
               />
             </div>
             {activeView === 'list' &&
