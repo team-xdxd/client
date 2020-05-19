@@ -11,9 +11,11 @@ import ListItem from './list-item'
 const List = ({mixedList}) => {
 
   const [listItems, setListItems] = useState([])
-
+const [group, setGroup] = useState([])
   useEffect(() => {
-    setListItems(Object.entries(groupByDate()))
+    let g= groupByDate()
+    setListItems(Object.entries(g))
+    setGroup(g)
   }, [])
 
   const groupByDate = () => {
@@ -31,10 +33,22 @@ const List = ({mixedList}) => {
 
   return (
     <section>
-      {listItems.map((key, value) => (
+      {listItems.map(([key, value]) => (
         <div key={key}>
           {key}
-          {value}
+          {(Object.keys(value[0]).map(el=>{
+            console.log(el)
+            return (el && (el === 'users')
+            ? null
+            :value[0][el]? value[0][el].toString() :null
+            )}
+          )          )
+          }
+          <br />
+          <br />
+          <br />
+          <br />
+          <br />
         </div>
       ))}
     </section>
