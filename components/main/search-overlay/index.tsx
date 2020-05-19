@@ -1,16 +1,14 @@
 import { useState } from 'react'
-import Router from 'next/router'
 import styles from './index.module.css'
 import Link from 'next/link'
-import { ProjectType, ProjectTypeChannel, ProjectTypes } from '../../../assets'
 import campaignApi from '../../../server-api/campaign'
 import projectApi from '../../../server-api/project'
 import taskApi from '../../../server-api/task'
-import { capitalCase } from 'change-case'
-import { format } from 'date-fns'
+
 
 // Components
 import Search from '../../common/inputs/search'
+import SearchItem from './search-item'
 
 const CreateOverlay = ({ closeOverlay }) => {
 
@@ -83,52 +81,6 @@ const CreateOverlay = ({ closeOverlay }) => {
     }
   }
 
-  const Item = ({ item }) => {
-    const dateKey = getItemDateKey(item)
-    const date = item[dateKey]
-    let type
-    let socialChannel
-    if (item.itemType === 'campaign') {
-      type = item.itemType
-    }
-    else if (item.itemType === 'project') {
-      type = item.type
-      if (type === 'social') {
-        socialChannel = item.channel || 'social'
-      }
-    }
-    else {
-      type = item.itemType
-    }
-
-    let icon = ProjectTypes[type]
-    if (type !== 'campaign' && type !== 'task') {
-      icon = ProjectType[type]
-    }
-
-    return (
-      <li
-        className={styles.item}
-        onClick={() => Router.replace(`/main/${item.itemType}s/${item.id}`)}>
-        <div className={styles.name}>
-          {item.name}
-        </div>
-        <div className={styles.type}>
-          <img src={socialChannel ? ProjectTypeChannel[socialChannel.toLowerCase()] : icon} />
-          <span>
-            {capitalCase(type)}
-          </span>
-        </div>
-        <div>
-          {date && format(new Date(date), 'EEE d yyyy, MMM')}
-        </div>
-        <div>
-          {date && format(new Date(date), 'hh:mm a')}
-        </div>
-      </li>
-    )
-  }
-
   return (
     <div className={styles.container}>
       <div className={styles.top}>
@@ -148,9 +100,10 @@ const CreateOverlay = ({ closeOverlay }) => {
         </div>
         <ul className={styles.list}>
           {mixedList.map((item, index) => (
-            <Item
+            <SearchItem
               key={index}
               item={item}
+              term={term}
             />
           ))}
         </ul>
