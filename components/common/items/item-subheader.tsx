@@ -7,11 +7,13 @@ import SubHeader from '../layouts/sub-header'
 import NavButton from '../buttons/nav-button'
 import StatusBadge from '../misc/status-badge'
 
-const ItemSubHeader = ({ title, status = 'draft', saveDraft = () => { }, changeName, changeStatus }) => {
+const ItemSubHeader = ({ title, status = 'draft', saveDraft = () => { }, changeName, changeStatus, resetPageTittle }) => {
   return (
     <SubHeader
+      editable={true}
       pageTitle={title}
       titleOnchange={(e) => changeName(e.target.value)}
+      resetPageTittle={resetPageTittle}
     >
       <div className={styles['header-additional']}>
         {status &&

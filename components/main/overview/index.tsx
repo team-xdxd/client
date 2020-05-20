@@ -83,6 +83,14 @@ const Overview = () => {
     }
   }
 
+  useEffect(() => {
+    if (createVisible) {
+      document.body.classList.add('no-overflow')
+    } else {
+      document.body.classList.remove('no-overflow')
+    }
+  }, [createVisible])
+
   return (
     <>
       <OverviewSubHeader
