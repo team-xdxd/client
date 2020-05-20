@@ -1,0 +1,21 @@
+.header {
+  display: flex;
+}
+
+.header h4 {
+  width: 14%;
+  font-weight: 550;
+  color: var(--color-prim-nav);
+}
+
+.header h4:first-child {
+  width: 28%
+}
+
+.header h4:last-child {
+  flex: 1;
+}
+
+.day{
+  margin-bottom: 4rem;
+}

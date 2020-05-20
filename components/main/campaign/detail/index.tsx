@@ -132,6 +132,7 @@ const CampaignDetail = () => {
         status={status}
         changeStatus={changeStatus}
         changeName={(name) => setName(name)}
+        resetPageTittle={() => setName(campaign?.name)}
       />
       <main className={`${styles.container}`}>
         <ItemSublayout >

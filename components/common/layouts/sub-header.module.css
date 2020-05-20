@@ -19,3 +19,16 @@
   color: inherit;
   width: fit-content;
 }
+
+.edit {
+  cursor: pointer;
+  width: 16px;
+  height: 16px;
+}
+
+.x{
+  cursor: pointer;
+  color: white;
+  font-size: 22px;
+  font-family: monospace;
+}

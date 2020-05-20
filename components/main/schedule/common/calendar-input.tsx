@@ -3,7 +3,7 @@ import { format, getWeeksInMonth, startOfMonth, startOfWeek, addDays, endOfMonth
 
 import styles from './calendar-input.module.css'
 
-const CalendarInput = ({ currentDate, setCurrentDate }) => {
+const CalendarInput = ({ currentDate, setCurrentDate, type }) => {
   const dayRef = useRef()
   const [calendarDays, setCalendarDays] = useState([])
 
@@ -82,7 +82,7 @@ const CalendarInput = ({ currentDate, setCurrentDate }) => {
               key={index}
               onClick={() => selectDate(day.date)}
               className={
-                `${styles.day} ${isSameMonth && styles['same-month']} ${isSameWeekDates && styles['same-week']} ${day.weekDay === 0 && styles['week-start']} ${day.weekDay === 6 && styles['week-end']}`
+                `${styles.day} ${isSameMonth && styles['same-month']} ${type === 'week' && isSameWeekDates && styles['same-week']} ${day.weekDay === 0 && styles['week-start']} ${day.weekDay === 6 && styles['week-end']}`
               }>
               <div
                 className={

@@ -50,7 +50,7 @@
 
 .x {
   font-weight: 900;
-  font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande", "Lucida Sans", Arial, sans-serif;
+  font-family: monospace;
 }
 
 .search,
@@ -58,43 +58,4 @@
   margin-top: 35px;
   max-width: 50rem;
   width: 100%;
-}
-
-.item {
-  align-items: center;
-  display: flex;
-  padding: 30px 0;
-  border-top: 1px solid var(--color-secondary-border);
-  cursor: pointer;
-  font-weight: 500;
-}
-
-.item:last-child {
-  border-bottom: 1px solid var(--color-secondary-border);
-}
-
-.item > div {
-  margin-right: 15px;
-}
-
-.item > div:last-child {
-  margin-right: 0;
-}
-
-.item img {
-  width: 18px;
-  height: 18px;
-  margin-right: 5px;
-}
-
-.name {
-  flex: 1;
-}
-
-.type {
-  display: flex;
-}
-
-.type span {
-  display: inline-flex;
 }

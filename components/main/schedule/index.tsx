@@ -197,6 +197,14 @@ const Schedule = () => {
     setCreateType(type)
   }
 
+  useEffect(() => {
+    if (createVisible || searchVisible) {
+      document.body.classList.add('no-overflow')
+    } else {
+      document.body.classList.remove('no-overflow')
+    }
+  }, [createVisible, searchVisible])
+
   const [activeView, setActiveView] = useState('month')
 
   return (
@@ -222,12 +230,16 @@ const Schedule = () => {
               <SidePanel
                 currentDate={currentDate}
                 setCurrentDate={setCurrentDate}
+                filters={filters}
+                setFilters={setFilters}
+                activeView={activeView}
               />
             </div>
             {activeView === 'list' &&
               <div className={styles.schedule}>
                 <List
                   mixedList={mixedList}
+                  currentDate={currentDate}
                 />
               </div>
             }

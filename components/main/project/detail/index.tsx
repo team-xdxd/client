@@ -84,7 +84,7 @@ const ProjectDetail = () => {
         headline: editableFields.headline,
         subject: editableFields.subject,
         preheader: editableFields.preheader
-      }      
+      }
       const { data } = await projectApi.updateProject(project.id, saveData)
       getProjectNames()
       setProject(data)
@@ -173,9 +173,9 @@ const ProjectDetail = () => {
   }
 
   const changeStatus = async (newStatus) => {
-    try{
+    try {
       setStatus(newStatus)
-      await projectApi.updateProject(project.id, {status: newStatus})
+      await projectApi.updateProject(project.id, { status: newStatus })
       toastUtils.success('Project updated sucesfully')
     } catch (err) {
       // TODO: Error if failure for whatever reason
@@ -191,6 +191,7 @@ const ProjectDetail = () => {
         status={status}
         changeName={(name) => editFields('name', name)}
         changeStatus={changeStatus}
+        resetPageTittle={() => editFields('name', project?.name)}
       />
       <main className={`${styles.container}`}>
         <ItemSublayout
