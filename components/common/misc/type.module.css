@@ -1,0 +1,13 @@
+.type {
+  display: flex;
+}
+
+.type span {
+  display: inline-flex;
+}
+
+.type img {
+  width: 14px;
+  height: 14px;
+  margin-right: 5px;
+}

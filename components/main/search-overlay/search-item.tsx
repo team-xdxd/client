@@ -18,28 +18,12 @@ const getItemDateKey = (item) => {
   }
 }
 
+// Components
+import Type from '../../common/misc/type'
+
 const SearchItem = ({ item, term }) => {
   const dateKey = getItemDateKey(item)
   const date = item[dateKey]
-  let type
-  let socialChannel
-  if (item.itemType === 'campaign') {
-    type = item.itemType
-  }
-  else if (item.itemType === 'project') {
-    type = item.type
-    if (type === 'social') {
-      socialChannel = item.channel || 'social'
-    }
-  }
-  else {
-    type = item.itemType
-  }
-
-  let icon = ProjectTypes[type]
-  if (type !== 'campaign' && type !== 'task') {
-    icon = ProjectType[type]
-  }
 
   return (
     <li
@@ -54,10 +38,9 @@ const SearchItem = ({ item, term }) => {
         />
       </div>
       <div className={styles.type}>
-        <img src={socialChannel ? ProjectTypeChannel[socialChannel.toLowerCase()] : icon} />
-        <span>
-          {capitalCase(type)}
-        </span>
+        <Type
+          item={item}
+        />
       </div>
       <div className={styles.date}>
         {date && format(new Date(date), 'EEE d yyyy, MMM')}

@@ -20,12 +20,6 @@
   margin-right: 0;
 }
 
-.item img {
-  width: 14px;
-  height: 14px;
-  margin-right: 5px;
-}
-
 .name {
   width: 50%;
 }
@@ -35,12 +29,7 @@
 }
 
 .type {
-  display: flex;
   width: 19%;
-}
-
-.type span {
-  display: inline-flex;
 }
 
 .date {

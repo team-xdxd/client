@@ -224,12 +224,14 @@ const Schedule = () => {
                 setCurrentDate={setCurrentDate}
                 filters={filters}
                 setFilters={setFilters}
+                activeView={activeView}
               />
             </div>
             {activeView === 'list' &&
               <div className={styles.schedule}>
                 <List
                   mixedList={mixedList}
+                  currentDate={currentDate}
                 />
               </div>
             }
