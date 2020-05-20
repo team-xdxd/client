@@ -140,6 +140,7 @@ const TaskDetail = () => {
         changeName={(name) => editFields('name', name)}
         status={status}
         changeStatus={changeStatus}
+        resetPageTittle={() => editFields('name', task?.name)}
       />
       <main className={`${styles.container}`}>
         <ItemSublayout

@@ -197,6 +197,14 @@ const Schedule = () => {
     setCreateType(type)
   }
 
+  useEffect(() => {
+    if (createVisible || searchVisible) {
+      document.body.classList.add('no-overflow')
+    } else {
+      document.body.classList.remove('no-overflow')
+    }
+  }, [createVisible, searchVisible])
+
   const [activeView, setActiveView] = useState('week')
 
   return (
