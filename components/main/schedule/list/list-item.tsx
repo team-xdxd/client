@@ -1,26 +1,83 @@
 import styles from './list-item.module.css'
+import { format } from 'date-fns'
+import Router from 'next/router'
+import { Utilities } from '../../../../assets'
 
-const ListItem = ({item, key}) => {
-  return (
-    <>
-    {item.publishDate || item.endDate &&
-      <div>
-        <div>
-          {item.name}
-          {item.itemType}
-        </div>
-        <div>
-            <div>
-              {item.itemType === 'project' ?
-                item.publishDate
-              :
-                item.endDate
-              }
-            </div>
-        </div>
-      </div>
+// Components
+import Button from '../../../common/buttons/button'
+import StatusBadge from '../../../common/misc/status-badge'
+import Type from '../../../common/misc/type'
+
+const ListItem = ({ item }) => {
+  const wasUpdated = item.createdAt !== item.updatedAt
+  const dateFormat = 'MMM do, yyyy h:mm a'
+  const createdAt = format(new Date(item.createdAt), dateFormat)
+  const updatedAt = format(new Date(item.updatedAt), dateFormat)
+
+  let itemTime
+  let parent
+
+  if (item.itemType === 'project') {
+    if (item.campaign) {
+      parent = `Campaign: ${item.campaign.name}`
     }
-    </>
+    if (item.publishDate) {
+      itemTime = format(new Date(item.publishDate), 'h:mm a')
+    }
+
+  }
+  else if (item.itemType === 'task') {
+    if (item.project) {
+      parent = `Project: ${item.project.name}`
+    }
+    if (item.endDate) {
+      itemTime = format(new Date(item.endDate), 'h:mm a')
+    }
+  }
+  else {
+    if (item.endDate) {
+      itemTime = format(new Date(item.endDate), 'h:mm a')
+    }
+  }
+
+  return (
+    <div className={styles.item}>
+      <div className={styles.info}>
+        <div className={styles.name}>{item.name}</div>
+        {parent &&
+          <div>{parent}</div>
+        }
+        {wasUpdated ?
+          <div className={styles['info-date']}>Edited <span>{updatedAt}</span></div>
+          :
+          <div className={styles['info-date']}>Created <span>{createdAt}</span></div>
+        }
+      </div>
+      <div className={styles.status}>
+        <StatusBadge status={item.status} />
+      </div>
+      <div className={styles.type}>
+        <Type
+          item={item}
+        />
+      </div>
+      <div className={styles.time}>
+        {itemTime}
+      </div>
+      <div className={styles.owner}>
+        {/* TODO: Placeholder, fix when teams are implemented */}
+        <img src={Utilities.memberProfile} />
+        <span>{item.users[0]?.name}</span>
+      </div>
+      <div className={styles.action}>
+        <Button
+          text='Edit'
+          type='button'
+          styleType='primary'
+          onClick={() => Router.replace(`/main/${item.itemType}s/${item.id}`)}
+        />
+      </div>
+    </div>
   )
 }
 

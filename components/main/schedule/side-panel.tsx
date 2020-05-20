@@ -18,7 +18,7 @@ const typeOptions = [
   ...projectTypes
 ]
 
-const SidePanel = ({ currentDate, setCurrentDate, filters, setFilters, }) => {
+const SidePanel = ({ currentDate, setCurrentDate, filters, setFilters, activeView}) => {
 
   const Filter = ({ icon, text, onClick, selected }) => (
     <li onClick={onClick} className={`${styles.item} ${selected && styles.selected}`}>
@@ -32,6 +32,7 @@ const SidePanel = ({ currentDate, setCurrentDate, filters, setFilters, }) => {
       <CalendarInput
         currentDate={currentDate}
         setCurrentDate={setCurrentDate}
+        type={activeView}
       />
       <div className={styles.status}>
         <h3>Status</h3>
