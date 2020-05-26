@@ -4,7 +4,11 @@
   position: relative;
 }
 
-.day.week{
+.hovering {
+  background-color: var(--color-secondary-border);
+}
+
+.day.week {
   height: 100%;
 }
 
@@ -35,7 +39,7 @@
   width: 100%;
 }
 
-.day ul li{
+.day ul li {
   position: relative;
   z-index: 100;
 }

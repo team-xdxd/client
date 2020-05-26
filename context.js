@@ -1,4 +1,5 @@
 import { createContext } from 'react'
+import { create } from 'domain'
 
 export const UserContext = createContext({
   user: null,
@@ -17,3 +18,7 @@ export const LanguageContext = createContext({
   setLanguage: () => { }
 })
 
+export const DragContext = createContext({
+  item: null,
+  setItem: (item) => { }
+})

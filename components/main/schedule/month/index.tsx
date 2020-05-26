@@ -8,7 +8,7 @@ import dateUtils from '../../../../utils/date'
 import Day from '../common/day'
 import DayMonth from './day-month'
 
-const Month = ({ currentDate, mixedList }) => {
+const Month = ({ currentDate, mixedList, updateItem }) => {
 
   const dayRef = useRef()
   const [calendarDays, setCalendarDays] = useState([])
@@ -47,6 +47,10 @@ const Month = ({ currentDate, mixedList }) => {
     }
   }, [mixedList])
 
+  const onDragDrop = (itemId, date) => {
+    updateItem(mixedList.find(item => item.id === itemId), date)
+  }
+
   return (
     <section className={styles.container}>
       <div className={styles.calendar} >
@@ -82,6 +86,7 @@ const Month = ({ currentDate, mixedList }) => {
                 itemList={itemList}
                 itemListPrevious={itemListPrevious}
                 itemListNext={[]}
+                onDragDrop={(e) => onDragDrop(e.dataTransfer.getData("itemId"), day.date)}
               />
             )
           })}

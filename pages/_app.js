@@ -9,6 +9,7 @@ import '../styles/schedule.css'
 import 'react-day-picker/lib/style.css';
 // Import stripe as a side effect so it helps detect fraudulent activy
 import '@stripe/stripe-js';
+import dragndropPolyfill from '../polyfills/dragndroptouch'
 import { useState, useEffect } from 'react'
 import { UserContext, LanguageContext, ThemeContext } from '../context'
 import cookiesUtils from '../utils/cookies'
@@ -62,6 +63,9 @@ export default function MyApp ({ Component, pageProps }) {
   const [theme, setTheme] = useState("light")
   const themeValue = { theme, setTheme }
 
+  const [item, setItem] = useState(null)
+  const itemValue = { item, setItem }
+
   const [initialLoadFinished, setInitialLoadFinished] = useState(false)
 
   const resizeWindow = () => {
@@ -75,6 +79,7 @@ export default function MyApp ({ Component, pageProps }) {
       resizeWindow()
     })
     getUserData()
+    dragndropPolyfill()
   }, [])
 
   const getUserData = async () => {

@@ -1,5 +1,6 @@
 import styles from './day.module.css'
 import { format } from 'date-fns'
+import { useState } from 'react'
 
 const isSameMonth = (date, targetDate) => {
   return date.getMonth() === targetDate.getMonth()
@@ -14,8 +15,8 @@ const dateFormat = (date) => {
 
 const today = new Date()
 
-const Day = ({ date, currentDate, itemList, itemListPrevious, itemListNext, hasDayHeader = true, type = '' }) => {
-
+const Day = ({ date, currentDate, itemList, itemListPrevious, itemListNext, hasDayHeader = true, type = '', onDragDrop }) => {
+  const [dragHovering, setDragHovering] = useState(false)
   const positionedItems = itemList.filter(item => item.currentWeekPosition !== undefined)
   const nonPositionedItems = itemList.filter(item => item.currentWeekPosition === undefined)
 
@@ -60,7 +61,15 @@ const Day = ({ date, currentDate, itemList, itemListPrevious, itemListNext, hasD
   })
 
   return (
-    <div className={`day ${styles['day']} ${!isSameMonth(date, currentDate) && styles['diff-month']} ${styles[type]}`}>
+    <div className={`day ${styles['day']} ${!isSameMonth(date, currentDate) && styles['diff-month']} ${styles[type]} ${dragHovering && styles.hovering}`}
+      onDragOver={(e) => { e.preventDefault(); setDragHovering(true) }}
+      onDragEnter={() => { setDragHovering(true) }}
+      onDragLeave={() => { setDragHovering(false) }}
+      onDrop={(e) => {
+        setDragHovering(false)
+        onDragDrop(e)
+      }}
+    >
       {hasDayHeader &&
         <div className={styles['day-header']}>
           <div className={styles['day-number']}>{dateFormat(date)}</div>
@@ -71,7 +80,7 @@ const Day = ({ date, currentDate, itemList, itemListPrevious, itemListNext, hasD
       }
       <ul>
         {preparedItemList.map(({ isContinuation, isLast, Item }, index) => (
-          <li key={index} className={`${isContinuation && 'continuation'} ${isLast && 'last'}`}>
+          <li key={index} className={`${isContinuation && 'continuation'} ${isLast && 'last'}`} >
             <Item
               key={index}
             />
