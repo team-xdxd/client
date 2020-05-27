@@ -12,9 +12,6 @@
 
 .side-panel {
   grid-area: side-panel;
-  display: flex;
-  flex-direction: column;
-  align-content: flex-start;
 }
 
 .schedule {
