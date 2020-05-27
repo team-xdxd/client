@@ -1,6 +1,6 @@
 .item {
   display: flex;
-  padding: 1.5rem 0;
+  padding-top: 1rem;
   border-top: 1px solid var(--color-secondary-border);
 }
 
@@ -11,7 +11,7 @@
 }
 
 .info > * {
-  margin-bottom: 10px;
+  margin-bottom: 5px;
 }
 
 .info > *:last-child {
@@ -19,13 +19,13 @@
 }
 
 .name {
-  font-size: 22px;
+  font-size: 18px;
   font-weight: 600;
   width: 100%;
 }
 
 .info-date span {
-  font-weight: 600;
+  font-size: 13px;
 }
 
 .status {
@@ -33,6 +33,7 @@
 }
 
 .type {
+  font-size: 13px;
   width: 14%;
 }
 

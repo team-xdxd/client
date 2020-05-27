@@ -45,12 +45,12 @@ const ListItem = ({ item }) => {
       <div className={styles.info}>
         <div className={styles.name}>{item.name}</div>
         {parent &&
-          <div>{parent}</div>
+          <div className={styles['info-date']}><span>{parent}</span></div>
         }
         {wasUpdated ?
-          <div className={styles['info-date']}>Edited <span>{updatedAt}</span></div>
+          <div className={styles['info-date']}><span> Edited {updatedAt}</span></div>
           :
-          <div className={styles['info-date']}>Created <span>{createdAt}</span></div>
+          <div className={styles['info-date']}><span> Created {createdAt}</span></div>
         }
       </div>
       <div className={styles.status}>
