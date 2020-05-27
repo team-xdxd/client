@@ -1,6 +1,6 @@
 import styles from './day.module.css'
 import { format } from 'date-fns'
-import { useState } from 'react'
+import { useState, useRef, useEffect } from 'react'
 
 const isSameMonth = (date, targetDate) => {
   return date.getMonth() === targetDate.getMonth()
@@ -15,12 +15,40 @@ const dateFormat = (date) => {
 
 const today = new Date()
 
-const Day = ({ date, currentDate, itemList, itemListPrevious, itemListNext, hasDayHeader = true, type = '', onDragDrop }) => {
+const Day = ({ date, currentDate, itemList, itemListPrevious, itemListNext, hasDayHeader = true, type = '', onDragDrop, setActiveView, setCurrentDate }) => {
+  const dayRef = useRef()
+
+  const [maxItems, setMaxItems] = useState(10)
+
+  useEffect(() => {
+    if (dayRef && dayRef.current) {
+      const modifyMaxItems = () => {
+        let dayHeight = dayRef.current.offsetHeight
+        if (dayHeight <= 300) {
+          setMaxItems(4)
+        }
+        if (dayHeight <= 195) {
+          setMaxItems(3)
+        }
+        if (dayHeight <= 165) {
+          setMaxItems(2)
+        }
+        if (dayHeight <= 128) {
+          setMaxItems(1)
+        }
+      }
+      modifyMaxItems()
+      window.addEventListener('resize', modifyMaxItems)
+      return () => window.removeEventListener('resize', modifyMaxItems)
+    }
+  }, [dayRef])
+
+
   const [dragHovering, setDragHovering] = useState(false)
   const positionedItems = itemList.filter(item => item.currentWeekPosition !== undefined)
   const nonPositionedItems = itemList.filter(item => item.currentWeekPosition === undefined)
 
-  const preparedItemList = []
+  let preparedItemList = []
 
   const fillPrevious = (difference) => {
     for (let i = 0; i < difference; i++) {
@@ -60,8 +88,15 @@ const Day = ({ date, currentDate, itemList, itemListPrevious, itemListNext, hasD
     preparedItemList.push({ Item: item.data.Item })
   })
 
+  let overLimit = false
+  if (preparedItemList.length > maxItems) {
+    preparedItemList = preparedItemList.slice(0, maxItems)
+    overLimit = true
+  }
+
+
   return (
-    <div className={`day ${styles['day']} ${!isSameMonth(date, currentDate) && styles['diff-month']} ${styles[type]} ${dragHovering && styles.hovering}`}
+    <div ref={dayRef} className={`day ${styles['day']} ${!isSameMonth(date, currentDate) && styles['diff-month']} ${styles[type]} ${dragHovering && styles.hovering}`}
       onDragOver={(e) => { e.preventDefault(); setDragHovering(true) }}
       onDragEnter={() => { setDragHovering(true) }}
       onDragLeave={() => { setDragHovering(false) }}
@@ -86,6 +121,16 @@ const Day = ({ date, currentDate, itemList, itemListPrevious, itemListNext, hasD
             />
           </li>
         ))}
+        {overLimit &&
+          <li className={styles['more-li']}>
+            <div className={styles.more} onClick={() => {
+              setActiveView('list')
+              setCurrentDate(date)
+            }}>
+              View more
+            </div>
+          </li>
+        }
       </ul>
     </div>
   )

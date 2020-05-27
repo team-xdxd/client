@@ -16,7 +16,7 @@ export default {
     return specialDate
   },
 
-  processDayItem: (item, currentDate, mappedItems, Component) => {
+  processDayItem: (item, mappedItems, Component) => {
     let type
     let socialChannel
     let date
@@ -37,23 +37,23 @@ export default {
     }
 
     if (date) {
-      const dayNumber = new Date(date).getDate()
+      const dayKey = `${new Date(date).getDate()}-${new Date(date).getMonth()}`
       let isMultiple
       if (item.startDate) {
         isMultiple = true
         const endDate = new Date(date)
         let iterDate = new Date(item.startDate)
-        while (iterDate.getDate() < endDate.getDate() && iterDate.getDate() <= 31) {
-          const dateNumber = iterDate.getDate()
-          parseItem(item, iterDate, currentDate, type, socialChannel, dateNumber, mappedItems, isMultiple, Component)
+        while (iterDate < endDate) {
+          const dateKey = `${iterDate.getDate()}-${iterDate.getMonth()}`
+          parseItem(item, iterDate, type, socialChannel, dateKey, mappedItems, isMultiple, Component)
           iterDate = addDays(iterDate, 1)
         }
       }
-      parseItem(item, new Date(date), currentDate, type, socialChannel, dayNumber, mappedItems, isMultiple, Component)
+      parseItem(item, new Date(date), type, socialChannel, dayKey, mappedItems, isMultiple, Component)
     }
   },
 
-  reorderItems: (items, currentDate, calendarDays) => {
+  reorderItems: (items, calendarDays) => {
     const newItems = {}
     let currentWeekOrder = {}
     let currentWeek = -1
@@ -61,13 +61,14 @@ export default {
       if (day.weekDay === 0) {
         currentWeek++
       }
-      if (day.date.getMonth() !== currentDate.getMonth()) return
       if (day.weekDay === 0) {
         currentWeekOrder = {}
       }
-      const dateNumber = day.date.getDate()
-      const mappedItems = items[dateNumber]
-      const nextDayItems = items[dateNumber + 1]
+      const dateKey = `${day.date.getDate()}-${day.date.getMonth()}`
+      const mappedItems = items[dateKey]
+      const nextDate = addDays(day.date, 1)
+      const nextDateKey = `${nextDate.getDate()}-${nextDate.getMonth()}`
+      const nextDayItems = items[nextDateKey]
       if (mappedItems) {
         const newMappedItems = []
         mappedItems.forEach(item => {
@@ -98,29 +99,27 @@ export default {
             return -1
           } else return 0
         })
-        newItems[dateNumber] = newMappedItems
+        newItems[dateKey] = newMappedItems
       }
     })
     return newItems
   }
 }
 
-const parseItem = (item, date, currentDate, type, socialChannel, dayNumber, mappedItems, isMultiple, Component) => {
-  if (date.getMonth() === currentDate.getMonth()) {
-    if (!mappedItems[dayNumber]) mappedItems[dayNumber] = []
-    mappedItems[dayNumber].push({
-      id: item.id,
-      Item: () => (
-        <Component
-          item={item}
-          socialChannel={socialChannel}
-          type={type}
-          isMultiple={isMultiple}
-          time={format(date, 'hh:mm aa')}
-        />
-      )
-    })
-  }
+const parseItem = (item, date, type, socialChannel, dayKey, mappedItems, isMultiple, Component) => {
+  if (!mappedItems[dayKey]) mappedItems[dayKey] = []
+  mappedItems[dayKey].push({
+    id: item.id,
+    Item: () => (
+      <Component
+        item={item}
+        socialChannel={socialChannel}
+        type={type}
+        isMultiple={isMultiple}
+        time={format(date, 'hh:mm aa')}
+      />
+    )
+  })
 }
 
 const getAvailablePosition = (currentWeekOrder) => {

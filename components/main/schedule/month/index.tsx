@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react'
-import { getWeeksInMonth, startOfMonth, startOfWeek, addDays } from 'date-fns'
+import { getWeeksInMonth, startOfMonth, startOfWeek, addDays, subDays } from 'date-fns'
 
 import styles from './index.module.css'
 import dateUtils from '../../../../utils/date'
@@ -8,7 +8,8 @@ import dateUtils from '../../../../utils/date'
 import Day from '../common/day'
 import DayMonth from './day-month'
 
-const Month = ({ currentDate, mixedList, updateItem }) => {
+
+const Month = ({ currentDate, mixedList, updateItem, setCurrentDate, setActiveView }) => {
 
   const dayRef = useRef()
   const [calendarDays, setCalendarDays] = useState([])
@@ -40,15 +41,17 @@ const Month = ({ currentDate, mixedList, updateItem }) => {
       setCalendarDays(newCalendarDays)
       const newMappedItems = {}
       mixedList.forEach((item) => {
-        dateUtils.processDayItem(item, currentDate, newMappedItems, DayMonth)
+        dateUtils.processDayItem(item, newMappedItems, DayMonth)
       })
-      const reorderedItems = dateUtils.reorderItems(newMappedItems, currentDate, newCalendarDays)
+      const reorderedItems = dateUtils.reorderItems(newMappedItems, newCalendarDays)
       setMappedItems(reorderedItems)
     }
   }, [mixedList])
 
   const onDragDrop = (itemId, date) => {
-    updateItem(mixedList.find(item => item.id === itemId), date)
+    if (itemId) {
+      updateItem(mixedList.find(item => item.id === itemId), date)
+    }
   }
 
   return (
@@ -66,27 +69,32 @@ const Month = ({ currentDate, mixedList, updateItem }) => {
         <div className={styles['date-grid']}>
 
           {calendarDays.map((day, index) => {
-            const isSameMonth = day.date.getMonth() === currentDate.getMonth()
-            const itemListForDate = isSameMonth ? mappedItems[day.date.getDate()] : []
+            const dayKey = `${day.date.getDate()}-${day.date.getMonth()}`
+            const itemListForDate = mappedItems[dayKey]
             const itemList = itemListForDate || []
 
             let itemListPrevious = []
             if (index > 0) {
-              const previousDay = calendarDays[index - 1]
-              const isSameMonthPrevious = previousDay.date.getMonth() === currentDate.getMonth()
-              const itemListForDatePrevious = isSameMonthPrevious ? mappedItems[previousDay.date.getDate()] : []
+              const previousDate = subDays(day.date, 1)
+              const previousKey = `${previousDate.getDate()}-${previousDate.getMonth()}`
+              const itemListForDatePrevious = mappedItems[previousKey]
               itemListPrevious = itemListForDatePrevious || []
             }
 
             return (
               <Day
+                setActiveView={setActiveView}
+                setCurrentDate={setCurrentDate}
                 currentDate={currentDate}
                 date={day.date}
                 key={index}
                 itemList={itemList}
                 itemListPrevious={itemListPrevious}
                 itemListNext={[]}
-                onDragDrop={(e) => onDragDrop(e.dataTransfer.getData("itemId"), day.date)}
+                onDragDrop={(e) => {
+                  onDragDrop(e.dataTransfer.getData("itemId"), day.date)
+                  e.dataTransfer.clearData()
+                }}
               />
             )
           })}

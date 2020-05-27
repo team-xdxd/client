@@ -13,7 +13,7 @@
 }
 
 .calendar {
-  width: calc(100% - 2.5rem);
+  width: 75%;
 }
 
 .day-of-week,

@@ -1,21 +1,22 @@
 import Router from 'next/router'
 import styles from './day-month.module.css'
-import Draggable from 'react-draggable'
 import { useState, useRef } from 'react'
 
 // Components
 import TypeBadge from '../../../common/misc/type-badge'
 
-const DayMonth = ({ item, socialChannel, type }) => {
+const DayMonth = ({ item, socialChannel, type, isMultiple }) => {
   const cloneRef = useRef()
   const [beingDragged, setBeingDragged] = useState(false)
 
   const beginDrag = (e) => {
-    e.dataTransfer.setData("itemId", item.id)
-    let dayWidth = cloneRef.current.offsetWidth
-    let dayHeight = cloneRef.current.offsetHeight
-    e.dataTransfer.setDragImage(cloneRef.current, dayWidth / 2, dayHeight / 2)
-    setBeingDragged(true)
+    if (cloneRef?.current) {
+      e.dataTransfer.setData("itemId", item.id)
+      let dayWidth = cloneRef.current.offsetWidth
+      let dayHeight = cloneRef.current.offsetHeight
+      e.dataTransfer.setDragImage(cloneRef.current, dayWidth / 2, dayHeight / 2)
+      setBeingDragged(true)
+    }
   }
 
   return (
@@ -23,7 +24,7 @@ const DayMonth = ({ item, socialChannel, type }) => {
       <div
         className={`${styles.item} ${beingDragged && styles.dragged}`}
         onClick={() => Router.replace(`/main/${item.itemType}s/${item.id}`)}
-        draggable={true}
+        draggable={!item.startDate}
         onDragStart={beginDrag}
         onDragEnd={() => setBeingDragged(false)}
       >
@@ -31,16 +32,20 @@ const DayMonth = ({ item, socialChannel, type }) => {
           socialChannel={socialChannel}
           type={type}
           name={item.name}
+          isMultiple={isMultiple}
         />
       </div>
-      {/* Draggable element with styles */}
-      <div className={styles.clone} ref={cloneRef}>
-        <TypeBadge
-          socialChannel={socialChannel}
-          type={type}
-          name={item.name}
-        />
-      </div>
+      {!item.startDate &&
+        <div className={styles.clone} ref={cloneRef}>
+          {/* Draggable element with styles */}
+          <TypeBadge
+            socialChannel={socialChannel}
+            type={type}
+            name={item.name}
+            isMultiple={isMultiple}
+          />
+        </div>
+      }
     </>
   )
 }
