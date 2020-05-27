@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react'
-import { startOfWeek, addDays } from 'date-fns'
+import { startOfWeek, addDays, subDays } from 'date-fns'
 import Router from 'next/router'
 import styles from './index.module.css'
 import dateUtils from '../../../../utils/date'
@@ -10,8 +10,7 @@ import DayWeek from './day-week'
 
 const weekDaysLabel = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']
 
-const Week = ({ currentDate, mixedList }) => {
-
+const Week = ({ currentDate, mixedList, updateItem, setActiveView, setCurrentDate }) => {
   const [weekDays, setWeekDays] = useState([])
   const [mappedItems, setMappedItems] = useState({})
 
@@ -26,12 +25,19 @@ const Week = ({ currentDate, mixedList }) => {
       setWeekDays(newWeekDays)
       const newMappedItems = {}
       mixedList.forEach((item) => {
-        dateUtils.processDayItem(item, currentDate, newMappedItems, DayWeek)
+        dateUtils.processDayItem(item, newMappedItems, DayWeek)
       })
-      const reorderedItems = dateUtils.reorderItems(newMappedItems, currentDate, newWeekDays)
+      const reorderedItems = dateUtils.reorderItems(newMappedItems, newWeekDays)
       setMappedItems(reorderedItems)
+      console.log(reorderedItems)
     }
   }, [mixedList])
+
+  const onDragDrop = (itemId, date) => {
+    if (itemId) {
+      updateItem(mixedList.find(item => item.id === itemId), date)
+    }
+  }
 
   return (
     <section className={styles.container}>
@@ -42,25 +48,30 @@ const Week = ({ currentDate, mixedList }) => {
       </div>
       <div className={styles['date-row']}>
         {weekDays.map((day, index) => {
-          const itemListForDate = mappedItems[day.date.getDate()]
+          const dayKey = `${day.date.getDate()}-${day.date.getMonth()}`
+          const itemListForDate = mappedItems[dayKey]
           const itemList = itemListForDate || []
 
           let itemListPrevious = []
           if (index > 0) {
             const previousDay = weekDays[index - 1]
-            const itemListForDatePrevious = mappedItems[previousDay.date.getDate()]
+            const dayKeyPrevious = `${previousDay.date.getDate()}-${previousDay.date.getMonth()}`
+            const itemListForDatePrevious = mappedItems[dayKeyPrevious]
             itemListPrevious = itemListForDatePrevious || []
           }
 
           let itemListNext = []
           if (index < weekDays.length - 1) {
             const nextDay = weekDays[index + 1]
-            const itemListForDateNext = mappedItems[nextDay.date.getDate()]
+            const dayKeyNext = `${nextDay.date.getDate()}-${nextDay.date.getMonth()}`
+            const itemListForDateNext = mappedItems[dayKeyNext]
             itemListNext = itemListForDateNext || []
           }
 
           return (
             <Day
+              setActiveView={setActiveView}
+              setCurrentDate={setCurrentDate}
               currentDate={currentDate}
               date={day.date}
               key={index}
@@ -69,6 +80,10 @@ const Week = ({ currentDate, mixedList }) => {
               itemListNext={itemListNext}
               hasDayHeader={false}
               type={'week'}
+              onDragDrop={(e) => {
+                onDragDrop(e.dataTransfer.getData("itemId"), day.date)
+                e.dataTransfer.clearData()
+              }}
             />
           )
         })}

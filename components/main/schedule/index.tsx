@@ -6,8 +6,9 @@ import campaignApi from '../../../server-api/campaign'
 import projectApi from '../../../server-api/project'
 import taskApi from '../../../server-api/task'
 import update from 'immutability-helper'
-import { format, startOfMonth, endOfMonth } from 'date-fns'
-import queryString from 'querystring'
+import { startOfMonth, endOfMonth, subDays, addDays } from 'date-fns'
+import toastUtils from '../../../utils/toast'
+
 // Components
 import ScheduleSubHeader from './schedule-subheader'
 import CreateOverlay from '../create-overlay'
@@ -120,9 +121,6 @@ const Schedule = () => {
       ...tasksData.map(task => ({ ...task, itemType: 'task' })),
     ]
     mixed
-      .filter(item => (new Date(item[getItemDateKey(item)]).getMonth()) === currentDate.getMonth()
-        || (new Date(item.startDate).getMonth()) === currentDate.getMonth()
-      )
       .sort((itemA, itemB) => {
         const aDateKey = getItemDateKey(itemA)
         const bDateKey = getItemDateKey(itemB)
@@ -147,8 +145,8 @@ const Schedule = () => {
   }
 
   const getCommonFilters = () => {
-    const startOfMonthDate = startOfMonth(currentDate)
-    const endOfMonthDate = endOfMonth(currentDate)
+    const startOfMonthDate = startOfMonth(subDays(startOfMonth(currentDate), 1))
+    const endOfMonthDate = endOfMonth(addDays(endOfMonth(currentDate), 1))
     const filterObj = {
       startOfMonth: startOfMonthDate.toISOString(),
       endOfMonth: endOfMonthDate.toISOString()
@@ -197,6 +195,41 @@ const Schedule = () => {
     setCreateType(type)
   }
 
+  const updateItem = async (item, targetDate) => {
+    try {
+      const existingDate = new Date(item[getItemDateKey(item)])
+
+      // Do nothing if moved to the same day and month
+      if (existingDate.getDate() === targetDate.getDate() && existingDate.getMonth() === targetDate.getMonth()) return
+
+      const newDate = new Date(targetDate.setHours(existingDate.getHours(), existingDate.getSeconds()))
+      const itemIndex = mixedList.findIndex(searchedItem => searchedItem.id === item.id)
+
+      let updatedIem
+      // targetDate
+      if (item.itemType === 'campaign') {
+        setMixedList(update(mixedList,
+          { [itemIndex]: { endDate: { $set: newDate } } }))
+        await campaignApi.updateCampaign(item.id, { endDate: newDate })
+      } else if (item.itemType === 'project') {
+        setMixedList(update(mixedList,
+          { [itemIndex]: { publishDate: { $set: newDate } } }))
+        await projectApi.updateProject(item.id, { publishDate: newDate })
+      } else {
+        setMixedList(update(mixedList,
+          { [itemIndex]: { endDate: { $set: newDate } } }))
+        await taskApi.updateTask(item.id, { endDate: newDate })
+      }
+
+
+
+    } catch (err) {
+      console.log(err)
+      toastUtils.error('Could not change date')
+    }
+  }
+
+
   useEffect(() => {
     if (createVisible || searchVisible) {
       document.body.classList.add('no-overflow')
@@ -205,7 +238,7 @@ const Schedule = () => {
     }
   }, [createVisible, searchVisible])
 
-  const [activeView, setActiveView] = useState('week')
+  const [activeView, setActiveView] = useState('month')
 
   return (
     <>
@@ -248,6 +281,9 @@ const Schedule = () => {
                 <Week
                   currentDate={currentDate}
                   mixedList={mixedList}
+                  updateItem={updateItem}
+                  setCurrentDate={setCurrentDate}
+                  setActiveView={setActiveView}
                 />
               </div>
             }
@@ -256,6 +292,9 @@ const Schedule = () => {
           <Month
             currentDate={currentDate}
             mixedList={mixedList}
+            updateItem={updateItem}
+            setCurrentDate={setCurrentDate}
+            setActiveView={setActiveView}
           />
         }
       </main>
