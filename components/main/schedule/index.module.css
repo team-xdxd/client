@@ -5,7 +5,8 @@
 .content{
   display: grid;
   grid-template-areas: "side-panel schedule";
-  grid-template-columns: 20% 80%;
+  grid-template-columns: 17% 80%;
+  grid-column-gap: 3%;
   margin-top: 1rem;
 }
 
