@@ -1,4 +1,4 @@
-import { useState, useContext, useRef } from 'react'
+import { useContext } from 'react'
 import styles from './main-layout.module.css'
 import Link from 'next/link'
 import { GeneralImg, Navigation, Utilities } from '../../../assets'
@@ -7,32 +7,11 @@ import Router from 'next/router'
 
 // Components
 import HeaderLink from '../layouts/header-link'
+import ToggleableAbsoluteWrapper from '../misc/toggleable-absolute-wrapper'
 import Dropdown from '../inputs/dropdown'
 
 const AuthLayout = ({ children }) => {
   const { user, logOut } = useContext(UserContext)
-
-  const [dropdownVisible, setDropdownVisible] = useState(false)
-
-  const buttonRef = useRef(null)
-  const wrapperRef = useRef(null)
-
-  const handleClickOutside = (event) => {
-    if (wrapperRef.current && !wrapperRef.current.contains(event.target) && !buttonRef.current.contains(event.target)) {
-      setDropdownVisible(false)
-    }
-  }
-
-  const setDropdownOpen = (e, visible) => {
-    e.stopPropagation()
-    setDropdownVisible(visible)
-    if (visible) {
-      document.addEventListener("mousedown", handleClickOutside);
-    } else {
-      document.removeEventListener("mousedown", handleClickOutside);
-    }
-  }
-
 
   return (
     <>
@@ -77,22 +56,25 @@ const AuthLayout = ({ children }) => {
             className={styles.notifications}
             src={Navigation.alert} />
         </div>
-        <div className={styles.user}
-          ref={buttonRef}
-          onClick={(e) => setDropdownOpen(e, !dropdownVisible)}>
-          <img
-            className={styles.profile}
-            src={Utilities.memberProfile} />
-          {user?.name}
-          {dropdownVisible &&
-            <div ref={wrapperRef} className={styles['user-dropdown']}>
-              <Dropdown
-                options={[{ label: 'Log Out' }]}
-                onClick={logOut}
-              />
-            </div>
-          }
-        </div>
+
+        <ToggleableAbsoluteWrapper
+          wrapperClass={styles.user}
+          Wrapper={({ children }) => (
+            <>
+              <img
+                className={styles.profile}
+                src={Utilities.memberProfile} />
+              {user?.name}
+              {children}
+            </>
+          )}
+          contentClass={styles['user-dropdown']}
+          Content={() => (
+            <Dropdown
+              options={[{ label: 'Log Out', onClick: logOut }]}
+            />
+          )}
+        />
       </header>
       {children}
       <footer className={styles.footer}>

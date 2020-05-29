@@ -7,6 +7,7 @@ import projectApi from '../../../../server-api/project'
 import taskApi from '../../../../server-api/task'
 import toastUtils from '../../../../utils/toast'
 import { ProjectTypes } from '../../../../assets'
+import Router from 'next/router'
 
 // Components
 import ItemSubheader from '../../../common/items/item-subheader'
@@ -53,6 +54,17 @@ const ProjectDetail = () => {
     } catch (err) {
       console.log(err)
       // TODO: Error handling
+    }
+  }
+
+  const deleteProject = async () => {
+    try {
+      await projectApi.deleteProject(project?.id)
+      Router.replace('/main/overview')
+      toastUtils.success('Project deleted sucesfully')
+    } catch (err) {
+      console.log(err)
+      // TODO: Handle error
     }
   }
 
@@ -175,8 +187,8 @@ const ProjectDetail = () => {
   const changeStatus = async (newStatus) => {
     try {
       setStatus(newStatus)
+      await saveProject()
       await projectApi.updateProject(project.id, { status: newStatus })
-      toastUtils.success('Project updated sucesfully')
     } catch (err) {
       // TODO: Error if failure for whatever reason
       console.log(err);
@@ -195,6 +207,8 @@ const ProjectDetail = () => {
       />
       <main className={`${styles.container}`}>
         <ItemSublayout
+          deleteItem={deleteProject}
+          type='project'
           navElements={[
             { icon: ProjectTypes.task }
           ]}

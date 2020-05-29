@@ -5,12 +5,12 @@ import Link from 'next/link'
 import update from 'immutability-helper'
 import campaignApi from '../../../../server-api/campaign'
 import toastUtils from '../../../../utils/toast'
+import Router from 'next/router'
 
 // Components
 import ItemSubheader from '../../../common/items/item-subheader'
 import ItemSublayout from '../../../common/layouts/item-sublayout'
 import Fields from './campaign-fields'
-import { set } from 'date-fns'
 
 const CampaignDetail = () => {
 
@@ -40,6 +40,17 @@ const CampaignDetail = () => {
       setCampaign(data)
     } catch (err) {
       // TODO: Error handling
+    }
+  }
+
+  const deleteCampaign = async () => {
+    try {
+      await campaignApi.deleteCampaign(campaign?.id)
+      Router.replace('/main/overview')
+      toastUtils.success('Campaign deleted sucesfully')
+    } catch (err) {
+      console.log(err)
+      // TODO: Handle error
     }
   }
 
@@ -115,12 +126,13 @@ const CampaignDetail = () => {
   }
 
   const changeStatus = async (newStatus) => {
-    try{
+    try {
       setStatus(newStatus)
-      await campaignApi.updateCampaign(campaign.id, {status: newStatus})
-      toastUtils.success('Campaign updated sucesfully')
+      await saveCampaign()
+      await campaignApi.updateCampaign(campaign.id, { status: newStatus })
     } catch (err) {
       // TODO: Error if failure for whatever reason
+      console.log(err);
     }
   }
 
@@ -135,7 +147,10 @@ const CampaignDetail = () => {
         resetPageTittle={() => setName(campaign?.name)}
       />
       <main className={`${styles.container}`}>
-        <ItemSublayout >
+        <ItemSublayout
+          deleteItem={deleteCampaign}
+          type='campaign'
+        >
           {campaign &&
             <Fields
               collaborators={collaborators}

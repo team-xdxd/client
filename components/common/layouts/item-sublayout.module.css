@@ -58,28 +58,35 @@
 
 .side-bar img {
   width: 20px;
-  height: auto;  
+  height: auto;
 }
 
-.side-bar>div:first-child img {
+.side-bar > div:first-child img {
   padding-bottom: 15px;
   margin-bottom: 15px;
 }
 
-.elements{
+.elements {
   padding-top: 30px;
 }
 
-.elements img{
+.elements img {
   margin-bottom: 10px;
 }
 
-.elements img:last-child{
+.elements img:last-child {
   margin-bottom: 30px;
 }
 
-.more{
+.more {
   padding-top: 30px;
+  cursor: pointer;
+  position: relative;
+}
+
+.more-drop {
+  position: absolute;
+  right: 0;
 }
 
 .children {
