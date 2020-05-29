@@ -13,6 +13,7 @@ import projectApi from '../../../../server-api/project'
 import ItemFieldWrapper from '../../../common/items/item-field-wrapper'
 import Select from '../../../common/inputs/select'
 import Tag from '../../../common/misc/tag'
+import ToggleableAbsoluteWrapper from '../../../common/misc/toggleable-absolute-wrapper'
 
 const TaskFields = ({
   editableFields: {
@@ -91,23 +92,29 @@ const TaskFields = ({
           <span>{task?.users[0].name}</span>
         </ItemFieldWrapper>
       </div>
-      <div className={styles.field}>
-        <ItemFieldWrapper
-          title='Deadline Date'
-          image={ItemFields.date}
-          hasOption={true}
-          optionOnClick={() => toggleActiveInput('endDate')}
-        >
-          <span>{endDate ? format(new Date(endDate), 'MMM d, yyyy') : 'No Deadline Date'}</span>
-        </ItemFieldWrapper>
-        {activeInput === 'endDate' &&
-          <div className={styles['day-picker']}>
-            <DayPicker
-              selectedDays={new Date(endDate)}
-              onDayClick={handleDayClick} />
-          </div>
-        }
-      </div>
+      <ToggleableAbsoluteWrapper
+        closeOnAction={false}
+        wrapperClass={styles.field}
+        Wrapper={({ children }) => (
+          <>
+            <ItemFieldWrapper
+              title='Deadline Date'
+              image={ItemFields.date}
+              hasOption={true}
+              optionOnClick={() => toggleActiveInput('endDate')}
+            >
+              <span>{endDate ? format(new Date(endDate), 'MMM d, yyyy') : 'No Deadline Date'}</span>
+            </ItemFieldWrapper>
+            {children}
+          </>
+        )}
+        contentClass={styles['day-picker']}
+        Content={() => (
+          <DayPicker
+            selectedDays={new Date(endDate)}
+            onDayClick={handleDayClick} />
+        )}
+      />
       <div className={styles.field}>
         <ItemFieldWrapper
           title='Time'
