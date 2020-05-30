@@ -83,3 +83,13 @@
   background-color: white;
   font-size: 13px;
 }
+
+/* Multi filter */
+.filter .select-prefix__option--is-selected {
+  background-color: inherit;
+  color: inherit;
+}
+
+.filter .select-prefix__option--is-selected:hover {
+  background-color: #DEEBFF;
+}

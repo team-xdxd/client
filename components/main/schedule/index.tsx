@@ -156,23 +156,23 @@ const Schedule = () => {
   }
 
   const evalCampaignsWithFilters = (campaign) => {
-    if (filters.campaign && campaign.id !== filters.campaign.value) return false
-    if (filters.status && campaign.status !== filters.status.value) return false
+    if (filters.campaign?.length > 0 && filters.campaign.findIndex(filterCampaign => campaign.id === filterCampaign.value) === -1) return false
+    if (filters.status?.length > 0 && filters.status.findIndex(filterStatus => campaign.status === filterStatus.value) === -1) return false
 
     return true
   }
 
   const evalProjectsWithFilters = (project) => {
-    if (filters.status && project.status !== filters.status.value) return false
-    if (filters.type && project.type !== filters.type.value) return false
-    if (filters.campaign && project.campaignId !== filters.campaign.value) return false
+    if (filters.status?.length > 0 && filters.status.findIndex(filterStatus => project.status === filterStatus.value) === -1) return false
+    if (filters.type?.length > 0 && filters.type.findIndex(filterType => project.type === filterType.value) === -1) return false
+    if (filters.campaign?.length > 0 && filters.campaign.findIndex(filterCampaign => project.campaignId === filterCampaign.value) === -1) return false
 
     return true
   }
 
   const evalTasksWithFilters = (task) => {
-    if (filters.status && task.status !== filters.status.value) return false
-    if (filters.campaign && task.project?.campaignId !== filters.campaign.value) return false
+    if (filters.status?.length > 0 && filters.status.findIndex(filterStatus => task.status === filterStatus.value) === -1) return false
+    if (filters.campaign?.length > 0 && filters.campaign.findIndex(filterCampaign => task.project?.campaignId === filterCampaign.value) === -1) return false
 
     return true
   }
