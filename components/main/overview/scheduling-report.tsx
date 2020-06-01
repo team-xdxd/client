@@ -7,7 +7,7 @@ import campaignApi from '../../../server-api/campaign'
 import projectApi from '../../../server-api/project'
 import taskApi from '../../../server-api/task'
 import { capitalCase } from 'change-case'
-import { format, startOfMonth, endOfMonth, subMonths } from 'date-fns'
+import { format, startOfMonth, endOfMonth, addMonths } from 'date-fns'
 
 // Components
 import ChartWrapper from '../../common/charts/chart-wrapper'
@@ -19,7 +19,7 @@ let currentDate = new Date()
 
 for (let i = 0; i < 9; i++) {
   availableMonths.push(currentDate)
-  currentDate = subMonths(currentDate, 1)
+  currentDate = addMonths(currentDate, 1)
 }
 
 const SchedulingReport = () => {

@@ -3,12 +3,12 @@ import itemStatus from '../../../resources/data/item-status.json'
 import projectTypes from '../../../resources/data/project-types.json'
 import { ProjectType, ProjectTypes, ProjectTypeChannel, Status } from '../../../assets'
 import { capitalCase } from 'change-case'
+import update from 'immutability-helper'
 
 // Components
 import CalendarInput from './common/calendar-input'
 
 const statusOptions = [
-  'all',
   ...itemStatus
 ]
 
@@ -18,7 +18,7 @@ const typeOptions = [
   ...projectTypes
 ]
 
-const SidePanel = ({ currentDate, setCurrentDate, filters, setFilters, activeView}) => {
+const SidePanel = ({ currentDate, setCurrentDate, filters, setFilters, activeView }) => {
 
   const Filter = ({ icon, text, onClick, selected }) => (
     <li onClick={onClick} className={`${styles.item} ${selected && styles.selected}`}>
@@ -26,6 +26,29 @@ const SidePanel = ({ currentDate, setCurrentDate, filters, setFilters, activeVie
       <span>{text}</span>
     </li>
   )
+
+  const onFilterClick = (type, value) => {
+    const typeIndex = filters[type]?.findIndex(type => type.value === value)
+
+    if (typeIndex === undefined || typeIndex === -1) {
+      let typeUpdateVal
+      let newType = { label: capitalCase(value), value }
+      if (!filters[type]) {
+        typeUpdateVal = { $set: [newType] }
+      } else {
+        typeUpdateVal = { $push: [newType] }
+      }
+      setFilters(update(filters, {
+        [type]: typeUpdateVal
+      }))
+    } else {
+      setFilters(update(filters, {
+        [type]: {
+          $splice: [[typeIndex, 1]]
+        }
+      }))
+    }
+  }
 
   return (
     <section>
@@ -39,13 +62,10 @@ const SidePanel = ({ currentDate, setCurrentDate, filters, setFilters, activeVie
           <h3>Status</h3>
           <ul className={styles.list}>
             {statusOptions.map((status) => {
-              let selected = filters.status?.value === status
-              if (status === 'all' && !filters.status) selected = true
+              let selected = filters.status && (filters.status?.findIndex(statusObj => statusObj.value === status) !== -1)
               const postFix = selected ? '' : 'Light'
               let icon = Status[`${status}${postFix}`]
-              let newStatus = { label: capitalCase(status), value: status }
-              if (status === 'all') newStatus = null
-              let onClick = () => setFilters({ ...filters, status: newStatus })
+              let onClick = () => onFilterClick('status', status)
               return <Filter text={capitalCase(status)} icon={icon} onClick={onClick} selected={selected} />
             })}
           </ul>
@@ -54,11 +74,11 @@ const SidePanel = ({ currentDate, setCurrentDate, filters, setFilters, activeVie
           <h3>Type</h3>
           <ul className={styles.list}>
             {typeOptions.map((type) => {
-              const selected = filters.type?.value === type
+              const selected = filters.type && (filters.type?.findIndex(typeObj => typeObj.value === type) !== -1)
               const postFix = selected ? '' : 'Light'
               let icon = ProjectType[`${type}${postFix}`] || ProjectTypes[`${type.substring(0, type.length - 1)}${postFix}`]
                 || ProjectTypeChannel[`${type}${postFix}`]
-              let onClick = () => setFilters({ ...filters, type: { label: capitalCase(type), value: type } })
+              let onClick = () => onFilterClick('type', type)
               return <Filter text={capitalCase(type)} icon={icon} onClick={onClick} selected={selected} />
             })}
           </ul>
