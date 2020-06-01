@@ -98,4 +98,15 @@
   width: 130%;
   margin-left: -30%;
   font-size: 12px;
+
+}
+
+/* Multi filter */
+.filter .select-prefix__option--is-selected {
+  background-color: inherit;
+  color: inherit;
+}
+
+.filter .select-prefix__option--is-selected:hover {
+  background-color: #DEEBFF;
 }

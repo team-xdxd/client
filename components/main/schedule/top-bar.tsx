@@ -7,7 +7,8 @@ import { capitalCase } from 'change-case'
 // Components
 import SectionButton from '../../common/buttons/section-button'
 import Button from '../../common/buttons/button'
-import Select from '../../common/inputs/select'
+// import Select from '../../common/inputs/select'
+import Select from '../../common/inputs/filters-select'
 
 const campaignPlaceholder = []
 const ownerPlaceholder = []
