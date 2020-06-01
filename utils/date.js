@@ -1,6 +1,16 @@
 import { addDays, format } from 'date-fns'
 
+const areSameDates = (date1, date2) => {
+  return date1.getDate() === date2.getDate() && date1.getMonth() === date2.getMonth() && date1.getYear() === date2.getYear()
+}
+
+const getDateKey = (date) => {
+  return `${date.getDate()}-${date.getMonth()}-${date.getYear()}`
+}
+
 export default {
+  areSameDates,
+  getDateKey,
   getSpecialDateString: (inputDate) => {
     let specialDate = ''
     const today = new Date()
@@ -37,14 +47,14 @@ export default {
     }
 
     if (date) {
-      const dayKey = `${new Date(date).getDate()}-${new Date(date).getMonth()}`
+      const dayKey = getDateKey(new Date(date))
       let isMultiple
       if (item.startDate) {
         isMultiple = true
         const endDate = new Date(date)
         let iterDate = new Date(item.startDate)
         while (iterDate < endDate) {
-          const dateKey = `${iterDate.getDate()}-${iterDate.getMonth()}`
+          const dateKey = getDateKey(iterDate)
           parseItem(item, iterDate, type, socialChannel, dateKey, mappedItems, isMultiple, Component)
           iterDate = addDays(iterDate, 1)
         }
@@ -64,10 +74,10 @@ export default {
       if (day.weekDay === 0) {
         currentWeekOrder = {}
       }
-      const dateKey = `${day.date.getDate()}-${day.date.getMonth()}`
+      const dateKey = getDateKey(day.date)
       const mappedItems = items[dateKey]
       const nextDate = addDays(day.date, 1)
-      const nextDateKey = `${nextDate.getDate()}-${nextDate.getMonth()}`
+      const nextDateKey = getDateKey(nextDate)
       const nextDayItems = items[nextDateKey]
       if (mappedItems) {
         const newMappedItems = []
@@ -141,3 +151,4 @@ const getAvailablePosition = (currentWeekOrder) => {
 
   return position || orderedWeekPos.length
 }
+

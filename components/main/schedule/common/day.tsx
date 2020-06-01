@@ -15,7 +15,20 @@ const dateFormat = (date) => {
 
 const today = new Date()
 
-const Day = ({ date, currentDate, itemList, itemListPrevious, itemListNext, hasDayHeader = true, type = '', onDragDrop, setActiveView, setCurrentDate }) => {
+const Day = ({
+  id = '',
+  date,
+  currentDate,
+  itemList,
+  itemListPrevious,
+  itemListNext,
+  hasDayHeader = true,
+  type = '',
+  onDragDrop,
+  setActiveView,
+  setCurrentDate,
+  Waypoint = <></>
+}) => {
   const dayRef = useRef()
 
   const [maxItems, setMaxItems] = useState(10)
@@ -96,7 +109,7 @@ const Day = ({ date, currentDate, itemList, itemListPrevious, itemListNext, hasD
 
 
   return (
-    <div ref={dayRef} className={`day ${styles['day']} ${!isSameMonth(date, currentDate) && styles['diff-month']} ${styles[type]} ${dragHovering && styles.hovering}`}
+    <div id={id} ref={dayRef} className={`day ${styles['day']} ${!isSameMonth(date, currentDate) && styles['diff-month']} ${styles[type]} ${dragHovering && styles.hovering}`}
       onDragOver={(e) => { e.preventDefault(); setDragHovering(true) }}
       onDragEnter={() => { setDragHovering(true) }}
       onDragLeave={() => { setDragHovering(false) }}
@@ -105,6 +118,7 @@ const Day = ({ date, currentDate, itemList, itemListPrevious, itemListNext, hasD
         onDragDrop(e)
       }}
     >
+      {Waypoint}
       {hasDayHeader &&
         <div className={styles['day-header']}>
           <div className={styles['day-number']}>{dateFormat(date)}</div>

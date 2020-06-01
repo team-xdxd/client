@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react'
-import { getWeeksInMonth, startOfMonth, startOfWeek, addDays, subDays } from 'date-fns'
-
+import { startOfWeek, endOfWeek, addDays, subDays, addMonths, subMonths, differenceInMonths } from 'date-fns'
+import { Waypoint } from 'react-waypoint'
 import styles from './index.module.css'
 import dateUtils from '../../../../utils/date'
 
@@ -9,11 +9,17 @@ import Day from '../common/day'
 import DayMonth from './day-month'
 
 
-const Month = ({ currentDate, mixedList, updateItem, setCurrentDate, setActiveView }) => {
+const Month = ({ monthRange, currentDate, mixedList, updateItem, setCurrentDate, setActiveView }) => {
 
-  const dayRef = useRef()
+  const dayRef = useRef(null)
+  const gridContRef = useRef(null)
+
+  const [calendarBoundaries, setCalendarBoundaries] = useState(null)
   const [calendarDays, setCalendarDays] = useState([])
-  const [mappedItems, setMappedItems] = useState({})
+  const [mappedItems, setMappedItems] = useState(null)
+  const [repositioning, setRepositioning] = useState(true)
+  const [loadingData, setLoadingData] = useState(true)
+  const [firstLoad, setFistLoad] = useState(false)
 
   useEffect(() => {
     if (dayRef && dayRef.current) {
@@ -28,13 +34,37 @@ const Month = ({ currentDate, mixedList, updateItem, setCurrentDate, setActiveVi
   }, [dayRef])
 
   useEffect(() => {
-    if (currentDate) {
+    loadData()
+  }, [mixedList])
+
+  const loadData = () => {
+    if (monthRange) {
+      let boundaryBegin = calendarBoundaries?.begin
+      let boundaryEnd = calendarBoundaries?.end
+
+      if (!boundaryBegin || monthRange.begin < boundaryBegin) {
+        boundaryBegin = monthRange.begin
+      }
+      if (!boundaryEnd || monthRange.end > boundaryEnd) {
+        boundaryEnd = monthRange.end
+      }
+
+      const newBoundaries = {
+        begin: boundaryBegin,
+        beginRender: subMonths(boundaryBegin, 5),
+        // beginRender: boundaryBegin,
+        end: boundaryEnd,
+        // endRender: addMonths(boundaryEnd, 1),
+        endRender: boundaryEnd
+      }
+      setCalendarBoundaries(newBoundaries)
+
       const newCalendarDays = []
-      const weeksAmount = getWeeksInMonth(currentDate)
-      let indDate = startOfWeek(startOfMonth(currentDate))
-      for (let i = 0; i < weeksAmount; i++) {
-        for (let j = 0; j < 7; j++) {
-          newCalendarDays.push({ date: new Date(indDate), weekDay: j })
+
+      let indDate = new Date(newBoundaries.beginRender)
+      while (indDate < newBoundaries.endRender) {
+        for (let i = 0; i < 7; i++) {
+          newCalendarDays.push({ date: new Date(indDate), weekDay: i })
           indDate = addDays(indDate, 1)
         }
       }
@@ -46,7 +76,26 @@ const Month = ({ currentDate, mixedList, updateItem, setCurrentDate, setActiveVi
       const reorderedItems = dateUtils.reorderItems(newMappedItems, newCalendarDays)
       setMappedItems(reorderedItems)
     }
-  }, [mixedList])
+  }
+
+  useEffect(() => {
+    if (mappedItems) {
+      setLoadingData(false)
+      if (!firstLoad) {
+        repositionToday()
+        setFistLoad(true)
+      }
+    }
+  }, [mappedItems])
+
+  const repositionToday = () => {
+    setRepositioning(true)
+    const elRef = window.document.getElementById(dateUtils.getDateKey(currentDate))
+    gridContRef?.current.scrollTo({
+      top: (elRef.offsetTop - (elRef.offsetWidth * 2))
+    })
+    setRepositioning(false)
+  }
 
   const onDragDrop = (itemId, date) => {
     if (itemId) {
@@ -54,9 +103,29 @@ const Month = ({ currentDate, mixedList, updateItem, setCurrentDate, setActiveVi
     }
   }
 
+  const handleScrollEnter = (day) => {
+    // const difference = differenceInMonths(day.date, currentDate)
+    // const triggerEnd = difference > 1
+    // const triggerBegin = difference < -1
+
+    const equalBeing = dateUtils.areSameDates(day.date, monthRange.begin)
+    const equalEnd = dateUtils.areSameDates(day.date, monthRange.end)
+
+
+    if (!repositioning && !loadingData && (equalBeing || equalEnd)) {
+      console.log(dateUtils.getDateKey(monthRange.previousMonthDate))
+      console.log(dateUtils.getDateKey(monthRange.begin))
+      setLoadingData(true)
+      setCurrentDate(equalEnd ? addDays(day.date, 1) : subDays(day.date, 1))
+    }
+  }
+
   return (
     <section className={styles.container}>
       <div className={styles.calendar} >
+        {loadingData &&
+          <div className={styles.loading}></div>
+        }
         <div className={styles['day-of-week']}>
           <div ref={dayRef}>Sun</div>
           <div>Mon</div>
@@ -66,41 +135,54 @@ const Month = ({ currentDate, mixedList, updateItem, setCurrentDate, setActiveVi
           <div>Fri</div>
           <div>Sat</div>
         </div>
-        <div className={styles['date-grid']}>
+        <div ref={gridContRef} className={`${styles['date-grid-container']}`}>
+          <div className={styles['date-grid']}>
 
-          {calendarDays.map((day, index) => {
-            const dayKey = `${day.date.getDate()}-${day.date.getMonth()}`
-            const itemListForDate = mappedItems[dayKey]
-            const itemList = itemListForDate || []
+            {calendarDays.map((day, index) => {
 
-            let itemListPrevious = []
-            if (index > 0) {
-              const previousDate = subDays(day.date, 1)
-              const previousKey = `${previousDate.getDate()}-${previousDate.getMonth()}`
-              const itemListForDatePrevious = mappedItems[previousKey]
-              itemListPrevious = itemListForDatePrevious || []
-            }
+              const { date } = day
 
-            return (
-              <Day
-                setActiveView={setActiveView}
-                setCurrentDate={setCurrentDate}
-                currentDate={currentDate}
-                date={day.date}
-                key={index}
-                itemList={itemList}
-                itemListPrevious={itemListPrevious}
-                itemListNext={[]}
-                onDragDrop={(e) => {
-                  onDragDrop(e.dataTransfer.getData("itemId"), day.date)
-                  e.dataTransfer.clearData()
-                }}
-              />
-            )
-          })}
+              const dayKey = dateUtils.getDateKey(date)
+              const itemListForDate = mappedItems[dayKey]
+              const itemList = itemListForDate || []
+
+              let itemListPrevious = []
+              if (index > 0) {
+                const previousDate = subDays(date, 1)
+                const previousKey = dateUtils.getDateKey(previousDate)
+                const itemListForDatePrevious = mappedItems[previousKey]
+                itemListPrevious = itemListForDatePrevious || []
+              }
+
+              let WaypointComp
+
+              // if (day.weekDay === 0 || day.weekDay === 6) {
+                WaypointComp = <Waypoint onEnter={() => handleScrollEnter(day)} />
+              // }
+
+              return (
+                <Day
+                  id={dayKey}
+                  setActiveView={setActiveView}
+                  setCurrentDate={setCurrentDate}
+                  currentDate={currentDate}
+                  date={date}
+                  key={index}
+                  itemList={itemList}
+                  itemListPrevious={itemListPrevious}
+                  itemListNext={[]}
+                  Waypoint={WaypointComp}
+                  onDragDrop={(e) => {
+                    onDragDrop(e.dataTransfer.getData("itemId"), date)
+                    e.dataTransfer.clearData()
+                  }}
+                />
+              )
+            })}
+          </div>
         </div>
       </div>
-    </section>
+    </section >
   )
 }
 

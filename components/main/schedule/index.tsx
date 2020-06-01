@@ -6,7 +6,7 @@ import campaignApi from '../../../server-api/campaign'
 import projectApi from '../../../server-api/project'
 import taskApi from '../../../server-api/task'
 import update from 'immutability-helper'
-import { startOfMonth, endOfMonth, subDays, addDays } from 'date-fns'
+import { startOfMonth, endOfMonth, startOfWeek, endOfWeek, subMonths, addMonths } from 'date-fns'
 import toastUtils from '../../../utils/toast'
 
 // Components
@@ -20,6 +20,20 @@ import Week from './week'
 import Month from './month'
 
 const Schedule = () => {
+
+  const getBeginEndRange = (date) => {
+    const current = date
+    const previousMonthDate = subMonths(date, 2)
+    const nextMonthDate = addMonths(date, 2)
+    return {
+      current,
+      previousMonthDate: startOfMonth(previousMonthDate),
+      nextMonthDate: endOfMonth(nextMonthDate),
+      begin: startOfWeek(startOfMonth(subMonths(date, 2))),
+      end: endOfWeek(endOfMonth(addMonths(date, 2)))
+    }
+  }
+
   const [createVisible, setCreateVisible] = useState(false)
   const [searchVisible, setSearchVisible] = useState(false)
 
@@ -32,6 +46,8 @@ const Schedule = () => {
   const [mixedList, setMixedList] = useState([])
 
   const [currentDate, setCurrentDate] = useState(new Date())
+
+  const [monthRange, setCurrentMonthRange] = useState()
 
   const [allCampaigns, setAllCampaigns] = useState([])
 
@@ -50,9 +66,17 @@ const Schedule = () => {
   }, [])
 
   useEffect(() => {
-    getData()
-    setInitialLoaded(true)
+    if (!monthRange || currentDate > monthRange.nextMonthDate || currentDate < monthRange.previousMonthDate) {
+      setCurrentMonthRange(getBeginEndRange(currentDate))
+    }
   }, [currentDate])
+
+  useEffect(() => {
+    if (monthRange) {
+      getData()
+      setInitialLoaded(true)
+    }
+  }, [monthRange])
 
   useEffect(() => {
     if (initialLoaded)
@@ -145,8 +169,8 @@ const Schedule = () => {
   }
 
   const getCommonFilters = () => {
-    const startOfMonthDate = startOfMonth(subDays(startOfMonth(currentDate), 1))
-    const endOfMonthDate = endOfMonth(addDays(endOfMonth(currentDate), 1))
+    const startOfMonthDate = monthRange.begin
+    const endOfMonthDate = monthRange.end
     const filterObj = {
       startOfMonth: startOfMonthDate.toISOString(),
       endOfMonth: endOfMonthDate.toISOString()
@@ -295,6 +319,7 @@ const Schedule = () => {
             updateItem={updateItem}
             setCurrentDate={setCurrentDate}
             setActiveView={setActiveView}
+            monthRange={monthRange}
           />
         }
       </main>

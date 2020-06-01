@@ -14,7 +14,7 @@ const List = ({ mixedList, currentDate }) => {
     let g = groupByDate()
     setListItems(Object.entries(g))
     setGroup(g)
-  }, [mixedList])
+  }, [currentDate])
 
   const groupByDate = () => {
     let group = get7DaySubset()?.reduce((r, a) => {
@@ -28,15 +28,12 @@ const List = ({ mixedList, currentDate }) => {
       r[formattedDate] = [...r[formattedDate] || [], a];
       return r;
     }, {});
-    console.log("group", group);
     return group
   }
 
   const get7DaySubset = () => {
     const startDate = startOfDay(new Date(currentDate))
-    console.log(startDate)
     const limitDate = endOfDay(addDays(new Date(currentDate), 6))
-    console.log(limitDate)
     return mixedList.filter(item => {
       if (item.itemType === 'project' && item.publishDate) {
         return new Date(item.publishDate) >= startDate && new Date(item.publishDate) <= limitDate
