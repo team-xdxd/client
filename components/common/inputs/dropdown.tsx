@@ -1,15 +1,12 @@
-import { useState } from 'react'
 import styles from './dropdown.module.css'
-import { GeneralImg, Utilities } from '../../../assets'
 
-const Dropdown = ({ onClick = (option, index) => { }, options = [] }) => {
+const Dropdown = ({ options = [], additionalClass = '' }) => {
 
   return (
-    <ul className={styles.menu}>
+    <ul className={`${styles.menu} ${additionalClass}`} >
       {options.map((option, index) => (
-        <li key={index} onClick={(e) => {
-          e.stopPropagation()
-          onClick(option, index)
+        <li key={index} onClick={() => {
+          option.onClick()
         }}>
           <span>
             {option.icon &&

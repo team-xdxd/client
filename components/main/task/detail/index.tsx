@@ -3,7 +3,7 @@ import { useState, useEffect } from 'react'
 import styles from './index.module.css'
 import Link from 'next/link'
 import update from 'immutability-helper'
-
+import Router from 'next/router'
 import taskApi from '../../../../server-api/task'
 import toastUtils from '../../../../utils/toast'
 
@@ -44,6 +44,17 @@ const TaskDetail = () => {
     } catch (err) {
       console.log(err)
       // TODO: Error handling
+    }
+  }
+
+  const deleteTask = async () => {
+    try {
+      await taskApi.deleteTask(task?.id)
+      Router.replace('/main/overview')
+      toastUtils.success('Task deleted sucesfully')
+    } catch (err) {
+      console.log(err)
+      // TODO: Handle error
     }
   }
 
@@ -123,12 +134,13 @@ const TaskDetail = () => {
   }
 
   const changeStatus = async (newStatus) => {
-    try{
+    try {
       setStatus(newStatus)
-      await taskApi.updateTask(task.id, {status: newStatus})
-      toastUtils.success('Task updated sucesfully')
+      await saveTask()
+      await taskApi.updateTask(task.id, { status: newStatus })
     } catch (err) {
       // TODO: Error if failure for whatever reason
+      console.log(err);
     }
   }
 
@@ -144,6 +156,8 @@ const TaskDetail = () => {
       />
       <main className={`${styles.container}`}>
         <ItemSublayout
+          deleteItem={deleteTask}
+          type='task'
           layout='single'
         >
           {task &&

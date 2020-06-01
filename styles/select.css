@@ -27,6 +27,9 @@
 }
 
 .select-prefix__option {
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
 }
 
 /* Regular */
@@ -61,11 +64,11 @@
   padding: 0 12px;
   min-height: 34px;
   border-top-left-radius: 5px;
-  border-bottom-left-radius: 5px;  
+  border-bottom-left-radius: 5px;
   font-weight: 600;
 }
 
-.filter .select-prefix__placeholder{
+.filter .select-prefix__placeholder {
   color: var(--color-prim-navy);
 }
 
@@ -75,13 +78,27 @@
   border-bottom-right-radius: 5px;
 }
 
-.filter .select-prefix__indicators span{
+.filter .select-prefix__indicators span {
   background-color: white;
 }
 
 .filter .select-prefix__menu-list {
   background-color: white;
   font-size: 13px;
+  border-radius: 5px;
+}
+
+/* filter-schedule */
+
+.filter-schedule {
+  font-size: 12px;
+}
+
+.filter-schedule .select-prefix__menu {
+  width: 130%;
+  margin-left: -30%;
+  font-size: 12px;
+
 }
 
 /* Multi filter */

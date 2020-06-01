@@ -33,6 +33,7 @@
   width: 14.6%;
   justify-content: flex-end;
   position: relative;
+  align-items: center;
 }
 
 .single-user {
@@ -48,6 +49,11 @@
   width: 27px;
   height: auto;
   margin-right: 5px;
+}
+
+.img-wrap{
+  width: 20px;
+  height: 20px;
 }
 
 .actions img {

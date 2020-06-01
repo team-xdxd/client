@@ -15,6 +15,7 @@ import channelAdsOptions from '../../../../resources/data/channels-ads.json'
 
 // Components
 import ItemFieldWrapper from '../../../common/items/item-field-wrapper'
+import ToggleableAbsoluteWrapper from '../../../common/misc/toggleable-absolute-wrapper'
 import Select from '../../../common/inputs/select'
 import Dropdown from '../../../common/inputs/dropdown'
 import Tag from '../../../common/misc/tag'
@@ -113,51 +114,63 @@ const ProjectFields = ({
         </ItemFieldWrapper>
       </div>
       {(project.type === 'ads' || project.type === 'banners') &&
-        <div className={`field`}>
-          <ItemFieldWrapper
-            title='Start Date'
-            image={ItemFields.date}
-            hasOption={true}
-            optionOnClick={() => toggleActiveInput('startDate')}
-          >
-            <span>{startDate ? format(new Date(startDate), 'MMM d, yyyy') : 'No Start Date'}</span>
-          </ItemFieldWrapper>
-          {activeInput === 'startDate' &&
-            <div className={'day-picker'}>
-              <DayPicker
-                selectedDays={new Date(startDate)}
-                disabledDays={
-                  {
-                    after: publishDate && new Date(publishDate),
-                  }
-                }
-                onDayClick={handleStartDayClick} />
-            </div>
-          }
-        </div>
-      }
-      <div className={`field`}>
-        <ItemFieldWrapper
-          title='Deadline Date'
-          image={ItemFields.date}
-          hasOption={true}
-          optionOnClick={() => toggleActiveInput('publishDate')}
-        >
-          <span>{publishDate ? format(new Date(publishDate), 'MMM d, yyyy') : 'No Deadline Date'}</span>
-        </ItemFieldWrapper>
-        {activeInput === 'publishDate' &&
-          <div className={'day-picker'}>
+        <ToggleableAbsoluteWrapper
+          closeOnAction={false}
+          wrapperClass='field'
+          Wrapper={({ children }) => (
+            <>
+              <ItemFieldWrapper
+                title='Start Date'
+                image={ItemFields.date}
+                hasOption={true}
+                optionOnClick={() => toggleActiveInput('startDate')}
+              >
+                <span>{startDate ? format(new Date(startDate), 'MMM d, yyyy') : 'No Start Date'}</span>
+              </ItemFieldWrapper>
+              {children}
+            </>
+          )}
+          contentClass='day-picker'
+          Content={() => (
             <DayPicker
-              selectedDays={publishDate}
+              selectedDays={new Date(startDate)}
               disabledDays={
                 {
-                  before: startDate && new Date(startDate),
+                  after: publishDate && new Date(publishDate),
                 }
               }
-              onDayClick={handlePublishDayClick} />
-          </div>
-        }
-      </div>
+              onDayClick={handleStartDayClick} />
+          )}
+        />
+      }
+      <ToggleableAbsoluteWrapper
+        closeOnAction={false}
+        wrapperClass='field'
+        Wrapper={({ children }) => (
+          <>
+            <ItemFieldWrapper
+              title='Deadline Date'
+              image={ItemFields.date}
+              hasOption={true}
+              optionOnClick={() => toggleActiveInput('publishDate')}
+            >
+              <span>{publishDate ? format(new Date(publishDate), 'MMM d, yyyy') : 'No Deadline Date'}</span>
+            </ItemFieldWrapper>
+            {children}
+          </>
+        )}
+        contentClass='day-picker'
+        Content={() => (
+          <DayPicker
+            selectedDays={publishDate}
+            disabledDays={
+              {
+                before: startDate && new Date(startDate),
+              }
+            }
+            onDayClick={handlePublishDayClick} />
+        )}
+      />
       {(project.type !== 'ads' && project.type !== 'banners') &&
         <div className={`field`}>
           <ItemFieldWrapper

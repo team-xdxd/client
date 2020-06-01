@@ -36,4 +36,5 @@
 .filters>div{
   margin: 0 5px;
   z-index: 200;
+  min-width: 160px;
 }

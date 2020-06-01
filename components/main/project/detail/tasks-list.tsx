@@ -9,6 +9,7 @@ import Router from 'next/router'
 // Components
 import TaskInput from '../../../common/inputs/task-input'
 import Button from '../../../common/buttons/button'
+import ToggleableAbsoluteWrapper from '../../../common/misc/toggleable-absolute-wrapper'
 import Dropdown from '../../../common/inputs/dropdown'
 import ConfirmModal from '../../../common/modals/confirm-modal'
 

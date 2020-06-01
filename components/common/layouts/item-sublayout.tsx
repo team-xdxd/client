@@ -1,12 +1,24 @@
 import styles from './item-sublayout.module.css'
-import Router from 'next/router'
-import Link from 'next/link'
+import { useState, useRef } from 'react'
 import { Utilities } from '../../../assets'
 
 // Components
 import SectionButton from '../buttons/section-button'
+import ConfirmModal from '../modals/confirm-modal'
+import Dropdown from '../inputs/dropdown'
+import ToggleableAbsoluteWrapper from '../misc/toggleable-absolute-wrapper'
 
-const ItemSublayout = ({ SideComponent = null, sideActive = true, navElements = [], children, layout = 'double' }) => {
+const ItemSublayout = ({
+  SideComponent = null,
+  sideActive = true,
+  navElements = [],
+  children,
+  layout = 'double',
+  type = 'item',
+  deleteItem = () => { }
+}) => {
+  const [modalOpen, setModalOpen] = useState(false)
+
   return (
     <div className={styles.container}>
       <div className={styles['main-component']}>
@@ -40,10 +52,37 @@ const ItemSublayout = ({ SideComponent = null, sideActive = true, navElements = 
           ))}
         </div>
         <div className={styles.separator}></div>
-        <div className={styles.more}>
-          <img src={Utilities.moreLight} />
-        </div>
+        <ToggleableAbsoluteWrapper
+          wrapperClass={styles.more}
+          Wrapper={({ children }) => (
+            <>
+              <img src={Utilities.moreLight} />
+              {children}
+            </>
+          )}
+          contentClass={styles['more-drop']}
+          Content={() => (
+            <Dropdown
+              options={[{ label: 'Delete', onClick: () => setModalOpen(true) }]}
+            />
+          )}
+        />
       </div>
+      {/* Delete modal */}
+      <ConfirmModal
+        closeModal={() => setModalOpen(false)}
+        confirmAction={() => {
+          deleteItem()
+          setModalOpen(false)
+        }}
+        confirmText={'Delete'}
+        message={
+          <span>
+            Are you sure you want to &nbsp;<strong>Delete</strong>&nbsp; this {type}?
+        </span>
+        }
+        modalIsOpen={modalOpen}
+      />
     </div>
   )
 }

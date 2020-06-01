@@ -64,6 +64,10 @@
   align-items: center;
 }
 
+.month{
+  min-width: 170px;
+}
+
 .chart {
   width: 30%;
 }

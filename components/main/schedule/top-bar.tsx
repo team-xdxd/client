@@ -51,7 +51,7 @@ const TopBar = ({ activeView, setActiveView, setCurrentDate, filters, setFilters
         <Select
           options={allCampaigns.map(campaign => ({ label: campaign.name, value: campaign.id }))}
           placeholder='Campaign'
-          styleType='filter'
+          styleType='filter filter-schedule'
           onChange={(selected) => setFilters({ ...filters, campaign: selected })}
           value={filters.campaign}
           isClearable={true}
@@ -61,7 +61,7 @@ const TopBar = ({ activeView, setActiveView, setCurrentDate, filters, setFilters
         <Select
           options={itemStatus.map(status => ({ label: capitalCase(status), value: status }))}
           placeholder='Status'
-          styleType='filter'
+          styleType='filter filter-schedule'
           onChange={(selected) => setFilters({ ...filters, status: selected })}
           value={filters.status}
           isClearable={true}
@@ -71,7 +71,7 @@ const TopBar = ({ activeView, setActiveView, setCurrentDate, filters, setFilters
         <Select
           options={typeOptions.map(type => ({ label: capitalCase(type), value: type }))}
           placeholder='Type'
-          styleType='filter'
+          styleType='filter filter-schedule'
           onChange={(selected) => setFilters({ ...filters, type: selected })}
           value={filters.type}
           isClearable={true}
@@ -81,7 +81,7 @@ const TopBar = ({ activeView, setActiveView, setCurrentDate, filters, setFilters
         <Select
           options={ownerPlaceholder}
           placeholder='Owner'
-          styleType='filter'
+          styleType='filter filter-schedule'
           isClearable={true}
         />
       </div>
