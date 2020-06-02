@@ -9,6 +9,11 @@
   color: var(--color-sec-ivory);
 }
 
+.container h1 span{
+  display: inline-flex;
+  margin-right: 10px;
+}
+
 .container h1 input {
   font-weight: 600;
 }
