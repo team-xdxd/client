@@ -9,7 +9,16 @@ import Day from '../common/day'
 import DayMonth from './day-month'
 
 
-const Month = ({ monthRange, currentDate, mixedList, updateItem, setCurrentDate, setActiveView }) => {
+const Month = ({
+  monthRange,
+  displayDate,
+  setDisplayDate,
+  currentDate,
+  mixedList,
+  updateItem,
+  setCurrentDate,
+  setActiveView
+}) => {
 
   const dayRef = useRef(null)
   const gridContRef = useRef(null)
@@ -20,6 +29,8 @@ const Month = ({ monthRange, currentDate, mixedList, updateItem, setCurrentDate,
   const [repositioning, setRepositioning] = useState(true)
   const [loadingData, setLoadingData] = useState(true)
   const [firstLoad, setFistLoad] = useState(false)
+  const [offsetBeginElement, setOffsetBeginElement] = useState(null)
+
 
   useEffect(() => {
     if (dayRef && dayRef.current) {
@@ -51,10 +62,8 @@ const Month = ({ monthRange, currentDate, mixedList, updateItem, setCurrentDate,
 
       const newBoundaries = {
         begin: boundaryBegin,
-        beginRender: subMonths(boundaryBegin, 5),
-        // beginRender: boundaryBegin,
+        beginRender: boundaryBegin,
         end: boundaryEnd,
-        // endRender: addMonths(boundaryEnd, 1),
         endRender: boundaryEnd
       }
       setCalendarBoundaries(newBoundaries)
@@ -79,20 +88,32 @@ const Month = ({ monthRange, currentDate, mixedList, updateItem, setCurrentDate,
   }
 
   useEffect(() => {
+    if (firstLoad && !loadingData) {
+      repositionToDate(currentDate)
+    }
+  }, [currentDate])
+
+  useEffect(() => {
     if (mappedItems) {
+      if (offsetBeginElement) {
+        gridContRef?.current.scrollTo({
+          top: (offsetBeginElement.offsetTop - (offsetBeginElement.offsetHeight * 1.8))
+        })
+        setOffsetBeginElement(null)
+      }
       setLoadingData(false)
       if (!firstLoad) {
-        repositionToday()
+        repositionToDate(currentDate)
         setFistLoad(true)
       }
     }
   }, [mappedItems])
 
-  const repositionToday = () => {
+  const repositionToDate = (date) => {
     setRepositioning(true)
-    const elRef = window.document.getElementById(dateUtils.getDateKey(currentDate))
+    const elRef = window.document.getElementById(dateUtils.getDateKey(date))
     gridContRef?.current.scrollTo({
-      top: (elRef.offsetTop - (elRef.offsetWidth * 2))
+      top: (elRef.offsetTop - (elRef.offsetHeight * 2))
     })
     setRepositioning(false)
   }
@@ -104,18 +125,19 @@ const Month = ({ monthRange, currentDate, mixedList, updateItem, setCurrentDate,
   }
 
   const handleScrollEnter = (day) => {
-    // const difference = differenceInMonths(day.date, currentDate)
-    // const triggerEnd = difference > 1
-    // const triggerBegin = difference < -1
-
-    const equalBeing = dateUtils.areSameDates(day.date, monthRange.begin)
+    const equalBegin = dateUtils.areSameDates(day.date, monthRange.begin)
     const equalEnd = dateUtils.areSameDates(day.date, monthRange.end)
 
+    if (displayDate.getMonth() !== day.date.getMonth()) {
+      setDisplayDate(day.date)
+    }
 
-    if (!repositioning && !loadingData && (equalBeing || equalEnd)) {
-      console.log(dateUtils.getDateKey(monthRange.previousMonthDate))
-      console.log(dateUtils.getDateKey(monthRange.begin))
+    if (!repositioning && !loadingData && (equalBegin || equalEnd)) {
       setLoadingData(true)
+      if (equalBegin && differenceInMonths(day.date, calendarBoundaries.begin) <= 1) {
+        setOffsetBeginElement(window.document.getElementById(dateUtils.getDateKey(day.date)))
+      }
+
       setCurrentDate(equalEnd ? addDays(day.date, 1) : subDays(day.date, 1))
     }
   }
@@ -156,9 +178,9 @@ const Month = ({ monthRange, currentDate, mixedList, updateItem, setCurrentDate,
 
               let WaypointComp
 
-              // if (day.weekDay === 0 || day.weekDay === 6) {
-                WaypointComp = <Waypoint onEnter={() => handleScrollEnter(day)} />
-              // }
+              if (day.weekDay === 0 || day.weekDay === 6) {
+                WaypointComp = <Waypoint onEnter={() => handleScrollEnter(day)} fireOnRapidScroll={false} />
+              }
 
               return (
                 <Day
@@ -166,8 +188,9 @@ const Month = ({ monthRange, currentDate, mixedList, updateItem, setCurrentDate,
                   setActiveView={setActiveView}
                   setCurrentDate={setCurrentDate}
                   currentDate={currentDate}
+                  displayDate={displayDate}
                   date={date}
-                  key={index}
+                  key={dayKey}
                   itemList={itemList}
                   itemListPrevious={itemListPrevious}
                   itemListNext={[]}

@@ -29,6 +29,25 @@
 .date-grid-container {
   height: 56vh;
   overflow-y: scroll;
+  scrollbar-width: thin; /* "auto" or "thin"  */
+  scrollbar-color: var(--color-sec-lightblue) white;
+}
+
+/* width */
+.date-grid-container::-webkit-scrollbar {
+  width: 10px;
+  height: 15px;
+}
+
+/* Track */
+.date-grid-container::-webkit-scrollbar-track {
+  border-radius: 10px;
+}
+
+/* Handle */
+.date-grid-container::-webkit-scrollbar-thumb {
+  background: var(--color-sec-lightblue);
+  border-radius: 10px;
 }
 
 .overflow-disabled {

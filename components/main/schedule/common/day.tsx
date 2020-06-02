@@ -19,6 +19,7 @@ const Day = ({
   id = '',
   date,
   currentDate,
+  displayDate = null,
   itemList,
   itemListPrevious,
   itemListNext,
@@ -109,7 +110,7 @@ const Day = ({
 
 
   return (
-    <div id={id} ref={dayRef} className={`day ${styles['day']} ${!isSameMonth(date, currentDate) && styles['diff-month']} ${styles[type]} ${dragHovering && styles.hovering}`}
+    <div id={id} ref={dayRef} className={`day ${styles['day']} ${!isSameMonth(date, displayDate || currentDate) && styles['diff-month']} ${styles[type]} ${dragHovering && styles.hovering}`}
       onDragOver={(e) => { e.preventDefault(); setDragHovering(true) }}
       onDragEnter={() => { setDragHovering(true) }}
       onDragLeave={() => { setDragHovering(false) }}

@@ -7,7 +7,7 @@ const SubHeader = ({ pageTitle, resetPageTittle = () => { }, titleOnchange = (e)
   const resizeFn = () => { inputRef.current.style.width = ((pageTitle.length + 1) * 24) + 'px'; }
 
   useEffect(() => {
-    if (pageTitle)
+    if (pageTitle && editable)
       resizeFn()
   }, [pageTitle]);
 
@@ -26,13 +26,17 @@ const SubHeader = ({ pageTitle, resetPageTittle = () => { }, titleOnchange = (e)
   return (
     <section className={styles.container}>
       <h1>
-        <input
-          ref={inputRef}
-          value={pageTitle}
-          minLength={1}
-          maxLength={30}
-          disabled={!enabled}
-          onChange={titleOnchange} />
+        {editable ?
+          <input
+            ref={inputRef}
+            value={pageTitle}
+            minLength={1}
+            maxLength={30}
+            disabled={!enabled}
+            onChange={titleOnchange} />
+          :
+          <span>{pageTitle}</span>
+        }
       </h1>
       {editable &&
         <>

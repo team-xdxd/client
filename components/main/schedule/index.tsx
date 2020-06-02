@@ -23,14 +23,10 @@ const Schedule = () => {
 
   const getBeginEndRange = (date) => {
     const current = date
-    const previousMonthDate = subMonths(date, 2)
-    const nextMonthDate = addMonths(date, 2)
     return {
       current,
-      previousMonthDate: startOfMonth(previousMonthDate),
-      nextMonthDate: endOfMonth(nextMonthDate),
-      begin: startOfWeek(startOfMonth(subMonths(date, 2))),
-      end: endOfWeek(endOfMonth(addMonths(date, 2)))
+      begin: startOfWeek(startOfMonth(subMonths(date, 3))),
+      end: endOfWeek(endOfMonth(addMonths(date, 3)))
     }
   }
 
@@ -46,6 +42,7 @@ const Schedule = () => {
   const [mixedList, setMixedList] = useState([])
 
   const [currentDate, setCurrentDate] = useState(new Date())
+  const [displayDate, setDisplayDate] = useState(new Date())
 
   const [monthRange, setCurrentMonthRange] = useState()
 
@@ -66,9 +63,10 @@ const Schedule = () => {
   }, [])
 
   useEffect(() => {
-    if (!monthRange || currentDate > monthRange.nextMonthDate || currentDate < monthRange.previousMonthDate) {
+    if (!monthRange || currentDate > monthRange.end || currentDate < monthRange.begin) {
       setCurrentMonthRange(getBeginEndRange(currentDate))
     }
+    setDisplayDate(new Date(currentDate))
   }, [currentDate])
 
   useEffect(() => {
@@ -267,6 +265,7 @@ const Schedule = () => {
   return (
     <>
       <ScheduleSubHeader
+        displayDate={displayDate}
         currentDate={currentDate}
         setCurrentDate={setCurrentDate}
         openCreateOVerlay={openCreateOVerlay}
@@ -314,6 +313,8 @@ const Schedule = () => {
           </div>
           :
           <Month
+            displayDate={displayDate}
+            setDisplayDate={setDisplayDate}
             currentDate={currentDate}
             mixedList={mixedList}
             updateItem={updateItem}
