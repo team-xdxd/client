@@ -180,18 +180,18 @@ const TaskFields = ({
           optionOnClick={() => toggleActiveInput('time')}
         >
           {endDate ?
-              <div className={'tag-select'}>
-                <Select
-                  options={times.map(time => ({label: time.regular, value: time.military }))}
-                  placeholder={'Select a time'}
-                  value={{value: format(new Date(endDate), 'HH:mm'), label: format(new Date(endDate), 'hh:mm a')}}
-                  onChange={handleTimeChange}
-                  className='detail-time'
-                />
-              </div>
-              :
-              <span>No Deadline Date</span>
-            }
+            <div >
+              <Select
+                options={times.map(time => ({ label: time.regular, value: time.military }))}
+                placeholder={'Select a time'}
+                value={{ value: format(new Date(endDate), 'HH:mm'), label: format(new Date(endDate), 'hh:mm a') }}
+                onChange={handleTimeChange}
+                styleType='filter'
+              />
+            </div>
+            :
+            <span>No Deadline Date</span>
+          }
         </ItemFieldWrapper>
       </div>
       <div className={styles.field}>

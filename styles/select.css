@@ -12,6 +12,11 @@
   color: var(--color-prim-navy);
 }
 
+.select-prefix__single-value{
+  color: var(--color-prim-navy);
+  font-weight: 500;
+}
+
 .select-prefix__indicators {
   background-color: var(--color-sec-ivory);
   color: var(--color-prim-navy);
