@@ -64,6 +64,9 @@ const CampaignDetail = () => {
   }
 
   const saveCampaign = async () => {
+    if(!endDate){
+      return toastUtils.error('You must add an End Date')
+    }
     if (!name) {
       return toastUtils.error('The name cannot be empty')
     }
@@ -126,6 +129,10 @@ const CampaignDetail = () => {
   }
 
   const changeStatus = async (newStatus) => {
+    if(!endDate){
+      return toastUtils.error('You must add an End Date')
+    }
+    
     try {
       setStatus(newStatus)
       await saveCampaign()

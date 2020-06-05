@@ -68,6 +68,9 @@ const TaskDetail = () => {
   }
 
   const saveTask = async () => {
+    if(!editableFields.endDate){
+      return toastUtils.error('You must add a Deadline Date')
+    }
     if (!editableFields.name) {
       return toastUtils.error('The name cannot be empty')
     }
@@ -134,6 +137,10 @@ const TaskDetail = () => {
   }
 
   const changeStatus = async (newStatus) => {
+    if(!editableFields.endDate){
+      return toastUtils.error('You must add an Deadline Date')
+    }
+
     try {
       setStatus(newStatus)
       await saveTask()
