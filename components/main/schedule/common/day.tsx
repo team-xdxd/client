@@ -108,7 +108,6 @@ const Day = ({
     overLimit = true
   }
 
-
   return (
     <div id={id} ref={dayRef} className={`day ${styles['day']} ${!isSameMonth(date, displayDate || currentDate) && styles['diff-month']} ${styles[type]} ${dragHovering && styles.hovering}`}
       onDragOver={(e) => { e.preventDefault(); setDragHovering(true) }}

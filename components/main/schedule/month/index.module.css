@@ -18,6 +18,8 @@
 
 .day-of-week {
   margin-top: 1.25em;
+  border-bottom: 1px solid var(--color-secondary-border);
+  padding-bottom: 10px;
 }
 
 .day-of-week > * {
@@ -29,26 +31,26 @@
 .date-grid-container {
   height: 56vh;
   overflow-y: scroll;
-  scrollbar-width: thin; /* "auto" or "thin"  */
-  scrollbar-color: var(--color-sec-lightblue) white;
+  /* scrollbar-width: thin;
+  scrollbar-color: var(--color-sec-lightblue) white; */
 }
 
 /* width */
-.date-grid-container::-webkit-scrollbar {
+/* .date-grid-container::-webkit-scrollbar {
   width: 10px;
   height: 15px;
-}
+} */
 
 /* Track */
-.date-grid-container::-webkit-scrollbar-track {
+/* .date-grid-container::-webkit-scrollbar-track {
   border-radius: 10px;
-}
+} */
 
 /* Handle */
-.date-grid-container::-webkit-scrollbar-thumb {
+/* .date-grid-container::-webkit-scrollbar-thumb {
   background: var(--color-sec-lightblue);
   border-radius: 10px;
-}
+} */
 
 .overflow-disabled {
   overflow-y: hidden;

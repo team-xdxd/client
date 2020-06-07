@@ -149,8 +149,8 @@ const ProjectFields = ({
     toggleActiveInput('campaign')
   }
 
-  const handleChannelChange = (selected) => {
-    editFields('channel', selected.value)
+  const handleChannelChange = (value) => {
+    editFields('channel', value)
     toggleActiveInput('channel')
   }
 
@@ -172,63 +172,53 @@ const ProjectFields = ({
         </ItemFieldWrapper>
       </div>
       {(project.type === 'ads' || project.type === 'banners') &&
-        <ToggleableAbsoluteWrapper
-          closeOnAction={false}
-          wrapperClass='field'
-          Wrapper={({ children }) => (
-            <>
-              <ItemFieldWrapper
-                title='Start Date'
-                image={ItemFields.date}
-                hasOption={true}
-                optionOnClick={() => toggleActiveInput('startDate')}
-              >
-                <span>{startDate ? format(new Date(startDate), 'MMM d, yyyy') : 'No Start Date'}</span>
-              </ItemFieldWrapper>
-              {children}
-            </>
-          )}
-          contentClass='day-picker'
-          Content={() => (
+        <div className={`field`}>
+          <ItemFieldWrapper
+            title='Start Date'
+            image={ItemFields.date}
+            hasOption={true}
+            optionOnClick={() => toggleActiveInput('startDate')}
+          >
+            <span>{startDate ? format(new Date(startDate), 'MMM d, yyyy') : 'No Start Date'}</span>
+          </ItemFieldWrapper>
+          {activeInput === 'startDate' &&
+            <div className={'day-picker'}>
+              <DayPicker
+                selectedDays={new Date(startDate)}
+                disabledDays={
+                  {
+                    after: publishDate && new Date(publishDate),
+                  }
+                }
+                onDayClick={handleStartDayClick} />
+            </div>
+          }
+        </div>
+
+      }
+      <div className={`field`}>
+        <ItemFieldWrapper
+          title='Deadline Date'
+          image={ItemFields.date}
+          hasOption={true}
+          optionOnClick={() => toggleActiveInput('publishDate')}
+        >
+          <span>{publishDate ? format(new Date(publishDate), 'MMM d, yyyy') : 'No Deadline Date'}</span>
+        </ItemFieldWrapper>
+        {activeInput === 'publishDate' &&
+          <div className={'day-picker'}>
             <DayPicker
-              selectedDays={new Date(startDate)}
+              selectedDays={publishDate}
               disabledDays={
                 {
-                  after: publishDate && new Date(publishDate),
+                  before: startDate && new Date(startDate),
                 }
               }
-              onDayClick={handleStartDayClick} />
-          )}
-        />
-      }
-      <ToggleableAbsoluteWrapper
-        closeOnAction={false}
-        wrapperClass='field'
-        Wrapper={({ children }) => (
-          <>
-            <ItemFieldWrapper
-              title='Deadline Date'
-              image={ItemFields.date}
-              hasOption={true}
-              optionOnClick={() => toggleActiveInput('publishDate')}
-            >
-              <span>{publishDate ? format(new Date(publishDate), 'MMM d, yyyy') : 'No Deadline Date'}</span>
-            </ItemFieldWrapper>
-            {children}
-          </>
-        )}
-        contentClass='day-picker'
-        Content={() => (
-          <DayPicker
-            selectedDays={publishDate}
-            disabledDays={
-              {
-                before: startDate && new Date(startDate),
-              }
-            }
-            onDayClick={handlePublishDayClick} />
-        )}
-      />
+              onDayClick={handlePublishDayClick} />
+          </div>
+        }
+      </div>
+
       {(project.type !== 'ads' && project.type !== 'banners') &&
         <div className={`field`}>
           <ItemFieldWrapper
@@ -236,15 +226,14 @@ const ProjectFields = ({
             image={Utilities.time}
             optionOnClick={() => toggleActiveInput('time')}
           >
-            {console.log(format(new Date(publishDate), 'HH:mm'))}
             {publishDate ?
-              <div className={'tag-select'}>
+              <div>
                 <Select
-                  options={times.map(time => ({label: time.regular, value: time.military }))}
+                  options={times.map(time => ({ label: time.regular, value: time.military }))}
                   placeholder={'Select a time'}
-                  value={{value: format(new Date(publishDate), 'HH:mm'), label: format(new Date(publishDate), 'hh:mm a')}}
+                  value={{ value: format(new Date(publishDate), 'HH:mm'), label: format(new Date(publishDate), 'hh:mm a') }}
                   onChange={handleTimeChange}
-                  className='detail-time'
+                  styleType='filter'
                 />
               </div>
               :
@@ -304,39 +293,32 @@ const ProjectFields = ({
           </ItemFieldWrapper>
         </div>
       }
-      {(project.type === 'social' || project.type === 'ads') &&
-        <div className={'field'}>
-          <ItemFieldWrapper
-            title='Social Channel'
-            image={channel && ProjectTypeChannel[channel] ? ProjectTypeChannel[channel] : ProjectTypeChannel.social}
-            hasOption={true}
-            optionOnClick={() => toggleActiveInput('channel')}
-          >
-            <span>{channel && capitalCase(channel)}</span>
-            {activeInput === 'channel' &&
-              <div className={'dropdown'}>
-                <Dropdown
-                  options={project.type === 'social' ?
-                    channelSocialOptions.map(option => ({ label: capitalCase(option), value: option }))
-                    :
-                    channelAdsOptions.map(option => ({ label: capitalCase(option), value: option }))
-                  }
-                  onClick={handleChannelChange}
-                />
-              </div>
+      <ToggleableAbsoluteWrapper
+        wrapperClass='field'
+        contentClass='dropdown'
+        Wrapper={({ children }) => (
+          <>
+            <ItemFieldWrapper
+              title='Social Channel'
+              image={channel && ProjectTypeChannel[channel] ? ProjectTypeChannel[channel] : ProjectTypeChannel.social}
+              hasOption={true}
+              optionOnClick={() => toggleActiveInput('channel')}
+            >
+              <span>{channel && capitalCase(channel)}</span>
+              {children}
+            </ItemFieldWrapper>
+          </>
+        )}
+        Content={() => (
+          <Dropdown
+            options={project.type === 'social' ?
+              channelSocialOptions.map(option => ({ label: capitalCase(option), onClick: () => handleChannelChange(option) }))
+              :
+              channelAdsOptions.map(option => ({ label: capitalCase(option), onClick: () => handleChannelChange(option) }))
             }
-          </ItemFieldWrapper>
-        </div>
-      }
-      {/* TODO: Create input for this thing */}
-      {/* <div className={`field`}>
-        <ItemFieldWrapper
-          title='Time'
-          image={Utilities.time}
-        >
-          <span>{''}</span>
-        </ItemFieldWrapper>
-      </div> */}
+          />
+        )}
+      />
       <div className='field'>
         <ItemFieldWrapper
           title='Campaign'
@@ -430,4 +412,3 @@ const ProjectFields = ({
 
 export default ProjectFields
 
-                

@@ -51,6 +51,10 @@
   margin-right: 5px;
 }
 
+.edit-icon{
+  cursor: pointer;
+}
+
 .img-wrap{
   width: 20px;
   height: 20px;

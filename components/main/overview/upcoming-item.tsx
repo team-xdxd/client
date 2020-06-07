@@ -42,7 +42,7 @@ const UpcomingItem = ({ name, date, status, users, userPhoto = Utilities.memberP
     </div>
     <div className={styles.actions}>
       <img src={Utilities.commentLight} />
-      <img src={Navigation.scheduleLight} />
+      <img className={styles['edit-icon']} src={Navigation.scheduleLight} onClick={() => Router.replace(detailUrl)}/>
       <img src={Utilities.assignMemberLight} />
       <ToggleableAbsoluteWrapper
         wrapperClass={styles['img-wrap']}

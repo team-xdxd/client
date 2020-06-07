@@ -103,12 +103,20 @@ export default {
         newMappedItems.sort((itema, itemb) => {
           const posA = itema.currentWeekPosition
           const posB = itemb.currentWeekPosition
+          if (!itema.currentWeekPosition)
+            return -1
+          if (!itemb.currentWeekPosition)
+            return 1
           if (posA > posB) {
             return 1
           } else if (posA < posB) {
             return -1
           } else return 0
         })
+        if (newMappedItems.find(item => item.data.id === '95bb02b0-3324-4718-9d90-18cc3e433a87')) {
+          console.log(newMappedItems)
+        }
+
         newItems[dateKey] = newMappedItems
       }
     })

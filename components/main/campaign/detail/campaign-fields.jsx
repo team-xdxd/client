@@ -82,62 +82,52 @@ const CampaignFields = ({
           <span>{owner?.name}</span>
         </ItemFieldWrapper>
       </div>
-      <ToggleableAbsoluteWrapper
-        closeOnAction={false}
-        wrapperClass='field'
-        Wrapper={({ children }) => (
-          <>
-            <ItemFieldWrapper
-              title='Start Date'
-              image={ItemFields.date}
-              hasOption={true}
-              optionOnClick={() => toggleActiveInput('startDate')}
-            >
-              <span>{startDate ? format(new Date(startDate), 'MMM d, yyyy') : 'No Start Date'}</span>
-            </ItemFieldWrapper>
-            {children}
-          </>
-        )}
-        contentClass='day-picker'
-        Content={() => (
-          <DayPicker
-            selectedDays={new Date(startDate)}
-            disabledDays={
-              {
-                after: endDate && new Date(endDate),
+      <div className={`field`}>
+        <ItemFieldWrapper
+          title='Start Date'
+          image={ItemFields.date}
+          hasOption={true}
+          optionOnClick={() => toggleActiveInput('startDate')}
+        >
+          <span>{startDate ? format(new Date(startDate), 'MMM d, yyyy') : 'No Start Date'}</span>
+        </ItemFieldWrapper>
+        {activeInput === 'startDate' &&
+          <div className={'day-picker'}>
+            <DayPicker
+              selectedDays={new Date(startDate)}
+              disabledDays={
+                {
+                  after: endDate && new Date(endDate),
+                }
               }
-            }
-            onDayClick={handleStartDayClick} />
-        )}
-      />
-      <ToggleableAbsoluteWrapper
-        closeOnAction={false}
-        wrapperClass='field'
-        Wrapper={({ children }) => (
-          <>
-            <ItemFieldWrapper
-              title='End Date'
-              image={ItemFields.date}
-              hasOption={true}
-              optionOnClick={() => toggleActiveInput('endDate')}
-            >
-              <span>{endDate ? format(new Date(endDate), 'MMM d, yyyy') : 'No End Date'}</span>
-            </ItemFieldWrapper>
-            {children}
-          </>
-        )}
-        contentClass='day-picker'
-        Content={() => (
-          <DayPicker
-            selectedDays={new Date(endDate)}
-            disabledDays={
-              {
-                before: startDate && new Date(startDate),
+              onDayClick={handleStartDayClick} />
+          </div>
+        }
+      </div>
+
+      <div className={`field`}>
+        <ItemFieldWrapper
+          title='End Date'
+          image={ItemFields.date}
+          hasOption={true}
+          optionOnClick={() => toggleActiveInput('endDate')}
+        >
+          <span>{endDate ? format(new Date(endDate), 'MMM d, yyyy') : 'No End Date'}</span>
+        </ItemFieldWrapper>
+        {activeInput === 'endDate' &&
+          <div className={'day-picker'}>
+            <DayPicker
+              selectedDays={new Date(endDate)}
+              disabledDays={
+                {
+                  before: startDate && new Date(startDate),
+                }
               }
-            }
-            onDayClick={handleEndDayClick} />
-        )}
-      />
+              onDayClick={handleEndDayClick} />
+          </div>
+        }
+      </div>
+
 
       <div onClick={() => toggleActiveInput('collaborators')} className='field field-row-last'>
         <ItemFieldWrapper

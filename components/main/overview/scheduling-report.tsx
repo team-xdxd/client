@@ -51,7 +51,7 @@ const SchedulingReport = () => {
       const taskResponse = await taskApi.getTasks(filterObj)
       const tasksData = taskResponse.data
 
-      filterAndComputate(campaignsData, projectsData, tasksData)
+      filterAndCompute(startOfMonthDate, endOfMonthDate, campaignsData, projectsData, tasksData)
 
     } catch (err) {
       // TODO: Handle this error
@@ -60,13 +60,17 @@ const SchedulingReport = () => {
   }
 
 
-  const filterAndComputate = (campaignsData, projectsData, tasksData) => {
+  const filterAndCompute = (startDate, endDate, campaignsData, projectsData, tasksData) => {
     const totalsObj = {}
     let totalCount = 0
+    const isInDateRange = (date) => {
+      const compDate = new Date(date)
+      return compDate >= startDate && compDate <= endDate
+    }
     itemStatuses.forEach(status => {
-      const filteredCampaignsLength = campaignsData.filter(campaign => campaign.status === status).length
-      const filteredProjectsLength = projectsData.filter(project => project.status === status).length
-      const filteredTasksLength = tasksData.filter(task => task.status === status).length
+      const filteredCampaignsLength = campaignsData.filter(campaign => campaign.status === status && isInDateRange(campaign.endDate)).length
+      const filteredProjectsLength = projectsData.filter(project => project.status === status && isInDateRange(project.publishDate)).length
+      const filteredTasksLength = tasksData.filter(task => task.status === status && isInDateRange(task.endDate)).length
       const currentTotal = filteredCampaignsLength + filteredProjectsLength + filteredTasksLength
       totalCount += currentTotal
       totalsObj[status] = { total: currentTotal }
