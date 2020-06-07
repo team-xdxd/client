@@ -11,7 +11,7 @@ const FiltersSelect = ({ options, placeholder, value = null, onChange = (selecte
   const Option = props => (
     <components.Option {...props} >
       <div className={styles.option}>
-        {props.label}
+        <span>{props.label}</span>
         <img src={props.isSelected ? Utilities.radioButtonEnabled : Utilities.radioButtonNormal} />
       </div>
     </components.Option>

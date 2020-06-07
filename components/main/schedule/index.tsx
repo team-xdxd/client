@@ -116,20 +116,21 @@ const Schedule = () => {
   }
 
   const applyLightFiltersAndOrder = (campaignsData = campaigns, projectsData = projects, tasksData = tasks) => {
-    const typeFilter = filters.type?.value
+    const typeFilter = filters.type
 
     let filteredCampaigns = []
-    if (!typeFilter || typeFilter === 'campaigns') {
+    if (!(typeFilter?.length > 0) || (typeFilter.findIndex(typeObj => typeObj.value === 'campaigns') !== -1)) {
       filteredCampaigns = campaignsData.filter(evalCampaignsWithFilters)
     }
 
     let filteredProjects = []
-    if (!typeFilter || (typeFilter !== 'campaigns' && typeFilter !== 'tasks')) {
+
+    if (!(typeFilter?.length > 0) || (typeFilter.findIndex(typeObj => typeObj.value !== 'campaigns' && typeObj.value !== 'tasks') !== -1)) {
       filteredProjects = projectsData.filter(evalProjectsWithFilters)
     }
 
     let filteredTasks = []
-    if (!typeFilter || typeFilter === 'tasks') {
+    if (!(typeFilter?.length > 0) || (typeFilter.findIndex(typeObj => typeObj.value === 'tasks') !== -1)) {
       filteredTasks = tasksData.filter(evalTasksWithFilters)
     }
 

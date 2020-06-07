@@ -39,6 +39,11 @@
   width: 100%;
 }
 
+.week .filler{
+  margin-top: 7px;
+  height: 40px;
+}
+
 .day ul li {
   position: relative;
   z-index: 100;
