@@ -293,32 +293,34 @@ const ProjectFields = ({
           </ItemFieldWrapper>
         </div>
       }
-      <ToggleableAbsoluteWrapper
-        wrapperClass='field'
-        contentClass='dropdown'
-        Wrapper={({ children }) => (
-          <>
-            <ItemFieldWrapper
-              title='Social Channel'
-              image={channel && ProjectTypeChannel[channel] ? ProjectTypeChannel[channel] : ProjectTypeChannel.social}
-              hasOption={true}
-              optionOnClick={() => toggleActiveInput('channel')}
-            >
-              <span>{channel && capitalCase(channel)}</span>
-              {children}
-            </ItemFieldWrapper>
-          </>
-        )}
-        Content={() => (
-          <Dropdown
-            options={project.type === 'social' ?
-              channelSocialOptions.map(option => ({ label: capitalCase(option), onClick: () => handleChannelChange(option) }))
-              :
-              channelAdsOptions.map(option => ({ label: capitalCase(option), onClick: () => handleChannelChange(option) }))
-            }
-          />
-        )}
-      />
+      {project.type !== 'email' &&
+        <ToggleableAbsoluteWrapper
+          wrapperClass='field'
+          contentClass='dropdown'
+          Wrapper={({ children }) => (
+            <>
+              <ItemFieldWrapper
+                title='Social Channel'
+                image={channel && ProjectTypeChannel[channel] ? ProjectTypeChannel[channel] : ProjectTypeChannel.social}
+                hasOption={true}
+                optionOnClick={() => toggleActiveInput('channel')}
+              >
+                <span>{channel && capitalCase(channel)}</span>
+                {children}
+              </ItemFieldWrapper>
+            </>
+          )}
+          Content={() => (
+            <Dropdown
+              options={project.type === 'social' ?
+                channelSocialOptions.map(option => ({ label: capitalCase(option), onClick: () => handleChannelChange(option) }))
+                :
+                channelAdsOptions.map(option => ({ label: capitalCase(option), onClick: () => handleChannelChange(option) }))
+              }
+            />
+          )}
+        />
+      }
       <div className='field'>
         <ItemFieldWrapper
           title='Campaign'
