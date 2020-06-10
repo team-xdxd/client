@@ -32,7 +32,7 @@
   /* width: 25rem; */
 }
 
-@media screen and (max-width: 1300px) {
+@media screen and (max-width: 1023px) {
   .container {
     display: flex;
     flex-wrap: wrap;

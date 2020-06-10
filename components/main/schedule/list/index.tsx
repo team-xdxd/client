@@ -14,7 +14,7 @@ const List = ({ mixedList, currentDate }) => {
     let g = groupByDate()
     setListItems(Object.entries(g))
     setGroup(g)
-  }, [currentDate])
+  }, [currentDate, mixedList])
 
   const groupByDate = () => {
     let group = get7DaySubset()?.reduce((r, a) => {

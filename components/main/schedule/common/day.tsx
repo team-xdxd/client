@@ -66,7 +66,7 @@ const Day = ({
 
   const fillPrevious = (difference) => {
     for (let i = 0; i < difference; i++) {
-      if (nonPositionedItems.length > 0) {
+      if (nonPositionedItems.length > 0 && type !== 'week') {
         preparedItemList.push({ Item: nonPositionedItems.pop().data.Item })
       } else {
         // Push filler

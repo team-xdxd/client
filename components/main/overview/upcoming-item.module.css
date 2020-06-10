@@ -8,6 +8,9 @@
 }
 
 .name {
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
   width: 33.3%;
   cursor: pointer;
 }
@@ -42,7 +45,7 @@
 }
 
 .container span {
-  display: inline-flex;
+  display: block;
 }
 
 .single-user img {
@@ -51,11 +54,11 @@
   margin-right: 5px;
 }
 
-.edit-icon{
+.edit-icon {
   cursor: pointer;
 }
 
-.img-wrap{
+.img-wrap {
   width: 20px;
   height: 20px;
 }
@@ -75,4 +78,22 @@
   position: absolute;
   left: 0;
   top: 1.2rem;
+}
+
+@media screen and (max-width: 1330px) {
+  .name {
+    width: 23.3%;
+  }
+  
+  .user {
+    width: 25.6%;
+  }
+  
+  .date {
+    width: 16.6%;
+  }
+  
+  .badge {
+    width: 19.6%;
+  }
 }
