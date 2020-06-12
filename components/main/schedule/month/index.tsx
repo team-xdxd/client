@@ -97,7 +97,7 @@ const Month = ({
     if (mappedItems) {
       if (offsetBeginElement) {
         gridContRef?.current.scrollTo({
-          top: (offsetBeginElement.offsetTop - (offsetBeginElement.offsetHeight * 1.8))
+          top: offsetBeginElement.offsetTop
         })
         setOffsetBeginElement(null)
       }
@@ -113,7 +113,7 @@ const Month = ({
     setRepositioning(true)
     const elRef = window.document.getElementById(dateUtils.getDateKey(date))
     gridContRef?.current.scrollTo({
-      top: (elRef.offsetTop - (elRef.offsetHeight * 2))
+      top: (elRef.offsetTop)
     })
     setRepositioning(false)
   }

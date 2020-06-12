@@ -39,6 +39,9 @@ const Day = ({
       const modifyMaxItems = () => {
         let dayHeight = dayRef.current.offsetHeight
         if (dayHeight <= 300) {
+          setMaxItems(5)
+        }
+        if (dayHeight <= 235) {
           setMaxItems(4)
         }
         if (dayHeight <= 195) {

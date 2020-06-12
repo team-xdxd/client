@@ -4,7 +4,7 @@
 }
 
 .calendar {
-  max-width: 1400px;
+  max-width: 1800px;
   width: 100%;
 }
 
@@ -31,6 +31,7 @@
 .date-grid-container {
   height: 56vh;
   overflow-y: scroll;
+  position: relative;
   /* scrollbar-width: thin;
   scrollbar-color: var(--color-sec-lightblue) white; */
 }
