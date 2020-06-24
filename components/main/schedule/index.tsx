@@ -1,7 +1,5 @@
 import styles from './index.module.css'
-import Link from 'next/link'
-import { useState, useEffect, useContext } from 'react'
-import { UserContext } from '../../../context'
+import { useState, useEffect } from 'react'
 import campaignApi from '../../../server-api/campaign'
 import projectApi from '../../../server-api/project'
 import taskApi from '../../../server-api/task'
