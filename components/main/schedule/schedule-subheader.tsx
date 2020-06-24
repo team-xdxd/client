@@ -1,6 +1,4 @@
 import styles from './schedule-subheader.module.css'
-import Router from 'next/router'
-import Link from 'next/link'
 import { format, addMonths, subMonths, startOfMonth } from 'date-fns'
 
 import { ProjectTypes } from '../../../assets'
@@ -8,9 +6,8 @@ import { ProjectTypes } from '../../../assets'
 // Components
 import SubHeader from '../../common/layouts/sub-header'
 import NavDropdownButton from '../../common/buttons/nav-dropdown-button'
-import CreateOverlay from '../create-overlay'
 
-const ScheduleSubHeader = ({ openCreateOVerlay, displayDate, currentDate, setCurrentDate }) => {
+const ScheduleSubHeader = ({ openCreateOVerlay, displayDate, setCurrentDate }) => {
 
   const dropdownOptions = [
     {
@@ -40,7 +37,7 @@ const ScheduleSubHeader = ({ openCreateOVerlay, displayDate, currentDate, setCur
 
   // TODO: Change page title to date
   return (
-    <SubHeader pageTitle={displayDate && format(displayDate, 'MMM yyyy')} inputDisabled={true}>
+    <SubHeader pageTitle={displayDate && format(displayDate, 'MMM yyyy')} >
       <div className={styles['header-additional']}>
         <div onClick={setPreviousMonth}>
           {'<'}
@@ -51,7 +48,6 @@ const ScheduleSubHeader = ({ openCreateOVerlay, displayDate, currentDate, setCur
       </div>
       <NavDropdownButton
         text='Create New'
-        onClick={() => openCreateOVerlay()}
         options={dropdownOptions}
       />
     </SubHeader>
