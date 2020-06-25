@@ -7,8 +7,8 @@ import { capitalCase } from 'change-case'
 // Components
 import SectionButton from '../../common/buttons/section-button'
 import Button from '../../common/buttons/button'
-// import Select from '../../common/inputs/select'
-import Select from '../../common/inputs/filters-select'
+// import FiltersSelect from '../../common/inputs/select'
+import FiltersSelect from '../../common/inputs/filters-select'
 
 const campaignPlaceholder = []
 const ownerPlaceholder = []
@@ -48,7 +48,7 @@ const TopBar = ({ activeView, setActiveView, setCurrentDate, filters, setFilters
     </div>
     <div className={styles.filters}>
       <div>
-        <Select
+        <FiltersSelect
           options={allCampaigns.map(campaign => ({ label: campaign.name, value: campaign.id }))}
           placeholder='Campaign'
           styleType='filter filter-schedule'
@@ -58,7 +58,7 @@ const TopBar = ({ activeView, setActiveView, setCurrentDate, filters, setFilters
         />
       </div>
       <div>
-        <Select
+        <FiltersSelect
           options={itemStatus.map(status => ({ label: capitalCase(status), value: status }))}
           placeholder='Status'
           styleType='filter filter-schedule'
@@ -68,7 +68,7 @@ const TopBar = ({ activeView, setActiveView, setCurrentDate, filters, setFilters
         />
       </div>
       <div>
-        <Select
+        <FiltersSelect
           options={typeOptions.map(type => ({ label: capitalCase(type), value: type }))}
           placeholder='Type'
           styleType='filter filter-schedule'
@@ -78,7 +78,7 @@ const TopBar = ({ activeView, setActiveView, setCurrentDate, filters, setFilters
         />
       </div>
       <div>
-        <Select
+        <FiltersSelect
           options={ownerPlaceholder}
           placeholder='Owner'
           styleType='filter filter-schedule'

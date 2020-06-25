@@ -2,10 +2,6 @@ import styles from './filters-select.module.css'
 import ReactSelect, { components } from 'react-select'
 import { Utilities } from '../../../assets'
 
-
-
-
-
 const FiltersSelect = ({ options, placeholder, value = null, onChange = (selected) => { }, styleType = '', isClearable = false }) => {
 
   const Option = props => (

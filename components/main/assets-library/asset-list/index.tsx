@@ -3,10 +3,10 @@ import styles from './index.module.css'
 // Components
 import Folder from './folder'
 
-const AssetGrid = () => {
+const AssetList = () => {
   return (
     <section></section>
   )
 }
 
-export default AssetGrid
+export default AssetList
