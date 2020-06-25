@@ -46,7 +46,9 @@ export const Utilities = {
   radioButtonNormal: require('./Icons/Utilities/Radio Button/Normal/icn-utilities-radionormal.svg'),
   radioButtonEnabled: require('./Icons/Utilities/Radio Button/Enabled/icn-utilities-radioenabled.svg'),
   print: require('./Icons/Utilities/Print/icn-utilities-print.svg'),
-  search: require('./Icons/Utilities/Search/icn-utilities-search.svg')
+  search: require('./Icons/Utilities/Search/icn-utilities-search.svg'),
+  gridView: require('./Icons/Utilities/View Grid/icn-utilities-gridview.svg'),
+  listView: require('./Icons/Utilities/View List/icn-utilities-listview.svg'),
 }
 
 export const ProjectTypes = {
@@ -99,4 +101,9 @@ export const Status = {
   draftLight: require('./Icons/Status/Drafts/icn-status-drafts-light.svg'),
   scheduled: require('./Icons/Status/Scheduled/icn-status-scheduled.svg'),
   scheduledLight: require('./Icons/Status/Scheduled/icn-status-scheduled-light.svg')
+}
+
+export const Assets = {
+  file: require('./Icons/Project Type/Campaign/icn-projecttype-campaign.svg'),
+  folder: require('./Icons/Project Type/Campaign/icn-projecttype-campaign.svg'),
 }
