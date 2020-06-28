@@ -1,0 +1,47 @@
+.padding {
+  flex: 1;
+}
+
+.button-wrapper {
+  position: relative;
+}
+
+.options-list {
+  position: absolute;
+  display: flex;
+  right: 0;
+  z-index: 300;
+}
+
+.option {
+  background-color: white;
+  border: 1px solid var(--color-secondary-border);
+  border-right: none;
+  width: 10rem;
+  height: 8em;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  cursor: pointer;
+}
+
+.option-label {
+  font-weight: 500;
+  margin-top: 0.5rem;
+}
+
+.option-text {
+  color: var(--color-sec-blue);
+  font-size: 12px;
+  margin-top: 0.2rem;
+}
+
+.option:last-child {
+  border-right: 1px solid var(--color-secondary-border);
+}
+
+.option img {
+  width: 15px;
+  height: 15px;
+}

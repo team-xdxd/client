@@ -10,6 +10,9 @@ import AssetList from './asset-list'
 import DetailOverlay from './detail-overlay'
 import TopBar from './top-bar'
 import MoveModal from './move-modal'
+import FoldarModal from './folder-modal'
+
+import assetApi from '../../../server-api/asset'
 
 const AssetsLibrary = () => {
 
@@ -24,11 +27,24 @@ const AssetsLibrary = () => {
 
   const [activeModal, setActiveModal] = useState('')
 
+  const onFilesDataGet = async (files) => {
+    try {
+      const formData = new FormData()
+      files.forEach(file => {
+        formData.append('asset', file.originalFile)
+      })
+      await assetApi.uploadAssets(formData)
+    } catch (err) {
+
+    }
+  }
+
   return (
     <>
       <AssetSubheader
-        openFileUploader={() => setActiveModal('file')}
+        onFilesDataGet={onFilesDataGet}
         openFolderUploader={() => setActiveModal('folder')}
+
       />
       <main className={`${styles.container}`}>
         <TopBar
@@ -41,8 +57,14 @@ const AssetsLibrary = () => {
           additionalFilters={additionalFilters}
           setAdditinalFilters={setAdditinalFilters}
         />
-        <AssetList />
+        <AssetList
+          onFilesDataGet={onFilesDataGet}
+        />
       </main>
+      <FoldarModal
+        modalIsOpen={activeModal === 'folder'}
+        closeModal={() => setActiveModal('')}
+      />
     </>
   )
 }

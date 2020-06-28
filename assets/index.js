@@ -28,6 +28,7 @@ export const Utilities = {
   editWhite: require('./Icons/Utilities/Description-Edit/icn-utilities-description_edit-fill-white.svg'),
   add: require('./Icons/Utilities/Add +/icn-utilities-add+.svg'),
   addLight: require('./Icons/Utilities/Add +/icn-utilities-add+light.svg'),
+  addWhite: require('./Icons/Utilities/Add +/icn-utilities-add+white.svg'),
   comment: require('./Icons/Utilities/Comments/icn-utilities-comments.svg'),
   commentLight: require('./Icons/Utilities/Comments/icn-utilities-comments-light.svg'),
   assignMember: require('./Icons/Utilities/Assign Member/icn-utilities-assignmember.svg'),

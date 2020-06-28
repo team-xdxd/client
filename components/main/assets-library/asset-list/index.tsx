@@ -2,10 +2,19 @@ import styles from './index.module.css'
 
 // Components
 import Folder from './folder'
+import AssetUpload from '../../../common/asset-item/asset-upload'
 
-const AssetList = () => {
+const AssetList = ({ onFilesDataGet }) => {
+
   return (
-    <section></section>
+    <section className={styles.container}>
+      <AssetUpload
+        onDragText={'Drop files here to upload'}
+        inputEnabled={true}
+        onFilesDataGet={onFilesDataGet}>
+
+      </AssetUpload>
+    </section>
   )
 }
 
