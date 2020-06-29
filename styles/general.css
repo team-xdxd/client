@@ -51,7 +51,7 @@ body {
   padding: 0;
 }
 
-body.no-overflow{
+body.no-overflow {
   overflow: hidden;
 }
 
@@ -159,4 +159,16 @@ ul {
 .ReactModal__Html--open,
 .ReactModal__Body--open {
   overflow: hidden; /* prevents background page from scrolling when the modal is open */
+}
+
+/* Overlay main styling */
+.app-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: white;
+  z-index: 2000;  
+  color: var(--color-prim-navy);
 }

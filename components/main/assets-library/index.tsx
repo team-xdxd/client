@@ -1,18 +1,19 @@
 import styles from './index.module.css'
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import selectOptions from './select-options'
 import update from 'immutability-helper'
 import toastUtils from '../../../utils/toast'
+import assetApi from '../../../server-api/asset'
 
 // Components
 import AssetSubheader from './asset-subheader'
-import AssetList from './asset-list'
-import DetailOverlay from './detail-overlay'
+import AssetGrid from '../../common/asset/asset-grid'
 import TopBar from './top-bar'
 import MoveModal from './move-modal'
 import FoldarModal from './folder-modal'
+import { DropzoneProvider } from '../../common/misc/dropzone'
 
-import assetApi from '../../../server-api/asset'
+
 
 const AssetsLibrary = () => {
 
@@ -26,16 +27,44 @@ const AssetsLibrary = () => {
   })
 
   const [activeModal, setActiveModal] = useState('')
+  const [fileDragged, isFileDragged] = useState(false)
+  const [assets, setAssets] = useState([])
+
+  useEffect(() => {
+    getAssets()
+  }, [])
+
+  const getAssets = async () => {
+    try {
+      const { data } = await assetApi.getAssets()
+      setAssets(data)
+    } catch (err) {
+      //TODO: Handle error
+      console.log(err)
+    }
+  }
 
   const onFilesDataGet = async (files) => {
     try {
       const formData = new FormData()
+      const currentDataClone = [...assets]
+      const newPlaceholders = []
       files.forEach(file => {
+        newPlaceholders.push({
+          asset: {
+            name: file.originalFile.name,
+            createdAt: new Date()
+          },
+          isUploading: true
+        })
         formData.append('asset', file.originalFile)
       })
-      await assetApi.uploadAssets(formData)
+      setAssets([...newPlaceholders, ...currentDataClone])
+      const { data } = await assetApi.uploadAssets(formData)
+      setAssets([...data, ...currentDataClone])
     } catch (err) {
-
+      //TODO: Handle error
+      console.log(err)
     }
   }
 
@@ -57,9 +86,13 @@ const AssetsLibrary = () => {
           additionalFilters={additionalFilters}
           setAdditinalFilters={setAdditinalFilters}
         />
-        <AssetList
-          onFilesDataGet={onFilesDataGet}
-        />
+        <DropzoneProvider>
+          <AssetGrid
+            activeView={activeView}
+            assets={assets}
+            onFilesDataGet={onFilesDataGet}
+          />
+        </DropzoneProvider>
       </main>
       <FoldarModal
         modalIsOpen={activeModal === 'folder'}

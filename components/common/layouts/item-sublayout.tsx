@@ -7,6 +7,7 @@ import SectionButton from '../buttons/section-button'
 import ConfirmModal from '../modals/confirm-modal'
 import Dropdown from '../inputs/dropdown'
 import ToggleableAbsoluteWrapper from '../misc/toggleable-absolute-wrapper'
+import ItemAssets from '../asset/item-assets'
 
 const ItemSublayout = ({
   SideComponent = null,
@@ -15,9 +16,12 @@ const ItemSublayout = ({
   children,
   layout = 'double',
   type = 'item',
+  hasAssets = false,
+  itemId = '',
   deleteItem = () => { }
 }) => {
   const [modalOpen, setModalOpen] = useState(false)
+  const [activeMain, setActiveMain] = useState('details')
 
   return (
     <div className={styles.container}>
@@ -26,12 +30,27 @@ const ItemSublayout = ({
           <div className={styles[layout]}>
             <SectionButton
               text='Details'
-              active={true}
+              active={activeMain === 'details'}
+              onClick={() => setActiveMain('details')}
             />
+            {hasAssets &&
+              <SectionButton
+                text='Assets'
+                active={activeMain === 'assets'}
+                onClick={() => setActiveMain('assets')}
+              />
+            }
           </div>
         </div>
         <div className={styles.children}>
-          {children}
+          {activeMain === 'details' &&
+            <>
+              {children}
+            </>
+          }
+          {activeMain === 'assets' &&
+            <ItemAssets type={type} itemId={itemId} />
+          }
         </div>
       </div>
 

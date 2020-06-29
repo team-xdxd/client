@@ -1,0 +1,17 @@
+.container {
+  height: 60vh;
+  display: flex;
+  justify-content: center;
+  position: relative;
+}
+
+.list-wrapper{
+  width: 100%;
+  max-width: 1800px;
+}
+
+.grid-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  grid-gap: 2rem;
+}

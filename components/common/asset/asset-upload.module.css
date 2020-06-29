@@ -1,0 +1,41 @@
+.wrapper {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 100vh;
+  outline: none;
+  z-index: 200;
+}
+
+.wrapper.is-dragging {
+  background-color: rgba(255, 255, 255, 0.8);
+}
+
+.text-wrapper{
+  pointer-events: none;
+}
+
+.wrapper .text-wrapper {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.text-wrapper .dragged {
+  pointer-events: none;
+  font-weight: bold;
+  font-size: 18px;
+}
+
+.normal {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 18px;
+  border: 1px dashed var(--color-secondary-border)
+}

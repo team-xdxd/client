@@ -169,7 +169,6 @@ const CampaignDetail = () => {
               setStartDate={setStartDate}
               owner={owner}
               tags={tags}
-              setTags={setTags}
               setCollaborators={setCollaborators}
               addTag={addTag}
               removeTag={removeTag}

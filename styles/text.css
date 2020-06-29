@@ -1,0 +1,9 @@
+.normal-text {
+  color: var(--color-prim-navy);
+  font-weight: 500;
+}
+
+.secondary-text {
+  color: var(--color-sec-blue);
+  font-size: 12px;
+}
