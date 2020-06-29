@@ -166,6 +166,8 @@ const TaskDetail = () => {
           deleteItem={deleteTask}
           type='task'
           layout='single'
+          itemId={task?.id}
+          hasAssets={true}
         >
           {task &&
             <Fields

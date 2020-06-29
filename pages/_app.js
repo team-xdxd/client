@@ -6,6 +6,7 @@ import '../styles/time-picker.css'
 import '../styles/detail-pages.css'
 import '../styles/select.css'
 import '../styles/schedule.css'
+import '../styles/text.css'
 import 'react-day-picker/lib/style.css';
 // Import stripe as a side effect so it helps detect fraudulent activy
 import '@stripe/stripe-js';

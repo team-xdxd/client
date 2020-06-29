@@ -82,7 +82,7 @@ const CreateOverlay = ({ closeOverlay }) => {
   }
 
   return (
-    <div className={styles.container}>
+    <div className={`app-overlay ${styles.container}`}>
       <div className={styles.top}>
         <div className={styles.close} onClick={closeOverlay}>
           <span className={styles.x}>X</span>

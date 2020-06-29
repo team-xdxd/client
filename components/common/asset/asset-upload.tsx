@@ -9,7 +9,6 @@ const AssetUpload = ({
   onFilesDataGet,
   dropEnabled = true,
   inputEnabled = false,
-  children,
   preDragText = '',
   onDragText = ''
 }) => {
@@ -63,12 +62,11 @@ const AssetUpload = ({
       {inputEnabled &&
         <input {...getInputProps()} />
       }
-      {children}
       {onDragText &&
         <div className={styles['text-wrapper']}>
           {
             isDragActive ?
-              <p>{onDragText}</p> :
+              <p className={styles.dragged}>{onDragText}</p> :
               <p>{preDragText}</p>
           }
         </div>
@@ -79,7 +77,7 @@ const AssetUpload = ({
   return (
     <>
       {dropEnabled ?
-        <div className={styles.wrapper} {...getRootProps()}>
+        <div className={`${!preDragText ? styles.wrapper : styles.normal} ${isDragActive && styles['is-dragging']}`} {...getRootProps()}>
           <Content />
         </div>
         :

@@ -11,7 +11,7 @@ import CreateItem from './create-item'
 
 const CreateOverlay = ({ type = '', setType, closeOverlay }) => {
   return (
-    <div className={styles.container}>
+    <div className={`app-overlay ${styles.container}`}>
       <div className={styles.top}>
         <div className={styles.back} onClick={() => setType('')}>
           {

@@ -78,7 +78,7 @@ const ProjectDetail = () => {
   }
 
   const saveProject = async () => {
-    if(!editableFields.publishDate){
+    if (!editableFields.publishDate) {
       return toastUtils.error('You must add an Deadline Date')
     }
     if (!editableFields.name) {
@@ -188,7 +188,7 @@ const ProjectDetail = () => {
   }
 
   const changeStatus = async (newStatus) => {
-    if(!editableFields.publishDate){
+    if (!editableFields.publishDate) {
       return toastUtils.error('You must add an Deadline Date')
     }
 
@@ -215,7 +215,9 @@ const ProjectDetail = () => {
       <main className={`${styles.container}`}>
         <ItemSublayout
           deleteItem={deleteProject}
+          hasAssets={true}
           type='project'
+          itemId={project?.id}
           navElements={[
             { icon: ProjectTypes.task }
           ]}
