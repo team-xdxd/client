@@ -32,7 +32,6 @@ const AssetsLibrary = () => {
   const [activeModal, setActiveModal] = useState('')
 
   const [fileDragged, isFileDragged] = useState(false)
-  const [assets, setAssets] = useState([])
   const [submitError, setSubmitError] = useState('')
 
   useEffect(() => {
