@@ -1,15 +1,18 @@
 import styles from './asset-subheader.module.css'
-import { ProjectTypes } from '../../../assets'
 import { useRef } from 'react'
-import { Assets, Utilities } from '../../../assets'
-import { useDropzone } from 'react-dropzone'
+import { Assets } from '../../../assets'
 
 // Components
 import SubHeader from '../../common/layouts/sub-header'
 import SimpleButton from '../../common/buttons/simple-button'
 import ToggleAbleAbsoluteWrapper from '../../common/misc/toggleable-absolute-wrapper'
+import AssetHeaderOps from '../../common/asset/asset-header-ops'
 
-const AssetSubheader = ({ onFilesDataGet, openFolderUploader }) => {
+const AssetSubheader = ({
+  onFilesDataGet,
+  openFolderUploader,
+  amountSelected = 0
+}) => {
 
   const fileBrowserRef = useRef(undefined)
 
@@ -35,7 +38,7 @@ const AssetSubheader = ({ onFilesDataGet, openFolderUploader }) => {
     </div>
   )
 
-  const onFileChange = (e) => {    
+  const onFileChange = (e) => {
     onFilesDataGet(Array.from(e.target.files).map(originalFile => ({ originalFile })))
   }
 
@@ -62,16 +65,21 @@ const AssetSubheader = ({ onFilesDataGet, openFolderUploader }) => {
   }
 
   return (
-    <SubHeader pageTitle={'Asset Library'} >
+    <SubHeader pageTitle={'Asset Library'} additionalClass={styles['asset-subheader']}>
       <div className={styles.padding}>
       </div>
-      <input multiple={true} id="file-input-id" ref={fileBrowserRef} style={{ display: 'none' }} type='file'
-        onChange={onFileChange} />
-      <ToggleAbleAbsoluteWrapper
-        Wrapper={SimpleButtonWrapper}
-        Content={DropDownOptions}
-      />
-
+      {amountSelected > 0 ?
+        <AssetHeaderOps />
+        :
+        <>
+          <input multiple={true} id="file-input-id" ref={fileBrowserRef} style={{ display: 'none' }} type='file'
+            onChange={onFileChange} />
+          <ToggleAbleAbsoluteWrapper
+            Wrapper={SimpleButtonWrapper}
+            Content={DropDownOptions}
+          />
+        </>
+      }
     </SubHeader>
   )
 }

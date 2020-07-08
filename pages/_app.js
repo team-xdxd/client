@@ -12,7 +12,7 @@ import 'react-day-picker/lib/style.css';
 import '@stripe/stripe-js';
 import dragndropPolyfill from '../polyfills/dragndroptouch'
 import { useState, useEffect } from 'react'
-import { UserContext, LanguageContext, ThemeContext } from '../context'
+import { UserContext, LanguageContext, ThemeContext, AssetContext } from '../context'
 import cookiesUtils from '../utils/cookies'
 import requestsUtils from '../utils/requests'
 
@@ -24,7 +24,7 @@ import 'react-toastify/dist/ReactToastify.css';
 toast.configure()
 
 // This default export is required in a new `pages/_app.js` file.
-export default function MyApp ({ Component, pageProps }) {
+export default function MyApp({ Component, pageProps }) {
   // set up context following this: https://stackoverflow.com/questions/41030361/how-to-update-react-context-from-inside-a-child-component
   const [user, setUser] = useState(null)
 
@@ -64,6 +64,9 @@ export default function MyApp ({ Component, pageProps }) {
   const [theme, setTheme] = useState("light")
   const themeValue = { theme, setTheme }
 
+  const [assets, setAssets] = useState([])
+  const assetsValue = { assets, setAssets }
+
   const [item, setItem] = useState(null)
   const itemValue = { item, setItem }
 
@@ -92,9 +95,11 @@ export default function MyApp ({ Component, pageProps }) {
     <UserContext.Provider value={userValue} >
       <LanguageContext.Provider value={languageValue}>
         <ThemeContext.Provider value={themeValue}>
-          {initialLoadFinished &&
-            <Component {...pageProps} />
-          }
+          <AssetContext.Provider value={assetsValue}>
+            {initialLoadFinished &&
+              <Component {...pageProps} />
+            }
+          </AssetContext.Provider>
         </ThemeContext.Provider>
       </LanguageContext.Provider>
     </UserContext.Provider>
