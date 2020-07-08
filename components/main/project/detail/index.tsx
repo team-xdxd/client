@@ -211,6 +211,7 @@ const ProjectDetail = () => {
         changeName={(name) => editFields('name', name)}
         changeStatus={changeStatus}
         resetPageTittle={() => editFields('name', project?.name)}
+        hasAssets={true}
       />
       <main className={`${styles.container}`}>
         <ItemSublayout

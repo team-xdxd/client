@@ -1,6 +1,8 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useContext } from 'react'
+import { AssetContext } from '../../../context'
 import assetApi from '../../../server-api/asset'
 import styles from './item-assets.module.css'
+import update from 'immutability-helper'
 
 // Components
 import AssetGrid from './asset-grid'
@@ -8,7 +10,7 @@ import { DropzoneProvider } from '../misc/dropzone'
 
 const ItemAssets = ({ type, itemId }) => {
 
-  const [assets, setAssets] = useState([])
+  const { assets, setAssets } = useContext(AssetContext)
 
   const getAssets = async () => {
     try {
@@ -54,12 +56,22 @@ const ItemAssets = ({ type, itemId }) => {
     }
   }
 
+  const toggleSelected = (id) => {
+    const assetIndex = assets.findIndex(assetItem => assetItem.asset.id === id)
+    setAssets(update(assets, {
+      [assetIndex]: {
+        isSelected: { $set: !assets[assetIndex].isSelected }
+      }
+    }))
+  }
+
   return (
     <DropzoneProvider>
       <div className={styles.container}>
         <AssetGrid
           assets={assets}
           onFilesDataGet={onFilesDataGet}
+          toggleSelected={toggleSelected}
         />
       </div>
     </DropzoneProvider>

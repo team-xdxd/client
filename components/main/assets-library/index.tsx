@@ -1,5 +1,6 @@
 import styles from './index.module.css'
-import { useState, useEffect, useRef } from 'react'
+import { useState, useEffect, useRef, useContext } from 'react'
+import { AssetContext } from '../../../context'
 import selectOptions from './select-options'
 import update from 'immutability-helper'
 import toastUtils from '../../../utils/toast'
@@ -13,8 +14,6 @@ import MoveModal from './move-modal'
 import FoldarModal from './folder-modal'
 import { DropzoneProvider } from '../../common/misc/dropzone'
 
-
-
 const AssetsLibrary = () => {
 
   const [activeFilter, setActiveFilter] = useState('all')
@@ -26,23 +25,35 @@ const AssetsLibrary = () => {
     tags: []
   })
 
+  const { assets, setAssets } = useContext(AssetContext)
+
   const [activeModal, setActiveModal] = useState('')
-  const [fileDragged, isFileDragged] = useState(false)
-  const [assets, setAssets] = useState([])
 
   useEffect(() => {
+    setAssets([])
     getAssets()
   }, [])
 
   const getAssets = async () => {
     try {
       const { data } = await assetApi.getAssets()
-      setAssets(data)
+      setAssets(data.map(mapWithToggleSelection))
     } catch (err) {
       //TODO: Handle error
       console.log(err)
     }
   }
+
+  const toggleSelected = (id) => {
+    const assetIndex = assets.findIndex(assetItem => assetItem.asset.id === id)
+    setAssets(update(assets, {
+      [assetIndex]: {
+        isSelected: { $set: !assets[assetIndex].isSelected }
+      }
+    }))
+  }
+
+  const mapWithToggleSelection = asset => ({ ...asset, toggleSelected })
 
   const onFilesDataGet = async (files) => {
     try {
@@ -68,12 +79,14 @@ const AssetsLibrary = () => {
     }
   }
 
+  const selectedAssets = assets.filter(asset => asset.isSelected)
+
   return (
     <>
       <AssetSubheader
         onFilesDataGet={onFilesDataGet}
         openFolderUploader={() => setActiveModal('folder')}
-
+        amountSelected={selectedAssets.length}
       />
       <main className={`${styles.container}`}>
         <TopBar
@@ -91,6 +104,7 @@ const AssetsLibrary = () => {
             activeView={activeView}
             assets={assets}
             onFilesDataGet={onFilesDataGet}
+            toggleSelected={toggleSelected}
           />
         </DropzoneProvider>
       </main>

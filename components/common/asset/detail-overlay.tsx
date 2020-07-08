@@ -1,30 +1,13 @@
 import styles from './detail-overlay.module.css'
 import { Utilities } from '../../../assets'
 import { useEffect, useState } from 'react'
-import assetApi from '../../../server-api/asset'
 
 // Components
 import SidePanel from './detail-side-panel'
 import IconClickable from '../buttons/icon-clickable'
 import Button from '../buttons/button'
 
-const DetailOverlay = ({ asset, closeOverlay }) => {
-
-  const [realUrl, setRealUrl] = useState('')
-
-  useEffect(() => {
-    getRealUrl()
-  }, [])
-
-  const getRealUrl = async () => {
-    try {
-      const { data } = await assetApi.getRealUrl(asset.id)
-      setRealUrl(data.realUrl)
-    } catch (err) {
-      console.log(err)
-      //TODO: handle this error
-    }
-  }
+const DetailOverlay = ({ asset, closeOverlay }) => {  
 
   return (
     <div className={`app-overlay ${styles.container}`}>

@@ -9,7 +9,7 @@ import ListItem from './list-item'
 import AssetUpload from './asset-upload'
 
 
-const AssetList = ({ activeView = 'grid', onFilesDataGet, assets }) => {
+const AssetGrid = ({ activeView = 'grid', onFilesDataGet, assets, toggleSelected }) => {
 
   const isDragging = useDropzone()
 
@@ -18,7 +18,7 @@ const AssetList = ({ activeView = 'grid', onFilesDataGet, assets }) => {
       {(assets.length === 0 || isDragging) &&
         <AssetUpload
           onDragText={'Drop files here to upload'}
-          preDragText={assets.length === 0 ? `Drag 'n' drop some files here` : ''}          
+          preDragText={assets.length === 0 ? `Drag 'n' drop some files here` : ''}
           onFilesDataGet={onFilesDataGet} />
       }
       <div className={styles['list-wrapper']}>
@@ -28,7 +28,7 @@ const AssetList = ({ activeView = 'grid', onFilesDataGet, assets }) => {
 
               return (
                 <li className={styles['grid-item']} key={assetItem.asset.id}>
-                  <AssetThumbail {...assetItem} />
+                  <AssetThumbail {...assetItem} toggleSelected={() => toggleSelected(assetItem.asset.id)} />
                 </li>
               )
             })}
@@ -51,4 +51,4 @@ const AssetList = ({ activeView = 'grid', onFilesDataGet, assets }) => {
   )
 }
 
-export default AssetList
+export default AssetGrid

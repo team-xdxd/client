@@ -18,6 +18,12 @@
   align-items: center;
 }
 
+.menu li a{
+  padding-left: 10px;
+  min-width: inherit;
+  display: inherit;
+}
+
 .menu li:hover {
   background-color: var(--color-secondary-hover);
 }

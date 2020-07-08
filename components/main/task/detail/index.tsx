@@ -68,7 +68,7 @@ const TaskDetail = () => {
   }
 
   const saveTask = async () => {
-    if(!editableFields.endDate){
+    if (!editableFields.endDate) {
       return toastUtils.error('You must add a Deadline Date')
     }
     if (!editableFields.name) {
@@ -137,7 +137,7 @@ const TaskDetail = () => {
   }
 
   const changeStatus = async (newStatus) => {
-    if(!editableFields.endDate){
+    if (!editableFields.endDate) {
       return toastUtils.error('You must add an Deadline Date')
     }
 
@@ -160,6 +160,7 @@ const TaskDetail = () => {
         status={status}
         changeStatus={changeStatus}
         resetPageTittle={() => editFields('name', task?.name)}
+        hasAssets={true}
       />
       <main className={`${styles.container}`}>
         <ItemSublayout

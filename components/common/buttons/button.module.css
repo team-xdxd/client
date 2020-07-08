@@ -3,7 +3,6 @@
   height: 34px;
   /* max-width: 250px; */
   padding: 0 20px;
-
   font-weight: 600;
   cursor: pointer;
 }
@@ -12,7 +11,7 @@
   min-height: 70px;
 }
 
-.normal-height{
+.normal-height {
   min-height: 34px;
 }
 
@@ -42,5 +41,18 @@
 
 .secondary:disabled {
   background-color: var(--color-sec-lightivory);
+  cursor: default;
+}
+
+.tertiary {
+  background-color: inherit;
+  color: white;
+}
+
+.tertiary:hover {
+  opacity: 0.6
+}
+
+.tertiary:disabled {
   cursor: default;
 }

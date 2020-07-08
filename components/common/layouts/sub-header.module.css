@@ -1,6 +1,7 @@
 .container {
   display: flex;
   align-items: center;
+  min-height: 83px;
   padding: 5px 32px 30px 32px;
   background-color: var(--color-prim-navy);
 }
@@ -9,7 +10,7 @@
   color: var(--color-sec-ivory);
 }
 
-.container h1 span{
+.container h1 span {
   display: inline-flex;
   margin-right: 10px;
 }
@@ -31,7 +32,7 @@
   height: 16px;
 }
 
-.x{
+.x {
   cursor: pointer;
   color: white;
   font-size: 22px;

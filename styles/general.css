@@ -1,5 +1,4 @@
 @import url("https://fonts.googleapis.com/css?family=Montserrat:400,500,600,700&display=swap");
-
 :root {
   /* Colors */
   --color-prim-navy: #08135e;
@@ -11,7 +10,6 @@
   --color-prim-turquoise: #10bda5;
   --color-prim-turquoise-hover: #00a38d;
   --color-sec-text: #817d9d;
-
   --color-sec-blue: #aeb0c2;
   --color-sec-lightblue: #e9eefa;
   --color-sec-ivory: #f6efe4;
@@ -21,15 +19,12 @@
   --color-sec-lightorange: #ffe3d6;
   --color-sec-lightyellow: #fae7c5;
   --color-sec-lightturquoise: #cee6e0;
-
   --color-nav: var(--color-prim-turquoise);
   --color-nav-icon: var(--color-prim-turquoise-hover);
   --color-nav-hover: var(--color-prim-turquoise-hover);
   --color-nav-icon-hover: #00806e;
-
   --color-secondary-border: #dedad4;
   --color-secondary-hover: var(--color-sec-lightivory);
-
   --color-ghost-text: #9597a6;
 }
 
@@ -55,11 +50,14 @@ body.no-overflow {
   overflow: hidden;
 }
 
-h1,
-h2,
-h3,
-h4 {
+a {
+  color: inherit;
+  /* blue colors for links too */
+  text-decoration: inherit;
+  /* no underline */
 }
+
+h1, h2, h3, h4 {}
 
 h1 {
   font-size: 35px;
@@ -80,23 +78,21 @@ mark {
   color: inherit;
 }
 
-*,
-*:before,
-*:after {
+*, *:before, *:after {
   -webkit-box-sizing: inherit;
   -moz-box-sizing: inherit;
   box-sizing: inherit;
 }
 
-button,
-input,
-optgroup,
-select,
-textarea {
-  font-family: inherit; /* 1 */
-  font-size: 100%; /* 1 */
-  line-height: 1.15; /* 1 */
-  margin: 0; /* 2 */
+button, input, optgroup, select, textarea {
+  font-family: inherit;
+  /* 1 */
+  font-size: 100%;
+  /* 1 */
+  line-height: 1.15;
+  /* 1 */
+  margin: 0;
+  /* 2 */
 }
 
 /**
@@ -104,8 +100,7 @@ textarea {
  * 1. Show the overflow in Edge.
  */
 
-button,
-input {
+button, input {
   /* 1 */
   overflow: visible;
 }
@@ -115,8 +110,7 @@ input {
  * 1. Remove the inheritance of text transform in Firefox.
  */
 
-button,
-select {
+button, select {
   /* 1 */
   text-transform: none;
 }
@@ -125,10 +119,7 @@ select {
  * Correct the inability to style clickable types in iOS and Safari.
  */
 
-button,
-[type="button"],
-[type="reset"],
-[type="submit"] {
+button, [type="button"], [type="reset"], [type="submit"] {
   -webkit-appearance: button;
 }
 
@@ -149,6 +140,7 @@ ul {
 }
 
 /* Card content */
+
 .card-content {
   padding: 35px;
   border: 1px solid var(--color-sec-lightblue);
@@ -156,12 +148,13 @@ ul {
   box-shadow: 23px 24px 51px -16px var(--color-sec-lightblue);
 }
 
-.ReactModal__Html--open,
-.ReactModal__Body--open {
-  overflow: hidden; /* prevents background page from scrolling when the modal is open */
+.ReactModal__Html--open, .ReactModal__Body--open {
+  overflow: hidden;
+  /* prevents background page from scrolling when the modal is open */
 }
 
 /* Overlay main styling */
+
 .app-overlay {
   position: fixed;
   top: 0;
@@ -169,6 +162,6 @@ ul {
   width: 100%;
   height: 100%;
   background-color: white;
-  z-index: 2000;  
+  z-index: 2000;
   color: var(--color-prim-navy);
 }

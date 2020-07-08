@@ -22,3 +22,8 @@ export const DragContext = createContext({
   item: null,
   setItem: (item) => { }
 })
+
+export const AssetContext = createContext({
+  assets: [],
+  setAssets: (assets) => { }
+})
