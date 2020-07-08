@@ -1,17 +1,19 @@
 import styles from './index.module.css'
 import { useState, useEffect, useRef, useContext } from 'react'
 import { AssetContext } from '../../../context'
+import { useForm } from 'react-hook-form'
 import selectOptions from './select-options'
 import update from 'immutability-helper'
 import toastUtils from '../../../utils/toast'
 import assetApi from '../../../server-api/asset'
+import folderApi from '../../../server-api/folder'
 
 // Components
 import AssetSubheader from './asset-subheader'
 import AssetGrid from '../../common/asset/asset-grid'
 import TopBar from './top-bar'
 import MoveModal from './move-modal'
-import FoldarModal from './folder-modal'
+import FolderModal from './folder-modal'
 import { DropzoneProvider } from '../../common/misc/dropzone'
 
 const AssetsLibrary = () => {
@@ -28,6 +30,10 @@ const AssetsLibrary = () => {
   const { assets, setAssets } = useContext(AssetContext)
 
   const [activeModal, setActiveModal] = useState('')
+
+  const [fileDragged, isFileDragged] = useState(false)
+  const [assets, setAssets] = useState([])
+  const [submitError, setSubmitError] = useState('')
 
   useEffect(() => {
     setAssets([])
@@ -81,6 +87,20 @@ const AssetsLibrary = () => {
 
   const selectedAssets = assets.filter(asset => asset.isSelected)
 
+  const onSubmit = async folderData => {
+    try {
+      await folderApi.createFolder(folderData)
+      setActiveModal('')
+    } catch (err) {
+      // TODO: Show error message
+      if (err.response?.data?.message) {
+        setSubmitError(err.response.data.message)
+      } else {
+        setSubmitError('Something went wrong, please try again later')
+      }
+    }
+  }
+
   return (
     <>
       <AssetSubheader
@@ -108,9 +128,10 @@ const AssetsLibrary = () => {
           />
         </DropzoneProvider>
       </main>
-      <FoldarModal
+      <FolderModal
         modalIsOpen={activeModal === 'folder'}
         closeModal={() => setActiveModal('')}
+        onSubmit={onSubmit}
       />
     </>
   )
