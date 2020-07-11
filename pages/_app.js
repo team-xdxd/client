@@ -1,4 +1,5 @@
 import Router from 'next/router'
+import Head from 'next/head'
 // Import global css
 import '../styles/general.css'
 import '../styles/auth.css'
@@ -92,10 +93,14 @@ export default function MyApp({ Component, pageProps }) {
   }
 
   return (
+
     <UserContext.Provider value={userValue} >
       <LanguageContext.Provider value={languageValue}>
         <ThemeContext.Provider value={themeValue}>
           <AssetContext.Provider value={assetsValue}>
+            <Head>
+              <script type="text/javascript" src="https://www.dropbox.com/static/api/2/dropins.js" id="dropboxjs" data-app-key={`gtwo80vc34l8vjd`}></script>
+            </Head>
             {initialLoadFinished &&
               <Component {...pageProps} />
             }

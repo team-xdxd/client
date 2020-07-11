@@ -7,7 +7,7 @@ import SidePanel from './detail-side-panel'
 import IconClickable from '../buttons/icon-clickable'
 import Button from '../buttons/button'
 
-const DetailOverlay = ({ asset, closeOverlay }) => {  
+const DetailOverlay = ({ asset, realUrl, closeOverlay }) => {
 
   return (
     <div className={`app-overlay ${styles.container}`}>

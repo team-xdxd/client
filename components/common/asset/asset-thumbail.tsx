@@ -14,6 +14,7 @@ import ToggleableAbsoluteWrapper from '../misc/toggleable-absolute-wrapper'
 const AssetThumbail = ({
   asset,
   thumbailUrl,
+  realUrl,
   isUploading,
   isSelected = false,
   toggleSelected = (id) => { },
@@ -23,22 +24,6 @@ const AssetThumbail = ({
 }) => {
 
   const [visibleOverlay, setVisibleOVerlay] = useState(false)
-
-  const [realUrl, setRealUrl] = useState('')
-
-  useEffect(() => {
-    getRealUrl()
-  }, [])
-
-  const getRealUrl = async () => {
-    try {
-      const { data } = await assetApi.getRealUrl(asset.id)
-      setRealUrl(data.realUrl)
-    } catch (err) {
-      console.log(err)
-      //TODO: handle this error
-    }
-  }
 
   useEffect(() => {
     if (visibleOverlay) {
@@ -117,6 +102,7 @@ const AssetThumbail = ({
       {visibleOverlay &&
         <DetailOverlay
           asset={asset}
+          realUrl={realUrl}
           closeOverlay={() => setVisibleOVerlay(false)} />
       }
     </>
