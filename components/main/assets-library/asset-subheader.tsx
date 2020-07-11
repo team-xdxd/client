@@ -2,15 +2,19 @@ import styles from './asset-subheader.module.css'
 import { useRef } from 'react'
 import { Assets } from '../../../assets'
 
+
 // Components
 import SubHeader from '../../common/layouts/sub-header'
 import SimpleButton from '../../common/buttons/simple-button'
 import ToggleAbleAbsoluteWrapper from '../../common/misc/toggleable-absolute-wrapper'
 import AssetHeaderOps from '../../common/asset/asset-header-ops'
+import DriveSelector from '../../common/asset/drive-selector'
 
 const AssetSubheader = ({
   onFilesDataGet,
   openFolderUploader,
+  openDropboxSelector,
+  onDriveFilesSelect,
   amountSelected = 0
 }) => {
 
@@ -28,6 +32,25 @@ const AssetSubheader = ({
       text: 'png, jpg, gif or mp4',
       onClick: () => fileBrowserRef.current.click(),
       icon: Assets.file
+    },
+    {
+      label: 'Dropbox',
+      text: 'Import files',
+      onClick: openDropboxSelector,
+      icon: Assets.file
+    },
+    {
+      label: 'Google Drive',
+      text: 'Import files',
+      onClick: () => { },
+      icon: Assets.file,
+      CustomContent: ({ children }) => (
+        <DriveSelector
+          onFilesSelect={onDriveFilesSelect}
+        >
+          {children}
+        </DriveSelector>
+      )
     }
   ]
 
@@ -58,7 +81,15 @@ const AssetSubheader = ({
     return (
       <ul className={styles['options-list']}>
         {dropdownOptions.map(option => (
-          <Content {...option} />
+          <>
+            {option.CustomContent ?
+              <option.CustomContent>
+                <Content {...option} />
+              </option.CustomContent>
+              :
+              <Content {...option} />
+            }
+          </>
         ))}
       </ul>
     )

@@ -11,4 +11,5 @@ export default {
   }),
   getAssets: (queryData = {}) => axios.get(`${assetUrl}?${querystring.encode(queryData)}`),
   getRealUrl: (assetId) => axios.get(`${assetUrl}/${assetId}/real-url`),
+  importAssets: (provider, assetData) => axios.post(`${assetUrl}/import/${provider}`, assetData)
 }
