@@ -6,19 +6,50 @@ export default {
     },
     {
       label: 'Newest',
-      value: 'newest'
+      value: 'newest',
+      field: 'createdAt',
+      order: 'desc'
     },
     {
       label: 'Oldest',
-      value: 'oldest'
+      value: 'oldest',
+      field: 'createdAt',
+      order: 'asc'
     },
     {
       label: 'Alphabetical',
-      value: 'alphabetical'
+      value: 'alphabetical',
+      field: 'name',
+      order: 'asc'
     },
     {
       label: 'File Size',
-      value: 'size'
+      value: 'size',
+      field: 'size',
+      order: 'desc'
+    }
+  ],
+
+  views: [
+    {
+      text: 'Folders',
+      name: 'folders'
+    },
+    {
+      text: 'All',
+      name: 'all'
+    },
+    {
+      text: 'Images',
+      name: 'images'
+    },
+    {
+      text: 'Videos',
+      name: 'videos'
+    },
+    {
+      text: 'Archived',
+      name: 'archived'
     }
   ]
 }

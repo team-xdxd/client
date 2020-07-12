@@ -1,6 +1,6 @@
 import styles from './button.module.css'
 
-const Button = ({ text, type, onClick = () => { }, disabled = false, styleType = '' }) => (
+const Button = ({ text, type, onClick = (e) => { }, disabled = false, styleType = '' }) => (
   <button
     className={`${styles.container} ${styles[styleType]} ${styles[type]}`}
     type={type}

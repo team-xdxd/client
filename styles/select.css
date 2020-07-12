@@ -13,7 +13,7 @@
 }
 
 .select-prefix__single-value{
-  color: var(--color-prim-navy);
+  color: var(--color-prim-navy) !important;
   font-weight: 500;
 }
 
