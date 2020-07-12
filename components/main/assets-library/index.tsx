@@ -19,35 +19,61 @@ import { DropzoneProvider } from '../../common/misc/dropzone'
 
 const AssetsLibrary = () => {
 
-  const [activeFilter, setActiveFilter] = useState('all')
-  const [activeView, setActiveView] = useState('grid')
-  const [activeSort, setActiveSort] = useState(selectOptions.sort[0])
-  const [additionalFilters, setAdditinalFilters] = useState({
-    campaigns: [],
-    type: [],
-    tags: []
+  const [activeSortFilter, setActiveSortFilter] = useState({
+    sort: selectOptions.sort[0],
+    mainFilter: 'all',
+    filterCampaigns: [],
+    filterTags: []
   })
+  const [activeView, setActiveView] = useState('grid')
 
   const { assets, setAssets } = useContext(AssetContext)
 
   const [activeModal, setActiveModal] = useState('')
 
-  const [fileDragged, isFileDragged] = useState(false)
   const [submitError, setSubmitError] = useState('')
 
   useEffect(() => {
     setAssets([])
     getAssets()
-  }, [])
+  }, [activeSortFilter])
 
   const getAssets = async () => {
     try {
-      const { data } = await assetApi.getAssets()
+      const { data } = await assetApi.getAssets({ ...getFilters(), ...getSort() })
       setAssets(data.map(mapWithToggleSelection))
     } catch (err) {
       //TODO: Handle error
       console.log(err)
     }
+  }
+
+  const getFilters = () => {
+    const filters = {}
+    const { mainFilter, filterCampaigns, filterTypes, filterTags } = activeSortFilter
+    if (mainFilter !== 'all' && mainFilter !== 'folders') {
+      if (mainFilter === 'images') filters.type = 'image'
+      else if (mainFilter === 'videos') filters.type = 'video'
+      else if (mainFilter === 'archived') filters.stage = 'archived'
+    }
+
+    if (filterCampaigns?.length > 0) {
+      filters.campaigns = filterCampaigns.map(camp => camp.value).join(',')
+    }
+
+    if (filterTags?.length > 0) {
+      filters.tags = filterTags.map(tag => tag.value).join(',')
+    }
+    return filters
+  }
+
+  const getSort = () => {
+    if (activeSortFilter.sort.value !== 'none') {
+      const { field, order } = activeSortFilter.sort
+      return {
+        sort: `${field},${order}`
+      }
+    } else return {}
   }
 
   const toggleSelected = (id) => {
@@ -169,7 +195,7 @@ const AssetsLibrary = () => {
       sizeLimit: 50 * 1024 * 1024
     }
     // Ignore this annoying warning
-    Dropbox.choose(options);
+    Dropbox.choose(options)
   }
 
   return (
@@ -183,14 +209,10 @@ const AssetsLibrary = () => {
       />
       <main className={`${styles.container}`}>
         <TopBar
-          activeFilter={activeFilter}
-          setActiveFilter={setActiveFilter}
+          activeSortFilter={activeSortFilter}
+          setActiveSortFilter={setActiveSortFilter}
           activeView={activeView}
           setActiveView={setActiveView}
-          activeSort={activeSort}
-          setActiveSort={setActiveSort}
-          additionalFilters={additionalFilters}
-          setAdditinalFilters={setAdditinalFilters}
         />
         <DropzoneProvider>
           <AssetGrid

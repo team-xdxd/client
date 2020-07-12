@@ -9,12 +9,13 @@ const ToggleableAbsoluteWrapper = ({ Wrapper, Content, wrapperClass = '', conten
 
   const handleClickOutside = (event) => {
     if (contentRef.current && !contentRef.current.contains(event.target) && !wrapperRef.current.contains(event.target)) {
-      setIsOpen(false)
+      setDropdownOpen(null, false)
     }
   }
 
   const setDropdownOpen = (e, visible) => {
-    e.stopPropagation()
+    if (e)
+      e.stopPropagation()
     setIsOpen(visible)
     if (visible) {
       document.addEventListener("mousedown", handleClickOutside);

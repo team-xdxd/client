@@ -34,3 +34,9 @@
   z-index: 200;
   min-width: 160px;
 }
+
+.nested-wrapper{
+  display: flex;
+  align-items: center;
+  margin: 0 5px;
+}
