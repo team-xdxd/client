@@ -17,6 +17,8 @@ const AssetGrid = ({ activeView = 'grid', onFilesDataGet, toggleSelected, mode =
 
   const { assets, setAssets } = useContext(AssetContext)
 
+  // TODO: Delete and archive asset
+  
   return (
     <section className={styles.container}>
       {(assets.length === 0 || isDragging) &&
