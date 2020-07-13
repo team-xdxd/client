@@ -15,4 +15,6 @@ export default {
   updateMultiple: (updateData) => axios.patch(`${assetUrl}`, updateData),
   getSharedAssets: (shareJWT) => axios.get(`${assetUrl}/share?shareJWT=${shareJWT}`),
   generateAndSendShareUrl: (data) => axios.post(`${assetUrl}/share`, data),
+  updateAsset: (id, updateData) => axios.patch(`${assetUrl}/${id}`, updateData),
+  deleteAsset: id => axios.delete(`${assetUrl}/${id}`),
 }

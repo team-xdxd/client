@@ -230,6 +230,11 @@ const AssetsLibrary = () => {
     Dropbox.choose(options)
   }
 
+  const prepareMoveAsset = async (id) => {
+    setAssets(assets.map(assetItem => ({ ...assetItem, isSelected: assetItem.asset.id === id })))
+    setActiveModal('move')
+  }
+
   const moveAssets = async (selectedFolder) => {
     try {
       const updateAssets = selectedAssets.map(selectedAsset => (
@@ -247,22 +252,25 @@ const AssetsLibrary = () => {
   const archiveAssets = async () => {
     try {
       const updateAssets = selectedAssets.map(assetItem => (
-        { id: assetItem.id, changes: { stage: 'archived' } }
+        { id: assetItem.asset.id, changes: { stage: 'archived' } }
       ))
       await assetApi.updateMultiple(updateAssets)
-      getAssets()
+      setActiveModal('')
     } catch (err) {
       console.log(err)
-      toastUtils.error('Could not move assets, please try again later.')
+      toastUtils.error('Could not archive assets, please try again later.')
     }
   }
 
   const deleteSelectedAssets = async () => {
     try {
-
+      const deletePromises = selectedAssets.map(assetItem => assetApi.deleteAsset(assetItem.asset.id))
+      await Promise.all(deletePromises)
+      getAssets()
+      setActiveModal('')
     } catch (err) {
       console.log(err)
-      toastUtils.error('Could not move assets, please try again later.')
+      toastUtils.error('Could not delete assets, please try again later.')
     }
   }
 
@@ -344,6 +352,7 @@ const AssetsLibrary = () => {
             folders={folders}
             viewFolder={viewFolder}
             deleteFolder={deleteFolder}
+            moveAsset={prepareMoveAsset}
           />
         </DropzoneProvider>
       </main>
