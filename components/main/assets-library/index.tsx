@@ -8,12 +8,14 @@ import toastUtils from '../../../utils/toast'
 import assetApi from '../../../server-api/asset'
 import folderApi from '../../../server-api/folder'
 import cookiesUtils from '../../../utils/cookies'
+import downloadUtils from '../../../utils/download'
 
 // Components
 import AssetSubheader from './asset-subheader'
 import AssetGrid from '../../common/asset/asset-grid'
 import TopBar from './top-bar'
 import MoveModal from './move-modal'
+import ConfirmModal from '../../common/modals/confirm-modal'
 import FolderModal from './folder-modal'
 import { DropzoneProvider } from '../../common/misc/dropzone'
 
@@ -26,22 +28,46 @@ const AssetsLibrary = () => {
     filterTags: []
   })
   const [activeView, setActiveView] = useState('grid')
-
   const { assets, setAssets } = useContext(AssetContext)
-
   const [activeModal, setActiveModal] = useState('')
-
   const [submitError, setSubmitError] = useState('')
+  const [activeMode, setActiveMode] = useState('assets')
+  const [activeFolder, setActiveFolder] = useState('')
+  const [folders, setFolders] = useState([])
+
+  useEffect(() => {
+    getFolders()
+  }, [])
+
+  useEffect(() => {
+    if (activeSortFilter.mainFilter === 'folders') {
+      setActiveMode('folders')
+    } else {
+      setActiveMode('assets')
+      setAssets([])
+      getAssets()
+    }
+  }, [activeSortFilter])
 
   useEffect(() => {
     setAssets([])
     getAssets()
-  }, [activeSortFilter])
+  }, [activeFolder])
 
   const getAssets = async () => {
     try {
       const { data } = await assetApi.getAssets({ ...getFilters(), ...getSort() })
       setAssets(data.map(mapWithToggleSelection))
+    } catch (err) {
+      //TODO: Handle error
+      console.log(err)
+    }
+  }
+
+  const getFolders = async () => {
+    try {
+      const { data } = await folderApi.getFolders()
+      setFolders(data)
     } catch (err) {
       //TODO: Handle error
       console.log(err)
@@ -63,6 +89,10 @@ const AssetsLibrary = () => {
 
     if (filterTags?.length > 0) {
       filters.tags = filterTags.map(tag => tag.value).join(',')
+    }
+
+    if (activeFolder) {
+      filters.folderId = activeFolder
     }
     return filters
   }
@@ -137,7 +167,6 @@ const AssetsLibrary = () => {
   }
 
   const onDriveFilesSelection = async (files) => {
-    console.log(files)
     const googleAuthToken = cookiesUtils.get('gdriveToken')
     const currentDataClone = [...assets]
     try {
@@ -161,7 +190,6 @@ const AssetsLibrary = () => {
       })))
       setAssets([...data, ...currentDataClone])
     } catch (err) {
-      //TODO: Handle error
       setAssets(currentDataClone)
       console.log(err)
       toastUtils.error('Could not upload files, please try again later.')
@@ -198,6 +226,45 @@ const AssetsLibrary = () => {
     Dropbox.choose(options)
   }
 
+  const moveAssets = async (selectedFolder) => {
+    try {
+      const updateAssets = selectedAssets.map(asset => (
+        { id: asset.id, changes: { folderId: selectedFolder } }
+      ))
+      await assetApi.updateMultiple(updateAssets)
+      setActiveFolder(selectedFolder)
+    } catch (err) {
+      console.log(err)
+      toastUtils.error('Could not move assets, please try again later.')
+    }
+  }
+
+  const archiveAssets = async () => {
+    try {
+      const updateAssets = selectedAssets.map(asset => (
+        { id: asset.id, changes: { stage: 'archived' } }
+      ))
+      await assetApi.updateMultiple(updateAssets)
+      getAssets()
+    } catch (err) {
+      console.log(err)
+      toastUtils.error('Could not move assets, please try again later.')
+    }
+  }
+
+  const deleteSelectedAssets = async () => {
+    try {
+
+    } catch (err) {
+      console.log(err)
+      toastUtils.error('Could not move assets, please try again later.')
+    }
+  }
+
+  const downloadSelectedAssets = async () => {
+    downloadUtils.zipAndDownload()
+  }
+
   return (
     <>
       <AssetSubheader
@@ -206,6 +273,8 @@ const AssetsLibrary = () => {
         amountSelected={selectedAssets.length}
         openDropboxSelector={openDropboxSelector}
         onDriveFilesSelect={onDriveFilesSelection}
+        setActiveModal={setActiveModal}
+        downloadSelected={downloadSelectedAssets}
       />
       <main className={`${styles.container}`}>
         <TopBar
@@ -220,6 +289,8 @@ const AssetsLibrary = () => {
             assets={assets}
             onFilesDataGet={onFilesDataGet}
             toggleSelected={toggleSelected}
+            mode={activeMode}
+            folders={folders}
           />
         </DropzoneProvider>
       </main>
@@ -227,6 +298,27 @@ const AssetsLibrary = () => {
         modalIsOpen={activeModal === 'folder'}
         closeModal={() => setActiveModal('')}
         onSubmit={onSubmit}
+      />
+      <MoveModal
+        modalIsOpen={activeModal === 'move'}
+        folders={folders}
+        closeModal={() => setActiveModal('')}
+        itemsAmount={selectedAssets.length}
+        moveAssets={moveAssets}
+      />
+      <ConfirmModal
+        modalIsOpen={activeModal === 'archive'}
+        closeModal={() => setActiveModal('')}
+        confirmAction={archiveAssets}
+        confirmText={'Archive'}
+        message={`Archive ${selectedAssets.length} items?`}
+      />
+      <ConfirmModal
+        modalIsOpen={activeModal === 'delete'}
+        closeModal={() => setActiveModal('')}
+        confirmAction={deleteSelectedAssets}
+        confirmText={'Delete'}
+        message={`Delete ${selectedAssets.length} items?`}
       />
     </>
   )

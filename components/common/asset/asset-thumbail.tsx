@@ -2,7 +2,6 @@ import styles from './asset-thumbail.module.css'
 import { Utilities } from '../../../assets'
 import { format } from 'date-fns'
 import { useState, useEffect } from 'react'
-import assetApi from '../../../server-api/asset'
 
 // Components
 import IconClickable from '../buttons/icon-clickable'

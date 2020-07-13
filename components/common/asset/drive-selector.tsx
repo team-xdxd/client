@@ -18,6 +18,7 @@ const DriveSelector = ({ children, onFilesSelect }) => {
             onChange={selectDriveFiles}
             onAuthenticate={token => cookiesUtils.set('gdriveToken', token)}
             onAuthFailed={error => {
+                if (error.error === 'popup_closed_by_user') return
                 toastUtils.error(`Could not get google drive data, please try again alter`)
                 console.log(error)
             }}
