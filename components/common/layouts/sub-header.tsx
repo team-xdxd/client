@@ -2,7 +2,15 @@ import styles from './sub-header.module.css'
 import { useRef, useEffect, useState } from 'react'
 import { Utilities } from '../../../assets'
 
-const SubHeader = ({ pageTitle, resetPageTittle = () => { }, titleOnchange = (e) => { }, children, editable = false, additionalClass = '' }) => {
+const SubHeader = ({
+  pageTitle,
+  resetPageTittle = () => { },
+  titleOnchange = (e) => { },
+  children,
+  editable = false,
+  additionalClass = '',
+  PreComponent = null
+}) => {
   const inputRef = useRef()
   const resizeFn = () => { inputRef.current.style.width = ((pageTitle.length + 1) * 24) + 'px'; }
 
@@ -25,6 +33,9 @@ const SubHeader = ({ pageTitle, resetPageTittle = () => { }, titleOnchange = (e)
 
   return (
     <section className={`${styles.container} ${additionalClass}`}>
+      {PreComponent &&
+        <PreComponent />
+      }
       <h1>
         {editable ?
           <input

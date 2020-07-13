@@ -41,8 +41,13 @@
 .image-wrapper>img {
   width: inherit;
   height: inherit;
-  object-fit: scale-down;
-  border-bottom: 1px solid var(--color-secondary-border);
+  object-fit: cover;  
+}
+
+.image-wrapper>img.nofit {
+  object-fit: none;
+  width: 450px;
+  height: auto;
 }
 
 .image-wrapper:hover>img {
@@ -75,6 +80,7 @@
 
 .info {
   padding: 10px;
+  border-top: 1px solid var(--color-secondary-border);
 }
 
 .details-wrapper {

@@ -15,6 +15,7 @@ const TopBar = ({
   setActiveSortFilter,
   activeView,
   setActiveView,
+  activeFolder
 }) => {
 
   const [campaignsFilter, setCampaignsFilter] = useState([])
@@ -60,12 +61,16 @@ const TopBar = ({
       <div className={styles.filters}>
         <img src={Utilities.search} />
         {selectOptions.views.map(view => (
-          <SectionButton
-            key={view.name}
-            text={view.text}
-            active={activeSortFilter.mainFilter === view.name}
-            onClick={() => setSortFilterValue('mainFilter', view.name)}
-          />
+          <>
+            {(!activeFolder || !view.ommitFolder) &&
+              <SectionButton
+                key={view.name}
+                text={view.text}
+                active={activeSortFilter.mainFilter === view.name}
+                onClick={() => setSortFilterValue('mainFilter', view.name)}
+              />
+            }
+          </>
         ))}
       </div>
       <div className={styles['sec-filters']}>

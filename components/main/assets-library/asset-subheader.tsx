@@ -1,5 +1,5 @@
 import styles from './asset-subheader.module.css'
-import { useRef } from 'react'
+import { useRef, useState } from 'react'
 import { Assets } from '../../../assets'
 
 
@@ -17,10 +17,15 @@ const AssetSubheader = ({
   onDriveFilesSelect,
   amountSelected = 0,
   setActiveModal,
-  downloadSelected
+  activeFolderData,
+  setActiveFolder,
+  downloadSelected,
+  updateFolder
 }) => {
 
   const fileBrowserRef = useRef(undefined)
+
+  const [folderName, setFolderName] = useState(activeFolderData.name)
 
   const dropdownOptions = [
     {
@@ -97,8 +102,19 @@ const AssetSubheader = ({
     )
   }
 
+
   return (
-    <SubHeader pageTitle={'Asset Library'} additionalClass={styles['asset-subheader']}>
+    <SubHeader pageTitle={activeFolderData ? activeFolderData.name : 'Asset Library'} additionalClass={styles['asset-subheader']}
+      editable={activeFolderData} titleOnchange={e => setFolderName(e.target.value)}
+      PreComponent={activeFolderData ? () => (
+        <div className={styles['additional-folder-wrapper']}>
+          <div className={styles.back} onClick={() => setActiveFolder('')}>
+            {'<'}
+          </div>
+          <h4>Folder</h4>
+        </div>
+      ) : null}
+    >
       <div className={styles.padding}>
       </div>
       {amountSelected > 0 ?

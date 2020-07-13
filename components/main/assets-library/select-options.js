@@ -33,7 +33,8 @@ export default {
   views: [
     {
       text: 'Folders',
-      name: 'folders'
+      name: 'folders',
+      ommitFolder: true
     },
     {
       text: 'All',
@@ -49,7 +50,8 @@ export default {
     },
     {
       text: 'Archived',
-      name: 'archived'
+      name: 'archived',
+      ommitFolder: true
     }
   ]
 }

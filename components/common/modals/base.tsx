@@ -9,7 +9,7 @@ import Button from '../buttons/button'
 ReactModal.defaultStyles = {}
 
 // Used for the future
-const Base = ({ modalIsOpen, children, closeModal, confirmAction = () => { }, confirmText = '', headText = '' }) => {
+const Base = ({ modalIsOpen, children, closeModal, confirmAction = () => { }, confirmText = '', headText = '', disabledConfirm = false }) => {
 
   return (
     <ReactModal
@@ -43,6 +43,7 @@ const Base = ({ modalIsOpen, children, closeModal, confirmAction = () => { }, co
               onClick={confirmAction}
               type='button'
               styleType='primary'
+              disabled={disabledConfirm}
             />
           </div>
         </div>
