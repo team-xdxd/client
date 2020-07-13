@@ -11,14 +11,16 @@ import ListItem from './list-item'
 import AssetUpload from './asset-upload'
 
 
-const AssetGrid = ({ activeView = 'grid', onFilesDataGet, toggleSelected, mode = 'assets', folders = [], viewFolder = (id) => { } }) => {
+const AssetGrid = ({ activeView = 'grid', onFilesDataGet, toggleSelected, mode = 'assets', folders = [],
+  deleteFolder = (id) => { },
+  viewFolder = (id) => { } }) => {
 
   const isDragging = useDropzone()
 
   const { assets, setAssets } = useContext(AssetContext)
 
   // TODO: Delete and archive asset
-  
+
   return (
     <section className={styles.container}>
       {(assets.length === 0 || isDragging) &&
@@ -41,7 +43,7 @@ const AssetGrid = ({ activeView = 'grid', onFilesDataGet, toggleSelected, mode =
             {mode === 'folders' && folders.map((folder) => {
               return (
                 <li className={styles['grid-item']} key={folder.id}>
-                  <FolderGridItem {...folder} viewFolder={() => viewFolder(folder.id)} />
+                  <FolderGridItem {...folder} viewFolder={() => viewFolder(folder.id)} deleteFolder={() => deleteFolder(folder.id)} />
                 </li>
               )
             })}
@@ -52,7 +54,7 @@ const AssetGrid = ({ activeView = 'grid', onFilesDataGet, toggleSelected, mode =
             {mode === 'assets' && assets.map((assetItem, index) => {
               return (
                 <li className={styles['regular-item']} key={index}>
-                  <ListItem 
+                  <ListItem
                     assetItem={assetItem}
                     index={index}
                   />

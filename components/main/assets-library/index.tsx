@@ -50,8 +50,10 @@ const AssetsLibrary = () => {
   }, [activeSortFilter])
 
   useEffect(() => {
-    setAssets([])
-    getAssets()
+    setActiveSortFilter({
+      ...activeSortFilter,
+      mainFilter: 'all'
+    })
   }, [activeFolder])
 
   const getAssets = async () => {
@@ -202,6 +204,7 @@ const AssetsLibrary = () => {
     try {
       await folderApi.createFolder(folderData)
       setActiveModal('')
+      getFolders()
     } catch (err) {
       // TODO: Show error message
       if (err.response?.data?.message) {
@@ -228,11 +231,12 @@ const AssetsLibrary = () => {
 
   const moveAssets = async (selectedFolder) => {
     try {
-      const updateAssets = selectedAssets.map(asset => (
-        { id: asset.id, changes: { folderId: selectedFolder } }
+      const updateAssets = selectedAssets.map(selectedAsset => (
+        { id: selectedAsset.asset.id, changes: { folderId: selectedFolder } }
       ))
       await assetApi.updateMultiple(updateAssets)
       setActiveFolder(selectedFolder)
+      getFolders()
     } catch (err) {
       console.log(err)
       toastUtils.error('Could not move assets, please try again later.')
@@ -261,8 +265,38 @@ const AssetsLibrary = () => {
     }
   }
 
+  const viewFolder = async (id) => {
+    setActiveFolder(id)
+  }
+
   const downloadSelectedAssets = async () => {
     downloadUtils.zipAndDownload()
+  }
+
+  const updateFolder = async (name) => {
+    try {
+      await folderApi.updateFolder(activeFolder, { name })
+      const modFolderIndex = folders.find(folder => folder.id === activeFolder)
+      setFolders(update(folders, {
+        [modFolderIndex]: {
+          name: { $set: name }
+        }
+      }))
+    } catch (err) {
+      console.log(err)
+    }
+  }
+
+  const deleteFolder = async (id) => {
+    try {
+      await folderApi.deleteFolder(id)
+      const modFolderIndex = folders.find(folder => folder.id === activeFolder)
+      setFolders(update(folders, {
+        $splice: [[modFolderIndex, 1]]
+      }))
+    } catch (err) {
+      console.log(err)
+    }
   }
 
   return (
@@ -275,6 +309,9 @@ const AssetsLibrary = () => {
         onDriveFilesSelect={onDriveFilesSelection}
         setActiveModal={setActiveModal}
         downloadSelected={downloadSelectedAssets}
+        activeFolderData={activeFolder && folders.find(folder => folder.id === activeFolder)}
+        setActiveFolder={setActiveFolder}
+        updateFolder={updateFolder}
       />
       <main className={`${styles.container}`}>
         <TopBar
@@ -282,15 +319,17 @@ const AssetsLibrary = () => {
           setActiveSortFilter={setActiveSortFilter}
           activeView={activeView}
           setActiveView={setActiveView}
+          activeFolder={activeFolder}
         />
         <DropzoneProvider>
           <AssetGrid
             activeView={activeView}
-            assets={assets}
             onFilesDataGet={onFilesDataGet}
             toggleSelected={toggleSelected}
             mode={activeMode}
             folders={folders}
+            viewFolder={viewFolder}
+            deleteFolder={deleteFolder}
           />
         </DropzoneProvider>
       </main>

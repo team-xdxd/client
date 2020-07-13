@@ -49,3 +49,21 @@
   width: 15px;
   height: 15px;
 }
+
+.back {
+  margin-right: 0.3rem;
+  color: var(--color-sec-ivory);
+  font-size: 25px;
+  font-family: monospace;
+  cursor: pointer;
+}
+
+.additional-folder-wrapper {
+  position: relative;
+}
+
+.additional-folder-wrapper h4 {
+  position: absolute;
+  bottom: 1rem;
+  left: 1rem;
+}
