@@ -1,0 +1,40 @@
+.header {
+    display: flex;
+  }
+  
+  .header h4 {
+    width: 14%;
+    font-weight: 550;
+    color: var(--color-prim-nav);
+  }
+  
+  .header h4:last-child {
+    flex: 1;
+  }
+
+  .thumbnail {
+    width: 14%;
+    margin-left: 0.5rem;
+  }
+  .thumbnail > img {
+    width: 50px;
+  }
+
+  .field_name {
+    width: 14%;
+    font-size: 13px;
+  }
+
+  .item {
+    display: flex;
+    padding: 1rem 0;
+    border-top: 1px solid var(--color-secondary-border);
+  }
+
+  .list{
+    margin-bottom: 1.5rem;
+  }
+
+  .status {
+    width: 14%;
+  }
