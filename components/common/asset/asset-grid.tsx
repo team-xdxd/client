@@ -49,10 +49,13 @@ const AssetGrid = ({ activeView = 'grid', onFilesDataGet, toggleSelected, mode =
         }
         {activeView === 'list' &&
           <ul className={'regular-list'}>
-            {mode === 'assets' && assets.map((assetItem) => {
+            {mode === 'assets' && assets.map((assetItem, index) => {
               return (
-                <li className={styles['regular-item']} key={assetItem.asset.id}>
-                  <ListItem />
+                <li className={styles['regular-item']} key={index}>
+                  <ListItem 
+                    assetItem={assetItem}
+                    index={index}
+                  />
                 </li>
               )
             })}
