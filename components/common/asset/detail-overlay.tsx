@@ -1,6 +1,5 @@
 import styles from './detail-overlay.module.css'
 import { Utilities } from '../../../assets'
-import { useEffect, useState } from 'react'
 
 // Components
 import SidePanel from './detail-side-panel'

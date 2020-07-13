@@ -31,7 +31,7 @@ export default function MyApp({ Component, pageProps }) {
 
   const fetchUser = async () => {
     const jwt = cookiesUtils.get('jwt')
-    if (jwt) {
+    if (jwt && Router.pathname.indexOf('/share') === -1) {
       requestsUtils.setAuthToken(jwt)
       try {
         const { data } = await userApi.getUserData()
@@ -46,7 +46,7 @@ export default function MyApp({ Component, pageProps }) {
   }
 
   const initialRedirect = () => {
-    if (Router.pathname.indexOf('/signup') === -1) {
+    if (Router.pathname.indexOf('/signup') === -1 && Router.pathname.indexOf('/share') === -1) {
       Router.replace('/login')
     }
   }

@@ -69,9 +69,9 @@ const ItemAssets = ({ type, itemId }) => {
     <DropzoneProvider>
       <div className={styles.container}>
         <AssetGrid
-          assets={assets}
           onFilesDataGet={onFilesDataGet}
           toggleSelected={toggleSelected}
+          
         />
       </div>
     </DropzoneProvider>

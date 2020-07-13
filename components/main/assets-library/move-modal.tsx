@@ -21,7 +21,7 @@ const MoveModal = ({ modalIsOpen, closeModal, folders, itemsAmount, moveAssets }
       modalIsOpen={modalIsOpen}
       closeModal={closemoveModal}
       confirmText={'Move'}
-      headText={`Move ${itemsAmount} items to...`}
+      headText={`Move ${itemsAmount} item(s) to...`}
       disabledConfirm={!selectedFolder}
       confirmAction={() => {
         moveAssets(selectedFolder)

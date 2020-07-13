@@ -8,6 +8,7 @@ import Dropdown from '../inputs/dropdown'
 import IconClickable from '../buttons/icon-clickable'
 import ToggleableAbsoluteWrapper from '../misc/toggleable-absolute-wrapper'
 import ConfirmModal from '../modals/confirm-modal'
+import zipDownloadUtils from '../../../utils/download'
 
 const FolderGridItem = ({
 	id,
@@ -17,7 +18,6 @@ const FolderGridItem = ({
 	assets,
 	viewFolder,
 	editFolder = (id) => { },
-	download = (id) => { },
 	archiveFolder = (id) => { },
 	deleteFolder = (id) => { }
 }) => {
@@ -25,6 +25,10 @@ const FolderGridItem = ({
 	const previews = [Assets.empty, Assets.empty, Assets.empty, Assets.empty].map((empty, index) => assets[index] ? assets[index].thumbailUrl : empty)
 
 	const [deleteOpen, setDeleteOpen] = useState(false)
+
+	const downloadFoldercontents = () => {
+		zipDownloadUtils.zipAndDownload(assets.map(assetItem => ({ url: assetItem.realUrl, name: assetItem.name })), name)
+	}
 
 	return (
 		<div className={styles.container}>
@@ -59,7 +63,7 @@ const FolderGridItem = ({
 								<Dropdown
 									options={[
 										// { label: 'Edit', onClick: editFolder },
-										{ label: 'Download', onClick: download },
+										{ label: 'Download', onClick: downloadFoldercontents },
 										// { label: 'Archive', onClick: archiveFolder },
 										{ label: 'Delete', onClick: () => setDeleteOpen(true) }
 									]}
