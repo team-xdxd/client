@@ -1,6 +1,7 @@
 import styles from './asset-grid.module.css'
 import useDropzone from '../misc/dropzone'
-import { useEffect } from 'react'
+import { useEffect, useContext } from 'react'
+import { AssetContext } from '../../../context'
 
 // Components
 import FolderGridItem from '../folder/folder-grid-item'
@@ -10,9 +11,11 @@ import ListItem from './list-item'
 import AssetUpload from './asset-upload'
 
 
-const AssetGrid = ({ activeView = 'grid', onFilesDataGet, assets, toggleSelected, mode = 'assets', folders = [], viewFolder = (id) => { } }) => {
+const AssetGrid = ({ activeView = 'grid', onFilesDataGet, toggleSelected, mode = 'assets', folders = [], viewFolder = (id) => { } }) => {
 
   const isDragging = useDropzone()
+
+  const { assets, setAssets } = useContext(AssetContext)
 
   return (
     <section className={styles.container}>
