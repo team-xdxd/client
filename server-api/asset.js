@@ -13,4 +13,6 @@ export default {
   getRealUrl: (assetId) => axios.get(`${assetUrl}/${assetId}/real-url`),
   importAssets: (provider, assetData) => axios.post(`${assetUrl}/import/${provider}`, assetData),
   updateMultiple: (updateData) => axios.patch(`${assetUrl}`, updateData),
+  getSharedAssets: (shareJWT) => axios.get(`${assetUrl}/share?shareJWT=${shareJWT}`),
+  generateAndSendShareUrl: (data) => axios.post(`${assetUrl}/share`, data),
 }

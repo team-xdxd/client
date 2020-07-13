@@ -12,3 +12,8 @@
   background-color: var(--color-sec-lightivory);
   min-height: 70px;
 }
+
+.regular-short{
+  background-color: var(--color-sec-lightivory);
+  min-height: 48px;
+}

@@ -15,6 +15,7 @@ import AssetSubheader from './asset-subheader'
 import AssetGrid from '../../common/asset/asset-grid'
 import TopBar from './top-bar'
 import MoveModal from './move-modal'
+import ShareModal from './share-modal'
 import ConfirmModal from '../../common/modals/confirm-modal'
 import FolderModal from './folder-modal'
 import { DropzoneProvider } from '../../common/misc/dropzone'
@@ -245,8 +246,8 @@ const AssetsLibrary = () => {
 
   const archiveAssets = async () => {
     try {
-      const updateAssets = selectedAssets.map(asset => (
-        { id: asset.id, changes: { stage: 'archived' } }
+      const updateAssets = selectedAssets.map(assetItem => (
+        { id: assetItem.id, changes: { stage: 'archived' } }
       ))
       await assetApi.updateMultiple(updateAssets)
       getAssets()
@@ -270,7 +271,7 @@ const AssetsLibrary = () => {
   }
 
   const downloadSelectedAssets = async () => {
-    downloadUtils.zipAndDownload()
+    downloadUtils.zipAndDownload(selectedAssets.map(assetItem => ({ url: assetItem.realUrl, name: assetItem.asset.name })), 'assets')
   }
 
   const updateFolder = async (name) => {
@@ -294,6 +295,19 @@ const AssetsLibrary = () => {
       setFolders(update(folders, {
         $splice: [[modFolderIndex, 1]]
       }))
+    } catch (err) {
+      console.log(err)
+    }
+  }
+
+  const shareAssets = async (recipients, message) => {
+    try {
+      await assetApi.generateAndSendShareUrl({
+        recipients,
+        message,
+        assetIds: selectedAssets.map(assetItem => assetItem.asset.id).join(',')
+      })
+      toastUtils.success('Assets shared succesfully')
     } catch (err) {
       console.log(err)
     }
@@ -344,6 +358,12 @@ const AssetsLibrary = () => {
         closeModal={() => setActiveModal('')}
         itemsAmount={selectedAssets.length}
         moveAssets={moveAssets}
+      />
+      <ShareModal
+        modalIsOpen={activeModal === 'share'}
+        closeModal={() => setActiveModal('')}
+        itemsAmount={selectedAssets.length}
+        shareAssets={shareAssets}
       />
       <ConfirmModal
         modalIsOpen={activeModal === 'archive'}
