@@ -15,7 +15,9 @@ const AssetSubheader = ({
   openFolderUploader,
   openDropboxSelector,
   onDriveFilesSelect,
-  amountSelected = 0
+  amountSelected = 0,
+  setActiveModal,
+  downloadSelected
 }) => {
 
   const fileBrowserRef = useRef(undefined)
@@ -100,7 +102,13 @@ const AssetSubheader = ({
       <div className={styles.padding}>
       </div>
       {amountSelected > 0 ?
-        <AssetHeaderOps />
+        <AssetHeaderOps
+          onArchive={() => setActiveModal('archive')}
+          onDelete={() => setActiveModal('delete')}
+          onDownload={downloadSelected}
+          onMove={() => setActiveModal('move')}
+          onShare={() => setActiveModal('share')}
+        />
         :
         <>
           <input multiple={true} id="file-input-id" ref={fileBrowserRef} style={{ display: 'none' }} type='file'
