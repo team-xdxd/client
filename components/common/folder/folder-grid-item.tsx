@@ -36,7 +36,7 @@ const FolderGridItem = ({
 				<>
 					{previews.map((thumbailUrl) => (
 						<div className={styles['sub-image-wrapper']}>
-							<img src={thumbailUrl} alt={name} />
+							<img src={thumbailUrl || Assets.videoThumbnail} alt={name} />
 						</div>
 					))}
 					<div className={styles['image-button-wrapper']}>
