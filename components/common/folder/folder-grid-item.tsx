@@ -3,6 +3,7 @@ import { Utilities, Assets } from '../../../assets'
 import { useState } from 'react'
 
 // Components
+import AssetImg from '../asset/asset-img'
 import Button from '../buttons/button'
 import Dropdown from '../inputs/dropdown'
 import IconClickable from '../buttons/icon-clickable'
@@ -22,7 +23,12 @@ const FolderGridItem = ({
 	deleteFolder = (id) => { }
 }) => {
 
-	const previews = [Assets.empty, Assets.empty, Assets.empty, Assets.empty].map((empty, index) => assets[index] ? assets[index].thumbailUrl : empty)
+	const previews = [1, 2, 3, 4]
+		.map((_, index) => ({
+			name: assets[index]?.name || 'empty',
+			thumbailUrl: assets[index]?.thumbailUrl || '',
+			type: assets[index]?.type || 'empty'
+		}))
 
 	const [deleteOpen, setDeleteOpen] = useState(false)
 
@@ -34,9 +40,9 @@ const FolderGridItem = ({
 		<div className={styles.container}>
 			<div className={styles['image-wrapper']}>
 				<>
-					{previews.map((thumbailUrl) => (
+					{previews.map((preview) => (
 						<div className={styles['sub-image-wrapper']}>
-							<img src={thumbailUrl} alt={name} />
+							<AssetImg {...preview} />
 						</div>
 					))}
 					<div className={styles['image-button-wrapper']}>

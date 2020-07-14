@@ -107,5 +107,6 @@ export const Status = {
 export const Assets = {
   file: require('./Icons/Project Type/Campaign/icn-projecttype-campaign.svg'),
   folder: require('./Icons/Project Type/Campaign/icn-projecttype-campaign.svg'),
-  empty: require('./general/empty.png')
+  empty: require('./general/empty.png'),
+  videoThumbnail: require('./general/thumbnail-video.png')
 }

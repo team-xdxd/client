@@ -38,16 +38,15 @@
   height: auto;
 }
 
+.video-wrapper{
+  width: 450px;
+  height: 450px;
+}
+
 .image-wrapper>img {
   width: inherit;
   height: inherit;
   object-fit: cover;  
-}
-
-.image-wrapper>img.nofit {
-  object-fit: none;
-  width: 450px;
-  height: auto;
 }
 
 .image-wrapper:hover>img {

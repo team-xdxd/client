@@ -2,7 +2,6 @@ import styles from './asset-subheader.module.css'
 import { useRef, useState } from 'react'
 import { Assets } from '../../../assets'
 
-
 // Components
 import SubHeader from '../../common/layouts/sub-header'
 import SimpleButton from '../../common/buttons/simple-button'
@@ -128,7 +127,7 @@ const AssetSubheader = ({
         :
         <>
           <input multiple={true} id="file-input-id" ref={fileBrowserRef} style={{ display: 'none' }} type='file'
-            onChange={onFileChange} />
+            onChange={onFileChange} accept='image/png, image/jpeg, image/gif, video/mp4' />
           <ToggleAbleAbsoluteWrapper
             Wrapper={SimpleButtonWrapper}
             Content={DropDownOptions}

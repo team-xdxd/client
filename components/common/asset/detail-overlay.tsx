@@ -27,7 +27,16 @@ const DetailOverlay = ({ asset, realUrl, closeOverlay }) => {
           </div>
         </div>
         <div className={styles['img-wrapper']}>
-          <img src={realUrl} />
+          {asset.type === 'image' &&
+            <img src={realUrl} />
+          }
+          {asset.type === 'video' &&
+            <video controls>
+              <source src={realUrl}
+                type={`video/${asset.extension}`} />
+                  Sorry, your browser doesn't support video playback.
+            </video>
+          }
         </div>
       </section>
       <section className={styles.side}>

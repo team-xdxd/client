@@ -1,9 +1,10 @@
 import styles from './asset-thumbail.module.css'
-import { Utilities } from '../../../assets'
+import { Utilities, Assets } from '../../../assets'
 import { format } from 'date-fns'
 import { useState, useEffect } from 'react'
 
 // Components
+import AssetImg from './asset-img'
 import IconClickable from '../buttons/icon-clickable'
 import Button from '../buttons/button'
 import DetailOverlay from './detail-overlay'
@@ -39,7 +40,7 @@ const AssetThumbail = ({
           {isUploading ?
             <p>Uploading...</p>
             :
-            <img src={thumbailUrl} alt={asset.name} />
+            <AssetImg thumbailUrl={thumbailUrl} type={asset.type} name={asset.name} />
           }
           {!isUploading &&
             <>
