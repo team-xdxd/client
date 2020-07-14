@@ -4,6 +4,7 @@ import { format } from 'date-fns'
 import { useState, useEffect } from 'react'
 
 // Components
+import AssetImg from './asset-img'
 import IconClickable from '../buttons/icon-clickable'
 import Button from '../buttons/button'
 import DetailOverlay from './detail-overlay'
@@ -39,7 +40,7 @@ const AssetThumbail = ({
           {isUploading ?
             <p>Uploading...</p>
             :
-            <img src={thumbailUrl || Assets.videoThumbnail} alt={asset.name} />
+            <AssetImg thumbailUrl={thumbailUrl} type={asset.type} name={asset.name} />
           }
           {!isUploading &&
             <>

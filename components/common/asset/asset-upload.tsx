@@ -55,7 +55,10 @@ const AssetUpload = ({
     })
   }
 
-  const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop })
+  const { getRootProps, getInputProps, isDragActive } = useDropzone({
+    onDrop,
+    accept: ['image/png', 'image/jpeg', 'image/gif', 'video/mp4']
+  })
 
   const Content = () => (
     <>
