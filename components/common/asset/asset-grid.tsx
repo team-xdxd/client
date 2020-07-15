@@ -3,6 +3,7 @@ import useDropzone from '../misc/dropzone'
 import update from 'immutability-helper'
 import { useEffect, useContext, useState } from 'react'
 import { AssetContext } from '../../../context'
+import toastUtils from '../../../utils/toast'
 
 // Components
 import FolderGridItem from '../folder/folder-grid-item'
@@ -16,12 +17,11 @@ import assetsApi from '../../../server-api/asset'
 
 
 const AssetGrid = ({ activeView = 'grid', onFilesDataGet, toggleSelected, mode = 'assets', folders = [],
-  moveAsset = (id) => { },
   deleteFolder = (id) => { },
   viewFolder = (id) => { } }) => {
 
   const isDragging = useDropzone()
-  const { assets, setAssets } = useContext(AssetContext)
+  const { assets, setAssets, setActiveOperation, setOperationAsset } = useContext(AssetContext)
 
   const [deleteModalOpen, setDeleteModalOpen] = useState(false)
   const [archiveModalOpen, setArchiveModalOpen] = useState(false)
@@ -44,9 +44,11 @@ const AssetGrid = ({ activeView = 'grid', onFilesDataGet, toggleSelected, mode =
       setAssets(update(assets, {
         $splice: [[assetIndex, 1]]
       }))
+      toastUtils.success('Assets deleted successfully')
     }
     catch (err) {
       // TODO: Error handling
+      toastUtils.error('Could not delete assets, please try again later.')
     }
   }
 
@@ -59,10 +61,17 @@ const AssetGrid = ({ activeView = 'grid', onFilesDataGet, toggleSelected, mode =
           stage: { $set: 'archived' }
         }
       }))
+      toastUtils.success('Assets archived successfully')
     }
     catch (err) {
       // TODO: Error handling
+      toastUtils.error('Could not archive assets, please try again later.')
     }
+  }
+
+  const beginAssetOperation = (asset, operation) => {
+    setOperationAsset(asset)
+    setActiveOperation(operation)
   }
 
   return (
@@ -70,7 +79,7 @@ const AssetGrid = ({ activeView = 'grid', onFilesDataGet, toggleSelected, mode =
       {(assets.length === 0 || isDragging) &&
         <AssetUpload
           onDragText={'Drop files here to upload'}
-          preDragText={assets.length === 0 ? `Drag 'n' drop some files here` : ''}
+          preDragText={assets.length === 0 ? `Drag and drop your files here to upload` : ''}
           onFilesDataGet={onFilesDataGet} />
       }
       <div className={styles['list-wrapper']}>
@@ -84,7 +93,8 @@ const AssetGrid = ({ activeView = 'grid', onFilesDataGet, toggleSelected, mode =
                     toggleSelected={() => toggleSelected(assetItem.asset.id)}
                     openArchiveAsset={() => openArchiveAsset(assetItem.asset.id)}
                     openDeleteAsset={() => openDeleteAsset(assetItem.asset.id)}
-                    openMoveAsset={() => moveAsset(assetItem.asset.id)}
+                    openMoveAsset={() => beginAssetOperation(assetItem, 'move')}
+                    openShareAsset={() => beginAssetOperation(assetItem, 'share')}
                   />
                 </li>
               )

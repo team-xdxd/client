@@ -17,10 +17,11 @@ const AssetThumbail = ({
   realUrl,
   isUploading,
   isSelected = false,
-  toggleSelected = (id) => { },
-  openDeleteAsset = (id) => { },
-  openMoveAsset = (id) => { },
-  openArchiveAsset = (id) => { },
+  toggleSelected = () => { },
+  openDeleteAsset = () => { },
+  openMoveAsset = () => { },
+  openShareAsset = () => { },
+  openArchiveAsset = () => { },
 }) => {
 
   const [visibleOverlay, setVisibleOVerlay] = useState(false)
@@ -37,11 +38,8 @@ const AssetThumbail = ({
     <>
       <div className={styles.container}>
         <div className={styles['image-wrapper']}>
-          {isUploading ?
-            <p>Uploading...</p>
-            :
-            <AssetImg thumbailUrl={thumbailUrl} type={asset.type} name={asset.name} />
-          }
+          {isUploading && <p className={styles.uploading}>Uploading...</p>}
+          <AssetImg thumbailUrl={thumbailUrl} type={asset.type} name={asset.name} />
           {!isUploading &&
             <>
               <div className={`${styles['selectable-wrapper']} ${isSelected && styles['selected-wrapper']}`}>
@@ -103,6 +101,8 @@ const AssetThumbail = ({
         <DetailOverlay
           asset={asset}
           realUrl={realUrl}
+          openShareAsset={openShareAsset}
+          openDeleteAsset={openDeleteAsset}
           closeOverlay={() => setVisibleOVerlay(false)} />
       }
     </>

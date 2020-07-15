@@ -6,6 +6,7 @@ import update from 'immutability-helper'
 
 // Components
 import AssetGrid from './asset-grid'
+import AssetOps from './asset-ops'
 import { DropzoneProvider } from '../misc/dropzone'
 
 const ItemAssets = ({ type, itemId }) => {
@@ -71,9 +72,10 @@ const ItemAssets = ({ type, itemId }) => {
         <AssetGrid
           onFilesDataGet={onFilesDataGet}
           toggleSelected={toggleSelected}
-          
+
         />
       </div>
+      <AssetOps />
     </DropzoneProvider>
   )
 }

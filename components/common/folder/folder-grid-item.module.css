@@ -30,6 +30,7 @@
     width: inherit;
     height: inherit;
     object-fit: cover;
+    border: 1px solid var(--color-secondary-border);
 }
 
 .image-wrapper:hover img {

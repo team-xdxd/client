@@ -8,15 +8,12 @@ import toastUtils from '../../../utils/toast'
 import assetApi from '../../../server-api/asset'
 import folderApi from '../../../server-api/folder'
 import cookiesUtils from '../../../utils/cookies'
-import downloadUtils from '../../../utils/download'
 
 // Components
+import AssetOps from '../../common/asset/asset-ops'
 import AssetSubheader from './asset-subheader'
 import AssetGrid from '../../common/asset/asset-grid'
 import TopBar from './top-bar'
-import MoveModal from './move-modal'
-import ShareModal from './share-modal'
-import ConfirmModal from '../../common/modals/confirm-modal'
 import FolderModal from './folder-modal'
 import { DropzoneProvider } from '../../common/misc/dropzone'
 
@@ -29,20 +26,16 @@ const AssetsLibrary = () => {
     filterTags: []
   })
   const [activeView, setActiveView] = useState('grid')
-  const { assets, setAssets } = useContext(AssetContext)
+  const { assets, setAssets, folders, setFolders } = useContext(AssetContext)
   const [activeModal, setActiveModal] = useState('')
   const [submitError, setSubmitError] = useState('')
   const [activeMode, setActiveMode] = useState('assets')
   const [activeFolder, setActiveFolder] = useState('')
-  const [folders, setFolders] = useState([])
-
-  useEffect(() => {
-    getFolders()
-  }, [])
 
   useEffect(() => {
     if (activeSortFilter.mainFilter === 'folders') {
       setActiveMode('folders')
+      getFolders()
     } else {
       setActiveMode('assets')
       setAssets([])
@@ -79,7 +72,7 @@ const AssetsLibrary = () => {
 
   const getFilters = () => {
     const filters = {}
-    const { mainFilter, filterCampaigns, filterTypes, filterTags } = activeSortFilter
+    const { mainFilter, filterCampaigns, filterTags } = activeSortFilter
     if (mainFilter !== 'all' && mainFilter !== 'folders') {
       if (mainFilter === 'images') filters.type = 'image'
       else if (mainFilter === 'videos') filters.type = 'video'
@@ -230,56 +223,8 @@ const AssetsLibrary = () => {
     Dropbox.choose(options)
   }
 
-  const prepareMoveAsset = async (id) => {
-    setAssets(assets.map(assetItem => ({ ...assetItem, isSelected: assetItem.asset.id === id })))
-    setActiveModal('move')
-  }
-
-  const moveAssets = async (selectedFolder) => {
-    try {
-      const updateAssets = selectedAssets.map(selectedAsset => (
-        { id: selectedAsset.asset.id, changes: { folderId: selectedFolder } }
-      ))
-      await assetApi.updateMultiple(updateAssets)
-      setActiveFolder(selectedFolder)
-      getFolders()
-    } catch (err) {
-      console.log(err)
-      toastUtils.error('Could not move assets, please try again later.')
-    }
-  }
-
-  const archiveAssets = async () => {
-    try {
-      const updateAssets = selectedAssets.map(assetItem => (
-        { id: assetItem.asset.id, changes: { stage: 'archived' } }
-      ))
-      await assetApi.updateMultiple(updateAssets)
-      setActiveModal('')
-    } catch (err) {
-      console.log(err)
-      toastUtils.error('Could not archive assets, please try again later.')
-    }
-  }
-
-  const deleteSelectedAssets = async () => {
-    try {
-      const deletePromises = selectedAssets.map(assetItem => assetApi.deleteAsset(assetItem.asset.id))
-      await Promise.all(deletePromises)
-      getAssets()
-      setActiveModal('')
-    } catch (err) {
-      console.log(err)
-      toastUtils.error('Could not delete assets, please try again later.')
-    }
-  }
-
   const viewFolder = async (id) => {
     setActiveFolder(id)
-  }
-
-  const downloadSelectedAssets = async () => {
-    downloadUtils.zipAndDownload(selectedAssets.map(assetItem => ({ url: assetItem.realUrl, name: assetItem.asset.name })), 'assets')
   }
 
   const updateFolder = async (name) => {
@@ -308,19 +253,6 @@ const AssetsLibrary = () => {
     }
   }
 
-  const shareAssets = async (recipients, message) => {
-    try {
-      await assetApi.generateAndSendShareUrl({
-        recipients,
-        message,
-        assetIds: selectedAssets.map(assetItem => assetItem.asset.id).join(',')
-      })
-      toastUtils.success('Assets shared succesfully')
-    } catch (err) {
-      console.log(err)
-    }
-  }
-
   return (
     <>
       <AssetSubheader
@@ -330,7 +262,6 @@ const AssetsLibrary = () => {
         openDropboxSelector={openDropboxSelector}
         onDriveFilesSelect={onDriveFilesSelection}
         setActiveModal={setActiveModal}
-        downloadSelected={downloadSelectedAssets}
         activeFolderData={activeFolder && folders.find(folder => folder.id === activeFolder)}
         setActiveFolder={setActiveFolder}
         updateFolder={updateFolder}
@@ -352,7 +283,6 @@ const AssetsLibrary = () => {
             folders={folders}
             viewFolder={viewFolder}
             deleteFolder={deleteFolder}
-            moveAsset={prepareMoveAsset}
           />
         </DropzoneProvider>
       </main>
@@ -361,33 +291,7 @@ const AssetsLibrary = () => {
         closeModal={() => setActiveModal('')}
         onSubmit={onSubmit}
       />
-      <MoveModal
-        modalIsOpen={activeModal === 'move'}
-        folders={folders}
-        closeModal={() => setActiveModal('')}
-        itemsAmount={selectedAssets.length}
-        moveAssets={moveAssets}
-      />
-      <ShareModal
-        modalIsOpen={activeModal === 'share'}
-        closeModal={() => setActiveModal('')}
-        itemsAmount={selectedAssets.length}
-        shareAssets={shareAssets}
-      />
-      <ConfirmModal
-        modalIsOpen={activeModal === 'archive'}
-        closeModal={() => setActiveModal('')}
-        confirmAction={archiveAssets}
-        confirmText={'Archive'}
-        message={`Archive ${selectedAssets.length} items?`}
-      />
-      <ConfirmModal
-        modalIsOpen={activeModal === 'delete'}
-        closeModal={() => setActiveModal('')}
-        confirmAction={deleteSelectedAssets}
-        confirmText={'Delete'}
-        message={`Delete ${selectedAssets.length} items?`}
-      />
+      <AssetOps />
     </>
   )
 }

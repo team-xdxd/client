@@ -14,11 +14,14 @@
   align-items: center;
 }
 
-.image-button-wrapper {
+.image-button-wrapper, .uploading {
   position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
+}
+
+.image-button-wrapper {
   display: none;
 }
 
@@ -38,15 +41,10 @@
   height: auto;
 }
 
-.video-wrapper{
-  width: 450px;
-  height: 450px;
-}
-
 .image-wrapper>img {
   width: inherit;
   height: inherit;
-  object-fit: cover;  
+  object-fit: cover;
 }
 
 .image-wrapper:hover>img {
