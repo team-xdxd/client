@@ -6,7 +6,7 @@ import SidePanel from './detail-side-panel'
 import IconClickable from '../buttons/icon-clickable'
 import Button from '../buttons/button'
 
-const DetailOverlay = ({ asset, realUrl, closeOverlay }) => {
+const DetailOverlay = ({ asset, realUrl, closeOverlay, openShareAsset = () => { }, openDeleteAsset = () => { }, isShare = false }) => {
 
   return (
     <div className={`app-overlay ${styles.container}`}>
@@ -20,6 +20,9 @@ const DetailOverlay = ({ asset, realUrl, closeOverlay }) => {
             {asset.name}
           </h3>
           <div className={styles['asset-actions']}>
+            {!isShare &&
+              <Button text={'Share'} type={'button'} styleType={'primary'} onClick={openShareAsset} />
+            }
             {/* <Button text={'Share'} type={'button'} /> */}
             <a href={realUrl} download={asset.name}>
               <Button text={'Download'} type={'button'} styleType={'secondary'} />
@@ -42,9 +45,11 @@ const DetailOverlay = ({ asset, realUrl, closeOverlay }) => {
       <section className={styles.side}>
         <SidePanel asset={asset} />
       </section>
-      <section className={styles.menu}>
-
-      </section>
+      {!isShare &&
+        <section className={styles.menu}>
+          <IconClickable src={Utilities.delete} onClick={openDeleteAsset} />
+        </section>
+      }
     </div>
   )
 }

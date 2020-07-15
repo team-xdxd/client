@@ -18,7 +18,6 @@ const AssetSubheader = ({
   setActiveModal,
   activeFolderData,
   setActiveFolder,
-  downloadSelected,
   updateFolder
 }) => {
 
@@ -120,7 +119,6 @@ const AssetSubheader = ({
         <AssetHeaderOps
           onArchive={() => setActiveModal('archive')}
           onDelete={() => setActiveModal('delete')}
-          onDownload={downloadSelected}
           onMove={() => setActiveModal('move')}
           onShare={() => setActiveModal('share')}
         />

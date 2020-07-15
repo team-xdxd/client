@@ -13,7 +13,8 @@ import 'react-day-picker/lib/style.css';
 import '@stripe/stripe-js';
 import dragndropPolyfill from '../polyfills/dragndroptouch'
 import { useState, useEffect } from 'react'
-import { UserContext, LanguageContext, ThemeContext, AssetContext } from '../context'
+import { UserContext, LanguageContext, ThemeContext } from '../context'
+import AssetContextProvider from '../context/asset-provider'
 import cookiesUtils from '../utils/cookies'
 import requestsUtils from '../utils/requests'
 
@@ -65,12 +66,6 @@ export default function MyApp({ Component, pageProps }) {
   const [theme, setTheme] = useState("light")
   const themeValue = { theme, setTheme }
 
-  const [assets, setAssets] = useState([])
-  const assetsValue = { assets, setAssets }
-
-  const [item, setItem] = useState(null)
-  const itemValue = { item, setItem }
-
   const [initialLoadFinished, setInitialLoadFinished] = useState(false)
 
   const resizeWindow = () => {
@@ -97,14 +92,14 @@ export default function MyApp({ Component, pageProps }) {
     <UserContext.Provider value={userValue} >
       <LanguageContext.Provider value={languageValue}>
         <ThemeContext.Provider value={themeValue}>
-          <AssetContext.Provider value={assetsValue}>
+          <AssetContextProvider>
             <Head>
               <script type="text/javascript" src="https://www.dropbox.com/static/api/2/dropins.js" id="dropboxjs" data-app-key={`gtwo80vc34l8vjd`}></script>
             </Head>
             {initialLoadFinished &&
               <Component {...pageProps} />
             }
-          </AssetContext.Provider>
+          </AssetContextProvider>
         </ThemeContext.Provider>
       </LanguageContext.Provider>
     </UserContext.Provider>

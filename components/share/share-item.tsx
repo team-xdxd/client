@@ -2,7 +2,8 @@ import styles from './share-item.module.css'
 import { format } from 'date-fns'
 import { useState, useEffect } from 'react'
 
-// Components
+// Component
+import AssetImg from '../common/asset/asset-img'
 import Button from '../common/buttons/button'
 import DetailOverlay from '../common/asset/detail-overlay'
 
@@ -26,7 +27,7 @@ const ShareItem = ({
 		<>
 			<div className={styles.container}>
 				<div className={styles['image-wrapper']}>
-					<img src={thumbailUrl} alt={asset.name} />
+					<AssetImg thumbailUrl={thumbailUrl} type={asset.type} name={asset.name} />
 					<div className={styles['image-button-wrapper']}>
 						<Button styleType={'primary'} text={'View Details'} type={'button'}
 							onClick={() => setVisibleOVerlay(true)} />
@@ -43,6 +44,7 @@ const ShareItem = ({
 				<DetailOverlay
 					asset={asset}
 					realUrl={realUrl}
+					isShare={true}
 					closeOverlay={() => setVisibleOVerlay(false)} />
 			}
 		</>
