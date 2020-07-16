@@ -67,6 +67,8 @@ const SidePanel = ({ asset }) => {
       } catch (err) {
         // TODO: Error if failure for whatever reason
       }
+    } else {
+      setActiveTags(false)
     }
   }
 
