@@ -10,7 +10,7 @@ import toastUtils from '../../../utils/toast'
 // Components
 import ScheduleSubHeader from './schedule-subheader'
 import CreateOverlay from '../create-overlay'
-import SearchOverlay from '../search-overlay'
+import SearchOverlay from '../search-overlay-schedule'
 import SidePanel from './side-panel'
 import TopBar from './top-bar'
 import List from './list'

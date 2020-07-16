@@ -1,0 +1,100 @@
+/* Search overlay */
+
+.search-container {
+    overflow: auto;
+    padding: 30px 32px;
+}
+
+.search-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.search-container h2 {
+    margin-top: 40px;
+    font-weight: 550;
+}
+
+.search-top {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.search-close {
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-right: 12rem;
+}
+
+.search-close:hover {
+    opacity: 0.search-7;
+}
+
+.search-close span {
+    display: block;
+}
+
+.search-close img {
+    width: 25px;
+    height: auto;
+}
+
+.search-x {
+    font-weight: 900;
+    font-family: monospace;
+}
+
+.search-cont, .search-content ul {
+    margin-top: 35px;
+    max-width: 50rem;
+    width: 100%;
+}
+
+/* Search item */
+
+.search-item {
+    align-items: center;
+    display: flex;
+    padding: 33px 0;
+    border-top: 1px solid var(--color-secondary-border);
+    cursor: pointer;
+    font-weight: 500;
+    font-size: 12px;
+}
+
+.search-item:last-child {
+    border-bottom: 1px solid var(--color-secondary-border);
+}
+
+.search-item>div {
+    margin-right: 15px;
+}
+
+.search-item>div:last-child {
+    margin-right: 0;
+}
+
+.search-name {
+    width: 50%;
+}
+
+.search-highlight {
+    font-weight: 700;
+}
+
+.search-type {
+    width: 19%;
+}
+
+.search-date {
+    width: 17%;
+}
+
+.search-time {
+    width: 14%;
+    display: flex;
+    justify-content: flex-end;
+}

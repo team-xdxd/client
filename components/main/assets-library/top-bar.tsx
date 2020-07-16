@@ -12,6 +12,7 @@ import Select from '../../common/inputs/select'
 
 const TopBar = ({
   activeSortFilter,
+  setActiveSearchOverlay,
   setActiveSortFilter,
   activeView,
   setActiveView,
@@ -59,7 +60,7 @@ const TopBar = ({
   return (
     <section className={styles.container}>
       <div className={styles.filters}>
-        <img src={Utilities.search} />
+        <img src={Utilities.search} onClick={setActiveSearchOverlay} />
         {selectOptions.views.map(view => (
           <>
             {(!activeFolder || !view.ommitFolder) &&
