@@ -1,7 +1,6 @@
 import styles from './index.module.css'
-import { useState, useEffect, useRef, useContext } from 'react'
+import { useState, useEffect, useContext } from 'react'
 import { AssetContext } from '../../../context'
-import { useForm } from 'react-hook-form'
 import selectOptions from './select-options'
 import update from 'immutability-helper'
 import toastUtils from '../../../utils/toast'
@@ -11,6 +10,7 @@ import cookiesUtils from '../../../utils/cookies'
 
 // Components
 import AssetOps from '../../common/asset/asset-ops'
+import SearchOverlay from '../search-overlay-assets'
 import AssetSubheader from './asset-subheader'
 import AssetGrid from '../../common/asset/asset-grid'
 import TopBar from './top-bar'
@@ -32,6 +32,10 @@ const AssetsLibrary = () => {
   const [activeMode, setActiveMode] = useState('assets')
   const [activeFolder, setActiveFolder] = useState('')
 
+  const [activeSearchOverlay, setActiveSearchOverlay] = useState(false)
+
+  const [firstLoaded, setFirstLoaded] = useState(false)
+
   useEffect(() => {
     if (activeSortFilter.mainFilter === 'folders') {
       setActiveMode('folders')
@@ -44,16 +48,18 @@ const AssetsLibrary = () => {
   }, [activeSortFilter])
 
   useEffect(() => {
-    setActiveSortFilter({
-      ...activeSortFilter,
-      mainFilter: 'all'
-    })
+    if (firstLoaded)
+      setActiveSortFilter({
+        ...activeSortFilter,
+        mainFilter: 'all'
+      })
   }, [activeFolder])
 
   const getAssets = async () => {
     try {
       const { data } = await assetApi.getAssets({ ...getFilters(), ...getSort() })
       setAssets(data.map(mapWithToggleSelection))
+      setFirstLoaded(true)
     } catch (err) {
       //TODO: Handle error
       console.log(err)
@@ -253,6 +259,11 @@ const AssetsLibrary = () => {
     }
   }
 
+  const closeSearchOverlay = () => {
+    getAssets()
+    setActiveSearchOverlay(false)
+  }
+
   return (
     <>
       <AssetSubheader
@@ -273,6 +284,7 @@ const AssetsLibrary = () => {
           activeView={activeView}
           setActiveView={setActiveView}
           activeFolder={activeFolder}
+          setActiveSearchOverlay={() => setActiveSearchOverlay(true)}
         />
         <DropzoneProvider>
           <AssetGrid
@@ -292,6 +304,12 @@ const AssetsLibrary = () => {
         onSubmit={onSubmit}
       />
       <AssetOps />
+
+      {activeSearchOverlay &&
+        <SearchOverlay
+          closeOverlay={closeSearchOverlay}
+        />
+      }
     </>
   )
 }

@@ -1,0 +1,26 @@
+.image-wrapper {
+  width: 50px;
+  height: 50px;
+}
+
+.image-wrapper>img {
+  width: inherit;
+  height: inherit;
+  object-fit: cover;
+}
+
+.name {
+  width: 45%;
+}
+
+.campaign {
+  width: 23%;
+}
+
+.extension {
+  width: 7%;
+}
+
+.folder {
+  width: 15%;
+}

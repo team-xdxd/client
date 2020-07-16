@@ -20,7 +20,7 @@ const Search = (props) => {
           {...props}
           onChange={(e) => setTerm(e.target.value)}
           value={term}
-          placeholder={'Search'}
+          placeholder={props.placeholder || 'Search'}
           className={`${styles.container} ${props.styleType && styles[props.styleType]}`}
         />
       </div>

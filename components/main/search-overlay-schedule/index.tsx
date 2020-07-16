@@ -82,23 +82,23 @@ const CreateOverlay = ({ closeOverlay }) => {
   }
 
   return (
-    <div className={`app-overlay ${styles.container}`}>
-      <div className={styles.top}>
-        <div className={styles.close} onClick={closeOverlay}>
-          <span className={styles.x}>X</span>
+    <div className={`app-overlay search-container`}>
+      <div className={'search-top'}>
+        <div className={'search-close'} onClick={closeOverlay}>
+          <span className={'search-x'}>X</span>
           <span>esc</span>
         </div>
       </div>
-      <div className={styles.content}>
-        <h2 className={styles.chooseTitle}>
+      <div className={'search-content'}>
+        <h2 >
           Search Calendar
         </h2>
-        <div className={styles.search}>
+        <div className={'search-cont'}>
           <Search
             onSubmit={(inputTerm) => getData(inputTerm)}
           />
         </div>
-        <ul className={styles.list}>
+        <ul>
           {mixedList.map((item, index) => (
             <SearchItem
               key={index}

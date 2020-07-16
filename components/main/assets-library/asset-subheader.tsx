@@ -116,12 +116,7 @@ const AssetSubheader = ({
       <div className={styles.padding}>
       </div>
       {amountSelected > 0 ?
-        <AssetHeaderOps
-          onArchive={() => setActiveModal('archive')}
-          onDelete={() => setActiveModal('delete')}
-          onMove={() => setActiveModal('move')}
-          onShare={() => setActiveModal('share')}
-        />
+        <AssetHeaderOps />
         :
         <>
           <input multiple={true} id="file-input-id" ref={fileBrowserRef} style={{ display: 'none' }} type='file'

@@ -27,25 +27,25 @@ const SearchItem = ({ item, term }) => {
 
   return (
     <li
-      className={styles.item}
+      className={'search-item'}
       onClick={() => Router.replace(`/main/${item.itemType}s/${item.id}`)}>
-      <div className={styles.name}>
+      <div className={'search-name'}>
         <Highlighter
-          highlightClassName={styles.highlight}
+          highlightClassName={'search-highlight'}
           searchWords={[term]}
           autoEscape={true}
           textToHighlight={item.name}
         />
       </div>
-      <div className={styles.type}>
+      <div className={'search-type'}>
         <Type
           item={item}
         />
       </div>
-      <div className={styles.date}>
+      <div className={'search-date'}>
         {date && format(new Date(date), 'EEE d yyyy, MMM')}
       </div>
-      <div className={styles.time}>
+      <div className={'search-time'}>
         {date && format(new Date(date), 'hh:mm a')}
       </div>
     </li>
