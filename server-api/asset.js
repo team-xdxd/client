@@ -17,4 +17,6 @@ export default {
   generateAndSendShareUrl: (data) => axios.post(`${assetUrl}/share`, data),
   updateAsset: (id, updateData) => axios.patch(`${assetUrl}/${id}`, updateData),
   deleteAsset: id => axios.delete(`${assetUrl}/${id}`),
+  addTag: (id, data) => axios.post(`${assetUrl}/${id}/tags`, data),
+  removeTag: (id, tagId) => axios.delete(`${assetUrl}/${id}/tags/${tagId}`)
 }
