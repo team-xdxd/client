@@ -80,6 +80,12 @@
   border-top: 1px solid var(--color-secondary-border);
 }
 
+.info>div:first-child {
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
 .details-wrapper {
   display: flex;
 }
@@ -87,13 +93,4 @@
 .details-wrapper>div:first-child {
   margin-top: 0.5rem;
   flex: 1;
-}
-
-.asset-actions-wrapper {
-  position: relative;
-}
-
-.more ul {
-  bottom: 1.8rem;
-  right: 0;
 }

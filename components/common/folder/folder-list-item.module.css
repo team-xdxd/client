@@ -1,0 +1,44 @@
+.header {
+    display: flex;
+  }
+  
+  .header h4 {
+    width: 14%;
+    font-weight: 550;
+    color: var(--color-prim-nav);
+  }
+  
+  .header h4:first-child {
+    width: 21%;
+  }
+  
+  .header h4:last-child {
+    flex: 1;
+  }
+  
+  .name{
+    width: 21%;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+    padding-right: 0.5rem;
+    cursor: pointer;
+    font-weight: 600;
+  }
+  
+  .name:hover{
+    opacity: 0.6
+  }
+  
+  .field_name {
+    width: 14%;
+    font-size: 13px;  
+  }
+  
+  .item {
+    display: flex;
+    padding: 0.5rem 0;
+    border-top: 1px solid var(--color-secondary-border);
+    align-items: center;
+    height: 71px;
+  }

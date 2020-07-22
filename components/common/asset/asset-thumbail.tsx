@@ -8,8 +8,7 @@ import AssetImg from './asset-img'
 import IconClickable from '../buttons/icon-clickable'
 import Button from '../buttons/button'
 import DetailOverlay from './detail-overlay'
-import Dropdown from '../inputs/dropdown'
-import ToggleableAbsoluteWrapper from '../misc/toggleable-absolute-wrapper'
+import AssetOptions from './asset-options'
 
 const AssetThumbail = ({
   asset,
@@ -32,6 +31,7 @@ const AssetThumbail = ({
     } else {
       document.body.classList.remove('no-overflow')
     }
+    return () => document.body.classList.remove('no-overflow')
   }, [visibleOverlay])
 
   return (
@@ -60,40 +60,13 @@ const AssetThumbail = ({
           <div className='normal-text'>{asset.name}</div>
           <div className={styles['details-wrapper']}>
             <div className='secondary-text'>{format(new Date(asset.createdAt), 'MMM d, yyyy, p')}</div>
-            <ToggleableAbsoluteWrapper
-              contentClass={styles['asset-actions']}
-              wrapperClass={styles['asset-actions-wrapper']}
-              Wrapper={({ children }) => (
-                <>
-                  <IconClickable src={Utilities.moreLight} />
-                  {children}
-                </>
-              )}
-              Content={() => (
-                <div className={styles.more} >
-                  <Dropdown
-                    options={[
-                      {
-                        OverrideComp: () => (
-                          <li>
-                            <a href={realUrl} download={asset.name}>
-                              <span>
-                                Download
-                            </span>
-                            </a>
-                          </li>
-                        )
-                      },
-                      { label: 'Comment', onClick: () => { } },
-                      { label: 'Move', onClick: openMoveAsset },
-                      { label: 'Archive', onClick: openArchiveAsset },
-                      { label: 'Delete', onClick: openDeleteAsset }
-                    ]}
-                  />
-                </div>
-              )}
+            <AssetOptions
+              asset={asset}
+              openArchiveAsset={openArchiveAsset}
+              openDeleteAsset={openDeleteAsset}
+              openMoveAsset={openMoveAsset}
+              realUrl={realUrl}
             />
-
           </div>
         </div>
       </div>

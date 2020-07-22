@@ -16,9 +16,9 @@ const AssetSubheader = ({
   onDriveFilesSelect,
   amountSelected = 0,
   setActiveModal,
+  backToFolders,
   activeFolderData,
-  setActiveFolder,
-  updateFolder
+  updateFolder,
 }) => {
 
   const fileBrowserRef = useRef(undefined)
@@ -106,7 +106,7 @@ const AssetSubheader = ({
       editable={activeFolderData} titleOnchange={e => setFolderName(e.target.value)}
       PreComponent={activeFolderData ? () => (
         <div className={styles['additional-folder-wrapper']}>
-          <div className={styles.back} onClick={() => setActiveFolder('')}>
+          <div className={styles.back} onClick={backToFolders}>
             {'<'}
           </div>
           <h4>Folder</h4>

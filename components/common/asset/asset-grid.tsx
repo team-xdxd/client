@@ -16,7 +16,7 @@ import ConfirmModal from '../modals/confirm-modal'
 import assetsApi from '../../../server-api/asset'
 
 
-const AssetGrid = ({ activeView = 'grid', onFilesDataGet, toggleSelected, mode = 'assets', folders = [],
+const AssetGrid = ({ activeView = 'grid', onFilesDataGet, toggleSelected, mode = 'assets', activeSortFilter = {}, folders = [],
   deleteFolder = (id) => { },
   viewFolder = (id) => { } }) => {
 
@@ -57,9 +57,7 @@ const AssetGrid = ({ activeView = 'grid', onFilesDataGet, toggleSelected, mode =
       await assetsApi.updateAsset(id, { stage: 'archived' })
       const assetIndex = assets.findIndex(assetItem => assetItem.asset.id === id)
       setAssets(update(assets, {
-        [assetIndex]: {
-          stage: { $set: 'archived' }
-        }
+        $splice: [[assetIndex, 1]]
       }))
       toastUtils.success('Assets archived successfully')
     }
@@ -76,7 +74,7 @@ const AssetGrid = ({ activeView = 'grid', onFilesDataGet, toggleSelected, mode =
 
   return (
     <section className={styles.container}>
-      {(assets.length === 0 || isDragging) &&
+      {((assets.length === 0 && folders.length === 0) || isDragging) &&
         <AssetUpload
           onDragText={'Drop files here to upload'}
           preDragText={assets.length === 0 ? `Drag and drop your files here to upload` : ''}
@@ -113,18 +111,23 @@ const AssetGrid = ({ activeView = 'grid', onFilesDataGet, toggleSelected, mode =
           <ul className={'regular-list'}>
             {mode === 'assets' && assets.map((assetItem, index) => {
               return (
-                <li className={styles['regular-item']} key={index}>
+                <li className={styles['regular-item']} key={assetItem.asset.id}>
                   <ListItem
                     assetItem={assetItem}
                     index={index}
+                    toggleSelected={() => toggleSelected(assetItem.asset.id)}
+                    openArchiveAsset={() => openArchiveAsset(assetItem.asset.id)}
+                    openDeleteAsset={() => openDeleteAsset(assetItem.asset.id)}
+                    openMoveAsset={() => beginAssetOperation(assetItem, 'move')}
+                    openShareAsset={() => beginAssetOperation(assetItem, 'share')}
                   />
                 </li>
               )
             })}
-            {mode === 'folders' && folders.map((folder) => {
+            {mode === 'folders' && folders.map((folder, index) => {
               return (
                 <li className={styles['grid-item']} key={folder.id}>
-                  <FolderListItem {...folder} viewFolder={() => viewFolder(folder.id)} />
+                  <FolderListItem {...folder} viewFolder={() => viewFolder(folder.id)} deleteFolder={() => deleteFolder(folder.id)} index={index} />
                 </li>
               )
             })}

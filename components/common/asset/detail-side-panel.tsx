@@ -152,7 +152,7 @@ const SidePanel = ({ asset }) => {
         <div className={'normal-text'}>
           <ul className={`tags-list ${styles['tags-list']}`}>
             {assetTags?.map((tag, index) => (
-              <li>
+              <li key={tag.id}>
                 <Tag
                   tag={tag.name}
                   canRemove={true}

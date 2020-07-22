@@ -48,7 +48,7 @@ const AssetsLibrary = () => {
   }, [activeSortFilter])
 
   useEffect(() => {
-    if (firstLoaded)
+    if (firstLoaded && activeFolder !== '')
       setActiveSortFilter({
         ...activeSortFilter,
         mainFilter: 'all'
@@ -79,10 +79,17 @@ const AssetsLibrary = () => {
   const getFilters = () => {
     const filters = {}
     const { mainFilter, filterCampaigns, filterTags } = activeSortFilter
-    if (mainFilter !== 'all' && mainFilter !== 'folders') {
-      if (mainFilter === 'images') filters.type = 'image'
-      else if (mainFilter === 'videos') filters.type = 'video'
+    if (mainFilter !== 'folders') {
+      if (mainFilter === 'images') {
+        filters.type = 'image'
+        filters.stage = 'draft'
+      }
+      else if (mainFilter === 'videos') {
+        filters.type = 'video'
+        filters.stage = 'draft'
+      }
       else if (mainFilter === 'archived') filters.stage = 'archived'
+      else filters.stage = 'draft'
     }
 
     if (filterCampaigns?.length > 0) {
@@ -128,14 +135,16 @@ const AssetsLibrary = () => {
         newPlaceholders.push({
           asset: {
             name: file.originalFile.name,
-            createdAt: new Date()
+            createdAt: new Date(),
+            size: file.originalFile.size,
+            stage: 'draft'
           },
           isUploading: true
         })
         formData.append('asset', file.originalFile)
       })
       setAssets([...newPlaceholders, ...currentDataClone])
-      const { data } = await assetApi.uploadAssets(formData)
+      const { data } = await assetApi.uploadAssets(formData, getCreationParameters())
       setAssets([...data, ...currentDataClone])
     } catch (err) {
       setAssets(currentDataClone)
@@ -152,13 +161,15 @@ const AssetsLibrary = () => {
         newPlaceholders.push({
           asset: {
             name: file.name,
-            createdAt: new Date()
+            createdAt: new Date(),
+            size: file.size,
+            stage: 'draft'
           },
           isUploading: true
         })
       })
       setAssets([...newPlaceholders, ...currentDataClone])
-      const { data } = await assetApi.importAssets('dropbox', files.map(file => ({ link: file.link, name: file.name })))
+      const { data } = await assetApi.importAssets('dropbox', files.map(file => ({ link: file.link, name: file.name })), getCreationParameters())
       setAssets([...data, ...currentDataClone])
     } catch (err) {
       //TODO: Handle error
@@ -177,7 +188,9 @@ const AssetsLibrary = () => {
         newPlaceholders.push({
           asset: {
             name: file.name,
-            createdAt: new Date()
+            createdAt: new Date(),
+            size: file.sizeBytes,
+            stage: 'draft'
           },
           isUploading: true
         })
@@ -189,13 +202,21 @@ const AssetsLibrary = () => {
         name: file.name,
         size: file.sizeBytes,
         mimeType: file.mimeType
-      })))
+      })), getCreationParameters())
       setAssets([...data, ...currentDataClone])
     } catch (err) {
       setAssets(currentDataClone)
       console.log(err)
       toastUtils.error('Could not upload files, please try again later.')
     }
+  }
+
+  const backToFolders = () => {
+    setActiveFolder('')
+    setActiveSortFilter({
+      ...activeSortFilter,
+      mainFilter: 'folders'
+    })
   }
 
   const selectedAssets = assets.filter(asset => asset.isSelected)
@@ -264,6 +285,15 @@ const AssetsLibrary = () => {
     setActiveSearchOverlay(false)
   }
 
+  const getCreationParameters = () => {
+    const queryData = {}
+    if (activeFolder) {
+      queryData.folderId = activeFolder
+    }
+
+    return queryData
+  }
+
   return (
     <>
       <AssetSubheader
@@ -274,7 +304,7 @@ const AssetsLibrary = () => {
         onDriveFilesSelect={onDriveFilesSelection}
         setActiveModal={setActiveModal}
         activeFolderData={activeFolder && folders.find(folder => folder.id === activeFolder)}
-        setActiveFolder={setActiveFolder}
+        backToFolders={backToFolders}
         updateFolder={updateFolder}
       />
       <main className={`${styles.container}`}>
@@ -289,6 +319,7 @@ const AssetsLibrary = () => {
         <DropzoneProvider>
           <AssetGrid
             activeView={activeView}
+            activeSortFilter={activeSortFilter}
             onFilesDataGet={onFilesDataGet}
             toggleSelected={toggleSelected}
             mode={activeMode}
