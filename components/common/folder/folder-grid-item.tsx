@@ -1,15 +1,14 @@
 import styles from './folder-grid-item.module.css'
 import { Utilities, Assets } from '../../../assets'
 import { useState } from 'react'
+import zipDownloadUtils from '../../../utils/download'
 
 // Components
 import AssetImg from '../asset/asset-img'
 import Button from '../buttons/button'
-import Dropdown from '../inputs/dropdown'
+import FolderOptions from './folder-options'
 import IconClickable from '../buttons/icon-clickable'
-import ToggleableAbsoluteWrapper from '../misc/toggleable-absolute-wrapper'
 import ConfirmModal from '../modals/confirm-modal'
-import zipDownloadUtils from '../../../utils/download'
 
 const FolderGridItem = ({
 	id,
@@ -18,8 +17,6 @@ const FolderGridItem = ({
 	length,
 	assets,
 	viewFolder,
-	editFolder = (id) => { },
-	archiveFolder = (id) => { },
 	deleteFolder = (id) => { }
 }) => {
 
@@ -55,27 +52,9 @@ const FolderGridItem = ({
 				<div className='normal-text'>{name}</div>
 				<div className={styles['details-wrapper']}>
 					<div className='secondary-text'>{`${length} Assets`}</div>
-					<ToggleableAbsoluteWrapper
-						contentClass={styles['asset-actions']}
-						wrapperClass={styles['asset-actions-wrapper']}
-						Wrapper={({ children }) => (
-							<>
-								<IconClickable src={Utilities.moreLight} />
-								{children}
-							</>
-						)}
-						Content={() => (
-							<div className={styles.more} >
-								<Dropdown
-									options={[
-										// { label: 'Edit', onClick: editFolder },
-										{ label: 'Download', onClick: downloadFoldercontents },
-										// { label: 'Archive', onClick: archiveFolder },
-										{ label: 'Delete', onClick: () => setDeleteOpen(true) }
-									]}
-								/>
-							</div>
-						)}
+					<FolderOptions
+						downloadFoldercontents={downloadFoldercontents}
+						setDeleteOpen={setDeleteOpen}
 					/>
 				</div>
 			</div>

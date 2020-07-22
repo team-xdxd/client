@@ -1,4 +1,4 @@
-.container{
+.container {
   display: flex;
   align-items: center;
   font-weight: 600;
@@ -22,4 +22,8 @@
 
 .completed {
   background-color: var(--color-sec-lightturquoise);
+}
+
+.archived {
+  background-color: var(--color-sec-lightred);
 }

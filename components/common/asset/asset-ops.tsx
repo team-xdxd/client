@@ -85,12 +85,19 @@ export default () => {
 			}
 
 			await assetApi.updateMultiple(updateAssets)
-			const updateAssetsObj = {}
-			updateAssets.forEach(assetItem => {
-				const assetIndex = assets.findIndex(assetListItem => assetItem.id === assetListItem.asset.id)
-				updateAssetsObj[assetIndex] = { stage: { $set: 'archived' } }
-			})
-			setAssets(update(assets, updateAssetsObj))
+			if (!operationAsset) {
+				const newAssets = assets.filter(existingAsset => {
+					const searchedAssetIndex = selectedAssets.findIndex(assetListItem => existingAsset.asset.id === assetListItem.asset.id)
+					return searchedAssetIndex === -1
+				})
+
+				setAssets(newAssets)
+			} else {
+				const assetIndex = assets.findIndex(assetItem => assetItem.asset.id === operationAsset.asset.id)
+				setAssets(update(assets, {
+					$splice: [[assetIndex, 1]]
+				}))
+			}
 			closeModalAndClearOpAsset()
 			toastUtils.success('Assets archived successfully')
 		} catch (err) {

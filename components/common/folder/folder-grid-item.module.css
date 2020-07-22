@@ -74,12 +74,3 @@
     margin-top: 0.5rem;
     flex: 1;
 }
-
-.asset-actions-wrapper {
-    position: relative;
-}
-
-.more ul {
-    bottom: 1.8rem;
-    right: 0;
-}
