@@ -161,6 +161,8 @@ const TaskDetail = () => {
         changeStatus={changeStatus}
         resetPageTittle={() => editFields('name', task?.name)}
         hasAssets={true}
+        type='task'
+        itemId={task?.id}
       />
       <main className={`${styles.container}`}>
         <ItemSublayout

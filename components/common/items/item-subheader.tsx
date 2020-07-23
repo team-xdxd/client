@@ -8,9 +8,20 @@ import Link from 'next/link'
 import SubHeader from '../layouts/sub-header'
 import NavButton from '../buttons/nav-button'
 import StatusBadge from '../misc/status-badge'
-import AssetHeaderOps from '../../common/asset/asset-header-ops'
+import AssetHeaderOps from '../asset/asset-header-ops'
+import AssetAddition from '../asset/asset-addition'
 
-const ItemSubHeader = ({ title, status = 'draft', saveDraft = () => { }, changeName, changeStatus, resetPageTittle, hasAssets = false }) => {
+const ItemSubHeader = ({
+  title,
+  status = 'draft',
+  saveDraft = () => { },
+  changeName,
+  changeStatus,
+  resetPageTittle,
+  hasAssets = false,
+  type = '',
+  itemId = ''
+}) => {
   const { assets } = useContext(AssetContext)
   const selectedAssets = assets.filter(asset => asset.isSelected)
   return (
@@ -26,22 +37,25 @@ const ItemSubHeader = ({ title, status = 'draft', saveDraft = () => { }, changeN
         }
       </div>
 
-      {(hasAssets && selectedAssets.length > 0) ?
+      {selectedAssets.length > 0 ?
         <AssetHeaderOps />
         :
         <>
+          {hasAssets &&
+            <AssetAddition folderAdd={false} type={type} itemId={itemId} />
+          }
           <button className={styles['draft-action']} onClick={() => Router.replace('/main/overview')}>
             Cancel
-      </button>
+          </button>
           {status === 'draft' &&
             <button className={styles['draft-action']} onClick={saveDraft}>
               Save Draft
-      </button>
+            </button>
           }
           {status === 'scheduled' &&
             <button className={styles['draft-action']} onClick={() => changeStatus('draft')}>
               Change to Draft
-      </button>
+            </button>
           }
           {status === 'draft' &&
             <NavButton
