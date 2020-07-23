@@ -8,7 +8,7 @@ import SidePanel from './detail-side-panel'
 import IconClickable from '../buttons/icon-clickable'
 import Button from '../buttons/button'
 
-const DetailOverlay = ({ asset: { id }, realUrl, closeOverlay, openShareAsset = () => { }, openDeleteAsset = () => { }, isShare = false }) => {
+const DetailOverlay = ({ asset, realUrl, closeOverlay, openShareAsset = () => { }, openDeleteAsset = () => { }, isShare = false }) => {
 
   const [assetDetail, setAssetDetail] = useState()
 
@@ -18,8 +18,12 @@ const DetailOverlay = ({ asset: { id }, realUrl, closeOverlay, openShareAsset = 
 
   const getDetail = async () => {
     try {
-      const { data } = await assetApi.getById(id)
-      setAssetDetail(data)
+      if (isShare)
+        setAssetDetail(asset)
+      else {
+        const { data } = await assetApi.getById(asset.id)
+        setAssetDetail(data)
+      }
     } catch (err) {
       console.log(err)
     }
