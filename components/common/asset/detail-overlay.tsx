@@ -67,7 +67,7 @@ const DetailOverlay = ({ asset, realUrl, closeOverlay, openShareAsset = () => { 
       }
       {assetDetail &&
         <section className={styles.side}>
-          <SidePanel asset={assetDetail} />
+          <SidePanel asset={assetDetail} isShare={isShare}/>
         </section>
       }
       {!isShare &&

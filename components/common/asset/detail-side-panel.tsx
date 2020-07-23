@@ -15,7 +15,7 @@ import { Utilities } from '../../../assets'
 import Tag from '../misc/tag'
 import IconClickable from '../buttons/icon-clickable'
 
-const SidePanel = ({ asset }) => {
+const SidePanel = ({ asset, isShare }) => {
   const {
     id,
     createdAt,
@@ -33,7 +33,8 @@ const SidePanel = ({ asset }) => {
   const [activeTags, setActiveTags] = useState(false)
 
   useEffect(() => {
-    getTags()
+    if (!isShare)
+      getTags()
   }, [])
 
   const getTags = async () => {
@@ -155,27 +156,31 @@ const SidePanel = ({ asset }) => {
               <li key={tag.id}>
                 <Tag
                   tag={tag.name}
-                  canRemove={true}
+                  canRemove={!isShare}
                   removeFunction={() => removeTag(index)}
                 />
               </li>
             ))}
           </ul>
-          {activeTags ?
-            <div className={`tag-select ${styles['select-wrapper']}`}>
-              <CreatableSelect
-                placeholder={'Enter a new tag or select an existing one'}
-                options={inputTags.map(tag => ({ label: tag.name, value: tag.id }))}
-                className={`regular item`}
-                onChange={handleTagChange}
-                classNamePrefix='select-prefix'
-              />
-            </div>
-            :
-            <div className={`add ${styles['select-add']}`} onClick={() => setActiveTags(true)}>
-              <IconClickable src={Utilities.add} />
-              <span>Add Tag</span>
-            </div>
+          {!isShare &&
+            <>
+              {activeTags ?
+                <div className={`tag-select ${styles['select-wrapper']}`}>
+                  <CreatableSelect
+                    placeholder={'Enter a new tag or select an existing one'}
+                    options={inputTags.map(tag => ({ label: tag.name, value: tag.id }))}
+                    className={`regular item`}
+                    onChange={handleTagChange}
+                    classNamePrefix='select-prefix'
+                  />
+                </div>
+                :
+                <div className={`add ${styles['select-add']}`} onClick={() => setActiveTags(true)}>
+                  <IconClickable src={Utilities.add} />
+                  <span>Add Tag</span>
+                </div>
+              }
+            </>
           }
         </div>
       </div>

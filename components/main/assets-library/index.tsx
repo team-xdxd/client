@@ -3,10 +3,9 @@ import { useState, useEffect, useContext } from 'react'
 import { AssetContext } from '../../../context'
 import selectOptions from './select-options'
 import update from 'immutability-helper'
-import toastUtils from '../../../utils/toast'
 import assetApi from '../../../server-api/asset'
 import folderApi from '../../../server-api/folder'
-import cookiesUtils from '../../../utils/cookies'
+import toastUtils from '../../../utils/toast'
 
 // Components
 import AssetOps from '../../common/asset/asset-ops'
@@ -14,7 +13,6 @@ import SearchOverlay from '../search-overlay-assets'
 import AssetSubheader from './asset-subheader'
 import AssetGrid from '../../common/asset/asset-grid'
 import TopBar from './top-bar'
-import FolderModal from './folder-modal'
 import { DropzoneProvider } from '../../common/misc/dropzone'
 
 const AssetsLibrary = () => {
@@ -27,14 +25,48 @@ const AssetsLibrary = () => {
   })
   const [activeView, setActiveView] = useState('grid')
   const { assets, setAssets, folders, setFolders } = useContext(AssetContext)
-  const [activeModal, setActiveModal] = useState('')
-  const [submitError, setSubmitError] = useState('')
   const [activeMode, setActiveMode] = useState('assets')
   const [activeFolder, setActiveFolder] = useState('')
 
   const [activeSearchOverlay, setActiveSearchOverlay] = useState(false)
 
   const [firstLoaded, setFirstLoaded] = useState(false)
+
+  const onFilesDataGet = async (files) => {
+    const currentDataClone = [...assets]
+    try {
+      const formData = new FormData()
+      const newPlaceholders = []
+      files.forEach(file => {
+        newPlaceholders.push({
+          asset: {
+            name: file.originalFile.name,
+            createdAt: new Date(),
+            size: file.originalFile.size,
+            stage: 'draft'
+          },
+          isUploading: true
+        })
+        formData.append('asset', file.originalFile)
+      })
+      setAssets([...newPlaceholders, ...currentDataClone])
+      const { data } = await assetApi.uploadAssets(formData, getCreationParameters())
+      setAssets([...data, ...currentDataClone])
+    } catch (err) {
+      setAssets(currentDataClone)
+      console.log(err)
+      toastUtils.error('Could not upload files, please try again later.')
+    }
+  }
+
+  const getCreationParameters = () => {
+    const queryData = {}
+    if (activeFolder) {
+      queryData.folderId = activeFolder
+    }
+
+    return queryData
+  }
 
   useEffect(() => {
     if (activeSortFilter.mainFilter === 'folders') {
@@ -126,91 +158,6 @@ const AssetsLibrary = () => {
 
   const mapWithToggleSelection = asset => ({ ...asset, toggleSelected })
 
-  const onFilesDataGet = async (files) => {
-    const currentDataClone = [...assets]
-    try {
-      const formData = new FormData()
-      const newPlaceholders = []
-      files.forEach(file => {
-        newPlaceholders.push({
-          asset: {
-            name: file.originalFile.name,
-            createdAt: new Date(),
-            size: file.originalFile.size,
-            stage: 'draft'
-          },
-          isUploading: true
-        })
-        formData.append('asset', file.originalFile)
-      })
-      setAssets([...newPlaceholders, ...currentDataClone])
-      const { data } = await assetApi.uploadAssets(formData, getCreationParameters())
-      setAssets([...data, ...currentDataClone])
-    } catch (err) {
-      setAssets(currentDataClone)
-      console.log(err)
-      toastUtils.error('Could not upload files, please try again later.')
-    }
-  }
-
-  const onDropboxFilesSelection = async (files) => {
-    const currentDataClone = [...assets]
-    try {
-      const newPlaceholders = []
-      files.forEach(file => {
-        newPlaceholders.push({
-          asset: {
-            name: file.name,
-            createdAt: new Date(),
-            size: file.size,
-            stage: 'draft'
-          },
-          isUploading: true
-        })
-      })
-      setAssets([...newPlaceholders, ...currentDataClone])
-      const { data } = await assetApi.importAssets('dropbox', files.map(file => ({ link: file.link, name: file.name })), getCreationParameters())
-      setAssets([...data, ...currentDataClone])
-    } catch (err) {
-      //TODO: Handle error
-      setAssets(currentDataClone)
-      console.log(err)
-      toastUtils.error('Could not upload files, please try again later.')
-    }
-  }
-
-  const onDriveFilesSelection = async (files) => {
-    const googleAuthToken = cookiesUtils.get('gdriveToken')
-    const currentDataClone = [...assets]
-    try {
-      const newPlaceholders = []
-      files.forEach(file => {
-        newPlaceholders.push({
-          asset: {
-            name: file.name,
-            createdAt: new Date(),
-            size: file.sizeBytes,
-            stage: 'draft'
-          },
-          isUploading: true
-        })
-      })
-      setAssets([...newPlaceholders, ...currentDataClone])
-      const { data } = await assetApi.importAssets('drive', files.map(file => ({
-        googleAuthToken,
-        id: file.id,
-        name: file.name,
-        size: file.sizeBytes,
-        mimeType: file.mimeType
-      })), getCreationParameters())
-      setAssets([...data, ...currentDataClone])
-    } catch (err) {
-      setAssets(currentDataClone)
-      console.log(err)
-      toastUtils.error('Could not upload files, please try again later.')
-    }
-  }
-
   const backToFolders = () => {
     setActiveFolder('')
     setActiveSortFilter({
@@ -220,35 +167,6 @@ const AssetsLibrary = () => {
   }
 
   const selectedAssets = assets.filter(asset => asset.isSelected)
-
-  const onSubmit = async folderData => {
-    try {
-      await folderApi.createFolder(folderData)
-      setActiveModal('')
-      getFolders()
-    } catch (err) {
-      // TODO: Show error message
-      if (err.response?.data?.message) {
-        setSubmitError(err.response.data.message)
-      } else {
-        setSubmitError('Something went wrong, please try again later')
-      }
-    }
-  }
-
-  const openDropboxSelector = (files) => {
-    //png, jpg, gif or mp4
-    const options = {
-      success: onDropboxFilesSelection,
-      linkType: 'direct',
-      multiselect: true,
-      extensions: ['.png', '.jpg', '.gif', '.mp4'],
-      folderselect: false,
-      sizeLimit: 50 * 1024 * 1024
-    }
-    // Ignore this annoying warning
-    Dropbox.choose(options)
-  }
 
   const viewFolder = async (id) => {
     setActiveFolder(id)
@@ -285,24 +203,12 @@ const AssetsLibrary = () => {
     setActiveSearchOverlay(false)
   }
 
-  const getCreationParameters = () => {
-    const queryData = {}
-    if (activeFolder) {
-      queryData.folderId = activeFolder
-    }
-
-    return queryData
-  }
-
   return (
     <>
       <AssetSubheader
-        onFilesDataGet={onFilesDataGet}
-        openFolderUploader={() => setActiveModal('folder')}
+        activeFolder={activeFolder}
+        getFolders={getFolders}
         amountSelected={selectedAssets.length}
-        openDropboxSelector={openDropboxSelector}
-        onDriveFilesSelect={onDriveFilesSelection}
-        setActiveModal={setActiveModal}
         activeFolderData={activeFolder && folders.find(folder => folder.id === activeFolder)}
         backToFolders={backToFolders}
         updateFolder={updateFolder}
@@ -329,11 +235,6 @@ const AssetsLibrary = () => {
           />
         </DropzoneProvider>
       </main>
-      <FolderModal
-        modalIsOpen={activeModal === 'folder'}
-        closeModal={() => setActiveModal('')}
-        onSubmit={onSubmit}
-      />
       <AssetOps />
 
       {activeSearchOverlay &&
