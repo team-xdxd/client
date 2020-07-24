@@ -29,6 +29,15 @@ const DetailOverlay = ({ asset, realUrl, closeOverlay, openShareAsset = () => { 
     }
   }
 
+  const updateAsset = async (updateData) => {
+    try {
+      const { data } = await assetApi.updateAsset(asset.id, updateData)
+      setAssetDetail(data)
+    } catch (err) {
+      console.log(err)
+    }
+  }
+
   return (
     <div className={`app-overlay ${styles.container}`}>
       {assetDetail &&
@@ -67,7 +76,7 @@ const DetailOverlay = ({ asset, realUrl, closeOverlay, openShareAsset = () => { 
       }
       {assetDetail &&
         <section className={styles.side}>
-          <SidePanel asset={assetDetail} isShare={isShare}/>
+          <SidePanel asset={assetDetail} updateAsset={updateAsset} isShare={isShare} />
         </section>
       }
       {!isShare &&
