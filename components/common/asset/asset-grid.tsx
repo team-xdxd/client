@@ -54,7 +54,7 @@ const AssetGrid = ({ activeView = 'grid', onFilesDataGet, toggleSelected, mode =
 
   const archiveAsset = async id => {
     try {
-      await assetsApi.updateAsset(id, { stage: 'archived' })
+      await assetsApi.updateAsset(id, { updateData: { stage: 'archived' } })
       const assetIndex = assets.findIndex(assetItem => assetItem.asset.id === id)
       setAssets(update(assets, {
         $splice: [[assetIndex, 1]]

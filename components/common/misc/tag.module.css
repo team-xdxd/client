@@ -19,3 +19,11 @@
 .remove:hover{
   opacity: 0.7;
 }
+
+.alt-color-turquoise{
+  background-color: var(--color-sec-lightturquoise);
+}
+
+.alt-color-yellow{
+  background-color: var(--color-sec-lightyellow);
+}
