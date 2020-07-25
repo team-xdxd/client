@@ -1,6 +1,23 @@
 import { useState } from 'react'
 import { AssetContext } from '../context'
 
+const loadingDefaultAsset = {
+    asset: {
+        name: 'placeholder',
+        createdAt: new Date(),
+        type: 'image'
+    },
+    isLoading: true
+}
+
+const loadingDefaultFolder = {
+    name: 'placeholder',
+    length: 10,
+    assets: [],
+    isLoading: true,
+    createdAt: new Date()
+}
+
 export default ({ children }) => {
     const [assets, setAssets] = useState([])
     const [folders, setFolders] = useState([])
@@ -9,11 +26,41 @@ export default ({ children }) => {
     const [operationFolder, setOperationFolder] = useState('')
 
     const [activeOperation, setActiveOperation] = useState('')
+
+    const setPlaceHolders = (type, replace = true) => {
+        if (type === 'asset') {
+            if (replace)
+                setAssets(Array(10).fill(loadingDefaultAsset))
+            else
+                setAssets([...assets, ...Array(10).fill(loadingDefaultAsset)])
+        } else {
+            if (replace)
+                setFolders(Array(10).fill(loadingDefaultFolder))
+            else
+                setFolders([...folders, ...Array(10).fill(loadingDefaultFolder)])
+        }
+    }
+
+    const setAssetItems = (inputAssets, replace = true) => {
+        if (replace)
+            setAssets(inputAssets)
+        else
+            setAssets([...assets.filter(asset => !asset.isLoading), ...inputAssets])
+    }
+
+    const setFolderItems = (inputFolders, replace = true) => {
+        if (replace)
+            setFolders(inputFolders)
+        else
+            setFolders([...folders.filter(folder => !folder.isLoading), ...inputFolders])
+    }
+
     const assetsValue = {
         assets,
-        setAssets,
+        setAssets: setAssetItems,
         folders,
-        setFolders,
+        setFolders: setFolderItems,
+        setPlaceHolders,
         activeOperation,
         setActiveOperation,
         operationAsset,

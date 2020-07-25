@@ -7,6 +7,7 @@ import assetApi from '../../../server-api/asset'
 import SidePanel from './detail-side-panel'
 import IconClickable from '../buttons/icon-clickable'
 import Button from '../buttons/button'
+import AssetImg from './asset-img'
 
 const DetailOverlay = ({ asset, realUrl, closeOverlay, openShareAsset = () => { }, openDeleteAsset = () => { }, isShare = false }) => {
 
@@ -53,7 +54,7 @@ const DetailOverlay = ({ asset, realUrl, closeOverlay, openShareAsset = () => { 
           </div>
           <div className={styles['img-wrapper']}>
             {assetDetail.type === 'image' &&
-              <img src={realUrl} />
+              <AssetImg name={assetDetail.name} assetImg={realUrl} />
             }
             {assetDetail.type === 'video' &&
               <video controls>
@@ -67,7 +68,7 @@ const DetailOverlay = ({ asset, realUrl, closeOverlay, openShareAsset = () => { 
       }
       {assetDetail &&
         <section className={styles.side}>
-          <SidePanel asset={assetDetail} isShare={isShare}/>
+          <SidePanel asset={assetDetail} isShare={isShare} />
         </section>
       }
       {!isShare &&

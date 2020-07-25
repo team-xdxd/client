@@ -1,0 +1,22 @@
+.loadable::before {
+  position: absolute;
+  top: -1px;
+  left: -1px;
+  width: calc(100% + 2px);
+  height: calc(100% + 2px);
+  content: "";
+  z-index: 1;
+  animation: pulsating 2s infinite;
+}
+
+@keyframes pulsating {
+  0% {
+    background-color: #f6f6f6;
+  }
+  50% {
+    background-color: #ebebeb;
+  }
+  100% {
+    background-color: #f6f6f6;
+  }
+}

@@ -5,6 +5,7 @@ import { useState, useEffect } from 'react'
 
 // Components
 import AssetImg from './asset-img'
+import AssetVideo from './asset-video'
 import IconClickable from '../buttons/icon-clickable'
 import Button from '../buttons/button'
 import DetailOverlay from './detail-overlay'
@@ -16,6 +17,7 @@ const AssetThumbail = ({
   realUrl,
   isUploading,
   isSelected = false,
+  isLoading = false,
   toggleSelected = () => { },
   openDeleteAsset = () => { },
   openMoveAsset = () => { },
@@ -36,11 +38,12 @@ const AssetThumbail = ({
 
   return (
     <>
-      <div className={styles.container}>
+      <div className={`${styles.container} ${isLoading && 'loadable'}`}>
         <div className={styles['image-wrapper']}>
           {isUploading && <p className={styles.uploading}>Uploading...</p>}
-          <AssetImg thumbailUrl={thumbailUrl} type={asset.type} name={asset.name} />
-          {!isUploading &&
+          {asset.type === 'image' && <AssetImg assetImg={thumbailUrl} type={asset.type} name={asset.name} />}
+          {asset.type === 'video' && <AssetVideo asset={asset} realUrl={realUrl} additionalClass={styles['video-wrapper']} />}
+          {!isUploading && !isLoading &&
             <>
               <div className={`${styles['selectable-wrapper']} ${isSelected && styles['selected-wrapper']}`}>
                 {isSelected ?

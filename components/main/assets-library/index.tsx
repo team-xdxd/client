@@ -24,7 +24,7 @@ const AssetsLibrary = () => {
     filterTags: []
   })
   const [activeView, setActiveView] = useState('grid')
-  const { assets, setAssets, folders, setFolders } = useContext(AssetContext)
+  const { assets, setAssets, folders, setFolders, setPlaceHolders } = useContext(AssetContext)
   const [activeMode, setActiveMode] = useState('assets')
   const [activeFolder, setActiveFolder] = useState('')
 
@@ -89,6 +89,7 @@ const AssetsLibrary = () => {
 
   const getAssets = async () => {
     try {
+      setPlaceHolders('asset')
       const { data } = await assetApi.getAssets({ ...getFilters(), ...getSort() })
       setAssets(data.map(mapWithToggleSelection))
       setFirstLoaded(true)
@@ -100,6 +101,7 @@ const AssetsLibrary = () => {
 
   const getFolders = async () => {
     try {
+      setPlaceHolders('folder')
       const { data } = await folderApi.getFolders()
       setFolders(data)
     } catch (err) {

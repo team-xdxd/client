@@ -2,7 +2,7 @@ import styles from './filters-select.module.css'
 import ReactSelect, { components } from 'react-select'
 import { Utilities } from '../../../assets'
 
-const FiltersSelect = ({ options, placeholder, value = null, onChange = (selected) => { }, styleType = '', isClearable = false }) => {
+const FiltersSelect = ({ options, placeholder, value = null, onChange = (selected) => { }, styleType = '', isClearable = false, closeMenuOnSelect = false }) => {
 
   const Option = props => (
     <components.Option {...props} >
@@ -18,7 +18,7 @@ const FiltersSelect = ({ options, placeholder, value = null, onChange = (selecte
       controlShouldRenderValue={false}
       placeholder={placeholder}
       options={options}
-      closeMenuOnSelect={false}
+      closeMenuOnSelect={closeMenuOnSelect}
       components={{ Option }}
       className={`${styles.container} ${styleType} ${styles[styleType]}`}
       value={value}

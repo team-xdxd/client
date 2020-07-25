@@ -3,6 +3,7 @@
   display: flex;
   flex-direction: column;
   height: 100%;
+  position: relative;
 }
 
 .image-wrapper {
@@ -41,13 +42,13 @@
   height: auto;
 }
 
-.image-wrapper>img {
+.image-wrapper>img, .image-wrapper>.video-wrapper {
   width: inherit;
   height: inherit;
   object-fit: cover;
 }
 
-.image-wrapper:hover>img {
+.image-wrapper:hover>img, .image-wrapper:hover>.video-wrapper {
   animation: halfopacity 0.5s;
   opacity: 0.5;
 }

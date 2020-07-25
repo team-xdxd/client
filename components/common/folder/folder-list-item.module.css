@@ -24,6 +24,7 @@
     padding-right: 0.5rem;
     cursor: pointer;
     font-weight: 600;
+    position: relative;
   }
   
   .name:hover{
@@ -33,6 +34,7 @@
   .field_name {
     width: 14%;
     font-size: 13px;  
+    position: relative;
   }
   
   .item {

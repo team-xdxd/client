@@ -21,16 +21,18 @@
 }
 
 .thumbnail {
-  padding: 0 10px;
+  margin: 0 10px;
+  position: relative;
 }
 
-.thumbnail>img {
+.thumbnail>img, .thumbnail>video {
   width: 50px;
+  height: 50px;
   height: auto;
   border: 1px solid var(--color-secondary-border)
 }
 
-.name{
+.name {
   width: 21%;
   text-overflow: ellipsis;
   white-space: nowrap;
@@ -38,15 +40,17 @@
   padding-right: 0.5rem;
   cursor: pointer;
   font-weight: 600;
+  position: relative;
 }
 
-.name:hover{
+.name:hover {
   opacity: 0.6
 }
 
 .field_name {
   width: 14%;
-  font-size: 13px;  
+  font-size: 13px;
+  position: relative;
 }
 
 .item {
@@ -54,6 +58,7 @@
   padding: 0.5rem 0;
   border-top: 1px solid var(--color-secondary-border);
   align-items: center;
+  height: 71px;
 }
 
 .status {
