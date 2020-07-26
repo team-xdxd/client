@@ -3,6 +3,7 @@ import { AssetContext } from '../../../context'
 import assetApi from '../../../server-api/asset'
 import styles from './item-assets.module.css'
 import update from 'immutability-helper'
+import toastUtils from '../../../utils/toast'
 
 // Components
 import AssetGrid from './asset-grid'
@@ -11,19 +12,22 @@ import { DropzoneProvider } from '../misc/dropzone'
 
 const ItemAssets = ({ type, itemId }) => {
 
-  const { assets, setAssets, setPlaceHolders } = useContext(AssetContext)
+  const { assets, setAssets, setPlaceHolders, nextPage } = useContext(AssetContext)
 
-  const getAssets = async () => {
+  const getAssets = async (replace = true) => {
     try {
-      setPlaceHolders('asset')
+      setPlaceHolders('asset', replace)
       const queryParams = {}
       if (type === 'project') queryParams.projectId = itemId
       if (type === 'task') queryParams.taskId = itemId
+      queryParams.page = replace ? 1 : nextPage
       const { data } = await assetApi.getAssets(queryParams)
-      setAssets(data)
+      setAssets(data, replace)
     } catch (err) {
       //TODO: Handle error
       console.log(err)
+      setAssets([])
+      toastUtils.error('There was an error loading the assets.')
     }
   }
 
@@ -32,15 +36,16 @@ const ItemAssets = ({ type, itemId }) => {
   }, [])
 
   const onFilesDataGet = async (files) => {
+    const currentDataClone = [...assets]
     try {
       const formData = new FormData()
-      const currentDataClone = [...assets]
       const newPlaceholders = []
       files.forEach(file => {
         newPlaceholders.push({
           asset: {
             name: file.originalFile.name,
-            createdAt: new Date()
+            createdAt: new Date(),
+            type: 'image'
           },
           isUploading: true
         })
@@ -52,9 +57,11 @@ const ItemAssets = ({ type, itemId }) => {
       if (type === 'task') queryParams.taskId = itemId
       const { data } = await assetApi.uploadAssets(formData, queryParams)
       setAssets([...data, ...currentDataClone])
+      toastUtils.success('Assets uploaded.')
     } catch (err) {
-      //TODO: Handle error
+      setAssets(currentDataClone)
       console.log(err)
+      toastUtils.error('Could not upload assets, please try again later.')
     }
   }
 
@@ -73,7 +80,8 @@ const ItemAssets = ({ type, itemId }) => {
         <AssetGrid
           onFilesDataGet={onFilesDataGet}
           toggleSelected={toggleSelected}
-
+          loadMore={() => getAssets(false)}
+          mode='assets'
         />
       </div>
       <AssetOps />

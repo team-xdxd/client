@@ -87,10 +87,11 @@ const ListItem = ({
             {asset.name}
           </div>
           <div className={styles.status}>
-            {!isLoading && <StatusBadge status={asset.stage} />}
+            {isUploading && 'Uplaoding...'}
+            {!isLoading && !isUploading && <StatusBadge status={asset.stage} />}
           </div>
           <div className={`${styles.field_name} ${isLoading && 'loadable'}`}>
-            {asset.type}
+            {!isUploading && asset.type}
           </div>
           <div className={styles.field_name}>
             {!isLoading && asset.extension}

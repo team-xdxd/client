@@ -40,8 +40,12 @@ const AssetThumbail = ({
     <>
       <div className={`${styles.container} ${isLoading && 'loadable'}`}>
         <div className={styles['image-wrapper']}>
-          {isUploading && <p className={styles.uploading}>Uploading...</p>}
-          {asset.type === 'image' && <AssetImg assetImg={thumbailUrl} type={asset.type} name={asset.name} />}
+          {isUploading &&
+            <>
+              <p className={styles.uploading}>Uploading...</p>
+            </>
+          }
+          {asset.type === 'image' && <AssetImg assetImg={thumbailUrl} type={asset.type} name={asset.name} opaque={isUploading}/>}
           {asset.type === 'video' && <AssetVideo asset={asset} realUrl={realUrl} additionalClass={styles['video-wrapper']} />}
           {!isUploading && !isLoading &&
             <>

@@ -24,11 +24,13 @@ export const DragContext = createContext({
 })
 
 export const AssetContext = createContext({
+    nextPage: 0,
+    totalAssets: 0,
     assets: [],
-    setAssets: (assets) => { },
+    setAssets: (assets, replace) => { },
     folders: [],
     setFolders: (folders) => { },
-    setPlaceHolders: (type) => { },
+    setPlaceHolders: (type, replace) => { },
     operationAsset: null,
     setOperationAsset: (asset) => { },
 

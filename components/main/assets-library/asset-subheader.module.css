@@ -1,3 +1,13 @@
+.additional-folder-wrapper {
+  position: relative;
+}
+
+.additional-folder-wrapper h4 {
+  position: absolute;
+  bottom: 1rem;
+  left: 1rem;
+}
+
 .asset-subheader button {
   margin-left: 0.5rem;
 }

@@ -27,6 +27,9 @@ export default ({ children }) => {
 
     const [activeOperation, setActiveOperation] = useState('')
 
+    const [nextPage, setNextPage] = useState(1)
+    const [totalAssets, setTotalAssets] = useState(0)
+
     const setPlaceHolders = (type, replace = true) => {
         if (type === 'asset') {
             if (replace)
@@ -42,6 +45,11 @@ export default ({ children }) => {
     }
 
     const setAssetItems = (inputAssets, replace = true) => {
+        const { results, next, total } = inputAssets
+        if (results) inputAssets = results
+        if (next) setNextPage(next)
+        if (total) setTotalAssets(total)
+
         if (replace)
             setAssets(inputAssets)
         else
@@ -58,6 +66,8 @@ export default ({ children }) => {
     const assetsValue = {
         assets,
         setAssets: setAssetItems,
+        nextPage,
+        totalAssets,
         folders,
         setFolders: setFolderItems,
         setPlaceHolders,

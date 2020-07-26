@@ -4,6 +4,7 @@ import update from 'immutability-helper'
 import { useEffect, useContext, useState } from 'react'
 import { AssetContext } from '../../../context'
 import toastUtils from '../../../utils/toast'
+import { Waypoint } from 'react-waypoint'
 
 // Components
 import FolderGridItem from '../folder/folder-grid-item'
@@ -12,16 +13,19 @@ import AssetThumbail from './asset-thumbail'
 import ListItem from './list-item'
 import AssetUpload from './asset-upload'
 import ConfirmModal from '../modals/confirm-modal'
+import Button from '../buttons/button'
 
 import assetsApi from '../../../server-api/asset'
+import asset from '../../../server-api/asset'
 
 
 const AssetGrid = ({ activeView = 'grid', onFilesDataGet, toggleSelected, mode = 'assets', activeSortFilter = {}, folders = [],
   deleteFolder = (id) => { },
+  loadMore = () => { },
   viewFolder = (id) => { } }) => {
 
   const isDragging = useDropzone()
-  const { assets, setAssets, setActiveOperation, setOperationAsset } = useContext(AssetContext)
+  const { assets, setAssets, setActiveOperation, setOperationAsset, nextPage } = useContext(AssetContext)
 
   const [deleteModalOpen, setDeleteModalOpen] = useState(false)
   const [archiveModalOpen, setArchiveModalOpen] = useState(false)
@@ -133,7 +137,28 @@ const AssetGrid = ({ activeView = 'grid', onFilesDataGet, toggleSelected, mode =
             })}
           </ul>
         }
+        {(mode === 'assets' && assets.length > 0) && nextPage !== -1 &&
+          <>
+            {nextPage > 2 ?
+              <>
+                {!assets[assets.length - 1].isLoading &&
+                  <Waypoint onEnter={loadMore} fireOnRapidScroll={false} />
+                }
+              </>
+
+              :
+              <div className={styles['button-wrapper']}>
+                <Button
+                  text='Load More'
+                  type='button'
+                  styleType='primary'
+                  onClick={loadMore} />
+              </div>
+            }
+          </>
+        }
       </div>
+
       {/* Delete modal */}
       <ConfirmModal
         closeModal={() => setDeleteModalOpen(false)}
