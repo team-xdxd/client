@@ -17,6 +17,7 @@ const FolderListItem = ({
 	createdAt,
 	assets,
 	viewFolder,
+	isLoading = false,
 	deleteFolder = (id) => { }
 }) => {
 
@@ -40,21 +41,23 @@ const FolderListItem = ({
 					</div>
 				}
 				<div className={styles.item}>
-					<div className={styles.name} onClick={viewFolder}>
+					<div className={`${styles.name} ${isLoading && 'loadable'}`} onClick={viewFolder}>
 						{name}
 					</div>
 					<div className={styles.field_name}>
-					{`${length} Assets`}
+						{!isLoading && `${length} Assets`}
 					</div>
-					<div className={styles.field_name}>
+					<div className={`${styles.field_name} ${isLoading && 'loadable'}`}>
 						{format(new Date(createdAt), dateFormat)}
 					</div>
-					<div>
-						<FolderOptions
-							downloadFoldercontents={downloadFoldercontents}
-							setDeleteOpen={setDeleteOpen}
-						/>
-					</div>
+					{!isLoading &&
+						<div>
+							<FolderOptions
+								downloadFoldercontents={downloadFoldercontents}
+								setDeleteOpen={setDeleteOpen}
+							/>
+						</div>
+					}
 				</div>
 			</div>
 			<ConfirmModal

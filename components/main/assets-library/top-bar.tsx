@@ -82,11 +82,13 @@ const TopBar = ({
             selectList={[
               {
                 options: campaignsFilter,
-                placeholder: 'Campaigns'
+                placeholder: 'Campaigns',
+                value: activeSortFilter.filterCampaigns
               },
               {
                 options: tagsFilter,
-                placeholder: 'Tags'
+                placeholder: 'Tags',
+                value: activeSortFilter.filterTags
               }
             ]}
             onApplyFilters={applyFilters}

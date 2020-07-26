@@ -17,13 +17,14 @@ const FolderGridItem = ({
 	length,
 	assets,
 	viewFolder,
+	isLoading = false,
 	deleteFolder = (id) => { }
 }) => {
 
 	const previews = [1, 2, 3, 4]
 		.map((_, index) => ({
 			name: assets[index]?.name || 'empty',
-			thumbailUrl: assets[index]?.thumbailUrl || '',
+			assetImg: assets[index]?.thumbailUrl || '',
 			type: assets[index]?.type || 'empty'
 		}))
 
@@ -34,7 +35,7 @@ const FolderGridItem = ({
 	}
 
 	return (
-		<div className={styles.container}>
+		<div className={`${styles.container} ${isLoading && 'loadable'}`}>
 			<div className={styles['image-wrapper']}>
 				<>
 					{previews.map((preview) => (

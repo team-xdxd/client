@@ -13,7 +13,7 @@ const NestedSelect = ({ selectList, onApplyFilters }) => {
   const [tempSelections, setTempSelections] = useState([])
 
   useEffect(() => {
-    const newTempSelections = selectList.map(() => [])
+    const newTempSelections = selectList.map((selectItem) => selectItem.value)
     setTempSelections(newTempSelections)
   }, [selectList])
 
@@ -42,6 +42,7 @@ const NestedSelect = ({ selectList, onApplyFilters }) => {
   }
 
   const setSelection = (selectValue, index) => {
+    console.log(tempSelections)
     setTempSelections(update(tempSelections, {
       [index]: { $set: selectValue }
     }))
@@ -72,6 +73,7 @@ const NestedSelect = ({ selectList, onApplyFilters }) => {
                   isClearable={true}
                   styleType='filter filter-schedule'
                   value={tempSelections[index]}
+                  closeMenuOnSelect={true}
                   onChange={(selected) => setSelection(selected, index)}
                 />
               </div>

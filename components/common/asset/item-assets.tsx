@@ -11,10 +11,11 @@ import { DropzoneProvider } from '../misc/dropzone'
 
 const ItemAssets = ({ type, itemId }) => {
 
-  const { assets, setAssets } = useContext(AssetContext)
+  const { assets, setAssets, setPlaceHolders } = useContext(AssetContext)
 
   const getAssets = async () => {
     try {
+      setPlaceHolders('asset')
       const queryParams = {}
       if (type === 'project') queryParams.projectId = itemId
       if (type === 'task') queryParams.taskId = itemId

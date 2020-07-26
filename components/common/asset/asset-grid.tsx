@@ -83,9 +83,9 @@ const AssetGrid = ({ activeView = 'grid', onFilesDataGet, toggleSelected, mode =
       <div className={styles['list-wrapper']}>
         {activeView === 'grid' &&
           <ul className={styles['grid-list']}>
-            {mode === 'assets' && assets.map((assetItem) => {
+            {mode === 'assets' && assets.map((assetItem, index) => {
               return (
-                <li className={styles['grid-item']} key={assetItem.asset.id}>
+                <li className={styles['grid-item']} key={assetItem.asset.id || index}>
                   <AssetThumbail
                     {...assetItem}
                     toggleSelected={() => toggleSelected(assetItem.asset.id)}
@@ -98,9 +98,9 @@ const AssetGrid = ({ activeView = 'grid', onFilesDataGet, toggleSelected, mode =
               )
             })}
 
-            {mode === 'folders' && folders.map((folder) => {
+            {mode === 'folders' && folders.map((folder, index) => {
               return (
-                <li className={styles['grid-item']} key={folder.id}>
+                <li className={styles['grid-item']} key={folder.id || index}>
                   <FolderGridItem {...folder} viewFolder={() => viewFolder(folder.id)} deleteFolder={() => deleteFolder(folder.id)} />
                 </li>
               )
@@ -111,7 +111,7 @@ const AssetGrid = ({ activeView = 'grid', onFilesDataGet, toggleSelected, mode =
           <ul className={'regular-list'}>
             {mode === 'assets' && assets.map((assetItem, index) => {
               return (
-                <li className={styles['regular-item']} key={assetItem.asset.id}>
+                <li className={styles['regular-item']} key={assetItem.asset.id || index}>
                   <ListItem
                     assetItem={assetItem}
                     index={index}
@@ -126,7 +126,7 @@ const AssetGrid = ({ activeView = 'grid', onFilesDataGet, toggleSelected, mode =
             })}
             {mode === 'folders' && folders.map((folder, index) => {
               return (
-                <li className={styles['grid-item']} key={folder.id}>
+                <li className={styles['grid-item']} key={folder.id || index}>
                   <FolderListItem {...folder} viewFolder={() => viewFolder(folder.id)} deleteFolder={() => deleteFolder(folder.id)} index={index} />
                 </li>
               )

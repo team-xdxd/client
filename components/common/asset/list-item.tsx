@@ -21,7 +21,8 @@ const ListItem = ({
     thumbailUrl,
     realUrl,
     isUploading,
-    isSelected = false
+    isSelected = false,
+    isLoading = false
   },
   index,
   toggleSelected = () => { },
@@ -63,42 +64,54 @@ const ListItem = ({
         }
         <div className={styles.item}>
           <div className={`${styles['selectable-wrapper']} ${isSelected && styles['selected-wrapper']}`}>
-            {isSelected ?
-              <IconClickable src={Utilities.radioButtonEnabled} additionalClass={styles['select-icon']} onClick={toggleSelected} />
-              :
-              <IconClickable src={Utilities.radioButtonNormal} additionalClass={styles['select-icon']} onClick={toggleSelected} />
+            {!isLoading &&
+              <>
+                {isSelected ?
+                  <IconClickable src={Utilities.radioButtonEnabled} additionalClass={styles['select-icon']} onClick={toggleSelected} />
+                  :
+                  <IconClickable src={Utilities.radioButtonNormal} additionalClass={styles['select-icon']} onClick={toggleSelected} />
+                }
+              </>
             }
           </div>
-          <div className={styles.thumbnail}>
-            <AssetImg thumbailUrl={thumbailUrl} type={asset.type} name={asset.name} />
+          <div className={`${styles.thumbnail} ${isLoading && 'loadable'}`}>
+            {asset.type === 'image' && <AssetImg assetImg={thumbailUrl} type={asset.type} name={asset.name} />}
+            {asset.type === 'video' &&
+              <video preload='metadata'>
+                <source src={realUrl}
+                  type={`video/${asset.extension}`} />
+              </video>
+            }
           </div>
-          <div className={styles.name} onClick={() => setVisibleOVerlay(true)}>
+          <div className={`${styles.name} ${isLoading && 'loadable'}`} onClick={() => setVisibleOVerlay(!isLoading)}>
             {asset.name}
           </div>
           <div className={styles.status}>
-            <StatusBadge status={asset.stage} />
+            {!isLoading && <StatusBadge status={asset.stage} />}
           </div>
-          <div className={styles.field_name}>
+          <div className={`${styles.field_name} ${isLoading && 'loadable'}`}>
             {asset.type}
           </div>
           <div className={styles.field_name}>
-            {asset.extension}
+            {!isLoading && asset.extension}
           </div>
           <div className={styles.field_name}>
             {asset.size && filesize(asset.size)}
           </div>
-          <div className={styles.field_name}>
+          <div className={`${styles.field_name} ${isLoading && 'loadable'}`}>
             {format(new Date(asset.createdAt), dateFormat)}
           </div>
-          <div>
-            <AssetOptions
-              asset={asset}
-              openArchiveAsset={openArchiveAsset}
-              openDeleteAsset={openDeleteAsset}
-              openMoveAsset={openMoveAsset}
-              realUrl={realUrl}
-            />
-          </div>
+          {!isLoading &&
+            <div>
+              <AssetOptions
+                asset={asset}
+                openArchiveAsset={openArchiveAsset}
+                openDeleteAsset={openDeleteAsset}
+                openMoveAsset={openMoveAsset}
+                realUrl={realUrl}
+              />
+            </div>
+          }
         </div>
       </div>
       {visibleOverlay &&

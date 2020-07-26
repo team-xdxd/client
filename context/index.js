@@ -28,7 +28,7 @@ export const AssetContext = createContext({
     setAssets: (assets) => { },
     folders: [],
     setFolders: (folders) => { },
-
+    setPlaceHolders: (type) => { },
     operationAsset: null,
     setOperationAsset: (asset) => { },
 
