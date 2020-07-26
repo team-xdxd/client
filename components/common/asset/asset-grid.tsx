@@ -147,13 +147,17 @@ const AssetGrid = ({ activeView = 'grid', onFilesDataGet, toggleSelected, mode =
               </>
 
               :
-              <div className={styles['button-wrapper']}>
-                <Button
-                  text='Load More'
-                  type='button'
-                  styleType='primary'
-                  onClick={loadMore} />
-              </div>
+              <>
+                {!assets[assets.length - 1].isLoading &&
+                  <div className={styles['button-wrapper']}>
+                    <Button
+                      text='Load More'
+                      type='button'
+                      styleType='primary'
+                      onClick={loadMore} />
+                  </div>
+                }
+              </>
             }
           </>
         }
