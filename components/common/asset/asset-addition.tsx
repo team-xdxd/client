@@ -39,7 +39,8 @@ const AssetAddition = ({
 						name: file.originalFile.name,
 						createdAt: new Date(),
 						size: file.originalFile.size,
-						stage: 'draft'
+						stage: 'draft',
+						type: 'image'
 					},
 					isUploading: true
 				})
@@ -48,10 +49,11 @@ const AssetAddition = ({
 			setAssets([...newPlaceholders, ...currentDataClone])
 			const { data } = await assetApi.uploadAssets(formData, getCreationParameters())
 			setAssets([...data, ...currentDataClone])
+			toastUtils.success('Assets uploaded.')
 		} catch (err) {
 			setAssets(currentDataClone)
 			console.log(err)
-			toastUtils.error('Could not upload files, please try again later.')
+			toastUtils.error('Could not upload assets, please try again later.')
 		}
 	}
 
@@ -65,7 +67,8 @@ const AssetAddition = ({
 						name: file.name,
 						createdAt: new Date(),
 						size: file.size,
-						stage: 'draft'
+						stage: 'draft',
+						type: 'image'
 					},
 					isUploading: true
 				})
@@ -73,11 +76,12 @@ const AssetAddition = ({
 			setAssets([...newPlaceholders, ...currentDataClone])
 			const { data } = await assetApi.importAssets('dropbox', files.map(file => ({ link: file.link, name: file.name })), getCreationParameters())
 			setAssets([...data, ...currentDataClone])
+			toastUtils.success('Assets imported.')
 		} catch (err) {
 			//TODO: Handle error
 			setAssets(currentDataClone)
 			console.log(err)
-			toastUtils.error('Could not upload files, please try again later.')
+			toastUtils.error('Could not import assets, please try again later.')
 		}
 	}
 
@@ -122,7 +126,8 @@ const AssetAddition = ({
 						name: file.name,
 						createdAt: new Date(),
 						size: file.sizeBytes,
-						stage: 'draft'
+						stage: 'draft',
+						type: 'image'
 					},
 					isUploading: true
 				})
@@ -136,10 +141,12 @@ const AssetAddition = ({
 				mimeType: file.mimeType
 			})), getCreationParameters())
 			setAssets([...data, ...currentDataClone])
+			toastUtils.success('Assets imported.')
 		} catch (err) {
+			//TODO: Handle error
 			setAssets(currentDataClone)
 			console.log(err)
-			toastUtils.error('Could not upload files, please try again later.')
+			toastUtils.error('Could not import assets, please try again later.')
 		}
 	}
 

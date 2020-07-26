@@ -3,7 +3,7 @@ import styles from './asset-img.module.css'
 import { Assets } from "../../../assets"
 import { useState } from 'react'
 
-const AssetImg = ({ assetImg, type = 'image', name }) => {
+const AssetImg = ({ assetImg, type = 'image', name, opaque = false }) => {
 
 	const [loaded, setLoaded] = useState(false)
 
@@ -14,7 +14,7 @@ const AssetImg = ({ assetImg, type = 'image', name }) => {
 	return (
 		<>
 			<img src={Assets.empty} alt={'blank'} style={loaded ? { display: "none" } : {}} />
-			<img src={finalImg} alt={name} className={styles.asset} onLoad={() => setLoaded(true)} style={loaded ? {} : {
+			<img src={finalImg} alt={name} className={`${styles.asset} ${opaque && styles.opaque}`} onLoad={() => setLoaded(true)} style={loaded ? {} : {
 				opacity: 0,
 				overflow: 'hidden',
 				height: 0,

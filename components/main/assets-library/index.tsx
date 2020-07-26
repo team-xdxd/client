@@ -24,7 +24,7 @@ const AssetsLibrary = () => {
     filterTags: []
   })
   const [activeView, setActiveView] = useState('grid')
-  const { assets, setAssets, folders, setFolders, setPlaceHolders } = useContext(AssetContext)
+  const { assets, setAssets, folders, setFolders, setPlaceHolders, nextPage } = useContext(AssetContext)
   const [activeMode, setActiveMode] = useState('assets')
   const [activeFolder, setActiveFolder] = useState('')
 
@@ -43,7 +43,8 @@ const AssetsLibrary = () => {
             name: file.originalFile.name,
             createdAt: new Date(),
             size: file.originalFile.size,
-            stage: 'draft'
+            stage: 'draft',
+            type: 'image'
           },
           isUploading: true
         })
@@ -52,10 +53,11 @@ const AssetsLibrary = () => {
       setAssets([...newPlaceholders, ...currentDataClone])
       const { data } = await assetApi.uploadAssets(formData, getCreationParameters())
       setAssets([...data, ...currentDataClone])
+      toastUtils.success('Assets upload.')
     } catch (err) {
       setAssets(currentDataClone)
       console.log(err)
-      toastUtils.error('Could not upload files, please try again later.')
+      toastUtils.error('Could not upload assets, please try again later.')
     }
   }
 
@@ -87,11 +89,12 @@ const AssetsLibrary = () => {
       })
   }, [activeFolder])
 
-  const getAssets = async () => {
+  const getAssets = async (replace = true) => {
     try {
-      setPlaceHolders('asset')
-      const { data } = await assetApi.getAssets({ ...getFilters(), ...getSort() })
-      setAssets(data.map(mapWithToggleSelection))
+      setPlaceHolders('asset', replace)
+      // await new Promise((resolve) => setTimeout(resolve, 2500))
+      const { data } = await assetApi.getAssets({ ...getFilters(replace), ...getSort() })
+      setAssets({ ...data, results: data.results.map(mapWithToggleSelection) }, replace)
       setFirstLoaded(true)
     } catch (err) {
       //TODO: Handle error
@@ -110,7 +113,7 @@ const AssetsLibrary = () => {
     }
   }
 
-  const getFilters = () => {
+  const getFilters = (replace) => {
     const filters = {}
     const { mainFilter, filterCampaigns, filterTags } = activeSortFilter
     if (mainFilter !== 'folders') {
@@ -137,6 +140,8 @@ const AssetsLibrary = () => {
     if (activeFolder) {
       filters.folderId = activeFolder
     }
+
+    filters.page = replace ? 1 : nextPage
     return filters
   }
 
@@ -234,6 +239,7 @@ const AssetsLibrary = () => {
             folders={folders}
             viewFolder={viewFolder}
             deleteFolder={deleteFolder}
+            loadMore={() => getAssets(false)}
           />
         </DropzoneProvider>
       </main>
