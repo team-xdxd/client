@@ -107,7 +107,9 @@ export const Status = {
 
 export const Assets = {
   file: require('./Icons/Project Type/Campaign/icn-projecttype-campaign.svg'),
-  folder: require('./Icons/Project Type/Campaign/icn-projecttype-campaign.svg'),
+  folder: require('./Icons/Assets/icn-utilities-movefolder2.svg'),
   empty: require('./general/empty.png'),
-  videoThumbnail: require('./general/thumbnail-video.png')
+  videoThumbnail: require('./general/thumbnail-video.png'),
+  dropbox: require('./Icons/Assets/Dropbox_Icon.svg'),
+  gdrive: require('./Icons/Assets/icons8-google-drive-1.svg'),
 }

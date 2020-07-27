@@ -41,9 +41,9 @@
       border-right: 1px solid var(--color-secondary-border);
   }
 
-  .option img {
-      width: 15px;
-      height: 15px;
+  .option .icon {
+      width: 25px;
+      height: 25px;
   }
 
   .back {

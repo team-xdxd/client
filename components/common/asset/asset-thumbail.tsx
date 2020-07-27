@@ -23,6 +23,7 @@ const AssetThumbail = ({
   openMoveAsset = () => { },
   openShareAsset = () => { },
   openArchiveAsset = () => { },
+  downloadAsset = () => { }
 }) => {
 
   const [visibleOverlay, setVisibleOVerlay] = useState(false)
@@ -45,7 +46,7 @@ const AssetThumbail = ({
               <p className={styles.uploading}>Uploading...</p>
             </>
           }
-          {asset.type === 'image' && <AssetImg assetImg={thumbailUrl} type={asset.type} name={asset.name} opaque={isUploading}/>}
+          {asset.type === 'image' && <AssetImg assetImg={thumbailUrl} type={asset.type} name={asset.name} opaque={isUploading} />}
           {asset.type === 'video' && <AssetVideo asset={asset} realUrl={realUrl} additionalClass={styles['video-wrapper']} />}
           {!isUploading && !isLoading &&
             <>
@@ -72,6 +73,7 @@ const AssetThumbail = ({
               openArchiveAsset={openArchiveAsset}
               openDeleteAsset={openDeleteAsset}
               openMoveAsset={openMoveAsset}
+              downloadAsset={downloadAsset}
               realUrl={realUrl}
             />
           </div>

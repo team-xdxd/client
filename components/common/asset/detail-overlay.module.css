@@ -4,17 +4,24 @@
   grid-template-columns: 1fr 25rem 60px;
 }
 
-.content,
-.side,
-.menu {
+.content, .side, .menu {
   height: 100vh;
   padding-top: 15px;
   padding-bottom: 15px;
 }
 
-.top-wrapper{
+.top-wrapper {
   display: flex;
   justify-content: space-between;
+}
+
+.top-wrapper .name {
+  display: flex;
+  align-items: center;
+}
+
+.top-wrapper .name h3 {
+  margin-right: 1rem;
 }
 
 .back {
@@ -61,12 +68,12 @@
   object-fit: scale-down;
 }
 
-.asset-actions{
+.asset-actions {
   display: flex;
   align-items: center;
 }
 
-.asset-actions button{
+.asset-actions button {
   margin-left: 0.5rem;
 }
 

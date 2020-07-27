@@ -11,15 +11,13 @@ const AssetSubheader = ({
   backToFolders,
   activeFolderData,
   activeFolder,
-  updateFolder,
+  setRenameModalOpen,
   getFolders
 }) => {
 
-  const [folderName, setFolderName] = useState(activeFolderData.name)
-
   return (
     <SubHeader pageTitle={activeFolderData ? activeFolderData.name : 'Asset Library'} additionalClass={styles['asset-subheader']}
-      editable={activeFolderData} titleOnchange={e => setFolderName(e.target.value)}
+      editable={activeFolderData} onAltEditionClick={() => setRenameModalOpen(true)} altEditionAction={true}
       PreComponent={activeFolderData ? () => (
         <div className={styles['additional-folder-wrapper']}>
           <div className={styles.back} onClick={backToFolders}>

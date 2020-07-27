@@ -29,7 +29,8 @@ const ListItem = ({
   openDeleteAsset = () => { },
   openMoveAsset = () => { },
   openShareAsset = () => { },
-  openArchiveAsset = () => { }
+  openArchiveAsset = () => { },
+  downloadAsset = () => { }
 }) => {
 
   const dateFormat = 'MMM do, yyyy h:mm a'
@@ -110,6 +111,7 @@ const ListItem = ({
                 openDeleteAsset={openDeleteAsset}
                 openMoveAsset={openMoveAsset}
                 realUrl={realUrl}
+                downloadAsset={downloadAsset}
               />
             </div>
           }

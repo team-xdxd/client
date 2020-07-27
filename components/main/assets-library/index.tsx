@@ -14,6 +14,7 @@ import AssetSubheader from './asset-subheader'
 import AssetGrid from '../../common/asset/asset-grid'
 import TopBar from './top-bar'
 import { DropzoneProvider } from '../../common/misc/dropzone'
+import RenameModal from '../../common/modals/rename-modal'
 
 const AssetsLibrary = () => {
 
@@ -31,6 +32,8 @@ const AssetsLibrary = () => {
   const [activeSearchOverlay, setActiveSearchOverlay] = useState(false)
 
   const [firstLoaded, setFirstLoaded] = useState(false)
+
+  const [renameModalOpen, setRenameModalOpen] = useState(false)
 
   const onFilesDataGet = async (files) => {
     const currentDataClone = [...assets]
@@ -53,7 +56,7 @@ const AssetsLibrary = () => {
       setAssets([...newPlaceholders, ...currentDataClone])
       const { data } = await assetApi.uploadAssets(formData, getCreationParameters())
       setAssets([...data, ...currentDataClone])
-      toastUtils.success('Assets upload.')
+      toastUtils.success('Assets uploaded.')
     } catch (err) {
       setAssets(currentDataClone)
       console.log(err)
@@ -179,24 +182,10 @@ const AssetsLibrary = () => {
     setActiveFolder(id)
   }
 
-  const updateFolder = async (name) => {
-    try {
-      await folderApi.updateFolder(activeFolder, { name })
-      const modFolderIndex = folders.find(folder => folder.id === activeFolder)
-      setFolders(update(folders, {
-        [modFolderIndex]: {
-          name: { $set: name }
-        }
-      }))
-    } catch (err) {
-      console.log(err)
-    }
-  }
-
   const deleteFolder = async (id) => {
     try {
       await folderApi.deleteFolder(id)
-      const modFolderIndex = folders.find(folder => folder.id === activeFolder)
+      const modFolderIndex = folders.findIndex(folder => folder.id === activeFolder)
       setFolders(update(folders, {
         $splice: [[modFolderIndex, 1]]
       }))
@@ -210,6 +199,22 @@ const AssetsLibrary = () => {
     setActiveSearchOverlay(false)
   }
 
+  const confirmFolderRename = async (newValue) => {
+    try {
+      await folderApi.updateFolder(activeFolder, { name: newValue })
+      const modFolderIndex = folders.findIndex(folder => folder.id === activeFolder)
+      setFolders(update(folders, {
+        [modFolderIndex]: {
+          name: { $set: newValue }
+        }
+      }))
+      toastUtils.success('Folder name updated')
+    } catch (err) {
+      console.log(err)
+      toastUtils.error('Could not update folder name')
+    }
+  }
+
   return (
     <>
       <AssetSubheader
@@ -218,7 +223,7 @@ const AssetsLibrary = () => {
         amountSelected={selectedAssets.length}
         activeFolderData={activeFolder && folders.find(folder => folder.id === activeFolder)}
         backToFolders={backToFolders}
-        updateFolder={updateFolder}
+        setRenameModalOpen={setRenameModalOpen}
       />
       <main className={`${styles.container}`}>
         <TopBar
@@ -244,7 +249,13 @@ const AssetsLibrary = () => {
         </DropzoneProvider>
       </main>
       <AssetOps />
-
+      <RenameModal
+        closeModal={() => setRenameModalOpen(false)}
+        modalIsOpen={renameModalOpen}
+        renameConfirm={confirmFolderRename}
+        type={'Folder'}
+        initialValue={activeFolder && folders.find(folder => folder.id === activeFolder).name}
+      />
       {activeSearchOverlay &&
         <SearchOverlay
           closeOverlay={closeSearchOverlay}

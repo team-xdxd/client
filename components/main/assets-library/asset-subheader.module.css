@@ -1,11 +1,12 @@
 .additional-folder-wrapper {
   position: relative;
+  margin-right: 4rem;
 }
 
 .additional-folder-wrapper h4 {
   position: absolute;
-  bottom: 1rem;
-  left: 1rem;
+  bottom: 0.4rem;
+  left: 4rem;
 }
 
 .asset-subheader button {
@@ -17,9 +18,10 @@
 }
 
 .back {
-  margin-right: 0.3rem;
-  color: var(--color-sec-ivory);
+  color: var(--color-sec-blue);
   font-size: 25px;
   font-family: monospace;
   cursor: pointer;
+  position: absolute;
+  bottom: 1rem;
 }

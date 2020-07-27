@@ -9,23 +9,14 @@ import ToggleableAbsoluteWrapper from '../misc/toggleable-absolute-wrapper'
 const AssetOptions = ({
 	realUrl,
 	asset,
+	downloadAsset,
 	openMoveAsset,
 	openArchiveAsset,
 	openDeleteAsset
 }) => {
-
+	// onClick={() => downloadUtils.downloadFile(realUrl, assetDetail.name)}
 	const options = [
-		{
-			OverrideComp: () => (
-				<li>
-					<a href={realUrl} download={asset.name}>
-						<span>
-							Download
-									</span>
-					</a>
-				</li>
-			)
-		},
+		{ label: 'Download', onClick: downloadAsset },
 		{ label: 'Comment', onClick: () => { } },
 		{ label: 'Move', onClick: openMoveAsset },
 		{ label: 'Archive', onClick: openArchiveAsset },

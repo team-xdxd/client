@@ -9,7 +9,9 @@ const SubHeader = ({
   children,
   editable = false,
   additionalClass = '',
-  PreComponent = null
+  PreComponent = null,
+  altEditionAction = false,
+  onAltEditionClick
 }) => {
   const inputRef = useRef()
   const resizeFn = () => { inputRef.current.style.width = ((pageTitle.length + 1) * 24) + 'px'; }
@@ -52,7 +54,7 @@ const SubHeader = ({
       {editable &&
         <>
           {!enabled ?
-            <img onClick={enableNameEdition} className={styles.edit} src={Utilities.editWhite} />
+            <img onClick={altEditionAction ? onAltEditionClick : enableNameEdition} className={styles.edit} src={Utilities.editWhite} />
             :
             <div onClick={cancelNameEdition} className={styles.x}>x</div>
           }
