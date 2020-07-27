@@ -10,9 +10,9 @@ import AssetImg from '../../common/asset/asset-img'
 import AssetVideo from '../../common/asset/asset-video'
 import DetailOverlay from '../../common/asset/detail-overlay'
 
-const SearchItem = ({ assetItem, term, openShareAsset, openDeleteAsset, isLoading = false }) => {
+const SearchItem = ({ assetItem, term, openShareAsset, openDeleteAsset }) => {
 
-  const { asset, thumbailUrl, realUrl } = assetItem
+  const { asset, thumbailUrl, realUrl, isLoading = false } = assetItem
   const [visibleOverlay, setVisibleOVerlay] = useState(false)
 
   return (

@@ -12,6 +12,7 @@
 
 .name {
   width: 45%;
+  position: relative;
 }
 
 .campaign {
@@ -20,6 +21,7 @@
 
 .extension {
   width: 7%;
+  position: relative;
 }
 
 .folder {
