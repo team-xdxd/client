@@ -7,9 +7,10 @@ import { useState } from 'react'
 
 // Components
 import AssetImg from '../../common/asset/asset-img'
+import AssetVideo from '../../common/asset/asset-video'
 import DetailOverlay from '../../common/asset/detail-overlay'
 
-const SearchItem = ({ assetItem, term, openShareAsset, openDeleteAsset }) => {
+const SearchItem = ({ assetItem, term, openShareAsset, openDeleteAsset, isLoading = false }) => {
 
   const { asset, thumbailUrl, realUrl } = assetItem
   const [visibleOverlay, setVisibleOVerlay] = useState(false)
@@ -18,11 +19,12 @@ const SearchItem = ({ assetItem, term, openShareAsset, openDeleteAsset }) => {
     <>
       <li
         className={'search-item'}
-        onClick={() => setVisibleOVerlay(true)}>
-        <div className={styles['image-wrapper']}>
-          <AssetImg type={asset.type} name={asset.name} thumbailUrl={thumbailUrl} />
+        onClick={() => !isLoading ? setVisibleOVerlay(true) : () => { }}>
+        <div className={`${styles['image-wrapper']} ${isLoading && 'loadable'}`}>
+          {asset.type === 'image' && <AssetImg assetImg={thumbailUrl} type={asset.type} name={asset.name} />}
+          {asset.type === 'video' && <AssetVideo asset={asset} realUrl={realUrl} additionalClass={styles['video-wrapper']} />}
         </div>
-        <div className={styles.name}>
+        <div className={`${styles.name} ${isLoading && 'loadable'}`}>
           <Highlighter
             highlightClassName={'search-highlight'}
             searchWords={[term]}
@@ -31,14 +33,16 @@ const SearchItem = ({ assetItem, term, openShareAsset, openDeleteAsset }) => {
           />
         </div>
         <div className={styles.campaign}>
-          <Highlighter
-            highlightClassName={'search-highlight'}
-            searchWords={[term]}
-            autoEscape={true}
-            textToHighlight={getAssociatedCampaigns(asset)}
-          />
+          {!isLoading &&
+            <Highlighter
+              highlightClassName={'search-highlight'}
+              searchWords={[term]}
+              autoEscape={true}
+              textToHighlight={getAssociatedCampaigns(asset)}
+            />
+          }
         </div>
-        <div className={styles.extension}>
+        <div className={`${styles.extension} ${isLoading && 'loadable'}`}>
           <Highlighter
             highlightClassName={'search-highlight'}
             searchWords={[term]}
@@ -47,12 +51,14 @@ const SearchItem = ({ assetItem, term, openShareAsset, openDeleteAsset }) => {
           />
         </div>
         <div className={styles.folder}>
-          <Highlighter
-            highlightClassName={'search-highlight'}
-            searchWords={[term]}
-            autoEscape={true}
-            textToHighlight={asset.folder?.name || 'No Folder'}
-          />
+          {!isLoading &&
+            <Highlighter
+              highlightClassName={'search-highlight'}
+              searchWords={[term]}
+              autoEscape={true}
+              textToHighlight={asset.folder?.name || 'No Folder'}
+            />
+          }
         </div>
       </li >
       {visibleOverlay &&

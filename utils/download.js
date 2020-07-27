@@ -1,6 +1,5 @@
 import JSZip from 'jszip'
 import { saveAs } from 'file-saver'
-import axios from 'axios'
 
 export default {
 	zipAndDownload: (assets, name) => {
@@ -23,6 +22,10 @@ export default {
 			}, (e) => {
 				console.log(e)
 			});
+	},
+
+	downloadFile: (realUrl, name) => {
+		saveAs(realUrl, name);
 	}
 }
 

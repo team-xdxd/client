@@ -12,6 +12,7 @@ import SimpleButton from '../buttons/simple-button'
 import ToggleAbleAbsoluteWrapper from '../misc/toggleable-absolute-wrapper'
 import DriveSelector from '../asset/drive-selector'
 import FolderModal from '../folder/folder-modal'
+import IconClickable from '../buttons/icon-clickable'
 
 const AssetAddition = ({
 	activeFolder = '',
@@ -161,13 +162,13 @@ const AssetAddition = ({
 			label: 'Dropbox',
 			text: 'Import files',
 			onClick: openDropboxSelector,
-			icon: Assets.file
+			icon: Assets.dropbox
 		},
 		{
 			label: 'Google Drive',
 			text: 'Import files',
 			onClick: () => { },
-			icon: Assets.file,
+			icon: Assets.gdrive,
 			CustomContent: ({ children }) => (
 				<DriveSelector
 					onFilesSelect={onDriveFilesSelection}
@@ -215,7 +216,7 @@ const AssetAddition = ({
 			return (
 				<li className={styles.option}
 					onClick={option.onClick}>
-					<img src={option.icon} />
+					<IconClickable src={option.icon} additionalClass={styles.icon}/>
 					<div className={styles['option-label']}>{option.label}</div>
 					<div className={styles['option-text']}>{option.text}</div>
 				</li>

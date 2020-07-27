@@ -5,6 +5,7 @@ import { useEffect, useContext, useState } from 'react'
 import { AssetContext } from '../../../context'
 import toastUtils from '../../../utils/toast'
 import { Waypoint } from 'react-waypoint'
+import downloadUtils from '../../../utils/download'
 
 // Components
 import FolderGridItem from '../folder/folder-grid-item'
@@ -76,6 +77,11 @@ const AssetGrid = ({ activeView = 'grid', onFilesDataGet, toggleSelected, mode =
     setActiveOperation(operation)
   }
 
+  const downloadAsset = (assetItem) => {
+    downloadUtils.downloadFile(assetItem.realUrl, assetItem.asset.name)
+  }
+
+
   return (
     <section className={styles.container}>
       {((assets.length === 0 && folders.length === 0) || isDragging) &&
@@ -97,6 +103,7 @@ const AssetGrid = ({ activeView = 'grid', onFilesDataGet, toggleSelected, mode =
                     openDeleteAsset={() => openDeleteAsset(assetItem.asset.id)}
                     openMoveAsset={() => beginAssetOperation(assetItem, 'move')}
                     openShareAsset={() => beginAssetOperation(assetItem, 'share')}
+                    downloadAsset={() => downloadAsset(assetItem)}
                   />
                 </li>
               )
@@ -124,6 +131,7 @@ const AssetGrid = ({ activeView = 'grid', onFilesDataGet, toggleSelected, mode =
                     openDeleteAsset={() => openDeleteAsset(assetItem.asset.id)}
                     openMoveAsset={() => beginAssetOperation(assetItem, 'move')}
                     openShareAsset={() => beginAssetOperation(assetItem, 'share')}
+                    downloadAsset={() => downloadAsset(assetItem)}
                   />
                 </li>
               )

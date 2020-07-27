@@ -2,21 +2,24 @@ import { useState, useContext, useEffect } from 'react'
 import { AssetContext } from '../../../context'
 import styles from './index.module.css'
 import assetApi from '../../../server-api/asset'
+import { Waypoint } from 'react-waypoint'
 
 // Components
 import Search from '../../common/inputs/search'
 import SearchItem from './search-item'
+import Button from '../../common/buttons/button'
 
 const SearchOverlayAssets = ({ closeOverlay }) => {
 
-  const { assets, setAssets, setActiveOperation, setOperationAsset } = useContext(AssetContext)
+  const { assets, setAssets, setActiveOperation, setOperationAsset, setPlaceHolders, nextPage } = useContext(AssetContext)
   const [term, setTerm] = useState('')
 
-  const getData = async (inputTerm) => {
+  const getData = async (inputTerm, replace = true) => {
     setTerm(inputTerm)
     try {
-      const { data } = await assetApi.getAssets({ term: inputTerm })
-      setAssets(data)
+      setPlaceHolders('asset', replace)
+      const { data } = await assetApi.getAssets({ term: inputTerm, page: replace ? 1 : nextPage })
+      setAssets(data, replace)
     } catch (err) {
       // TODO: Handle this error
       console.log(err)
@@ -61,6 +64,30 @@ const SearchOverlayAssets = ({ closeOverlay }) => {
             />
           ))}
         </ul>
+        {assets.length > 0 && nextPage !== -1 &&
+          <>
+            {nextPage > 2 ?
+              <>
+                {!assets[assets.length - 1].isLoading &&
+                  <Waypoint onEnter={() => getData(term, false)} fireOnRapidScroll={false} />
+                }
+              </>
+
+              :
+              <>
+                {!assets[assets.length - 1].isLoading &&
+                  <div className={styles['button-wrapper']}>
+                    <Button
+                      text='Load More'
+                      type='button'
+                      styleType='primary'
+                      onClick={() => getData(term, false)} />
+                  </div>
+                }
+              </>
+            }
+          </>
+        }
       </div>
     </div >
   )
