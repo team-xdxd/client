@@ -9,6 +9,7 @@ import tagApi from '../../../server-api/tag'
 import SectionButton from '../../common/buttons/section-button'
 import NestedSelect from '../../common/inputs/nested-select'
 import Select from '../../common/inputs/select'
+import Button from '../../common/buttons/button'
 
 const TopBar = ({
   activeSortFilter,
@@ -16,6 +17,7 @@ const TopBar = ({
   setActiveSortFilter,
   activeView,
   setActiveView,
+  selectAll,
   activeFolder
 }) => {
 
@@ -75,6 +77,7 @@ const TopBar = ({
         ))}
       </div>
       <div className={styles['sec-filters']}>
+        {activeSortFilter.mainFilter !== 'folders' && <Button type='button' text='Select All' styleType='primary' onClick={selectAll} />}
         <img src={Utilities.gridView} onClick={() => setActiveView('grid')} />
         <img src={Utilities.listView} onClick={() => setActiveView('list')} />
         <div className={styles['nested-wrapper']}>

@@ -166,6 +166,10 @@ const AssetsLibrary = () => {
     }))
   }
 
+  const selectAll = () => {
+    setAssets(assets.map(assetItem => ({ ...assetItem, isSelected: true })))
+  }
+
   const mapWithToggleSelection = asset => ({ ...asset, toggleSelected })
 
   const backToFolders = () => {
@@ -233,6 +237,7 @@ const AssetsLibrary = () => {
           setActiveView={setActiveView}
           activeFolder={activeFolder}
           setActiveSearchOverlay={() => setActiveSearchOverlay(true)}
+          selectAll={selectAll}
         />
         <DropzoneProvider>
           <AssetGrid
