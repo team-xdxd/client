@@ -65,10 +65,10 @@ const DetailOverlay = ({ asset, realUrl, closeOverlay, openShareAsset = () => { 
         {
           name: { $set: editedName }
         }))
-      toastUtils.success('Folder name updated')
+      toastUtils.success('Asset name updated')
     } catch (err) {
       console.log(err)
-      toastUtils.error('Could not update folder name')
+      toastUtils.error('Could not update asset name')
     }
   }
 

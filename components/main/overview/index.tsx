@@ -27,6 +27,8 @@ const Overview = () => {
 
   const { user } = useContext(UserContext)
 
+  const DEFAULT_DATE = (new Date()).toISOString()
+
   const openCreateOVerlay = (type) => {
     setCreateVisible(true)
     setCreateType(type)
@@ -58,7 +60,7 @@ const Overview = () => {
 
   const getCampaigns = async () => {
     try {
-      const { data } = await campaignApi.getCampaigns()
+      const { data } = await campaignApi.getCampaigns({ fromDate: DEFAULT_DATE })
       setCampaigns(data)
     } catch (err) {
       // TODO: Display error or something
@@ -67,7 +69,7 @@ const Overview = () => {
 
   const getProjects = async () => {
     try {
-      const { data } = await projectApi.getProjects()
+      const { data } = await projectApi.getProjects({ fromDate: DEFAULT_DATE })
       setProjects(data)
     } catch (err) {
       // TODO: Display error or something
@@ -76,7 +78,7 @@ const Overview = () => {
 
   const getTasks = async () => {
     try {
-      const { data } = await taskApi.getTasks()
+      const { data } = await taskApi.getTasks({ fromDate: DEFAULT_DATE })
       setTasks(data)
     } catch (err) {
       // TODO: Display error or something

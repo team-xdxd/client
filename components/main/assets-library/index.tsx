@@ -19,7 +19,7 @@ import RenameModal from '../../common/modals/rename-modal'
 const AssetsLibrary = () => {
 
   const [activeSortFilter, setActiveSortFilter] = useState({
-    sort: selectOptions.sort[0],
+    sort: selectOptions.sort[1],
     mainFilter: 'all',
     filterCampaigns: [],
     filterTags: []
