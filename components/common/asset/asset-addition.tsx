@@ -182,7 +182,7 @@ const AssetAddition = ({
 	if (folderAdd) {
 		dropdownOptions.unshift({
 			label: 'Add Folder',
-			text: 'Orgnanized Files',
+			text: 'Organized Files',
 			onClick: () => setActiveModal('folder'),
 			icon: Assets.folder
 		})
