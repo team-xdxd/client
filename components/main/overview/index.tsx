@@ -6,6 +6,7 @@ import campaignApi from '../../../server-api/campaign'
 import projectApi from '../../../server-api/project'
 import taskApi from '../../../server-api/task'
 import update from 'immutability-helper'
+import { startOfDay } from 'date-fns'
 
 // Components
 import OverviewSubHeader from './overview-subheader'
@@ -27,7 +28,7 @@ const Overview = () => {
 
   const { user } = useContext(UserContext)
 
-  const DEFAULT_DATE = (new Date()).toISOString()
+  const DEFAULT_DATE = startOfDay(new Date()).toISOString()
 
   const openCreateOVerlay = (type) => {
     setCreateVisible(true)
