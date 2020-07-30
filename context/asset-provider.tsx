@@ -27,6 +27,9 @@ export default ({ children }) => {
 
     const [activeOperation, setActiveOperation] = useState('')
 
+    const [activeFolder, setActiveFolder] = useState('')
+    const [activePageMode, setActivePageMode] = useState('')
+
     const [nextPage, setNextPage] = useState(1)
     const [totalAssets, setTotalAssets] = useState(0)
 
@@ -76,7 +79,11 @@ export default ({ children }) => {
         operationAsset,
         setOperationAsset,
         operationFolder,
-        setOperationFolder
+        setOperationFolder,
+        activeFolder,
+        setActiveFolder,
+        activePageMode,
+        setActivePageMode
     }
     return (
         <AssetContext.Provider value={assetsValue}>

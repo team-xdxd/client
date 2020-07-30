@@ -10,6 +10,7 @@ export default {
     }
   }),
   getAssets: (queryData = {}) => axios.get(`${assetUrl}?${querystring.encode(queryData)}`),
+  copyAssets: ({ idList, folderId }) => axios.post(`${assetUrl}/copy`, { idList, folderId }),
   getRealUrl: (assetId) => axios.get(`${assetUrl}/${assetId}/real-url`),
   importAssets: (provider, assetData, queryData) => axios.post(`${assetUrl}/import/${provider}?${querystring.encode(queryData)}`, assetData),
   updateMultiple: (updateData) => axios.patch(`${assetUrl}`, updateData),

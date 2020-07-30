@@ -38,5 +38,11 @@ export const AssetContext = createContext({
     setOperationFolder: (folder) => { },
 
     activeOperation: '',
-    setActiveOperation: (op) => { }
+    setActiveOperation: (op) => { },
+
+    activeFolder: '',
+    setActiveFolder: (folderId) => { },
+
+    activePageMode: '',
+    setActivePageMode: (mode) => { }
 })

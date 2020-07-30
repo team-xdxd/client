@@ -26,9 +26,19 @@ const AssetsLibrary = () => {
     filterTags: []
   })
   const [activeView, setActiveView] = useState('grid')
-  const { assets, setAssets, folders, setFolders, setPlaceHolders, nextPage } = useContext(AssetContext)
+  const {
+    assets,
+    setAssets,
+    folders,
+    setFolders,
+    setPlaceHolders,
+    nextPage,
+    activeFolder,
+    setActiveFolder,
+    activeOperation,
+    activePageMode,
+    setActivePageMode } = useContext(AssetContext)
   const [activeMode, setActiveMode] = useState('assets')
-  const [activeFolder, setActiveFolder] = useState('')
 
   const [activeSearchOverlay, setActiveSearchOverlay] = useState(false)
 
@@ -75,6 +85,7 @@ const AssetsLibrary = () => {
   }
 
   useEffect(() => {
+    setActivePageMode('library')
     if (activeSortFilter.mainFilter === 'folders') {
       setActiveMode('folders')
       getFolders()

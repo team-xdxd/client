@@ -102,6 +102,7 @@ const AssetGrid = ({ activeView = 'grid', onFilesDataGet, toggleSelected, mode =
                     openArchiveAsset={() => openArchiveAsset(assetItem.asset.id)}
                     openDeleteAsset={() => openDeleteAsset(assetItem.asset.id)}
                     openMoveAsset={() => beginAssetOperation(assetItem, 'move')}
+                    openCopyAsset={() => beginAssetOperation(assetItem, 'copy')}
                     openShareAsset={() => beginAssetOperation(assetItem, 'share')}
                     downloadAsset={() => downloadAsset(assetItem)}
                   />

@@ -21,6 +21,7 @@ const AssetThumbail = ({
   toggleSelected = () => { },
   openDeleteAsset = () => { },
   openMoveAsset = () => { },
+  openCopyAsset = () => { },
   openShareAsset = () => { },
   openArchiveAsset = () => { },
   downloadAsset = () => { }
@@ -73,6 +74,7 @@ const AssetThumbail = ({
               openArchiveAsset={openArchiveAsset}
               openDeleteAsset={openDeleteAsset}
               openMoveAsset={openMoveAsset}
+              openCopyAsset={openCopyAsset}
               downloadAsset={downloadAsset}
               realUrl={realUrl}
             />

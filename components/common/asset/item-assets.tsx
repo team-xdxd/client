@@ -12,7 +12,7 @@ import { DropzoneProvider } from '../misc/dropzone'
 
 const ItemAssets = ({ type, itemId }) => {
 
-  const { assets, setAssets, setPlaceHolders, nextPage } = useContext(AssetContext)
+  const { assets, setAssets, setPlaceHolders, nextPage, setActiveFolder, setActivePageMode } = useContext(AssetContext)
 
   const getAssets = async (replace = true) => {
     try {
@@ -32,6 +32,8 @@ const ItemAssets = ({ type, itemId }) => {
   }
 
   useEffect(() => {
+    setActivePageMode('item')
+    setActiveFolder('')
     getAssets()
   }, [])
 

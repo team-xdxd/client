@@ -11,6 +11,7 @@ const AssetOptions = ({
 	asset,
 	downloadAsset,
 	openMoveAsset,
+	openCopyAsset,
 	openArchiveAsset,
 	openDeleteAsset
 }) => {
@@ -19,6 +20,7 @@ const AssetOptions = ({
 		{ label: 'Download', onClick: downloadAsset },
 		{ label: 'Comment', onClick: () => { } },
 		{ label: 'Move', onClick: openMoveAsset },
+		{ label: 'Copy', onClick: openCopyAsset },
 		{ label: 'Archive', onClick: openArchiveAsset },
 		{ label: 'Delete', onClick: openDeleteAsset }
 	]
