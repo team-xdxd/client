@@ -24,6 +24,7 @@
 
 .sec-filters {
   display: flex;
+  align-items: center;
 }
 
 .multifilter-wrapper {
