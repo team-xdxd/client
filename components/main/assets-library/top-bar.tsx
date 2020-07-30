@@ -53,7 +53,8 @@ const TopBar = ({
     setActiveSortFilter({
       ...activeSortFilter,
       filterCampaigns: selectData[0],
-      filterTags: selectData[1],
+      filterChannels: selectData[1],
+      filterTags: selectData[2],
     })
   }
 
@@ -84,6 +85,11 @@ const TopBar = ({
                 options: campaignsFilter,
                 placeholder: 'Campaigns',
                 value: activeSortFilter.filterCampaigns
+              },
+              {
+                options: selectOptions.channels,
+                placeholder: 'Channels',
+                value: activeSortFilter.filterChannels
               },
               {
                 options: tagsFilter,
