@@ -22,6 +22,7 @@ const AssetsLibrary = () => {
     sort: selectOptions.sort[1],
     mainFilter: 'all',
     filterCampaigns: [],
+    filterChannels: [],
     filterTags: []
   })
   const [activeView, setActiveView] = useState('grid')
@@ -118,7 +119,7 @@ const AssetsLibrary = () => {
 
   const getFilters = (replace) => {
     const filters = {}
-    const { mainFilter, filterCampaigns, filterTags } = activeSortFilter
+    const { mainFilter, filterCampaigns, filterTags, filterChannels } = activeSortFilter
     if (mainFilter !== 'folders') {
       if (mainFilter === 'images') {
         filters.type = 'image'
@@ -134,6 +135,10 @@ const AssetsLibrary = () => {
 
     if (filterCampaigns?.length > 0) {
       filters.campaigns = filterCampaigns.map(camp => camp.value).join(',')
+    }
+
+    if (filterChannels?.length > 0) {
+      filters.channels = filterChannels.map(channel => channel.value).join(',')
     }
 
     if (filterTags?.length > 0) {

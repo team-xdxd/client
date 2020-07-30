@@ -53,5 +53,28 @@ export default {
       name: 'archived',
       ommitFolder: true
     }
+  ],
+
+  channels: [
+    {
+      label: 'Email',
+      value: 'email'
+    },
+    {
+      label: 'Social',
+      value: 'social'
+    },
+    {
+      label: 'Ads',
+      value: 'ads'
+    },
+    {
+      label: 'Articles',
+      value: 'articles'
+    },
+    {
+      label: 'Banners',
+      value: 'banners'
+    }
   ]
 }
