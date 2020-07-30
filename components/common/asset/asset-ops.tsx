@@ -22,11 +22,13 @@ export default () => {
 		operationAsset,
 		setOperationAsset,
 		operationFolder,
-		setOperationFolder
+		setOperationFolder,
+		activeFolder,
+		activePageMode
 	} = useContext(AssetContext)
 
 	useEffect(() => {
-		if (activeOperation === 'move') {
+		if (activeOperation === 'move' || activeOperation === 'copy') {
 			getFolders()
 		}
 	}, [activeOperation])
@@ -64,6 +66,9 @@ export default () => {
 
 			await assetApi.updateMultiple(updateAssets)
 			closeModalAndClearOpAsset()
+			if (activeFolder && activeFolder !== selectedFolder) {
+				removeSelectedFromList()
+			}
 			toastUtils.success('Assets moved successfully')
 		} catch (err) {
 			console.log(err)
@@ -85,19 +90,7 @@ export default () => {
 			}
 
 			await assetApi.updateMultiple(updateAssets)
-			if (!operationAsset) {
-				const newAssets = assets.filter(existingAsset => {
-					const searchedAssetIndex = selectedAssets.findIndex(assetListItem => existingAsset.asset.id === assetListItem.asset.id)
-					return searchedAssetIndex === -1
-				})
-
-				setAssets(newAssets)
-			} else {
-				const assetIndex = assets.findIndex(assetItem => assetItem.asset.id === operationAsset.asset.id)
-				setAssets(update(assets, {
-					$splice: [[assetIndex, 1]]
-				}))
-			}
+			removeSelectedFromList()
 			closeModalAndClearOpAsset()
 			toastUtils.success('Assets archived successfully')
 		} catch (err) {
@@ -150,16 +143,75 @@ export default () => {
 		}
 	}
 
+	const copyAssets = async (selectedFolder) => {
+		try {
+			let copyAssetIds
+			if (!operationAsset) {
+				copyAssetIds = selectedAssets.map(selectedAsset => selectedAsset.asset.id)
+			} else {
+				copyAssetIds = [operationAsset.asset.id]
+			}
+
+			const { data } = await assetApi.copyAssets({ idList: copyAssetIds, folderId: selectedFolder })
+			closeModalAndClearOpAsset()
+			toastUtils.success('Assets copied successfully')
+			if (!activeFolder && activePageMode === 'library') {
+				setAssets(update(assets, { $unshift: data }))
+			}
+		} catch (err) {
+			console.log(err)
+			toastUtils.error('Could not copy assets, please try again later.')
+		}
+	}
+
+	const createFolder = async (newFolderName) => {
+		try {
+			const { data } = await folderApi.createFolder({ name: newFolderName })
+			setFolders(update(folders, { $push: [data] }))
+		} catch (err) {
+			console.log(err)
+			toastUtils.error('Could not create folder, please try again later.')
+		}
+	}
+
+	const removeSelectedFromList = () => {
+		if (!operationAsset) {
+			const newAssets = assets.filter(existingAsset => {
+				const searchedAssetIndex = selectedAssets.findIndex(assetListItem => existingAsset.asset.id === assetListItem.asset.id)
+				return searchedAssetIndex === -1
+			})
+
+			setAssets(newAssets)
+		} else {
+			const assetIndex = assets.findIndex(assetItem => assetItem.asset.id === operationAsset.asset.id)
+			setAssets(update(assets, {
+				$splice: [[assetIndex, 1]]
+			}))
+		}
+	}
+
 	const operationLength = operationAsset ? 1 : selectedAssets.length
+
+	const filteredFolders = folders.filter(folder => folder.id !== activeFolder)
 
 	return (
 		<>
 			<MoveModal
 				modalIsOpen={activeOperation === 'move'}
-				folders={folders}
+				folders={filteredFolders}
 				closeModal={closeModalAndClearOpAsset}
 				itemsAmount={operationLength}
 				moveAssets={moveAssets}
+				createFolder={createFolder}
+			/>
+			<MoveModal
+				modalIsOpen={activeOperation === 'copy'}
+				folders={filteredFolders}
+				closeModal={closeModalAndClearOpAsset}
+				itemsAmount={operationLength}
+				moveAssets={copyAssets}
+				confirmText={'Copy'}
+				createFolder={createFolder}
 			/>
 			<ShareModal
 				modalIsOpen={activeOperation === 'share'}
