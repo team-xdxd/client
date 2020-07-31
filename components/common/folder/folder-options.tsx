@@ -8,14 +8,16 @@ import ToggleableAbsoluteWrapper from '../misc/toggleable-absolute-wrapper'
 
 const FolderOptions = ({
 	downloadFoldercontents,
-	setDeleteOpen
+	setDeleteOpen,
+	shareAssets
 }) => {
 
 	const options = [
 		// { label: 'Edit', onClick: editFolder },
 		{ label: 'Download', onClick: downloadFoldercontents },
 		// { label: 'Archive', onClick: archiveFolder },
-		{ label: 'Delete', onClick: () => setDeleteOpen(true) }
+		{ label: 'Delete', onClick: () => setDeleteOpen(true) },
+		{ label: 'Share', onClick: shareAssets }
 	]
 
 	return (

@@ -13,7 +13,8 @@ const AssetOptions = ({
 	openMoveAsset,
 	openCopyAsset,
 	openArchiveAsset,
-	openDeleteAsset
+	openDeleteAsset,
+	openShareAsset
 }) => {
 	// onClick={() => downloadUtils.downloadFile(realUrl, assetDetail.name)}
 	const options = [
@@ -22,7 +23,8 @@ const AssetOptions = ({
 		{ label: 'Move', onClick: openMoveAsset },
 		{ label: 'Copy', onClick: openCopyAsset },
 		{ label: 'Archive', onClick: openArchiveAsset },
-		{ label: 'Delete', onClick: openDeleteAsset }
+		{ label: 'Delete', onClick: openDeleteAsset },
+		{ label: 'Share', onClick: openShareAsset }
 	]
 
 	const filteredOptions = options.filter(option => asset.stage !== 'archived' || (asset.stage === 'archived' && option.label !== 'Archive'))

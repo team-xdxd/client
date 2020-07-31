@@ -32,7 +32,7 @@ const FolderModal = ({ modalIsOpen, closeModal, onSubmit }) => {
                 <Input
                   type='text'
                   placeholder='Name Your Folder'
-                  styleType='regular'
+                  styleType='regular-short'
                 />
               }
               name='name'
