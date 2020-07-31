@@ -27,7 +27,7 @@ const ShareItem = ({
 		<>
 			<div className={styles.container}>
 				<div className={styles['image-wrapper']}>
-					<AssetImg thumbailUrl={thumbailUrl} type={asset.type} name={asset.name} />
+					<AssetImg assetImg={thumbailUrl} type={asset.type} name={asset.name} />
 					<div className={styles['image-button-wrapper']}>
 						<Button styleType={'primary'} text={'View Details'} type={'button'}
 							onClick={() => setVisibleOVerlay(true)} />

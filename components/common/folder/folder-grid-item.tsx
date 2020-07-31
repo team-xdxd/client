@@ -18,7 +18,8 @@ const FolderGridItem = ({
 	assets,
 	viewFolder,
 	isLoading = false,
-	deleteFolder = (id) => { }
+	deleteFolder = (id) => { },
+	shareAssets = (folder) => { }
 }) => {
 
 	const previews = [1, 2, 3, 4]
@@ -56,6 +57,7 @@ const FolderGridItem = ({
 					<FolderOptions
 						downloadFoldercontents={downloadFoldercontents}
 						setDeleteOpen={setDeleteOpen}
+						shareAssets={shareAssets}
 					/>
 				</div>
 			</div>

@@ -29,6 +29,7 @@ const ListItem = ({
   openDeleteAsset = () => { },
   openMoveAsset = () => { },
   openShareAsset = () => { },
+  openCopyAsset = () => { },
   openArchiveAsset = () => { },
   downloadAsset = () => { }
 }) => {
@@ -112,6 +113,8 @@ const ListItem = ({
                 openMoveAsset={openMoveAsset}
                 realUrl={realUrl}
                 downloadAsset={downloadAsset}
+                openShareAsset={openShareAsset}
+                openCopyAsset={openCopyAsset}
               />
             </div>
           }

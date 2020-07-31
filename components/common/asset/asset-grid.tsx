@@ -6,6 +6,7 @@ import { AssetContext } from '../../../context'
 import toastUtils from '../../../utils/toast'
 import { Waypoint } from 'react-waypoint'
 import downloadUtils from '../../../utils/download'
+import assetsApi from '../../../server-api/asset'
 
 // Components
 import FolderGridItem from '../folder/folder-grid-item'
@@ -16,17 +17,13 @@ import AssetUpload from './asset-upload'
 import ConfirmModal from '../modals/confirm-modal'
 import Button from '../buttons/button'
 
-import assetsApi from '../../../server-api/asset'
-import asset from '../../../server-api/asset'
-
-
 const AssetGrid = ({ activeView = 'grid', onFilesDataGet, toggleSelected, mode = 'assets', activeSortFilter = {}, folders = [],
   deleteFolder = (id) => { },
   loadMore = () => { },
   viewFolder = (id) => { } }) => {
 
   const isDragging = useDropzone()
-  const { assets, setAssets, setActiveOperation, setOperationAsset, nextPage } = useContext(AssetContext)
+  const { assets, setAssets, setActiveOperation, setOperationAsset, nextPage, setOperationFolder } = useContext(AssetContext)
 
   const [deleteModalOpen, setDeleteModalOpen] = useState(false)
   const [archiveModalOpen, setArchiveModalOpen] = useState(false)
@@ -72,8 +69,9 @@ const AssetGrid = ({ activeView = 'grid', onFilesDataGet, toggleSelected, mode =
     }
   }
 
-  const beginAssetOperation = (asset, operation) => {
-    setOperationAsset(asset)
+  const beginAssetOperation = ({ asset = null, folder = null }, operation) => {
+    if (asset) setOperationAsset(asset)
+    if (folder) setOperationFolder(folder)
     setActiveOperation(operation)
   }
 
@@ -101,9 +99,9 @@ const AssetGrid = ({ activeView = 'grid', onFilesDataGet, toggleSelected, mode =
                     toggleSelected={() => toggleSelected(assetItem.asset.id)}
                     openArchiveAsset={() => openArchiveAsset(assetItem.asset.id)}
                     openDeleteAsset={() => openDeleteAsset(assetItem.asset.id)}
-                    openMoveAsset={() => beginAssetOperation(assetItem, 'move')}
-                    openCopyAsset={() => beginAssetOperation(assetItem, 'copy')}
-                    openShareAsset={() => beginAssetOperation(assetItem, 'share')}
+                    openMoveAsset={() => beginAssetOperation({ asset: assetItem }, 'move')}
+                    openCopyAsset={() => beginAssetOperation({ asset: assetItem }, 'copy')}
+                    openShareAsset={() => beginAssetOperation({ asset: assetItem }, 'share')}
                     downloadAsset={() => downloadAsset(assetItem)}
                   />
                 </li>
@@ -113,7 +111,10 @@ const AssetGrid = ({ activeView = 'grid', onFilesDataGet, toggleSelected, mode =
             {mode === 'folders' && folders.map((folder, index) => {
               return (
                 <li className={styles['grid-item']} key={folder.id || index}>
-                  <FolderGridItem {...folder} viewFolder={() => viewFolder(folder.id)} deleteFolder={() => deleteFolder(folder.id)} />
+                  <FolderGridItem {...folder}
+                    viewFolder={() => viewFolder(folder.id)}
+                    deleteFolder={() => deleteFolder(folder.id)}
+                    shareAssets={() => beginAssetOperation({ folder }, 'share')} />
                 </li>
               )
             })}
@@ -130,8 +131,9 @@ const AssetGrid = ({ activeView = 'grid', onFilesDataGet, toggleSelected, mode =
                     toggleSelected={() => toggleSelected(assetItem.asset.id)}
                     openArchiveAsset={() => openArchiveAsset(assetItem.asset.id)}
                     openDeleteAsset={() => openDeleteAsset(assetItem.asset.id)}
-                    openMoveAsset={() => beginAssetOperation(assetItem, 'move')}
-                    openShareAsset={() => beginAssetOperation(assetItem, 'share')}
+                    openMoveAsset={() => beginAssetOperation({ asset: assetItem }, 'move')}
+                    openCopyAsset={() => beginAssetOperation({ asset: assetItem }, 'copy')}
+                    openShareAsset={() => beginAssetOperation({ asset: assetItem }, 'share')}
                     downloadAsset={() => downloadAsset(assetItem)}
                   />
                 </li>
@@ -140,7 +142,10 @@ const AssetGrid = ({ activeView = 'grid', onFilesDataGet, toggleSelected, mode =
             {mode === 'folders' && folders.map((folder, index) => {
               return (
                 <li className={styles['grid-item']} key={folder.id || index}>
-                  <FolderListItem {...folder} viewFolder={() => viewFolder(folder.id)} deleteFolder={() => deleteFolder(folder.id)} index={index} />
+                  <FolderListItem {...folder}
+                    viewFolder={() => viewFolder(folder.id)}
+                    deleteFolder={() => deleteFolder(folder.id)} index={index}
+                    shareAssets={() => beginAssetOperation({ folder }, 'share')} />
                 </li>
               )
             })}

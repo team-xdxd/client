@@ -76,6 +76,7 @@ const AssetThumbail = ({
               openMoveAsset={openMoveAsset}
               openCopyAsset={openCopyAsset}
               downloadAsset={downloadAsset}
+              openShareAsset={openShareAsset}
               realUrl={realUrl}
             />
           </div>

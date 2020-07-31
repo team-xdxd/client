@@ -85,7 +85,7 @@ const DetailOverlay = ({ asset, realUrl, closeOverlay, openShareAsset = () => { 
               <h3>
                 {assetDetail.name}
               </h3>
-              <IconClickable src={Utilities.edit} onClick={() => setRenameModalOpen(true)} />
+              {!isShare && <IconClickable src={Utilities.edit} onClick={() => setRenameModalOpen(true)} />}
             </div>
             <div className={styles['asset-actions']}>
               {!isShare &&

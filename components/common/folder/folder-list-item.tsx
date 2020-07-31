@@ -18,7 +18,8 @@ const FolderListItem = ({
 	assets,
 	viewFolder,
 	isLoading = false,
-	deleteFolder = (id) => { }
+	deleteFolder = (id) => { },
+	shareAssets = (folder) => { }
 }) => {
 
 	const dateFormat = 'MMM do, yyyy h:mm a'
@@ -54,6 +55,7 @@ const FolderListItem = ({
 						<div>
 							<FolderOptions
 								downloadFoldercontents={downloadFoldercontents}
+								shareAssets={shareAssets}
 								setDeleteOpen={setDeleteOpen}
 							/>
 						</div>

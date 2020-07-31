@@ -47,6 +47,7 @@ export default () => {
 	const closeModalAndClearOpAsset = () => {
 		setActiveOperation('')
 		setOperationAsset(null)
+		setOperationFolder(null)
 	}
 
 	const selectedAssets = assets.filter(asset => asset.isSelected)
@@ -130,10 +131,20 @@ export default () => {
 
 	const shareAssets = async (recipients, message) => {
 		try {
+			let assetIds
+			if (operationAsset) {
+				assetIds = operationAsset.asset.id
+			}
+			else if (operationFolder) {
+				assetIds = operationFolder.assets.map(asset => asset.id).join(',')
+			}
+			else {
+				assetIds = selectedAssets.map(assetItem => assetItem.asset.id).join(',')
+			}
 			await assetApi.generateAndSendShareUrl({
 				recipients,
 				message,
-				assetIds: !operationAsset ? selectedAssets.map(assetItem => assetItem.asset.id).join(',') : operationAsset.asset.id
+				assetIds
 			})
 			toastUtils.success('Assets shared succesfully')
 			closeModalAndClearOpAsset()
@@ -190,7 +201,16 @@ export default () => {
 		}
 	}
 
-	const operationLength = operationAsset ? 1 : selectedAssets.length
+	let operationLength = 0
+	if (operationAsset) {
+		operationLength = 1
+	}
+	else if (operationFolder) {
+		operationLength = operationFolder.assets.length
+	}
+	else {
+		operationLength = selectedAssets.length
+	}
 
 	const filteredFolders = folders.filter(folder => folder.id !== activeFolder)
 
