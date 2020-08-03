@@ -86,16 +86,17 @@ const AssetGrid = ({ activeView = 'grid', onFilesDataGet, toggleSelected, mode =
     downloadUtils.downloadFile(assetItem.realUrl, assetItem.asset.name)
   }
 
+  const shouldShowUpload = (mode === 'assets' && assets.length === 0) || (mode === 'folders' && folders.length === 0)
 
   return (
     <section className={styles.container}>
-      {(((mode === 'assets' && assets.length === 0) || (mode === 'folders' && folders.length === 0)) || isDragging) &&
+      {(shouldShowUpload || isDragging) &&
         <AssetUpload
           onDragText={'Drop files here to upload'}
-          preDragText={assets.length === 0 ? `Drag and drop your files here to upload (png, jpg, gif or mp4)` : ''}
+          preDragText={shouldShowUpload ? `Drag and drop your files here to upload (png, jpg, gif or mp4)` : ''}
           onFilesDataGet={onFilesDataGet} />
       }
-      {(activeSearchOverlay || assets.length === 0) &&
+      {shouldShowUpload &&
         <AssetAddition
           displayMode='regular'
           folderAdd={false}
