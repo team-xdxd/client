@@ -33,6 +33,10 @@ export default ({ children }) => {
     const [nextPage, setNextPage] = useState(1)
     const [totalAssets, setTotalAssets] = useState(0)
 
+    const [needsFetch, setNeedsFetch] = useState('')
+
+    const [addedIds, setAddedIds] = useState([])
+
     const setPlaceHolders = (type, replace = true) => {
         if (type === 'asset') {
             if (replace)
@@ -83,7 +87,11 @@ export default ({ children }) => {
         activeFolder,
         setActiveFolder,
         activePageMode,
-        setActivePageMode
+        setActivePageMode,
+        needsFetch,
+        setNeedsFetch,
+        addedIds,
+        setAddedIds
     }
     return (
         <AssetContext.Provider value={assetsValue}>

@@ -10,5 +10,6 @@ export default {
   updateTask: (id, data) => axios.patch(`${taskUrl}/${id}`, data),
   deleteTask: (id) => axios.delete(`${taskUrl}/${id}`),
   addTag: (id, data) => axios.post(`${taskUrl}/${id}/tags`, data),
-  removeTag: (id, tagId) => axios.delete(`${taskUrl}/${id}/tags/${tagId}`)
+  removeTag: (id, tagId) => axios.delete(`${taskUrl}/${id}/tags/${tagId}`),
+  associateAssets: (id, { assetIds }) => axios.patch(`${taskUrl}/${id}/assets`, {assetIds})
 }

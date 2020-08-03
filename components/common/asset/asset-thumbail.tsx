@@ -69,16 +69,18 @@ const AssetThumbail = ({
           <div className='normal-text'>{asset.name}</div>
           <div className={styles['details-wrapper']}>
             <div className='secondary-text'>{format(new Date(asset.createdAt), 'MMM d, yyyy, p')}</div>
-            <AssetOptions
-              asset={asset}
-              openArchiveAsset={openArchiveAsset}
-              openDeleteAsset={openDeleteAsset}
-              openMoveAsset={openMoveAsset}
-              openCopyAsset={openCopyAsset}
-              downloadAsset={downloadAsset}
-              openShareAsset={openShareAsset}
-              realUrl={realUrl}
-            />
+            {!isUploading &&
+              <AssetOptions
+                asset={asset}
+                openArchiveAsset={openArchiveAsset}
+                openDeleteAsset={openDeleteAsset}
+                openMoveAsset={openMoveAsset}
+                openCopyAsset={openCopyAsset}
+                downloadAsset={downloadAsset}
+                openShareAsset={openShareAsset}
+                realUrl={realUrl}
+              />
+            }
           </div>
         </div>
       </div>

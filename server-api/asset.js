@@ -19,6 +19,7 @@ export default {
   getById: id => axios.get(`${assetUrl}/${id}`),
   updateAsset: (id, { updateData, associations = {} }) => axios.patch(`${assetUrl}/${id}`, { updateData, associations }),
   deleteAsset: id => axios.delete(`${assetUrl}/${id}`),
+  deleteMultipleAssets: ({ assetIds }) => axios.delete(`${assetUrl}`, { data: { assetIds } }),
   addTag: (id, data) => axios.post(`${assetUrl}/${id}/tags`, data),
   removeTag: (id, tagId) => axios.delete(`${assetUrl}/${id}/tags/${tagId}`)
 }

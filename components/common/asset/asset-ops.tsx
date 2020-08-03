@@ -102,11 +102,8 @@ export default () => {
 
 	const deleteSelectedAssets = async () => {
 		try {
-
 			if (!operationAsset) {
-				const deletePromises = selectedAssets.map(assetItem => assetApi.deleteAsset(assetItem.asset.id))
-				await Promise.all(deletePromises)
-
+				await assetApi.deleteMultipleAssets({ assetIds: selectedAssets.map(assetItem => assetItem.asset.id) })
 				const newAssets = assets.filter(existingAsset => {
 					const searchedAssetIndex = selectedAssets.findIndex(assetListItem => existingAsset.asset.id === assetListItem.asset.id)
 					return searchedAssetIndex === -1

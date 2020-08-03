@@ -9,6 +9,7 @@ import downloadUtils from '../../../utils/download'
 import assetsApi from '../../../server-api/asset'
 
 // Components
+import AssetAddition from './asset-addition'
 import FolderGridItem from '../folder/folder-grid-item'
 import FolderListItem from '../folder/folder-list-item'
 import AssetThumbail from './asset-thumbail'
@@ -19,6 +20,10 @@ import Button from '../buttons/button'
 
 const AssetGrid = ({ activeView = 'grid', onFilesDataGet, toggleSelected, mode = 'assets', activeSortFilter = {}, folders = [],
   deleteFolder = (id) => { },
+  activeFolder = '',
+  type = '',
+  itemId = '',
+  getFolders = () => { },
   loadMore = () => { },
   viewFolder = (id) => { } }) => {
 
@@ -28,6 +33,8 @@ const AssetGrid = ({ activeView = 'grid', onFilesDataGet, toggleSelected, mode =
   const [deleteModalOpen, setDeleteModalOpen] = useState(false)
   const [archiveModalOpen, setArchiveModalOpen] = useState(false)
   const [activeAssetId, setActiveAssetId] = useState('')
+
+  const [activeSearchOverlay, setActiveSearchOverlay] = useState(false)
 
   const openArchiveAsset = id => {
     setActiveAssetId(id)
@@ -82,11 +89,23 @@ const AssetGrid = ({ activeView = 'grid', onFilesDataGet, toggleSelected, mode =
 
   return (
     <section className={styles.container}>
-      {((assets.length === 0 && folders.length === 0) || isDragging) &&
+      {(((mode === 'assets' && assets.length === 0) || (mode === 'folders' && folders.length === 0)) || isDragging) &&
         <AssetUpload
           onDragText={'Drop files here to upload'}
-          preDragText={assets.length === 0 ? `Drag and drop your files here to upload` : ''}
+          preDragText={assets.length === 0 ? `Drag and drop your files here to upload (png, jpg, gif or mp4)` : ''}
           onFilesDataGet={onFilesDataGet} />
+      }
+      {(activeSearchOverlay || assets.length === 0) &&
+        <AssetAddition
+          displayMode='regular'
+          folderAdd={false}
+          activeFolder={activeFolder}
+          getFolders={getFolders}
+          type={type}
+          itemId={itemId}
+          activeSearchOverlay={activeSearchOverlay}
+          setActiveSearchOverlay={setActiveSearchOverlay}
+        />
       }
       <div className={styles['list-wrapper']}>
         {activeView === 'grid' &&

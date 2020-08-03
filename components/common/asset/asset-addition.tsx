@@ -5,36 +5,49 @@ import { AssetContext } from '../../../context'
 import toastUtils from '../../../utils/toast'
 import cookiesUtils from '../../../utils/cookies'
 import assetApi from '../../../server-api/asset'
+import taskApi from '../../../server-api/task'
+import projectApi from '../../../server-api/project'
 import folderApi from '../../../server-api/folder'
 
 // Components
+import SearchOverlay from '../../main/search-overlay-assets'
 import SimpleButton from '../buttons/simple-button'
 import ToggleAbleAbsoluteWrapper from '../misc/toggleable-absolute-wrapper'
 import DriveSelector from '../asset/drive-selector'
 import FolderModal from '../folder/folder-modal'
 import IconClickable from '../buttons/icon-clickable'
 
+const ALLOWED_TYPES = 'image/png, image/jpeg, image/gif, video/mp4'
+
 const AssetAddition = ({
 	activeFolder = '',
 	getFolders = () => { },
+	activeSearchOverlay = false,
+	setActiveSearchOverlay = (active) => { },
 	folderAdd = true,
 	type = '',
-	itemId = ''
+	itemId = '',
+	displayMode = 'dropdown'
 }) => {
 
 	const fileBrowserRef = useRef(undefined)
+	const folderBrowserRef = useRef(undefined)
 
 	const [activeModal, setActiveModal] = useState('')
 	const [submitError, setSubmitError] = useState('')
 
-	const { assets, setAssets } = useContext(AssetContext)
+	const { assets, setAssets, setNeedsFetch, setAddedIds, activePageMode } = useContext(AssetContext)
 
 	const onFilesDataGet = async (files) => {
 		const currentDataClone = [...assets]
 		try {
+			let needsFolderFetch
 			const formData = new FormData()
 			const newPlaceholders = []
-			files.forEach(file => {
+			files.filter(file => ALLOWED_TYPES.includes(file.originalFile.type)).forEach(file => {
+				if (file.originalFile.name.includes('/')) {
+					needsFolderFetch = true
+				}
 				newPlaceholders.push({
 					asset: {
 						name: file.originalFile.name,
@@ -45,12 +58,17 @@ const AssetAddition = ({
 					},
 					isUploading: true
 				})
-				formData.append('asset', file.originalFile)
+				formData.append('asset', file.path || file.originalFile)
 			})
 			setAssets([...newPlaceholders, ...currentDataClone])
 			const { data } = await assetApi.uploadAssets(formData, getCreationParameters())
-			setAssets([...data, ...currentDataClone])
-			toastUtils.success('Assets uploaded.')
+			if (needsFolderFetch) {
+				setNeedsFetch('folders')
+			} else {
+				setAssets([...data, ...currentDataClone])
+				setAddedIds(data.map(assetItem => assetItem.asset.id))
+			}
+			toastUtils.success(`${data.length} Asset(s) uploaded.`)
 		} catch (err) {
 			setAssets(currentDataClone)
 			console.log(err)
@@ -151,12 +169,40 @@ const AssetAddition = ({
 		}
 	}
 
+	const onLibraryImport = async () => {
+		try {
+			const assetIds = assets.filter(asset => asset.isSelected).map(assetItem => assetItem.asset.id)
+			if (type === 'project') {
+				await projectApi.associateAssets(itemId, { assetIds })
+			} else if (type === 'task') {
+				await taskApi.associateAssets(itemId, { assetIds })
+			}
+			closeSearchOverlay()
+			toastUtils.success('Assets imported successfully')
+		} catch (err) {
+			console.log(err)
+			closeSearchOverlay()
+			toastUtils.error('Could not import Assets. Please try again later')
+		}
+	}
+
+	const closeSearchOverlay = () => {
+		setNeedsFetch('assets')
+		setActiveSearchOverlay(false)
+	}
+
 	const dropdownOptions = [
 		{
 			label: 'Upload',
 			text: 'png, jpg, gif or mp4',
 			onClick: () => fileBrowserRef.current.click(),
 			icon: Assets.file
+		},
+		{
+			label: 'Upload',
+			text: 'folder',
+			onClick: () => folderBrowserRef.current.click(),
+			icon: Assets.folder
 		},
 		{
 			label: 'Dropbox',
@@ -188,6 +234,15 @@ const AssetAddition = ({
 		})
 	}
 
+	if (activePageMode !== 'library') {
+		dropdownOptions.unshift({
+			label: 'Asset Library',
+			text: 'Import from library',
+			onClick: () => setActiveSearchOverlay(true),
+			icon: Assets.asset
+		})
+	}
+
 	const getCreationParameters = () => {
 		const queryData = {}
 		if (activeFolder) {
@@ -216,7 +271,7 @@ const AssetAddition = ({
 			return (
 				<li className={styles.option}
 					onClick={option.onClick}>
-					<IconClickable src={option.icon} additionalClass={styles.icon}/>
+					<IconClickable src={option.icon} additionalClass={styles.icon} />
 					<div className={styles['option-label']}>{option.label}</div>
 					<div className={styles['option-text']}>{option.text}</div>
 				</li>
@@ -224,7 +279,7 @@ const AssetAddition = ({
 		}
 
 		return (
-			<ul className={styles['options-list']}>
+			<ul className={`${styles['options-list']} ${styles[displayMode]}`}>
 				{dropdownOptions.map(option => (
 					<>
 						{option.CustomContent ?
@@ -243,16 +298,29 @@ const AssetAddition = ({
 	return (
 		<>
 			<input multiple={true} id="file-input-id" ref={fileBrowserRef} style={{ display: 'none' }} type='file'
-				onChange={onFileChange} accept='image/png, image/jpeg, image/gif, video/mp4' />
-			<ToggleAbleAbsoluteWrapper
-				Wrapper={SimpleButtonWrapper}
-				Content={DropDownOptions}
-			/>
+				onChange={onFileChange} accept={ALLOWED_TYPES} />
+			<input multiple={true} webkitdirectory='' webkitRelativePath='' id="file-input-id" ref={folderBrowserRef} style={{ display: 'none' }} type='file'
+				onChange={onFileChange} accept={ALLOWED_TYPES} />
+			{displayMode === 'dropdown' ?
+				<ToggleAbleAbsoluteWrapper
+					Wrapper={SimpleButtonWrapper}
+					Content={DropDownOptions}
+				/>
+				:
+				<DropDownOptions />
+			}
 			<FolderModal
 				modalIsOpen={activeModal === 'folder'}
 				closeModal={() => setActiveModal('')}
 				onSubmit={onSubmit}
 			/>
+			{activeSearchOverlay &&
+				<SearchOverlay
+					closeOverlay={closeSearchOverlay}
+					importAssets={onLibraryImport}
+					importEnabled={true}
+				/>
+			}
 		</>
 	)
 }

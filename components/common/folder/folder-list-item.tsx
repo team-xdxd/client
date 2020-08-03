@@ -18,7 +18,7 @@ const FolderListItem = ({
 	assets,
 	viewFolder,
 	isLoading = false,
-	deleteFolder = (id) => { },
+	deleteFolder = () => { },
 	shareAssets = (folder) => { }
 }) => {
 
@@ -64,7 +64,10 @@ const FolderListItem = ({
 			</div>
 			<ConfirmModal
 				closeModal={() => setDeleteOpen(false)}
-				confirmAction={deleteFolder}
+				confirmAction={() => {
+					deleteFolder()
+					setDeleteOpen(false)
+				}}
 				confirmText={'Delete'}
 				message={'Are you sure you want to delete this folder?'}
 				modalIsOpen={deleteOpen}

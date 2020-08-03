@@ -104,7 +104,7 @@ const ListItem = ({
           <div className={`${styles.field_name} ${isLoading && 'loadable'}`}>
             {format(new Date(asset.createdAt), dateFormat)}
           </div>
-          {!isLoading &&
+          {!isLoading && !isUploading &&
             <div>
               <AssetOptions
                 asset={asset}

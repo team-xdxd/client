@@ -62,7 +62,7 @@
     border-top: 1px solid var(--color-secondary-border);
     cursor: pointer;
     font-weight: 500;
-    font-size: 12px;
+    font-size: 13px;
 }
 
 .search-item:last-child {
