@@ -44,5 +44,11 @@ export const AssetContext = createContext({
     setActiveFolder: (folderId) => { },
 
     activePageMode: '',
-    setActivePageMode: (mode) => { }
+    setActivePageMode: (mode) => { },
+
+    needsFetch: '',
+    setNeedsFetch: (type) => { },
+
+    addedIds: [],
+    setAddedIds: (idList) => { }
 })

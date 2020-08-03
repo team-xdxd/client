@@ -4,6 +4,10 @@
   position: relative;
 }
 
+.image-wrapper.image-selectable{
+  margin-left: 10px;
+}
+
 .image-wrapper>img, .image-wrapper>.video-wrapper {
   width: inherit;
   height: inherit;
@@ -13,6 +17,11 @@
 .name {
   width: 45%;
   position: relative;
+  cursor: pointer;
+}
+
+.name:hover {
+  opacity: 0.5;
 }
 
 .campaign {
@@ -26,4 +35,15 @@
 
 .folder {
   width: 15%;
+}
+
+
+
+.search-item {
+  cursor: default;
+}
+
+.search-item .select-icon {
+  width: 25px;
+  height: auto;
 }

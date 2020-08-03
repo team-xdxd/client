@@ -1,5 +1,5 @@
 import styles from './item-subheader.module.css'
-import { useContext } from 'react'
+import { useContext, useState } from 'react'
 import Router from 'next/router'
 import { AssetContext } from '../../../context'
 import Link from 'next/link'
@@ -23,6 +23,7 @@ const ItemSubHeader = ({
   itemId = ''
 }) => {
   const { assets } = useContext(AssetContext)
+  const [activeSearchOverlay, setActiveSearchOverlay] = useState(false)
   const selectedAssets = assets.filter(asset => asset.isSelected)
   return (
     <SubHeader
@@ -37,12 +38,17 @@ const ItemSubHeader = ({
         }
       </div>
 
-      {selectedAssets.length > 0 ?
+      {!activeSearchOverlay && selectedAssets.length > 0 ?
         <AssetHeaderOps />
         :
         <>
           {hasAssets &&
-            <AssetAddition folderAdd={false} type={type} itemId={itemId} />
+            <AssetAddition
+              folderAdd={false}
+              type={type}
+              itemId={itemId}
+              activeSearchOverlay={activeSearchOverlay}
+              setActiveSearchOverlay={setActiveSearchOverlay} />
           }
           <button className={styles['draft-action']} onClick={() => Router.replace('/main/overview')}>
             Cancel

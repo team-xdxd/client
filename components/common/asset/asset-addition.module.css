@@ -2,16 +2,23 @@
       position: relative;
   }
 
-  .button-wrapper-displaced{
+  .button-wrapper-displaced {
       margin-right: 1rem;
   }
 
   .options-list {
       position: absolute;
       display: flex;
-      right: 0;
       z-index: 300;
   }
+
+  .options-list.regular {
+      bottom: 1rem;
+  }
+
+  .options-list.dropdown {
+    right: 0;
+}
 
   .option {
       background-color: white;

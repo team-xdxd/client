@@ -12,7 +12,7 @@ import { DropzoneProvider } from '../misc/dropzone'
 
 const ItemAssets = ({ type, itemId }) => {
 
-  const { assets, setAssets, setPlaceHolders, nextPage, setActiveFolder, setActivePageMode } = useContext(AssetContext)
+  const { assets, setAssets, setPlaceHolders, nextPage, setActiveFolder, setActivePageMode, addedIds, needsFetch, setNeedsFetch } = useContext(AssetContext)
 
   const getAssets = async (replace = true) => {
     try {
@@ -20,6 +20,9 @@ const ItemAssets = ({ type, itemId }) => {
       const queryParams = {}
       if (type === 'project') queryParams.projectId = itemId
       if (type === 'task') queryParams.taskId = itemId
+      if (addedIds.length > 0) {
+        queryParams.excludeIds = addedIds.join(',')
+      }
       queryParams.page = replace ? 1 : nextPage
       const { data } = await assetApi.getAssets(queryParams)
       setAssets(data, replace)
@@ -36,6 +39,13 @@ const ItemAssets = ({ type, itemId }) => {
     setActiveFolder('')
     getAssets()
   }, [])
+
+  useEffect(() => {
+    if (needsFetch === 'assets') {
+      getAssets()
+      setNeedsFetch('')
+    }
+  }, [needsFetch])
 
   const onFilesDataGet = async (files) => {
     const currentDataClone = [...assets]
@@ -84,6 +94,8 @@ const ItemAssets = ({ type, itemId }) => {
           toggleSelected={toggleSelected}
           loadMore={() => getAssets(false)}
           mode='assets'
+          type={type}
+          itemId={itemId}
         />
       </div>
       <AssetOps />

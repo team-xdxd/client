@@ -35,9 +35,12 @@ const AssetsLibrary = () => {
     nextPage,
     activeFolder,
     setActiveFolder,
-    activeOperation,
-    activePageMode,
-    setActivePageMode } = useContext(AssetContext)
+    setActivePageMode,
+    needsFetch,
+    setNeedsFetch,
+    addedIds,
+    setAddedIds
+  } = useContext(AssetContext)
   const [activeMode, setActiveMode] = useState('assets')
 
   const [activeSearchOverlay, setActiveSearchOverlay] = useState(false)
@@ -45,44 +48,6 @@ const AssetsLibrary = () => {
   const [firstLoaded, setFirstLoaded] = useState(false)
 
   const [renameModalOpen, setRenameModalOpen] = useState(false)
-
-  const onFilesDataGet = async (files) => {
-    const currentDataClone = [...assets]
-    try {
-      const formData = new FormData()
-      const newPlaceholders = []
-      files.forEach(file => {
-        newPlaceholders.push({
-          asset: {
-            name: file.originalFile.name,
-            createdAt: new Date(),
-            size: file.originalFile.size,
-            stage: 'draft',
-            type: 'image'
-          },
-          isUploading: true
-        })
-        formData.append('asset', file.originalFile)
-      })
-      setAssets([...newPlaceholders, ...currentDataClone])
-      const { data } = await assetApi.uploadAssets(formData, getCreationParameters())
-      setAssets([...data, ...currentDataClone])
-      toastUtils.success('Assets uploaded.')
-    } catch (err) {
-      setAssets(currentDataClone)
-      console.log(err)
-      toastUtils.error('Could not upload assets, please try again later.')
-    }
-  }
-
-  const getCreationParameters = () => {
-    const queryData = {}
-    if (activeFolder) {
-      queryData.folderId = activeFolder
-    }
-
-    return queryData
-  }
 
   useEffect(() => {
     setActivePageMode('library')
@@ -104,8 +69,70 @@ const AssetsLibrary = () => {
       })
   }, [activeFolder])
 
+  useEffect(() => {
+    if (needsFetch === 'assets') {
+      getAssets()
+    } else if (needsFetch === 'folders') {
+      getFolders()
+    }
+    setNeedsFetch('')
+  }, [needsFetch])
+
+  const onFilesDataGet = async (files) => {
+    const currentDataClone = [...assets]
+    try {
+      const formData = new FormData()
+      const newPlaceholders = []
+      files.forEach(file => {
+        let { originalFile } = file
+        newPlaceholders.push({
+          asset: {
+            name: originalFile.name,
+            createdAt: new Date(),
+            size: originalFile.size,
+            stage: 'draft',
+            type: 'image'
+          },
+          isUploading: true
+        })
+        const { path, type, size } = originalFile
+        if (path.includes('/')) {
+          originalFile = new File([originalFile.slice(0, size, type)],
+            path.substring(1, path.length)
+            , { type })
+        }
+        formData.append('asset', originalFile)
+      })
+      setAssets([...newPlaceholders, ...currentDataClone])
+      const { data } = await assetApi.uploadAssets(formData, getCreationParameters())
+      if (activeMode === 'folders') {
+        setNeedsFetch('folders')
+      } else {
+        setAddedIds(data.map(assetItem => assetItem.asset.id))
+        setAssets([...data, ...currentDataClone])
+      }
+      toastUtils.success(`${data.length} Asset(s) uploaded.`)
+    } catch (err) {
+      setAssets(currentDataClone)
+      console.log(err)
+      toastUtils.error('Could not upload assets, please try again later.')
+    }
+  }
+
+  const getCreationParameters = () => {
+    const queryData = {}
+    if (activeFolder) {
+      queryData.folderId = activeFolder
+    }
+
+    return queryData
+  }
+
   const getAssets = async (replace = true) => {
     try {
+      if (replace) {
+        setAddedIds([])
+      }
       setPlaceHolders('asset', replace)
       // await new Promise((resolve) => setTimeout(resolve, 2500))
       const { data } = await assetApi.getAssets({ ...getFilters(replace), ...getSort() })
@@ -160,6 +187,10 @@ const AssetsLibrary = () => {
       filters.folderId = activeFolder
     }
 
+    if (!replace && addedIds.length > 0) {
+      filters.excludeIds = addedIds.join(',')
+    }
+
     filters.page = replace ? 1 : nextPage
     return filters
   }
@@ -205,7 +236,7 @@ const AssetsLibrary = () => {
   const deleteFolder = async (id) => {
     try {
       await folderApi.deleteFolder(id)
-      const modFolderIndex = folders.findIndex(folder => folder.id === activeFolder)
+      const modFolderIndex = folders.findIndex(folder => folder.id === id)
       setFolders(update(folders, {
         $splice: [[modFolderIndex, 1]]
       }))
@@ -257,6 +288,8 @@ const AssetsLibrary = () => {
         />
         <DropzoneProvider>
           <AssetGrid
+            activeFolder={activeFolder}
+            getFolders={getFolders}
             activeView={activeView}
             activeSortFilter={activeSortFilter}
             onFilesDataGet={onFilesDataGet}

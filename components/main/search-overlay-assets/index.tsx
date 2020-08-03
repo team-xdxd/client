@@ -3,13 +3,14 @@ import { AssetContext } from '../../../context'
 import styles from './index.module.css'
 import assetApi from '../../../server-api/asset'
 import { Waypoint } from 'react-waypoint'
+import update from 'immutability-helper'
 
 // Components
 import Search from '../../common/inputs/search'
 import SearchItem from './search-item'
 import Button from '../../common/buttons/button'
 
-const SearchOverlayAssets = ({ closeOverlay }) => {
+const SearchOverlayAssets = ({ closeOverlay, importEnabled = false, importAssets = () => { } }) => {
 
   const { assets, setAssets, setActiveOperation, setOperationAsset, setPlaceHolders, nextPage } = useContext(AssetContext)
   const [term, setTerm] = useState('')
@@ -35,6 +36,17 @@ const SearchOverlayAssets = ({ closeOverlay }) => {
     setActiveOperation(operation)
   }
 
+  const toggleSelected = (id) => {
+    const assetIndex = assets.findIndex(assetItem => assetItem.asset.id === id)
+    setAssets(update(assets, {
+      [assetIndex]: {
+        isSelected: { $set: !assets[assetIndex].isSelected }
+      }
+    }))
+  }
+
+  const selectedAssets = assets.filter(asset => asset.isSelected)
+
   return (
     <div className={`app-overlay search-container`}>
       <div className={'search-top'}>
@@ -45,7 +57,7 @@ const SearchOverlayAssets = ({ closeOverlay }) => {
       </div>
       <div className={'search-content'}>
         <h2 >
-          Search Assets
+          {`Search ${importEnabled ? 'and Import ' : ''}Assets`}
         </h2>
         <div className={'search-cont'}>
           <Search
@@ -53,10 +65,21 @@ const SearchOverlayAssets = ({ closeOverlay }) => {
             onSubmit={(inputTerm) => getData(inputTerm)}
           />
         </div>
+        <div className={styles['import-wrapper']}>
+          <Button
+            text='Import Assets'
+            type='button'
+            disabled={selectedAssets.length === 0}
+            onClick={importAssets}
+            styleType='primary'
+          />
+        </div>
         <ul>
           {assets.map((assetItem, index) => (
             <SearchItem
               key={index}
+              enabledSelect={importEnabled}
+              toggleSelected={() => toggleSelected(assetItem.asset.id)}
               assetItem={assetItem}
               term={term}
               openShareAsset={() => beginAssetOperation(assetItem, 'share')}
