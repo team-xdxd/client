@@ -1,0 +1,84 @@
+.month-year {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  font-weight: 600;
+  margin-bottom: 1rem;
+}
+
+.arrow {
+  font-family: monospace;
+  font-size: 22px;
+  cursor: pointer;
+}
+
+.calendar {
+  width: 75%;
+}
+
+.day-of-week,
+.date-grid {
+  display: grid;
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+  grid-template-rows: 1fr;
+}
+
+.day-of-week > * {
+  font-weight: 700;
+  text-align: center;
+}
+
+/* Dates */
+.date-grid {
+  width: 100%;
+}
+
+.day-of-week div,
+.day {
+  height: var(--day-calendar-width);
+}
+
+.day-of-week div {
+  color: var(--color-sec-blue);
+}
+
+.day {
+  font-weight: 600;
+  color: var(--color-sec-blue);
+  cursor: pointer;
+}
+
+.same-month {
+  color: var(--color-prim-navy);
+}
+
+.same-week {
+  background-color: var(--color-sec-lightblue);
+}
+
+.week-start,
+.week-start .day-wrapper {
+  border-bottom-left-radius: 50%;
+  border-top-left-radius: 50%;
+}
+
+.week-end,
+.week-end .day-wrapper {
+  border-bottom-right-radius: 50%;
+  border-top-right-radius: 50%;
+}
+
+.day-wrapper {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: inherit;
+}
+
+.same-day {
+  background-color: var(--color-sec-blue);
+  border-radius: 50%;
+  color: var(--color-prim-navy);
+}

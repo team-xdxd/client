@@ -1,0 +1,14 @@
+.item {
+  cursor: pointer;
+  margin: 7px 7px 0 7px;
+}
+
+.dragged {
+  opacity: 0.2;
+}
+
+.clone {
+  position: fixed;
+  top: -200px;
+  width: calc(var(--day-week-width));
+}

@@ -1,0 +1,174 @@
+.container {
+  min-width: 25rem;
+  width: 20%;
+  padding: 1.5rem 1rem;
+}
+
+.container .title {
+  display: flex;
+  align-items: center;
+}
+
+.container .title span {
+  font-weight: 600;
+  padding-right: 15px;
+}
+
+.container h2 {
+  margin: 0;
+  flex: 1;
+  font-weight: 600;
+  padding-left: 15px;
+}
+
+.percentage {
+  margin-top: 1rem;
+}
+
+.percentage-value {
+  margin-top: 5px;
+  padding-left: 15px;
+  font-weight: 600;
+  color: var(--color-sec-text);
+}
+
+.container span {
+  display: inline-flex;
+}
+
+.list img {
+  width: 20px;
+  height: 20px;
+}
+
+.task-status {
+  cursor: pointer;
+}
+
+.completed .task-content > span {
+  position: relative;
+}
+
+.completed .task-content > span::after {
+  content: "";
+  border-bottom: 2px solid var(--color-prim-navy);
+  position: absolute;
+  left: 0;
+  top: 45%;
+  width: 100%;
+}
+
+.add {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.add:hover {
+  color: var(--color-sec-blue);
+}
+
+.add img {
+  width: 20px;
+  height: 20px;
+  margin-right: 8px;
+}
+
+.add span {
+  display: inline-flex;
+}
+
+.container .list {
+  margin-top: 2rem;
+  margin-bottom: 1.6rem;
+}
+
+.container .list > li {
+  position: relative;
+  display: flex;
+  margin-bottom: 1rem;
+}
+
+.container .list > li > img {
+  width: 22px;
+  height: 22px;
+}
+
+.task-content {
+  margin-left: 13px;
+  flex: 1;
+  position: relative;
+}
+
+.task-content > span {
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.task-content > span:hover {
+  color: var(--color-sec-blue);
+}
+
+.task-content > span {
+  font-size: 15px;
+}
+
+.task-content span {
+  display: inline-flex;
+}
+
+.detail {
+  font-size: 13px;
+  display: flex;
+  margin-top: 4px;
+  align-items: center;
+  font-weight: 600;
+  color: var(--color-sec-text);
+}
+
+.detail img {
+  width: 12px;
+  height: 12px;
+}
+
+.detail > span {
+  margin-left: 8px;
+}
+
+.actions button {
+  margin-top: 8px;
+  margin-right: 8px;
+}
+
+.item-actions {
+  display: none;
+}
+
+.item-actions.visible {
+  display: flex;
+}
+
+.item-actions img {
+  width: 16px;
+  height: 16px;
+  margin-left: 5px;
+  cursor: pointer;
+}
+
+.item-date {
+  position: absolute;
+  border: 1px solid var(--color-secondary-border);
+  border-top: 0;
+  z-index: 500;
+  background-color: white;
+  border-radius: 10px;
+  right: 0;
+  top: 20px;
+}
+
+.item-more {
+  position: absolute;
+  top: 20px;
+  right: 150px;
+}

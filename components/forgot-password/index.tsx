@@ -6,10 +6,10 @@ import { useForm } from 'react-hook-form'
 import userApi from '../../server-api/user'
 
 // Container
-import AuthContainer from '../common/auth-container'
-import AuthButton from '../common/auth-button'
-import FormInput from '../common/form-input'
-import Input from '../common/input'
+import AuthContainer from '../common/containers/auth-container'
+import AuthButton from '../common/buttons/auth-button'
+import FormInput from '../common/inputs/form-input'
+import Input from '../common/inputs/input'
 
 const ForgotPassword = () => {
   const { control, handleSubmit, errors } = useForm()

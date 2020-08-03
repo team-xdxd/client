@@ -1,0 +1,40 @@
+.container {
+  display: flex;
+  align-items: center;
+  min-height: 83px;
+  padding: 5px 32px 30px 32px;
+  background-color: var(--color-prim-navy);
+}
+
+.container h1 {
+  color: var(--color-sec-ivory);
+}
+
+.container h1 span {
+  display: inline-flex;
+  margin-right: 10px;
+}
+
+.container h1 input {
+  font-weight: 600;
+}
+
+.container h1 input {
+  border: none;
+  background-color: inherit;
+  color: inherit;
+  width: fit-content;
+}
+
+.edit {
+  cursor: pointer;
+  width: 16px;
+  height: 16px;
+}
+
+.x {
+  cursor: pointer;
+  color: white;
+  font-size: 22px;
+  font-family: monospace;
+}

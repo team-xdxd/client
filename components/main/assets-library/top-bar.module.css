@@ -1,0 +1,43 @@
+.container {
+  display: flex;
+  align-items: center;
+  margin-bottom: 3rem;
+}
+
+.filters {
+  display: flex;
+  flex: 1;
+}
+
+.filters > img,
+.sec-filters > img {
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+  margin: 0 15px;
+  align-self: center;
+}
+
+.filters > button {
+  margin: 0 15px;
+}
+
+.sec-filters {
+  display: flex;
+  align-items: center;
+}
+
+.multifilter-wrapper {
+}
+
+.sort-wrapper {
+  margin: 0 5px;
+  z-index: 200;
+  min-width: 160px;
+}
+
+.nested-wrapper{
+  display: flex;
+  align-items: center;
+  margin: 0 5px;
+}

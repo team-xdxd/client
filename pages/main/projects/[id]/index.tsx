@@ -1,7 +1,7 @@
 import Head from 'next/head'
 
 // Components
-import MainLayout from '../../../../components/common/main-layout'
+import MainLayout from '../../../../components/common/layouts/main-layout'
 import ProjectDetail from '../../../../components/main/project/detail'
 
 const ProjectDetailPage = () => (

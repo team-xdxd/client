@@ -1,0 +1,29 @@
+.container {
+  border-radius: 5px;
+  border: 1px solid var(--color-secondary-border);
+  width: 100%;
+}
+
+.filter {
+  min-width: 170px;
+  font-size: 13px;
+  border: 2px solid var(--color-secondary-border);
+}
+
+.option {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.option span{
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+  flex: 1;
+}
+
+.option img {
+  width: 15px;
+  height: 15px;
+}

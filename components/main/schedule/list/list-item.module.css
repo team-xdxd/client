@@ -1,0 +1,63 @@
+.item {
+  display: flex;
+  padding: 1rem 0;
+  border-top: 1px solid var(--color-secondary-border);
+}
+
+.info {
+  box-sizing: border-box;
+  width: 28%;
+  padding-right: 5px;
+}
+
+.info > * {
+  margin-bottom: 5px;
+}
+
+.info > *:last-child {
+  margin-bottom: 0;
+}
+
+.name {
+  font-size: 18px;
+  font-weight: 600;
+  width: 100%;
+}
+
+.info-date span {
+  font-size: 13px;
+}
+
+.status {
+  width: 14%;
+}
+
+.type {
+  font-size: 13px;
+  width: 14%;
+}
+
+.time {
+  width: 14%;
+}
+
+.owner {
+  width: 14%;
+  display: flex;
+}
+
+.owner span {
+  margin-left: 5px;
+  display: inline-flex;
+}
+
+.owner img {
+  width: 20px;
+  height: 20px;
+}
+
+.action {
+  display: flex;
+  justify-content: flex-end;
+  flex: 1;
+}

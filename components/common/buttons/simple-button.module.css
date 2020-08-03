@@ -1,0 +1,22 @@
+.container {
+  border-radius: 50%;
+  height: 43px;
+  width: 43px;
+  font-size: 35px;
+  /* max-width: 250px; */
+  cursor: pointer;
+  background-color: var(--color-prim-turquoise);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white;
+}
+
+.container:hover {
+  background-color: var(--color-prim-turquoise-hover);
+}
+
+.container:disabled {
+  background-color: var(--color-prim-turquoise-hover);
+  cursor: default;
+}

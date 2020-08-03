@@ -8,13 +8,20 @@
 }
 
 .name {
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
   width: 33.3%;
+  cursor: pointer;
+}
+
+.name:hover {
+  color: var(--color-sec-text);
 }
 
 .user {
   width: 22.6%;
 }
-
 
 .date {
   width: 14.6%;
@@ -28,21 +35,32 @@
   display: flex;
   width: 14.6%;
   justify-content: flex-end;
+  position: relative;
+  align-items: center;
 }
 
-.single-user{
+.single-user {
   display: flex;
   align-items: center;
 }
 
 .container span {
-  display: inline-flex;
+  display: block;
 }
 
 .single-user img {
-  width: 20px;
+  width: 27px;
   height: auto;
   margin-right: 5px;
+}
+
+.edit-icon {
+  cursor: pointer;
+}
+
+.img-wrap {
+  width: 20px;
+  height: 20px;
 }
 
 .actions img {
@@ -50,3 +68,33 @@
   height: auto;
   margin-right: 5px;
 }
+
+.more-icon {
+  position: relative;
+  cursor: pointer;
+}
+
+.more {
+  position: absolute;
+  left: 0;
+  top: 1.2rem;
+}
+
+@media screen and (max-width: 1330px) {
+  .name {
+    width: 23.3%;
+  }
+  
+  .user {
+    width: 25.6%;
+  }
+  
+  .date {
+    width: 16.6%;
+  }
+  
+  .badge {
+    width: 19.6%;
+  }
+}
+

@@ -1,0 +1,68 @@
+.day {
+  height: var(--day-width);
+  background-color: white;
+  position: relative;
+}
+
+.hovering {
+  background-color: rgba(230, 247, 255);
+}
+
+.day.week {
+  height: 100%;
+  padding-top: 1rem;
+}
+
+.day-header {
+  display: flex;
+  align-items: center;
+}
+
+.diff-month {
+  color: var(--color-sec-blue);
+}
+
+.day-number {
+  margin: 6px 12px;
+  font-weight: 600;
+}
+
+.today-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background-color: var(--color-prim-turquoise);
+}
+
+.filler {
+  margin-bottom: 5px;
+  height: 30px;
+  width: 100%;
+}
+
+.week .filler{
+  margin-top: 7px;
+  height: 40px;
+}
+
+.day ul li {
+  position: relative;
+  z-index: 100;
+}
+
+.more {
+  margin: 0 4px 5px 4px;
+  font-size: 11px;
+  height: 25px;
+  display: flex;
+  border-radius: 20px;
+  align-items: center;
+  box-sizing: border-box;
+  justify-content: center;
+  border: 1px solid var(--color-secondary-border);
+  cursor: pointer;
+}
+
+.week .more{
+  margin-top: 10px;
+}

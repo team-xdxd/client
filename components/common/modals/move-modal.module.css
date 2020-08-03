@@ -1,0 +1,45 @@
+.list {
+    padding: 1rem;
+}
+
+.list li {
+    cursor: pointer;
+    display: flex;
+    padding: 1rem;
+    border-bottom: 1px solid var(--color-secondary-border);
+}
+
+.list li:last-child {
+    border-bottom: none;
+}
+
+.list li:hover, .list li.selected {
+    background-color: var(--color-sec-lightblue);
+}
+
+.name {
+    margin-left: 0.5rem;
+    font-weight: 500;
+}
+
+.folder-wrapper {
+    padding: 0.5rem 2rem;
+}
+
+.folder-wrapper button{
+    margin-left: 1rem;
+}
+
+.folder-wrapper form {
+    display: flex;
+    align-items: center;
+}
+
+.folder-wrapper form>div {
+    margin-right: 0.5rem;
+}
+
+.folder-wrapper .create-new {
+    cursor: pointer;
+    font-weight: bold;
+}

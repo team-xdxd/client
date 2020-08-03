@@ -1,12 +1,12 @@
 import styles from './banner.module.css'
-const defaultBanner = require('../../../assets/images/banner-default-scaled.jpg')
+const defaultBanner = require('../../../assets/app-images/banner-default-scaled.jpg')
 
-const Banner = ({ userName = 'Spencer Moss' }) => (
+const Banner = ({ userName }) => (
   <div className={`${styles.container}`}>
     <img src={defaultBanner} />
     <h1>
       Welcome,
-      <span>{userName}</span>
+      <span>{userName.split(' ')[0]}</span>
     </h1>
   </div>
 )

@@ -1,0 +1,21 @@
+.link {
+  color: var(--color-sec-text);
+  display: flex;
+  align-items: center;
+  margin-right: 40px;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.active,
+.link:hover {
+  color: white;
+}
+
+.icon {
+  height: 1rem;
+}
+
+.text {
+  padding-left: 10px;
+}

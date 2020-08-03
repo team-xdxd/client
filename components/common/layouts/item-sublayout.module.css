@@ -1,0 +1,99 @@
+.container {
+  display: flex;
+  min-height: calc(100vh - 195px); /* Fallback for browsers that do not support Custom Properties */
+  min-height: calc(calc(var(--vh, 1vh) * 100) - 195px);
+}
+
+.heading {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 15px;
+}
+
+.heading > div {
+  display: flex;
+  justify-content: flex-start;
+}
+
+.heading .single {
+  width: 25rem;
+}
+
+.heading button{
+  margin-right: 1rem;
+}
+
+.heading .double {
+  max-width: 70rem;
+  width: 70%;
+}
+
+.heading h4 {
+  margin: 0;
+  padding-bottom: 5px;
+  border-bottom: 2px solid var(--color-prim-turquoise);
+}
+
+.main-component {
+  flex: 1;
+  padding: 30px 32px;
+}
+
+.side-component {
+  width: min-content;
+  border-left: 1px solid var(--color-secondary-border);
+}
+
+.side-bar {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: var(--color-sec-lightivory);
+  border-left: 1px solid var(--color-secondary-border);
+  width: 60px;
+  padding: 30px 0;
+}
+
+.separator {
+  height: 1px;
+  width: 70%;
+  border-bottom: 1px solid var(--color-sec-blue);
+}
+
+.side-bar img {
+  width: 20px;
+  height: auto;
+}
+
+.side-bar > div:first-child img {
+  padding-bottom: 15px;
+  margin-bottom: 15px;
+}
+
+.elements {
+  padding-top: 30px;
+}
+
+.elements img {
+  margin-bottom: 10px;
+}
+
+.elements img:last-child {
+  margin-bottom: 30px;
+}
+
+.more {
+  padding-top: 30px;
+  cursor: pointer;
+  position: relative;
+}
+
+.more-drop {
+  position: absolute;
+  right: 150px;
+}
+
+.children {
+  display: flex;
+  justify-content: center;
+}

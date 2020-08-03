@@ -1,0 +1,71 @@
+.header {
+  display: flex;
+}
+
+.header h4 {
+  width: 14%;
+  font-weight: 550;
+  color: var(--color-prim-nav);
+}
+
+.header h4:first-child {
+  width: 95px;
+}
+
+.header h4:nth-child(2) {
+  width: 21%;
+}
+
+.header h4:last-child {
+  flex: 1;
+}
+
+.thumbnail {
+  margin: 0 10px;
+  position: relative;
+}
+
+.thumbnail>img, .thumbnail>video {
+  width: 50px;
+  height: 50px;
+  height: auto;
+  border: 1px solid var(--color-secondary-border)
+}
+
+.name {
+  width: 21%;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+  padding-right: 0.5rem;
+  cursor: pointer;
+  font-weight: 600;
+  position: relative;
+}
+
+.name:hover {
+  opacity: 0.6
+}
+
+.field_name {
+  width: 14%;
+  font-size: 13px;
+  position: relative;
+}
+
+.item {
+  display: flex;
+  padding: 0.5rem 0;
+  border-top: 1px solid var(--color-secondary-border);
+  align-items: center;
+  height: 71px;
+}
+
+.status {
+  width: 14%;
+}
+
+.select-icon {
+  width: 25px;
+  height: auto;
+}

@@ -1,0 +1,29 @@
+.container {
+  display: flex;
+  align-items: center;
+  font-weight: 500;
+  height: 24px;
+  border-radius: 50px;
+  padding: 0 13px;
+  width: fit-content;
+  background-color: var(--color-sec-lightblue);
+}
+
+.remove {
+  display: inline-flex;
+  margin-left: 8px;
+  color: var(--color-sec-blue);
+  cursor: pointer;
+}
+
+.remove:hover{
+  opacity: 0.7;
+}
+
+.alt-color-turquoise{
+  background-color: var(--color-sec-lightturquoise);
+}
+
+.alt-color-yellow{
+  background-color: var(--color-sec-lightyellow);
+}

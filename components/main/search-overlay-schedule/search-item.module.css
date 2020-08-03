@@ -1,0 +1,43 @@
+.item {
+  align-items: center;
+  display: flex;
+  padding: 33px 0;
+  border-top: 1px solid var(--color-secondary-border);
+  cursor: pointer;
+  font-weight: 500;
+  font-size: 12px;
+}
+
+.item:last-child {
+  border-bottom: 1px solid var(--color-secondary-border);
+}
+
+.item > div {
+  margin-right: 15px;
+}
+
+.item > div:last-child {
+  margin-right: 0;
+}
+
+.name {
+  width: 50%;
+}
+
+.highlight{
+  font-weight: 700;
+}
+
+.type {
+  width: 19%;
+}
+
+.date {
+  width: 17%;
+}
+
+.time {
+  width: 14%;
+  display: flex;
+  justify-content: flex-end;
+}

@@ -2,9 +2,9 @@ import styles from './index.module.css'
 import Link from 'next/link'
 
 // Container
-import AuthContainer from '../common/auth-container'
+import AuthContainer from '../common/containers/auth-container'
 import LoginForm from './login-form'
-import ProvidersAuth from '../common/providers-auth'
+import ProvidersAuth from '../common/containers/providers-auth'
 
 const SignIn = () => (
   <main className={`${styles.container} container-centered`}>

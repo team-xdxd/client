@@ -7,33 +7,12 @@ import userApi from '../../server-api/user'
 import cookiesUtils from '../../utils/cookies'
 
 // Components
-import AuthButton from '../common/auth-button'
-import FormInput from '../common/form-input'
-import Input from '../common/input'
-import Select from '../common/select'
+import AuthButton from '../common/buttons/auth-button'
+import FormInput from '../common/inputs/form-input'
+import Input from '../common/inputs/input'
+import Select from '../common/inputs/select'
 
-const companySizeOptions = [
-  {
-    label: '1-24 employees',
-    value: '1-24 employees',
-  },
-  {
-    label: '25-49 employees',
-    value: '25-49 employees',
-  },
-  {
-    label: '50-249 employees',
-    value: '50-249 employees',
-  },
-  {
-    label: '250-999 employees',
-    value: '250-999 employees',
-  },
-  {
-    label: '1000+ employees',
-    value: '1000+ employees',
-  }
-]
+import companySizeOptions from '../../resources/data/company-sizes.json'
 
 const SignupForm = ({ }) => {
   const { control, handleSubmit, errors, getValues } = useForm()

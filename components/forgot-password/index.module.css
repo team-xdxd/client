@@ -4,11 +4,11 @@
 
 .instructions {
   text-align: left;
-  color: var(--color-sec-blue);
+  color: var(--color-sec-text);
 }
 
 .instructions span {
-  font-weight: bold;
+  font-weight: 600;
   cursor: pointer;
   text-decoration: underline;
 }

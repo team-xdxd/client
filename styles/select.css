@@ -1,0 +1,116 @@
+/* Select prefix */
+
+.select-prefix__control {
+  border-style: none !important;
+}
+
+.select-prefix__value-container {
+  width: 100%;
+  min-height: 48px;
+  padding: 8px 12px;
+  background-color: var(--color-sec-ivory);
+  color: var(--color-prim-navy);
+}
+
+.select-prefix__single-value{
+  color: var(--color-prim-navy) !important;
+  font-weight: 500;
+}
+
+.select-prefix__indicators {
+  background-color: var(--color-sec-ivory);
+  color: var(--color-prim-navy);
+}
+
+.select-prefix__menu {
+}
+
+.select-prefix__menu-list {
+  background-color: var(--color-sec-ivory);
+  color: var(--color-prim-navy);
+  text-align: left;
+}
+
+.select-prefix__option {
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+/* Regular */
+.regular .select-prefix__value-container {
+  background-color: var(--color-sec-lightivory);
+  padding: 0 12px;
+  min-height: 70px;
+  border-top-left-radius: 5px;
+  border-bottom-left-radius: 5px;
+}
+
+.regular .select-prefix__indicators {
+  background-color: var(--color-sec-lightivory);
+  border-top-right-radius: 5px;
+  border-bottom-right-radius: 5px;
+}
+
+.regular .select-prefix__menu-list {
+  background-color: var(--color-sec-lightivory);
+}
+
+/* Item */
+.item .select-prefix__value-container {
+  min-height: 48px;
+  border-top-left-radius: 5px;
+  border-bottom-left-radius: 5px;
+}
+
+/* Filter */
+.filter .select-prefix__value-container {
+  background-color: white;
+  padding: 0 12px;
+  min-height: 34px;
+  border-top-left-radius: 5px;
+  border-bottom-left-radius: 5px;
+  font-weight: 600;
+}
+
+.filter .select-prefix__placeholder {
+  color: var(--color-prim-navy);
+}
+
+.filter .select-prefix__indicators {
+  background-color: white;
+  border-top-right-radius: 5px;
+  border-bottom-right-radius: 5px;
+}
+
+.filter .select-prefix__indicators span {
+  background-color: white;
+}
+
+.filter .select-prefix__menu-list {
+  background-color: white;
+  font-size: 13px;
+  border-radius: 5px;
+}
+
+/* filter-schedule */
+
+.filter-schedule {
+  font-size: 12px;
+}
+
+.filter-schedule .select-prefix__menu {
+  width: 140%;
+  margin-left: -30%;
+  font-size: 12px;
+}
+
+/* Multi filter */
+.filter .select-prefix__option--is-selected {
+  background-color: inherit;
+  color: inherit;
+}
+
+.filter .select-prefix__option--is-selected:hover {
+  background-color: #DEEBFF;
+}

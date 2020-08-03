@@ -1,0 +1,92 @@
+.item-detail-cont {
+  display: flex;
+  padding-top: 15px;
+  flex-flow: row wrap;
+  justify-content: center;
+  flex-wrap: wrap;
+  width: 70%;
+  max-width: 70rem;
+}
+
+.item-detail-cont img {
+  width: 20px;
+  height: 20px;
+}
+
+.item-detail-cont .field {
+  width: 50%;
+  padding: 35px 25px;
+  border: 1px solid var(--color-secondary-border);
+  border-right: none;
+  border-bottom: none;
+}
+
+.item-detail-cont .field {
+  width: 50%;
+  padding: 35px 25px;
+  border: 1px solid var(--color-secondary-border);
+  border-right: none;
+  border-bottom: none;
+}
+
+.pad-div:nth-of-type(2n + 1) {
+  width: 0;
+  padding: 0;
+}
+
+.item-detail-cont .field:nth-of-type(2n) {
+  border-right: 1px solid var(--color-secondary-border);
+}
+
+.item-detail-cont .field-wide {
+  width: 100%;
+  border-right: 1px solid var(--color-secondary-border);
+  border-bottom: 1px solid var(--color-secondary-border);
+}
+
+.item-detail-cont .day-picker {
+  position: absolute;
+  border: 1px solid var(--color-secondary-border);
+  z-index: 500;
+  background-color: white;
+  border-radius: 10px;
+}
+
+.item-detail-cont .dropdown {
+  position: absolute;
+}
+
+.tag-select,
+.item-detail-cont .campaign-select,
+.item-detail-cont .add {
+  margin-top: 10px;
+}
+
+.item-detail-cont .add {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+}
+
+.item-detail-cont .add:hover {
+  color: var(--color-sec-blue);
+}
+
+.item-detail-cont .add img {
+  margin-right: 8px;
+}
+
+.item-detail-cont .add span {
+  display: inline-flex;
+}
+
+.tags-list {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.tags-list li {
+  margin-left: 8px;
+  margin-bottom: 10px;
+}
+

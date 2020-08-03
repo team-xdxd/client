@@ -1,0 +1,5 @@
+.container {
+  border-radius: 5px;
+  border: 1px solid var(--color-secondary-border);
+  width: 100%;
+}
