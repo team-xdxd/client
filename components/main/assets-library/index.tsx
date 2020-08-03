@@ -240,6 +240,7 @@ const AssetsLibrary = () => {
       setFolders(update(folders, {
         $splice: [[modFolderIndex, 1]]
       }))
+      toastUtils.success('Folder deleted successfully')
     } catch (err) {
       console.log(err)
     }
