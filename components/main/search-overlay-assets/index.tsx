@@ -65,15 +65,17 @@ const SearchOverlayAssets = ({ closeOverlay, importEnabled = false, importAssets
             onSubmit={(inputTerm) => getData(inputTerm)}
           />
         </div>
-        <div className={styles['import-wrapper']}>
-          <Button
-            text='Import Assets'
-            type='button'
-            disabled={selectedAssets.length === 0}
-            onClick={importAssets}
-            styleType='primary'
-          />
-        </div>
+        {importEnabled &&
+          <div className={styles['import-wrapper']}>
+            <Button
+              text='Import Assets'
+              type='button'
+              disabled={selectedAssets.length === 0}
+              onClick={importAssets}
+              styleType='primary'
+            />
+          </div>
+        }
         <ul>
           {assets.map((assetItem, index) => (
             <SearchItem
