@@ -78,7 +78,7 @@ const TopBar = ({
         ))}
       </div>
       <div className={styles['sec-filters']}>
-        {activeSortFilter.mainFilter !== 'folders' && <Button type='button' text='Select All' styleType='primary' onClick={selectAll} />}
+        {activeSortFilter.mainFilter !== 'folders' && <Button type='button' text='Select All' styleType='secondary' onClick={selectAll} />}
         <img src={Utilities.gridView} onClick={() => setActiveView('grid')} />
         <img src={Utilities.listView} onClick={() => setActiveView('list')} />
         <div className={styles['nested-wrapper']}>

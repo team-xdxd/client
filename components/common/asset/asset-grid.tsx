@@ -20,6 +20,7 @@ import Button from '../buttons/button'
 
 const AssetGrid = ({ activeView = 'grid', onFilesDataGet, toggleSelected, mode = 'assets', activeSortFilter = {}, folders = [],
   deleteFolder = (id) => { },
+  itemSize = 'regular',
   activeFolder = '',
   type = '',
   itemId = '',
@@ -110,7 +111,7 @@ const AssetGrid = ({ activeView = 'grid', onFilesDataGet, toggleSelected, mode =
       }
       <div className={styles['list-wrapper']}>
         {activeView === 'grid' &&
-          <ul className={styles['grid-list']}>
+          <ul className={`${styles['grid-list']} ${styles[itemSize]}`}>
             {mode === 'assets' && assets.map((assetItem, index) => {
               return (
                 <li className={styles['grid-item']} key={assetItem.asset.id || index}>

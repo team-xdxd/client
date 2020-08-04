@@ -96,6 +96,7 @@ const ItemAssets = ({ type, itemId }) => {
           mode='assets'
           type={type}
           itemId={itemId}
+          itemSize={'medium'}
         />
       </div>
       <AssetOps />
