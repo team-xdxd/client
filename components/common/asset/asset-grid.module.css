@@ -16,6 +16,10 @@
   grid-gap: 2rem;
 }
 
+.grid-list.medium{
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+}
+
 .button-wrapper{
   margin-top: 1.5rem;
   display: flex;

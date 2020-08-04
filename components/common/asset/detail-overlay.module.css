@@ -10,6 +10,17 @@
   padding-bottom: 15px;
 }
 
+@media screen and (max-height: 760px) {
+  .container {
+    overflow-y: auto;
+  }
+  .side, .menu {
+    height: 100%;
+    padding-top: 15px;
+    padding-bottom: 60px;
+  }
+}
+
 .top-wrapper {
   display: flex;
   justify-content: space-between;
