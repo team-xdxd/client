@@ -1,0 +1,5 @@
+.container {
+  grid-area: side-nav;
+  border-right: 1px solid var(--color-secondary-border);
+  height: 80vh;
+}

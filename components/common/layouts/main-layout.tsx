@@ -71,7 +71,19 @@ const AuthLayout = ({ children }) => {
           contentClass={styles['user-dropdown']}
           Content={() => (
             <Dropdown
-              options={[{ label: 'Log Out', onClick: logOut }]}
+              options={[
+                {
+                  OverrideComp: () => (
+                    <Link href='/main/user-settings/team'>
+                      <li>
+                        <span></span>
+                        <span>Team</span>
+                      </li>
+                    </Link>
+                  )
+                },
+                { label: 'Log Out', onClick: logOut }
+              ]}
             />
           )}
         />
