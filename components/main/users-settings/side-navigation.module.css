@@ -3,3 +3,16 @@
   border-right: 1px solid var(--color-secondary-border);
   height: 80vh;
 }
+
+.container>ul {}
+
+.setting {
+  font-size: 15px;
+  padding: 15px 5px;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+.selected, .setting:hover {
+  background-color: var(--color-sec-lightblue);
+}
