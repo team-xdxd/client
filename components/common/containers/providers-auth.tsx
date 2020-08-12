@@ -7,12 +7,13 @@ import cookiesUtil from '../../../utils/cookies'
 // Components
 import ProviderAuthButton from '../buttons/provider-auth-button'
 
-let ProvidersAuth = () => {
+let ProvidersAuth = ({ inviteCode }) => {
 
   const initiateOAuth = async (provider) => {
     try {
       const { data } = await authApi.getUrl(provider)
       cookiesUtil.set('oauthProvider', provider)
+      cookiesUtil.set('inviteCode', inviteCode)
       window.location.replace(data.url)
     } catch (err) {
       console.log(err)

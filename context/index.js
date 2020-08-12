@@ -4,7 +4,7 @@ import { create } from 'domain'
 export const UserContext = createContext({
     user: null,
     setUser: (user) => { },
-    fetchUser: () => { },
+    fetchUser: (redirectUser) => { },
     logOut: () => { }
 })
 
