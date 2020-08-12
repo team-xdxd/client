@@ -32,7 +32,8 @@ export default function MyApp({ Component, pageProps }) {
   // set up context following this: https://stackoverflow.com/questions/41030361/how-to-update-react-context-from-inside-a-child-component
   const [user, setUser] = useState(null)
 
-  const fetchUser = async () => {
+  const fetchUser = async (redirectLogin = false) => {
+    if(redirectLogin) return Router.replace('/login')
     const jwt = cookiesUtils.get('jwt')
     if (jwt && Router.pathname.indexOf('/share') === -1) {
       requestsUtils.setAuthToken(jwt)

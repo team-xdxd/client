@@ -14,7 +14,7 @@ import Select from '../common/inputs/select'
 
 import companySizeOptions from '../../resources/data/company-sizes.json'
 
-const SignupForm = ({ }) => {
+const SignupForm = ({ inviteCode = '' }) => {
   const { control, handleSubmit, errors, getValues } = useForm()
   const [companySize, setCompanySize] = useState()
   const [submitError, setSubmitError] = useState('')
@@ -29,7 +29,7 @@ const SignupForm = ({ }) => {
         password: fieldData.password,
         companySize: companySize ? companySize.value : ''
       }
-      const { data } = await userApi.signUp(createData)
+      const { data } = await userApi.signUp(createData, { inviteCode })
       cookiesUtils.setUserJWT(data.token)
       fetchUser()
     } catch (err) {
@@ -88,29 +88,33 @@ const SignupForm = ({ }) => {
           errors={errors}
         />
       </div>
-      <div>
-        <FormInput
-          InputComponent={
-            <Input
-              type='text'
-              placeholder='Company Name'
-            />
-          }
-          name='company'
-          control={control}
-          rules={{ minLength: 2, maxLength: 40, required: true }}
-          message={'This field should be between 2 and 40 characters long'}
-          errors={errors}
-        />
-      </div>
-      <div>
-        <Select
-          placeholder='Company Size...'
-          options={companySizeOptions}
-          onChange={selected => setCompanySize(selected)}
-          value={companySize}
-        />
-      </div>
+      {!inviteCode &&
+        <div>
+          <FormInput
+            InputComponent={
+              <Input
+                type='text'
+                placeholder='Company Name'
+              />
+            }
+            name='company'
+            control={control}
+            rules={{ minLength: 2, maxLength: 40, required: true }}
+            message={'This field should be between 2 and 40 characters long'}
+            errors={errors}
+          />
+        </div>
+      }
+      {!inviteCode &&
+        <div>
+          <Select
+            placeholder='Company Size...'
+            options={companySizeOptions}
+            onChange={selected => setCompanySize(selected)}
+            value={companySize}
+          />
+        </div>
+      }
       <div>
         <FormInput
           InputComponent={
