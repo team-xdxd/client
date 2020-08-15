@@ -98,7 +98,7 @@ const TasksList = ({ tasks = [], createTask, removeTask, updateTask }) => {
     <div className={styles.container}>
       <div className={styles.title}>
         <h2>Tasks</h2>
-        <span>{tasks.length} tasks</span>
+        <span>{tasks.length} task(s)</span>
       </div>
       <div className={styles.percentage}>
         <Line

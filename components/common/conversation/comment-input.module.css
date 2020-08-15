@@ -1,0 +1,103 @@
+.form {
+  display: flex;
+}
+
+.content-input {
+  font-size: 16px;
+  width: 100%;
+  padding: 20px 80px 16px 20px;
+  border-radius: 35px;
+  border: 1px solid var(--color-secondary-border);
+  background-color: var(--color-sec-lightivory);
+  min-height: 56px;
+  color: var(--color-prim-navy);
+  resize: none;
+  overflow-y: hidden;
+  outline: none;
+  position: relative;
+}
+
+.content-input.reply {
+  padding-left: 42px;
+  border-radius: 5px;
+  background-color: inherit;
+  border-top: none;
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+}
+
+.input-container {
+  width: 100%;
+  margin-right: 9px;
+  position: relative;
+}
+
+.input-container > img {
+  /* margin: 25px 10px; */
+  top: 18px;
+  left: 14px;
+  position: absolute;
+  width: 20px;
+  height: 20px;
+}
+
+.input-container .image-pair {
+  /* margin: 25px 10px; */
+  top: 18px;
+  right: 25px;
+  position: absolute;
+  height: 25px;
+  display: flex;
+  align-items: center;
+}
+
+.input-container .image-pair img {
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+  position: relative;
+}
+
+.input-container .image-pair img:last-of-type {
+  margin-left: 10px;
+}
+
+.buttons-wrapper {
+  margin-top: 10px;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.buttons-wrapper button {
+  width: 92px;
+}
+
+.buttons-wrapper button:last-child {
+  margin-left: 1rem;
+}
+
+.image-wrapper {
+  display: flex;
+}
+
+.picker-wrapper,
+.user-list-wrapper,
+.mention-dropdown {
+  position: absolute;
+  z-index: 300;
+}
+
+.picker-wrapper {
+  right: 0;
+  top: 0;
+}
+
+.user-list-wrapper {
+  right: 0;
+  top: 2rem;
+}
+
+.mention-dropdown {
+  top: calc(1.5rem + var(--top-dropdown));
+  left: var(--left-dropdown);
+}
