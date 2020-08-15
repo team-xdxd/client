@@ -165,3 +165,8 @@ ul {
   z-index: 2000;
   color: var(--color-prim-navy);
 }
+
+/* Emoji mart component */
+.emoji-mart-preview{
+  display: none;
+}

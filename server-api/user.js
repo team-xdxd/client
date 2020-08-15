@@ -9,4 +9,5 @@ export default {
   signUp: (data, queryData = {}) => axios.post(`${userUrl}/signup?${querystring.encode(queryData)}`, data),
   requestPasswordreset: (data) => axios.post(`${userUrl}/generate-password-reset`, data),
   passwordReset: (data) => axios.post(`${userUrl}/password-reset`, data),
+  getTeamMembers: () => axios.get(`${userUrl}/members`)
 }

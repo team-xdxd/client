@@ -52,3 +52,9 @@ export const AssetContext = createContext({
     addedIds: [],
     setAddedIds: (idList) => { }
 })
+
+export const TeamContext = createContext({
+    teamMembers: [],
+    setTeamMembers: (data) => { },
+    getTeamMembers: () => { }
+})

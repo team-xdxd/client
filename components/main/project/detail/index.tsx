@@ -6,12 +6,13 @@ import update from 'immutability-helper'
 import projectApi from '../../../../server-api/project'
 import taskApi from '../../../../server-api/task'
 import toastUtils from '../../../../utils/toast'
-import { ProjectTypes } from '../../../../assets'
+import { ProjectTypes, Utilities } from '../../../../assets'
 import Router from 'next/router'
 
 // Components
 import ItemSubheader from '../../../common/items/item-subheader'
 import ItemSublayout from '../../../common/layouts/item-sublayout'
+import ConversationList from '../../../common/conversation/conversation-list'
 import TasksList from './tasks-list'
 import Fields from './project-fields'
 
@@ -24,6 +25,8 @@ const ProjectDetail = () => {
   const [tasks, setTasks] = useState([])
 
   const [status, setStatus] = useState('')
+
+  const [activeSideComponent, setActiveSidecomponent] = useState('tasks')
 
   const [editableFields, setEditableFields] = useState({
     name: '',
@@ -202,6 +205,18 @@ const ProjectDetail = () => {
     }
   }
 
+  let SideComponent
+  if (activeSideComponent === 'tasks')
+    SideComponent = <TasksList
+      tasks={tasks}
+      createTask={createTask}
+      removeTask={removeTask}
+      updateTask={updateTask}
+    />
+
+  else if (activeSideComponent === 'comments')
+    SideComponent = <ConversationList itemId={project?.id} itemType='projects' />
+
   return (
     <>
       <ItemSubheader
@@ -222,16 +237,10 @@ const ProjectDetail = () => {
           type='project'
           itemId={project?.id}
           navElements={[
-            { icon: ProjectTypes.task }
+            { icon: ProjectTypes.task, onClick: () => { setActiveSidecomponent('tasks') } },
+            { icon: Utilities.comment, onClick: () => { setActiveSidecomponent('comments') } }
           ]}
-          SideComponent={
-            <TasksList
-              tasks={tasks}
-              createTask={createTask}
-              removeTask={removeTask}
-              updateTask={updateTask}
-            />
-          }
+          SideComponent={SideComponent}
         >
           {project &&
             <Fields

@@ -10,13 +10,15 @@ import '../styles/schedule.css'
 import '../styles/text.css'
 import '../styles/search.css'
 import '../styles/loading-skeleton.css'
-import 'react-day-picker/lib/style.css';
+import 'react-day-picker/lib/style.css'
+import 'emoji-mart/css/emoji-mart.css'
 // Import stripe as a side effect so it helps detect fraudulent activy
 import '@stripe/stripe-js';
 import dragndropPolyfill from '../polyfills/dragndroptouch'
 import { useState, useEffect } from 'react'
 import { UserContext, LanguageContext, ThemeContext } from '../context'
 import AssetContextProvider from '../context/asset-provider'
+import TeamContextProvider from '../context/team-provider'
 import cookiesUtils from '../utils/cookies'
 import requestsUtils from '../utils/requests'
 
@@ -33,7 +35,7 @@ export default function MyApp({ Component, pageProps }) {
   const [user, setUser] = useState(null)
 
   const fetchUser = async (redirectLogin = false) => {
-    if(redirectLogin) return Router.replace('/login')
+    if (redirectLogin) return Router.replace('/login')
     const jwt = cookiesUtils.get('jwt')
     if (jwt && Router.pathname.indexOf('/share') === -1) {
       requestsUtils.setAuthToken(jwt)
@@ -96,12 +98,14 @@ export default function MyApp({ Component, pageProps }) {
       <LanguageContext.Provider value={languageValue}>
         <ThemeContext.Provider value={themeValue}>
           <AssetContextProvider>
-            <Head>
-              <script type="text/javascript" src="https://www.dropbox.com/static/api/2/dropins.js" id="dropboxjs" data-app-key={`gtwo80vc34l8vjd`}></script>
-            </Head>
-            {initialLoadFinished &&
-              <Component {...pageProps} />
-            }
+            <TeamContextProvider>
+              <Head>
+                <script type="text/javascript" src="https://www.dropbox.com/static/api/2/dropins.js" id="dropboxjs" data-app-key={`gtwo80vc34l8vjd`}></script>
+              </Head>
+              {initialLoadFinished &&
+                <Component {...pageProps} />
+              }
+            </TeamContextProvider>
           </AssetContextProvider>
         </ThemeContext.Provider>
       </LanguageContext.Provider>

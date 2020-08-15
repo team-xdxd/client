@@ -10,6 +10,7 @@ import downloadUtils from '../../../utils/download'
 
 // Components
 import SidePanel from './detail-side-panel'
+import ConversationList from '../conversation/conversation-list'
 import IconClickable from '../buttons/icon-clickable'
 import Button from '../buttons/button'
 import AssetImg from './asset-img'
@@ -20,6 +21,8 @@ const DetailOverlay = ({ asset, realUrl, closeOverlay, openShareAsset = () => { 
   const [assetDetail, setAssetDetail] = useState()
 
   const [renameModalOpen, setRenameModalOpen] = useState(false)
+
+  const [activeSideComponent, setActiveSidecomponent] = useState('detail')
 
   const { assets, setAssets } = useContext(AssetContext)
 
@@ -108,14 +111,30 @@ const DetailOverlay = ({ asset, realUrl, closeOverlay, openShareAsset = () => { 
           </div>
         </section>
       }
-      {assetDetail &&
-        <section className={styles.side}>
+      <section className={styles.side}>
+        {assetDetail && activeSideComponent === 'detail' &&
           <SidePanel asset={assetDetail} updateAsset={updateAsset} isShare={isShare} />
-        </section>
-      }
+        }
+        {!isShare && activeSideComponent === 'comments' &&
+          < ConversationList itemId={asset?.id} itemType='assets' />
+        }
+      </section>
       {!isShare &&
         <section className={styles.menu}>
-          <IconClickable src={Utilities.delete} onClick={openDeleteAsset} />
+          <IconClickable
+            src={Utilities.delete}
+            additionalClass={styles['menu-icon']}
+            onClick={openDeleteAsset} />
+          <div className={styles.separator}></div>
+          <IconClickable
+            src={Utilities.info}
+            additionalClass={styles['menu-icon']}
+            onClick={() => setActiveSidecomponent('detail')} />
+          <IconClickable
+            src={Utilities.comment}
+            additionalClass={styles['menu-icon']}
+            onClick={() => setActiveSidecomponent('comments')} />
+
         </section>
       }
       <RenameModal

@@ -18,6 +18,16 @@
   align-items: center;
 }
 
+.menu li:first-child {
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+}
+
+.menu li:last-child {
+  border-bottom-left-radius: 5px;
+  border-bottom-right-radius: 5px;
+}
+
 .menu li a{
   padding-left: 10px;
   min-width: inherit;

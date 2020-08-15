@@ -51,6 +51,7 @@ export const Utilities = {
   search: require('./Icons/Utilities/Search/icn-utilities-search.svg'),
   gridView: require('./Icons/Utilities/View Grid/icn-utilities-gridview.svg'),
   listView: require('./Icons/Utilities/View List/icn-utilities-listview.svg'),
+  info: require('./Icons/Utilities/Information/icn-utilities-information.svg'),
 }
 
 export const ProjectTypes = {
@@ -113,4 +114,9 @@ export const Assets = {
   videoThumbnail: require('./general/thumbnail-video.png'),
   dropbox: require('./Icons/Assets/Dropbox_Icon.svg'),
   gdrive: require('./Icons/Assets/icons8-google-drive-1.svg'),
+}
+
+export const Comments = {
+  mention: require('./Icons/Utilities/@/icn-comments-mention.svg'),
+  smile: require('./Icons/Utilities/Smile/icn-comments-smile.svg'),
 }

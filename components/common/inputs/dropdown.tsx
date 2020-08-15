@@ -1,15 +1,15 @@
 import styles from './dropdown.module.css'
 
 const Dropdown = ({ options = [], additionalClass = '' }) => {
-
+  console.log(options)
   return (
     <ul className={`${styles.menu} ${additionalClass}`} >
       {options.map((option, index) => (
-        <>
+        <div key={option.id || index}>
           {option.OverrideComp ?
-            <option.OverrideComp key={index} />
+            <option.OverrideComp />
             :
-            <li key={index} onClick={() => {
+            <li onClick={() => {
               option.onClick()
             }}>
               <span>
@@ -22,7 +22,7 @@ const Dropdown = ({ options = [], additionalClass = '' }) => {
               </span>
             </li>
           }
-        </>
+        </div>
       ))}
     </ul>
   )

@@ -72,10 +72,13 @@
 
 .elements {
   padding-top: 30px;
+  display: flex;
+  flex-direction: column;
 }
 
 .elements img {
-  margin-bottom: 10px;
+  margin-bottom: 20px;
+  cursor: pointer;
 }
 
 .elements img:last-child {

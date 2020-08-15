@@ -1,0 +1,28 @@
+.container {
+  width: 250px;
+  background-color: white;
+  border: 1px solid var(--color-secondary-border);
+  border-radius: 5px;
+}
+
+.empty{
+  width: 0;
+}
+
+.term {
+  border: none;
+  background-color: inherit;
+  color: inherit;
+  padding: 0.5rem 2rem;
+  margin: 0.2rem 0;
+}
+
+.term,
+.dropdown {
+  width: 100%;
+}
+
+.container .dropdown {
+  position: relative;
+  border: none;
+}
