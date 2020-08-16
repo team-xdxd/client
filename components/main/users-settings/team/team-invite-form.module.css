@@ -1,0 +1,17 @@
+.form {
+  display: flex;
+  max-width: 40rem;
+}
+
+.form input{
+  flex: 1;
+}
+
+.form .role-select-wrapper{
+  width: 150px;
+  margin: 0 2rem;
+}
+
+.form button{
+  
+}

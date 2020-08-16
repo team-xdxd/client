@@ -1,0 +1,15 @@
+.container {
+  display: flex;
+  width: 100%;
+  margin: 0.8rem 0;
+  padding: 0.8rem 0;
+  border-bottom: 1px solid var(--color-secondary-border);
+}
+
+.container:last-child {
+  border-bottom: none;
+}
+
+.container > div:first-child {
+  flex: 1;
+}
