@@ -10,6 +10,7 @@
   "dependencies": {
     "@stripe/react-stripe-js": "^1.1.0",
     "@stripe/stripe-js": "^1.2.0",
+    "aws-appsync": "^4.0.0",
     "axios": "^0.19.2",
     "change-case": "^4.1.1",
     "chart.js": "^2.9.3",

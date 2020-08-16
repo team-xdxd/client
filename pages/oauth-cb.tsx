@@ -18,7 +18,12 @@ const OauthCbPage = () => {
   const signIn = async (accessCode) => {
     try {
       const provider = cookiesUtil.get('oauthProvider')
-      const inviteCode = cookiesUtil.get('inviteCode')
+      const cookieInviteCode = cookiesUtil.get('inviteCode')
+      let inviteCode
+      // Check if inviteCode is valid
+      if (cookieInviteCode && cookieInviteCode !== 'undefined') {
+        inviteCode = cookieInviteCode
+      }
       const { data } = await authApi.signIn(provider, accessCode, { inviteCode })
       cookiesUtil.setUserJWT(data.token)
       fetchUser()
