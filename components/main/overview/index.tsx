@@ -16,8 +16,6 @@ import Upcoming from './upcoming'
 import UpcomingTasks from './upcoming-tasks'
 import CreateOverlay from '../create-overlay'
 
-// name, status, date
-
 const Overview = () => {
   const [createVisible, setCreateVisible] = useState(false)
   const [createType, setCreateType] = useState('')

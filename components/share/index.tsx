@@ -2,6 +2,7 @@ import styles from './index.module.css'
 import { useEffect, useState } from 'react'
 import assetApi from '../../server-api/asset'
 import toastUtils from '../../utils/toast'
+import urlUtils from '../../utils/url'
 
 // Components
 import ShareItem from './share-item'
@@ -17,9 +18,9 @@ const AssetShare = () => {
 
 	const getAssets = async () => {
 		try {
-			const splitSearch = window.location.search?.split('shareJWT=')
-			if (splitSearch[1]) {
-				const { data } = await assetApi.getSharedAssets(splitSearch[1])
+			const { shareJWT } = urlUtils.getQueryParameters()
+			if (shareJWT) {
+				const { data } = await assetApi.getSharedAssets(shareJWT)
 				setAssets(data)
 			}
 		} catch (err) {

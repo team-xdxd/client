@@ -2,6 +2,7 @@ import styles from './upcoming-item.module.css'
 import { Utilities, Navigation } from '../../../assets'
 import { format } from 'date-fns'
 import Router from 'next/router'
+import urlUtils from '../../../utils/url'
 
 // Component
 import StatusBadge from '../../common/misc/status-badge'
@@ -41,8 +42,12 @@ const UpcomingItem = ({ name, date, status, users, userPhoto = Utilities.memberP
       <StatusBadge status={status} />
     </div>
     <div className={styles.actions}>
-      <img src={Utilities.commentLight} />
-      <img className={styles['edit-icon']} src={Navigation.scheduleLight} onClick={() => Router.replace(detailUrl)}/>
+      <img className={styles['edit-icon']}
+        src={Utilities.commentLight}
+        onClick={() => Router.replace(`${detailUrl}?${urlUtils.encodeQueryParameters({ side: 'comments' })}`)} />
+      <img className={styles['edit-icon']}
+        src={Navigation.scheduleLight}
+        onClick={() => Router.replace(detailUrl)} />
       <img src={Utilities.assignMemberLight} />
       <ToggleableAbsoluteWrapper
         wrapperClass={styles['img-wrap']}

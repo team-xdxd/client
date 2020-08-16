@@ -14,6 +14,7 @@ import Button from '../buttons/button'
 import DetailOverlay from './detail-overlay'
 import AssetOptions from './asset-options'
 
+const DEFAULT_DETAIL_PROPS = { visible: false, side: 'detail' }
 
 const ListItem = ({
   assetItem: {
@@ -36,17 +37,21 @@ const ListItem = ({
 
   const dateFormat = 'MMM do, yyyy h:mm a'
 
-  const [visibleOverlay, setVisibleOVerlay] = useState(false)
+  const [overlayProperties, setOverlayProperties] = useState(DEFAULT_DETAIL_PROPS)
 
   useEffect(() => {
-    if (visibleOverlay) {
+    if (overlayProperties.visible) {
       document.body.classList.add('no-overflow')
     } else {
       document.body.classList.remove('no-overflow')
     }
 
     return () => document.body.classList.remove('no-overflow')
-  }, [visibleOverlay])
+  }, [overlayProperties.visible])
+
+  const openComments = () => {
+    setOverlayProperties({ visible: true, side: 'comments' })
+  }
 
   return (
     <>
@@ -85,7 +90,7 @@ const ListItem = ({
               </video>
             }
           </div>
-          <div className={`${styles.name} ${isLoading && 'loadable'}`} onClick={() => setVisibleOVerlay(!isLoading)}>
+          <div className={`${styles.name} ${isLoading && 'loadable'}`} onClick={() => setOverlayProperties({ ...DEFAULT_DETAIL_PROPS, visible: !overlayProperties.visible })}>
             {asset.name}
           </div>
           <div className={styles.status}>
@@ -115,18 +120,20 @@ const ListItem = ({
                 downloadAsset={downloadAsset}
                 openShareAsset={openShareAsset}
                 openCopyAsset={openCopyAsset}
+                openComments={openComments}
               />
             </div>
           }
         </div>
       </div>
-      {visibleOverlay &&
+      {overlayProperties.visible &&
         <DetailOverlay
           asset={asset}
           realUrl={realUrl}
+          initiaParams={overlayProperties}
           openShareAsset={openShareAsset}
           openDeleteAsset={openDeleteAsset}
-          closeOverlay={() => setVisibleOVerlay(false)} />
+          closeOverlay={() => setOverlayProperties({ ...DEFAULT_DETAIL_PROPS, visible: false })} />
       }
     </>
   )

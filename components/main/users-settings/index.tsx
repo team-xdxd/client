@@ -2,6 +2,7 @@ import styles from './index.module.css'
 import { useState, useEffect } from 'react'
 import update from 'immutability-helper'
 import toastUtils from '../../../utils/toast'
+import urlUtils from '../../../utils/url'
 
 // Components
 import SideNavigation from './side-navigation'
@@ -19,8 +20,8 @@ const SETTING_OPTIONS_CONTENT = {
 const UserSettings = () => {
 
     useEffect(() => {
-        const splitPath = window.location.pathname.split('/')
-        setActiveView(splitPath[splitPath.length - 1])
+        const activeView = urlUtils.getPathId()
+        setActiveView(activeView)
     }, [])
 
     const [activeView, setActiveView] = useState('')

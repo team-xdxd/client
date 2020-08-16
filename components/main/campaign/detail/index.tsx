@@ -6,6 +6,7 @@ import update from 'immutability-helper'
 import campaignApi from '../../../../server-api/campaign'
 import toastUtils from '../../../../utils/toast'
 import Router from 'next/router'
+import urlUtils from '../../../../utils/url'
 
 // Components
 import ItemSubheader from '../../../common/items/item-subheader'
@@ -34,8 +35,8 @@ const CampaignDetail = () => {
 
   const getCampaign = async () => {
     try {
-      const splitPath = window.location.pathname.split('/')
-      const { data } = await campaignApi.getCampaignById(splitPath[splitPath.length - 1])
+      const campaignId = urlUtils.getPathId()
+      const { data } = await campaignApi.getCampaignById(campaignId)
       setCampaignData(data)
       setCampaign(data)
     } catch (err) {
@@ -64,7 +65,7 @@ const CampaignDetail = () => {
   }
 
   const saveCampaign = async () => {
-    if(!endDate){
+    if (!endDate) {
       return toastUtils.error('You must add an End Date')
     }
     if (!name) {
@@ -129,10 +130,10 @@ const CampaignDetail = () => {
   }
 
   const changeStatus = async (newStatus) => {
-    if(!endDate){
+    if (!endDate) {
       return toastUtils.error('You must add an End Date')
     }
-    
+
     try {
       setStatus(newStatus)
       await saveCampaign()

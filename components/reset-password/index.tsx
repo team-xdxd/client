@@ -3,6 +3,7 @@ import styles from './index.module.css'
 import Link from 'next/link'
 import { useForm } from 'react-hook-form'
 import userApi from '../../server-api/user'
+import urlUtils from '../../utils/url'
 
 // Container
 import AuthContainer from '../common/containers/auth-container'
@@ -17,11 +18,10 @@ const ForgotPassword = () => {
 
   const onSubmit = async resetData => {
     try {
-      const queryParams = window.location.search
-      if (queryParams) {
-        const token = queryParams.substring(queryParams.indexOf('=') + 1, queryParams.length)
+      const { resetToken } = urlUtils.getQueryParameters()
+      if (resetToken) {
         await userApi.passwordReset({
-          resetToken: token,
+          resetToken,
           password: resetData.password
         })
         setPasswordReset(true)

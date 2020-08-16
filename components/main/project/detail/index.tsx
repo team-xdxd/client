@@ -8,6 +8,7 @@ import taskApi from '../../../../server-api/task'
 import toastUtils from '../../../../utils/toast'
 import { ProjectTypes, Utilities } from '../../../../assets'
 import Router from 'next/router'
+import urlUtils from '../../../../utils/url'
 
 // Components
 import ItemSubheader from '../../../common/items/item-subheader'
@@ -46,12 +47,20 @@ const ProjectDetail = () => {
   useEffect(() => {
     getProject()
     getProjectNames()
+    checkQueryParameters()
   }, [])
+
+  const checkQueryParameters = () => {
+    const { side } = urlUtils.getQueryParameters()
+    if (side) {
+      setActiveSidecomponent(side as string)
+    }
+  }
 
   const getProject = async () => {
     try {
-      const splitPath = window.location.pathname.split('/')
-      const { data } = await projectApi.getProjectById(splitPath[splitPath.length - 1])
+      const projectId = urlUtils.getPathId()
+      const { data } = await projectApi.getProjectById(projectId)
       setProjectData(data)
       setProject(data)
     } catch (err) {
