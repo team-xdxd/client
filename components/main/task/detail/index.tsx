@@ -6,6 +6,7 @@ import update from 'immutability-helper'
 import Router from 'next/router'
 import taskApi from '../../../../server-api/task'
 import toastUtils from '../../../../utils/toast'
+import urlUtils from '../../../../utils/url'
 
 // Components
 import ItemSubheader from '../../../common/items/item-subheader'
@@ -35,8 +36,8 @@ const TaskDetail = () => {
 
   const getTask = async () => {
     try {
-      const splitPath = window.location.pathname.split('/')
-      const { data } = await taskApi.getTaskById(splitPath[splitPath.length - 1])
+      const taskId = urlUtils.getPathId()
+      const { data } = await taskApi.getTaskById(taskId)
       console.log(data);
 
       setTaskData(data)

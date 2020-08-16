@@ -1,7 +1,7 @@
 import styles from './conversation.module.css'
 
 // Components
-import Comment from './Comment'
+import Comment from './comment'
 import CommentInput from './comment-input'
 
 const Conversation = ({ comments, addComment }) => {

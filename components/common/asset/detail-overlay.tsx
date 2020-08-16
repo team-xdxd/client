@@ -16,7 +16,7 @@ import Button from '../buttons/button'
 import AssetImg from './asset-img'
 import RenameModal from '../modals/rename-modal'
 
-const DetailOverlay = ({ asset, realUrl, closeOverlay, openShareAsset = () => { }, openDeleteAsset = () => { }, isShare = false }) => {
+const DetailOverlay = ({ asset, realUrl, closeOverlay, openShareAsset = () => { }, openDeleteAsset = () => { }, isShare = false, initiaParams }) => {
 
   const [assetDetail, setAssetDetail] = useState()
 
@@ -28,7 +28,14 @@ const DetailOverlay = ({ asset, realUrl, closeOverlay, openShareAsset = () => { 
 
   useEffect(() => {
     getDetail()
+    checkInitialParams()
   }, [])
+
+  const checkInitialParams = () => {
+    if (initiaParams.side) {
+      setActiveSidecomponent(initiaParams.side)
+    }
+  }
 
   const getDetail = async () => {
     try {

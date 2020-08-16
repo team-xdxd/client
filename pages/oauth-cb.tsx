@@ -3,6 +3,7 @@ import Router from 'next/router'
 import { UserContext } from '../context'
 import authApi from '../server-api/auth'
 import cookiesUtil from '../utils/cookies'
+import urlUtils from '../utils/url'
 
 // Simple redirect page
 const OauthCbPage = () => {
@@ -10,9 +11,8 @@ const OauthCbPage = () => {
   const { fetchUser } = useContext(UserContext)
   useEffect(() => {
     // TODO: Include state string verification
-    const queryParams = window.location.search.substr(1).split('&')
-    const accessCode = decodeURIComponent(getFromQueryParams(queryParams, 'code'))
-    signIn(accessCode)
+    const { code } = urlUtils.getQueryParameters()
+    signIn(decodeURIComponent(code as string))
   }, [])
 
   const signIn = async (accessCode) => {
@@ -37,14 +37,3 @@ const OauthCbPage = () => {
 }
 
 export default OauthCbPage
-
-
-const getFromQueryParams = (queryParams, parameter) => {
-  let foundCode;
-  queryParams.forEach(element => {
-    if (element.includes(parameter + "=")) {
-      foundCode = element.split(parameter + "=")[1];
-    }
-  });
-  return foundCode;
-}

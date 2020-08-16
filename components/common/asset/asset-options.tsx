@@ -14,12 +14,13 @@ const AssetOptions = ({
 	openCopyAsset,
 	openArchiveAsset,
 	openDeleteAsset,
-	openShareAsset
+	openShareAsset,
+	openComments
 }) => {
 	// onClick={() => downloadUtils.downloadFile(realUrl, assetDetail.name)}
 	const options = [
 		{ label: 'Download', onClick: downloadAsset },
-		{ label: 'Comment', onClick: () => { } },
+		{ label: 'Comment', onClick: openComments },
 		{ label: 'Move', onClick: openMoveAsset },
 		{ label: 'Copy', onClick: openCopyAsset },
 		{ label: 'Archive', onClick: openArchiveAsset },
