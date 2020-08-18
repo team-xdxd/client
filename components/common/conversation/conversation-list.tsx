@@ -8,8 +8,23 @@ import { TeamContext } from '../../../context'
 import Conversation from './conversation'
 import CommentInput from './comment-input'
 
+const skeletonConversation = {
+  comments: [
+    {
+      createdAt: "2020-08-18T05:08:30.662Z",
+      content: "Default comment",
+      user: {
+        name: 'Default Name'
+      },
+      mentions: []
+    }],
+  isLoading: true
+}
+
+const skeletonConversations = [skeletonConversation, skeletonConversation, skeletonConversation]
+
 const ConversationList = ({ itemType, itemId }) => {
-  const [conversations, setConversations] = useState([])
+  const [conversations, setConversations] = useState(skeletonConversations)
 
   const { teamMembers, getTeamMembers } = useContext(TeamContext)
 
@@ -34,7 +49,7 @@ const ConversationList = ({ itemType, itemId }) => {
       const { data } = await conversationApi.createComment(itemType, itemId, conversationId, { content, mentions })
       if (conversationId === 'new') {
         setConversations(update(conversations, {
-          $push: [data]
+          $unshift: [data]
         }))
       }
       else {
@@ -64,9 +79,10 @@ const ConversationList = ({ itemType, itemId }) => {
 
       <CommentInput onSubmit={addComment} />
       <ul>
-        {conversations.map((conversation) => (
-          <li key={conversation.id}>
+        {conversations.map((conversation, index) => (
+          <li key={conversation.id || index} >
             <Conversation
+              isLoading={conversation.isLoading}
               comments={conversation.comments}
               addComment={(content) => addComment(content, conversation.id)} />
           </li>
