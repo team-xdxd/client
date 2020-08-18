@@ -73,6 +73,7 @@ const SidePanel = ({ asset, updateAsset, isShare }) => {
         } else {
           stateTagsUpdate = update(tags, { $push: [data] })
           setTags(stateTagsUpdate)
+          setInputTags(update(inputTags, { $push: [data] }))
         }
         updateAssetState({
           tags: { $set: stateTagsUpdate }
@@ -81,6 +82,7 @@ const SidePanel = ({ asset, updateAsset, isShare }) => {
         return data
       } catch (err) {
         // TODO: Error if failure for whatever reason
+        setActiveDropdown('')
       }
     } else {
       setActiveDropdown('')
@@ -206,6 +208,7 @@ const SidePanel = ({ asset, updateAsset, isShare }) => {
                     onChange={handleTagChange}
                     classNamePrefix='select-prefix'
                     menuPlacement={'top'}
+                    isClearable={true}
                   />
                 </div>
                 :
@@ -244,6 +247,7 @@ const SidePanel = ({ asset, updateAsset, isShare }) => {
                     onChange={(selected) => handleAssociationChange(selected.value, 'projects', 'add')}
                     styleType={'regular item'}
                     menuPlacement={'top'}
+                    isClearable={true}
                   />
                 </div>
                 :
@@ -282,6 +286,7 @@ const SidePanel = ({ asset, updateAsset, isShare }) => {
                     onChange={(selected) => handleAssociationChange(selected.value, 'tasks', 'add')}
                     styleType={'regular item'}
                     menuPlacement={'top'}
+                    isClearable={true}
                   />
                 </div>
                 :

@@ -4,10 +4,10 @@ import styles from './conversation.module.css'
 import Comment from './comment'
 import CommentInput from './comment-input'
 
-const Conversation = ({ comments, addComment }) => {
+const Conversation = ({ comments, addComment, isLoading }) => {
 
   return (
-    <div className={styles.container}>
+    <div className={`${styles.container} ${isLoading && 'loadable'}`}>
       <ul>
         {comments.map(comment => (
           <li key={comment.id}>

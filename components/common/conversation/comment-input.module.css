@@ -18,7 +18,7 @@
 }
 
 .content-input.reply {
-  padding-left: 42px;
+  padding-left: 49px;
   border-radius: 5px;
   background-color: inherit;
   border-top: none;
@@ -37,8 +37,9 @@
   top: 18px;
   left: 14px;
   position: absolute;
-  width: 20px;
-  height: 20px;
+  width: 27px;
+  height: 27px;
+  margin-top: -5px;
 }
 
 .input-container .image-pair {
