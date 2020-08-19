@@ -118,5 +118,7 @@ export const Assets = {
 
 export const Comments = {
   mention: require('./Icons/Utilities/@/icn-comments-mention.svg'),
+  mentionLight: require('./Icons/Utilities/@/icn-comments-mention-light.svg'),
   smile: require('./Icons/Utilities/Smile/icn-comments-smile.svg'),
+  smileLight: require('./Icons/Utilities/Smile/icn-comments-smile-light.svg')
 }

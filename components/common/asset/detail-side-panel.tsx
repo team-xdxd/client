@@ -68,10 +68,10 @@ const SidePanel = ({ asset, updateAsset, isShare }) => {
         const { data } = await assetApi.addTag(id, newTag)
         let stateTagsUpdate
         if (!isNew) {
-          stateTagsUpdate = update(tags, { $push: [newTag] })
+          stateTagsUpdate = update(assetTags, { $push: [newTag] })
           setTags(stateTagsUpdate)
         } else {
-          stateTagsUpdate = update(tags, { $push: [data] })
+          stateTagsUpdate = update(assetTags, { $push: [data] })
           setTags(stateTagsUpdate)
           setInputTags(update(inputTags, { $push: [data] }))
         }
@@ -91,9 +91,9 @@ const SidePanel = ({ asset, updateAsset, isShare }) => {
 
   const removeTag = async (index) => {
     try {
-      let stateTagsUpdate = update(tags, { $splice: [[index, 1]] })
+      let stateTagsUpdate = update(assetTags, { $splice: [[index, 1]] })
       setTags(stateTagsUpdate)
-      await assetApi.removeTag(id, tags[index].id)
+      await assetApi.removeTag(id, assetTags[index].id)
       updateAssetState({
         tags: { $set: stateTagsUpdate }
       })
