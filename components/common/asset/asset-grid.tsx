@@ -32,14 +32,14 @@ const AssetGrid = ({ activeView = 'grid', onFilesDataGet, toggleSelected, mode =
   const { assets, setAssets, setActiveOperation, setOperationAsset, nextPage, setOperationFolder } = useContext(AssetContext)
 
   const [deleteModalOpen, setDeleteModalOpen] = useState(false)
-  const [archiveModalOpen, setArchiveModalOpen] = useState(false)
+  const [activeArchiveAsset, setActiveArchiveAsset] = useState(undefined)
   const [activeAssetId, setActiveAssetId] = useState('')
 
   const [activeSearchOverlay, setActiveSearchOverlay] = useState(false)
 
-  const openArchiveAsset = id => {
-    setActiveAssetId(id)
-    setArchiveModalOpen(true)
+  const openArchiveAsset = asset => {
+    setActiveAssetId(asset.id)
+    setActiveArchiveAsset(asset)
   }
 
   const openDeleteAsset = id => {
@@ -63,17 +63,18 @@ const AssetGrid = ({ activeView = 'grid', onFilesDataGet, toggleSelected, mode =
   }
 
   const archiveAsset = async id => {
+    const newState = activeArchiveAsset?.stage !== 'archived' ? 'archived' : 'draft'
     try {
-      await assetsApi.updateAsset(id, { updateData: { stage: 'archived' } })
+      await assetsApi.updateAsset(id, { updateData: { stage: newState } })
       const assetIndex = assets.findIndex(assetItem => assetItem.asset.id === id)
       setAssets(update(assets, {
         $splice: [[assetIndex, 1]]
       }))
-      toastUtils.success('Assets archived successfully')
+      toastUtils.success(`Assets ${newState === 'archived' ? 'archived' : 'unarchived'} successfully`)
     }
     catch (err) {
       // TODO: Error handling
-      toastUtils.error('Could not archive assets, please try again later.')
+      toastUtils.error(`Could not ${newState === 'archived' ? 'archive' : 'unarchive'} assets, please try again later.`)
     }
   }
 
@@ -88,6 +89,7 @@ const AssetGrid = ({ activeView = 'grid', onFilesDataGet, toggleSelected, mode =
   }
 
   const shouldShowUpload = (mode === 'assets' && assets.length === 0) || (mode === 'folders' && folders.length === 0)
+
 
   return (
     <section className={styles.container}>
@@ -118,7 +120,7 @@ const AssetGrid = ({ activeView = 'grid', onFilesDataGet, toggleSelected, mode =
                   <AssetThumbail
                     {...assetItem}
                     toggleSelected={() => toggleSelected(assetItem.asset.id)}
-                    openArchiveAsset={() => openArchiveAsset(assetItem.asset.id)}
+                    openArchiveAsset={() => openArchiveAsset(assetItem.asset)}
                     openDeleteAsset={() => openDeleteAsset(assetItem.asset.id)}
                     openMoveAsset={() => beginAssetOperation({ asset: assetItem }, 'move')}
                     openCopyAsset={() => beginAssetOperation({ asset: assetItem }, 'copy')}
@@ -217,19 +219,19 @@ const AssetGrid = ({ activeView = 'grid', onFilesDataGet, toggleSelected, mode =
 
       {/* Archive modal */}
       <ConfirmModal
-        closeModal={() => setArchiveModalOpen(false)}
+        closeModal={() => setActiveArchiveAsset(undefined)}
         confirmAction={() => {
           archiveAsset(activeAssetId)
           setActiveAssetId('')
-          setArchiveModalOpen(false)
+          setActiveArchiveAsset(undefined)
         }}
-        confirmText={'Archive'}
+        confirmText={`${activeArchiveAsset?.stage !== 'archived' ? 'Archive' : 'Unarchive'}`}
         message={
           <span>
-            Are you sure you want to &nbsp;<strong>Archive</strong>&nbsp; this asset?
+            Are you sure you want to &nbsp;<strong>{`${activeArchiveAsset?.stage !== 'archived' ? 'Archive' : 'Unarchive'}`}</strong>&nbsp; this asset?
         </span>
         }
-        modalIsOpen={archiveModalOpen}
+        modalIsOpen={activeArchiveAsset}
       />
     </section >
   )

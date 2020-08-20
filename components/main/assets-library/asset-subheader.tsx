@@ -12,7 +12,8 @@ const AssetSubheader = ({
   activeFolderData,
   activeFolder,
   setRenameModalOpen,
-  getFolders
+  getFolders,
+  activeSortFilter
 }) => {
 
   return (
@@ -30,7 +31,7 @@ const AssetSubheader = ({
       <div className={styles.padding}>
       </div>
       {amountSelected > 0 ?
-        <AssetHeaderOps />
+        <AssetHeaderOps isUnarchive={activeSortFilter.mainFilter === 'archived'} />
         :
         <AssetAddition activeFolder={activeFolder} getFolders={getFolders} />
       }

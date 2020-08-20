@@ -276,6 +276,7 @@ const AssetsLibrary = () => {
         activeFolderData={activeFolder && folders.find(folder => folder.id === activeFolder)}
         backToFolders={backToFolders}
         setRenameModalOpen={setRenameModalOpen}
+        activeSortFilter={activeSortFilter}
       />
       <main className={`${styles.container}`}>
         <TopBar

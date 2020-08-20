@@ -23,12 +23,10 @@ const AssetOptions = ({
 		{ label: 'Comment', onClick: openComments },
 		{ label: 'Move', onClick: openMoveAsset },
 		{ label: 'Copy', onClick: openCopyAsset },
-		{ label: 'Archive', onClick: openArchiveAsset },
+		{ label: asset.stage !== 'archived' ? 'Archive' : 'Unarchive', onClick: openArchiveAsset },
 		{ label: 'Delete', onClick: openDeleteAsset },
 		{ label: 'Share', onClick: openShareAsset }
 	]
-
-	const filteredOptions = options.filter(option => asset.stage !== 'archived' || (asset.stage === 'archived' && option.label !== 'Archive'))
 
 	return (
 		<ToggleableAbsoluteWrapper
@@ -43,7 +41,7 @@ const AssetOptions = ({
 			Content={() => (
 				<div className={styles.more} >
 					<Dropdown
-						options={filteredOptions}
+						options={options}
 					/>
 				</div>
 			)}

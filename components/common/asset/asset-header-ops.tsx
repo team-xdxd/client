@@ -5,7 +5,7 @@ import downloadUtils from '../../../utils/download'
 // Components
 import Button from '../../common/buttons/button'
 
-const AssetHeaderOpts = () => {
+const AssetHeaderOps = ({ isUnarchive = false }) => {
 	const {
 		assets,
 		setAssets,
@@ -24,7 +24,7 @@ const AssetHeaderOpts = () => {
 	return (
 		<>
 			<Button text={'Delete'} type='button' styleType='tertiary' onClick={() => setActiveOperation('delete')} />
-			<Button text={'Archive'} type='button' styleType='tertiary' onClick={() => setActiveOperation('archive')} />
+			<Button text={isUnarchive ? 'Unarchive' : 'Archive'} type='button' styleType='tertiary' onClick={() => setActiveOperation(isUnarchive ? 'unarchive' : 'archive')} />
 			<Button text={'Download'} type='button' styleType='tertiary' onClick={downloadSelectedAssets} />
 			<Button text={'Move'} type='button' styleType='tertiary' onClick={() => setActiveOperation('move')} />
 			<Button text={'Copy'} type='button' styleType='tertiary' onClick={() => setActiveOperation('copy')} />
@@ -34,4 +34,4 @@ const AssetHeaderOpts = () => {
 	)
 }
 
-export default AssetHeaderOpts
+export default AssetHeaderOps
