@@ -1,7 +1,7 @@
 import Head from 'next/head'
 
 // Components
-import MainLayout from '../../components/common/layouts/share-layout'
+import ShareLayout from '../../components/common/layouts/share-layout'
 import ShareMain from '../../components/share'
 
 const AssetsPage = () => (
@@ -10,9 +10,9 @@ const AssetsPage = () => (
       <title>Assets</title>
       <link rel="icon" href="/favicon.ico" />
     </Head>
-    <MainLayout>
+    <ShareLayout>
       <ShareMain />
-    </MainLayout>
+    </ShareLayout>
   </>
 )
 

@@ -17,8 +17,6 @@ import '@stripe/stripe-js';
 import dragndropPolyfill from '../polyfills/dragndroptouch'
 import { useState, useEffect } from 'react'
 import { UserContext, LanguageContext, ThemeContext } from '../context'
-import AssetContextProvider from '../context/asset-provider'
-import TeamContextProvider from '../context/team-provider'
 import cookiesUtils from '../utils/cookies'
 import requestsUtils from '../utils/requests'
 
@@ -93,20 +91,15 @@ export default function MyApp({ Component, pageProps }) {
   }
 
   return (
-
     <UserContext.Provider value={userValue} >
       <LanguageContext.Provider value={languageValue}>
         <ThemeContext.Provider value={themeValue}>
-          <AssetContextProvider>
-            <TeamContextProvider>
-              <Head>
-                <script type="text/javascript" src="https://www.dropbox.com/static/api/2/dropins.js" id="dropboxjs" data-app-key={`gtwo80vc34l8vjd`}></script>
-              </Head>
-              {initialLoadFinished &&
-                <Component {...pageProps} />
-              }
-            </TeamContextProvider>
-          </AssetContextProvider>
+          <Head>
+            <script type="text/javascript" src="https://www.dropbox.com/static/api/2/dropins.js" id="dropboxjs" data-app-key={`gtwo80vc34l8vjd`}></script>
+          </Head>
+          {initialLoadFinished &&
+            <Component {...pageProps} />
+          }
         </ThemeContext.Provider>
       </LanguageContext.Provider>
     </UserContext.Provider>
