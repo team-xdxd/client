@@ -176,7 +176,8 @@ export default () => {
 			}
 		} catch (err) {
 			console.log(err)
-			toastUtils.error('Could not copy assets, please try again later.')
+			if (err.response?.status === 402) toastUtils.error(err.response.data.message)
+			else toastUtils.error('Could not copy assets, please try again later.')
 		}
 	}
 

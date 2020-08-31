@@ -51,7 +51,8 @@ const Team = () => {
       toastUtils.success(`Invitation sent to ${email}`)
     } catch (err) {
       console.log(err)
-      toastUtils.error(`Coudl not send invitation to ${email}`)
+      if (err.response?.status === 402) toastUtils.error(err.response.data.message)
+      else toastUtils.error(`Coudl not send invitation to ${email}`)
     }
   }
 
