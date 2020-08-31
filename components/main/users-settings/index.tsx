@@ -8,10 +8,11 @@ import { capitalCase } from 'change-case'
 // Components
 import SideNavigation from './side-navigation'
 import Team from './team'
+import Billing from './billing'
 
 const SETTING_OPTIONS_CONTENT = {
   profile: () => <></>,
-  billing: () => <></>,
+  billing: Billing,
   security: () => <></>,
   team: Team,
   notifications: () => <></>,
