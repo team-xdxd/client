@@ -33,7 +33,9 @@ const Billing = () => {
         <SectionButtonOption section='invoices' />
         <SectionButtonOption section='paymentMethod' />
       </div>
-      <ActiveContent />
+      <div className={styles.content}>
+        <ActiveContent />
+      </div>
     </div>
   )
 }

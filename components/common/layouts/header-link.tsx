@@ -9,18 +9,19 @@ const HeaderLink = ({ img, imgHover, href, text, active = false }) => {
 
   return (
     <Link href={href}>
-      <li className={`${styles.link} ${active && styles.active}`}
-        // onClick={() => Router.replace(href)}
-        onMouseOver={() => setSrcimg(imgHover)}
-        onMouseOut={() => setSrcimg(img)}>
-        <img
-          className={styles.icon}
-          src={srcimg}
-        />
-        <div className={styles.text}>
-          {text}
-        </div>
-      </li>
+      <a className={styles.ref}>
+        <li className={`${styles.link} ${active && styles.active}`}
+          onMouseOver={() => setSrcimg(imgHover)}
+          onMouseOut={() => setSrcimg(img)}>
+          <img
+            className={styles.icon}
+            src={srcimg}
+          />
+          <div className={styles.text}>
+            {text}
+          </div>
+        </li>
+      </a>
     </Link>
   )
 }

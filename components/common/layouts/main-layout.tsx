@@ -13,13 +13,26 @@ import Dropdown from '../inputs/dropdown'
 const AuthLayout = ({ children }) => {
   const { user, logOut } = useContext(UserContext)
 
+  const SettingsLink = ({ settingRef, name }) => (
+    <Link href={`/main/user-settings/${settingRef}`}>
+      <a>
+        <li>
+          <span></span>
+          <span>{name}</span>
+        </li>
+      </a>
+    </Link>
+  )
+
   return (
     <>
       <header className={styles.header}>
         <Link href='/main/overview'>
-          <img
-            className={styles['logo-img']}
-            src={GeneralImg.logo} />
+          <a>
+            <img
+              className={styles['logo-img']}
+              src={GeneralImg.logo} />
+          </a>
         </Link>
         <ul className={styles['navigation-links']}>
           <HeaderLink
@@ -73,14 +86,10 @@ const AuthLayout = ({ children }) => {
             <Dropdown
               options={[
                 {
-                  OverrideComp: () => (
-                    <Link href='/main/user-settings/team'>
-                      <li>
-                        <span></span>
-                        <span>Team</span>
-                      </li>
-                    </Link>
-                  )
+                  OverrideComp: () => <SettingsLink name='Billing' settingRef='billing' />
+                },
+                {
+                  OverrideComp: () => <SettingsLink name='Team' settingRef='team' />
                 },
                 { label: 'Log Out', onClick: logOut }
               ]}

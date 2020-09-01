@@ -1,5 +1,4 @@
 import { useState, useContext } from 'react'
-import Router from 'next/router'
 import { useForm } from 'react-hook-form'
 import styles from './signup-form.module.css'
 import { UserContext } from '../../context'
@@ -16,7 +15,7 @@ import companySizeOptions from '../../resources/data/company-sizes.json'
 
 const SignupForm = ({ inviteCode = '' }) => {
   const { control, handleSubmit, errors, getValues } = useForm()
-  const [companySize, setCompanySize] = useState()
+  const [companySize, setCompanySize] = useState(undefined)
   const [submitError, setSubmitError] = useState('')
   const { fetchUser } = useContext(UserContext)
   const onSubmit = async fieldData => {
