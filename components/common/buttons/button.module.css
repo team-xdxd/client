@@ -11,7 +11,8 @@
   min-height: 70px;
 }
 
-.normal-height {
+.normal-height,
+.normal-height-primary {
   min-height: 34px;
 }
 
@@ -19,7 +20,8 @@
   min-height: 48px;
 }
 
-.primary {
+.primary,
+.normal-height-primary {
   background-color: var(--color-prim-turquoise);
   color: white;
 }
@@ -54,7 +56,7 @@
 }
 
 .tertiary:hover {
-  opacity: 0.6
+  opacity: 0.6;
 }
 
 .tertiary:disabled {

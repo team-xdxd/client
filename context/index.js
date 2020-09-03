@@ -54,7 +54,25 @@ export const AssetContext = createContext({
 })
 
 export const TeamContext = createContext({
+    team: null,
+    patchTeam: (patchData) => { },
+    getTeam: () => { },
     teamMembers: [],
     setTeamMembers: (data) => { },
-    getTeamMembers: () => { }
+    getTeamMembers: () => { },
+
+    plan: null,
+    getPlan: () => { },
+
+})
+
+export const LocationContext = createContext({
+    countries: [],
+    loadCountries: () => { },
+
+    states: [],
+    loadStates: (countryId) => { },
+
+    cities: [],
+    loadCities: (stateId) => { },
 })

@@ -4,14 +4,16 @@ import update from 'immutability-helper'
 import toastUtils from '../../../utils/toast'
 import urlUtils from '../../../utils/url'
 import { capitalCase } from 'change-case'
+import LocationContextProvider from '../../../context/location-provider'
 
 // Components
 import SideNavigation from './side-navigation'
 import Team from './team'
+import Billing from './billing'
 
 const SETTING_OPTIONS_CONTENT = {
   profile: () => <></>,
-  billing: () => <></>,
+  billing: Billing,
   security: () => <></>,
   team: Team,
   notifications: () => <></>,
@@ -32,14 +34,16 @@ const UserSettings = () => {
 
   return (
     <main className={`${styles.container}`}>
-      <SideNavigation
-        activeView={activeView}
-        setActiveView={setActiveView}
-      />
-      <section className={styles.content}>
-        <h2>{capitalCase(activeView)}</h2>
-        <ActiveContent />
-      </section>
+      <LocationContextProvider>
+        <SideNavigation
+          activeView={activeView}
+          setActiveView={setActiveView}
+        />
+        <section className={styles.content}>
+          <h2>{capitalCase(activeView)}</h2>
+          <ActiveContent />
+        </section>
+      </LocationContextProvider>
     </main>
   )
 }
