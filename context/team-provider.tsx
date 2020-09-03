@@ -3,15 +3,26 @@ import { TeamContext } from '../context'
 import toastUtils from '../utils/toast'
 import userApi from '../server-api/user'
 import teamApi from '../server-api/team'
+import planApi from '../server-api/plan'
 
 export default ({ children }) => {
   const [team, setTeam] = useState(null)
+  const [plan, setPlan] = useState(null)
   const [teamMembers, setTeamMembers] = useState([])
 
   const getTeam = async () => {
     try {
       const { data } = await teamApi.getTeam()
       setTeam(data)
+    } catch (err) {
+      console.log(err)
+    }
+  }
+
+  const getPlan = async () => {
+    try {
+      const { data } = await planApi.getPlanDetail()
+      setPlan(data)
     } catch (err) {
       console.log(err)
     }
@@ -40,6 +51,8 @@ export default ({ children }) => {
     team,
     patchTeam,
     getTeam,
+    plan,
+    getPlan,
     teamMembers,
     setTeamMembers,
     getTeamMembers

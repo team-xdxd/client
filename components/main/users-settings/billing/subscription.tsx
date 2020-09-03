@@ -5,22 +5,15 @@ import { TeamContext } from '../../../../context'
 // Components
 import SubscriptionNameForm from './subscription-name-form'
 import SubscriptionAddressForm from './subscription-address-form'
-import SubscriptionForm from './subscription-form'
+import SubscriptionPlan from './subscription-plan'
 
 const Subscription = () => {
 
-  const [companyAddress, setCompanyAddress] = useState({
-    address: '',
-    city: '',
-    state: '',
-    country: '',
-    zip: ''
-  })
-
-  const { getTeam } = useContext(TeamContext)
+  const { getTeam, getPlan } = useContext(TeamContext)
 
   useEffect(() => {
     getTeam()
+    getPlan()
   }, [])
 
   return (
@@ -30,7 +23,7 @@ const Subscription = () => {
         <SubscriptionAddressForm />
       </div>
       <div>
-        <SubscriptionForm />
+        <SubscriptionPlan />
       </div>
     </>
   )

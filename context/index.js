@@ -59,7 +59,11 @@ export const TeamContext = createContext({
     getTeam: () => { },
     teamMembers: [],
     setTeamMembers: (data) => { },
-    getTeamMembers: () => { }
+    getTeamMembers: () => { },
+
+    plan: null,
+    getPlan: () => { },
+
 })
 
 export const LocationContext = createContext({
