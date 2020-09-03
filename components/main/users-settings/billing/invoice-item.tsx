@@ -9,7 +9,7 @@ const InvoiceItem = ({ invoice, type = 'invoice' }) => {
   return (
     <div className={styles.container}>
       <div>
-        {format(invoice.date, 'MM/dd/YYYY')}
+        {invoice.date && format(invoice.date, 'MM/dd/yyyy')}
       </div>
       <div>
         {invoice.product}
