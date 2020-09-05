@@ -43,18 +43,13 @@ const SubscriptionAddressForm = () => {
     }
   }, [country, countries])
 
-  const mapFn = (item) => ({ ...item, label: item.name, value: item.id })
-
-  const countriesOptions = countries.map(mapFn)
-  const statesOptions = states.map(mapFn)
-
   const getSelectedItem = (type, value) => {
     const findFn = (item) => item.name === value
     switch (type) {
       case 'country':
-        return countriesOptions.find(findFn)
+        return countries.find(findFn)
       default:
-        return statesOptions.find(findFn)
+        return states.find(findFn)
     }
   }
 
@@ -85,7 +80,7 @@ const SubscriptionAddressForm = () => {
                 <label>Country</label>
                 <Select
                   placeholder='Select Country'
-                  options={countriesOptions}
+                  options={countries}
                   onChange={(selected) => setCountry(selected.name)}
                   value={getSelectedItem('country', country)}
                 />
@@ -94,7 +89,7 @@ const SubscriptionAddressForm = () => {
                 <label>State</label>
                 <Select
                   placeholder='Select State'
-                  options={statesOptions}
+                  options={states}
                   onChange={(selected) => seState(selected.name)}
                   value={getSelectedItem('state', state)}
                 />

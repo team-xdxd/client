@@ -56,7 +56,7 @@ export const AssetContext = createContext({
 export const TeamContext = createContext({
     team: null,
     patchTeam: (patchData) => { },
-    getTeam: () => { },
+    getTeam: (once) => { },
     teamMembers: [],
     setTeamMembers: (data) => { },
     getTeamMembers: () => { },

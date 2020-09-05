@@ -9,6 +9,7 @@ import Router from 'next/router'
 import HeaderLink from '../layouts/header-link'
 import ToggleableAbsoluteWrapper from '../misc/toggleable-absolute-wrapper'
 import Dropdown from '../inputs/dropdown'
+import TrialReminderModal from '../modals/trial-reminder-modal'
 
 const AuthLayout = ({ children }) => {
   const { user, logOut } = useContext(UserContext)
@@ -99,6 +100,7 @@ const AuthLayout = ({ children }) => {
       </header>
       {children}
       <footer className={styles.footer}>
+        <TrialReminderModal />
       </footer>
     </>
   )
