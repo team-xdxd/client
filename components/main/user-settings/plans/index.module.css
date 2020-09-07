@@ -1,0 +1,19 @@
+.section-buttons button{
+  margin-right: 2rem;
+  font-size: 16px;
+}
+
+.products{
+  display: flex;
+  justify-content: space-between;
+  /* flex-wrap: wrap; */
+  margin-top: 2rem;
+}
+
+.products>li:first-child{
+  margin-right: 2rem;
+}
+
+.products>li:last-child{
+  margin-left: 2rem;
+}

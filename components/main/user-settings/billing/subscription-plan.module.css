@@ -1,0 +1,43 @@
+.container {
+  border-top: 1px solid var(--color-secondary-border);
+  margin-top: 2rem;
+  padding-top: 2rem;
+}
+
+.sub-container {
+  display: flex;
+}
+
+.subscription-data {
+  flex: 1;
+  margin-right: 20%;
+}
+
+.plan {
+  width: 100%;
+  margin-bottom: 28px;
+}
+
+.prop-pair {
+  display: flex;
+  margin-bottom: 28px;
+}
+
+.prop-pair > div {
+  width: 50%;
+}
+
+.value {
+  font-weight: 500;
+  font-size: 16px;
+  margin-top: 5px;
+}
+
+.button-actions {
+  display: flex;
+  flex-direction: column;
+}
+
+.button-actions button{
+  margin-bottom: 26px;
+}

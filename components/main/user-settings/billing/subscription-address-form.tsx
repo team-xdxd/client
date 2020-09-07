@@ -54,49 +54,49 @@ const SubscriptionAddressForm = () => {
   }
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className={styles.container}>
+    <form onSubmit={handleSubmit(onSubmit)}>
       {team &&
         <>
-          <div>
-            <h3>Company Address</h3>
-            <FormInput
-              labId='address'
-              label='Address'
-              InputComponent={
-                <Input
-                  type='text'
-                  id='address'
-                />
-              }
-              defaultValue={team.address}
-              name='address'
-              control={control}
-              rules={{ minLength: 4, maxLength: 50 }}
-              errors={errors}
-              message={'This field should be between 4 and 30 characters long'}
-            />
-            <div className={styles['city-state']}>
-              <div className={styles.city}>
-                <label>Country</label>
-                <Select
-                  placeholder='Select Country'
-                  options={countries}
-                  onChange={(selected) => setCountry(selected.name)}
-                  value={getSelectedItem('country', country)}
-                />
+          <h3>Company Address</h3>
+          <div className={styles.container}>
+            <div className='fields-first'>
+              <FormInput
+                labId='address'
+                label='Address'
+                InputComponent={
+                  <Input
+                    type='text'
+                    id='address'
+                  />
+                }
+                defaultValue={team.address}
+                name='address'
+                control={control}
+                rules={{ minLength: 4, maxLength: 50 }}
+                errors={errors}
+                message={'This field should be between 4 and 30 characters long'}
+              />
+              <div className={styles['fields-pair']}>
+                <div>
+                  <label>Country</label>
+                  <Select
+                    placeholder='Select Country'
+                    options={countries}
+                    onChange={(selected) => setCountry(selected.name)}
+                    value={getSelectedItem('country', country)}
+                  />
+                </div>
+                <div >
+                  <label>State</label>
+                  <Select
+                    placeholder='Select State'
+                    options={states}
+                    onChange={(selected) => seState(selected.name)}
+                    value={getSelectedItem('state', state)}
+                  />
+                </div>
               </div>
-              <div >
-                <label>State</label>
-                <Select
-                  placeholder='Select State'
-                  options={states}
-                  onChange={(selected) => seState(selected.name)}
-                  value={getSelectedItem('state', state)}
-                />
-              </div>
-            </div>
-            <div>
-              <div className={styles['city-state']}>
+              <div className={styles['fields-pair']}>
                 <div className={styles.city}>
                   <FormInput
                     labId='city'
@@ -135,13 +135,13 @@ const SubscriptionAddressForm = () => {
                 </div>
               </div>
             </div>
-          </div>
-          <div>
-            <Button
-              text='Save Changes'
-              type='submit'
-              styleType='normal-height-primary'
-            />
+            <div>
+              <Button
+                text='Save Changes'
+                type='submit'
+                styleType='input-height-primary'
+              />
+            </div>
           </div>
         </>
       }

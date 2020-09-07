@@ -45,15 +45,15 @@ const PaymentMethod = () => {
     <>
       <div className={styles.container}>
         <h3>Active Card</h3>
-        <div className={styles['card-info']}>
+        <div className={`${styles['card-info']}`}>
           {paymentMethod ?
-            <div>
+            <div className={'fields-first'}>
               <div>{paymentMethod.name}</div>
               <div>{`Card: ${paymentMethod.brand} ending in ${paymentMethod.last4}`}</div>
               <div>{`Exp. ${paymentMethod.expMonth}/${paymentMethod.expYear} `}</div>
             </div>
             :
-            <div>
+            <div className={'fields-first'}>
               No card configured
             </div>
           }
@@ -62,18 +62,20 @@ const PaymentMethod = () => {
               text='Update Card'
               type='button'
               onClick={() => setModalActive(true)}
-              styleType='primary' />
+              styleType='input-height-primary' />
           </div>
         </div>
       </div>
       <Elements stripe={stripePromise}>
         <BaseModal
           closeModal={() => setModalActive(false)}
+          noHeightMax={true}
           modalIsOpen={modalActive}>
           <CreditCardForm
             onConfirm={updatePaymentMethod}
             buttonText={'Update Card'}
             buttonDisabled={false}
+            noBottomMargin={true}
           />
         </BaseModal>
       </Elements>

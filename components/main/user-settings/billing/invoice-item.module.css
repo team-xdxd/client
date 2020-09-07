@@ -1,0 +1,9 @@
+.container{
+  display: flex;
+  align-items: center;
+  margin-top: 20px;
+}
+
+.container>div{
+  width: 20%;
+}

@@ -2,13 +2,17 @@
   padding: 35px 32px;
   display: grid;
   grid-template-areas: "side-nav content";
-  grid-template-columns: 19% 80%;
+  grid-template-columns: 20% 79%;
   grid-column-gap: 1%;
   margin-top: 1rem;
+  margin-right: 5%;
 }
 
 .content {
   grid-area: content;
   min-height: 80vh;
   padding: 0 3rem;
+  width: 100%;
+  max-width: 55rem;
+  
 }

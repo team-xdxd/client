@@ -31,7 +31,7 @@ const elemOptions = {
   }
 }
 
-const CreditCardForm = ({ onConfirm, buttonDisabled, buttonText = 'Subscribe' }) => {
+const CreditCardForm = ({ onConfirm, buttonDisabled, buttonText = 'Subscribe', noBottomMargin = false }) => {
   const { control, handleSubmit, errors } = useForm()
   const [state, setState] = useState({ label: '', value: '' })
   const [country, setCountry] = useState({ label: '', value: '', code: '' })
@@ -81,7 +81,7 @@ const CreditCardForm = ({ onConfirm, buttonDisabled, buttonText = 'Subscribe' })
   }
 
   return (
-    <section className={`${styles.container} card-content`}>
+    <section className={`${styles.container} card-content ${noBottomMargin && styles['no-bottom']}`}>
       <h3>Credit Card Information</h3>
       <form onSubmit={handleSubmit(onSubmit)} className={styles.form}>
         <div>
@@ -145,7 +145,7 @@ const CreditCardForm = ({ onConfirm, buttonDisabled, buttonText = 'Subscribe' })
             message={'This field should be between 4 and 120 characters long'}
           />
         </div>
-        <div className={styles['city-state']}>
+        <div className={styles['fields-pair']}>
           <div >
             <label>Country</label>
             <Select
@@ -165,8 +165,8 @@ const CreditCardForm = ({ onConfirm, buttonDisabled, buttonText = 'Subscribe' })
             />
           </div>
         </div>
-        <div className={styles.zip}>
-          <div className={styles.city}>
+        <div className={styles['fields-pair']}>
+          <div >
             <FormInput
               labId='city-form'
               label='City'
@@ -183,20 +183,22 @@ const CreditCardForm = ({ onConfirm, buttonDisabled, buttonText = 'Subscribe' })
               message={'This field should be between 2 and 25 characters long'}
             />
           </div>
-          <FormInput
-            labId='zip-form'
-            label='Zip Code'
-            InputComponent={
-              <Input
-                type='text'
-                id='zip-form'
-              />
-            }
-            name='zip'
-            control={control}
-            rules={{}}
-            errors={errors}
-          />
+          <div>
+            <FormInput
+              labId='zip-form'
+              label='Zip Code'
+              InputComponent={
+                <Input
+                  type='text'
+                  id='zip-form'
+                />
+              }
+              name='zip'
+              control={control}
+              rules={{}}
+              errors={errors}
+            />
+          </div>
         </div>
         {submitError &&
           <p className='submit-error'>{submitError}</p>

@@ -17,6 +17,10 @@
   height: fit-content;
 }
 
+.no-height-max{
+  max-height: 100vh;
+}
+
 @media screen and (max-width: 1200px) {
   .modal {
     max-width: 80vw;
