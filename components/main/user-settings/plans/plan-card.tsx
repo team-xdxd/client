@@ -1,5 +1,6 @@
 import styles from './plan-card.module.css'
 import featuresConstants from './constants'
+import { formatCurrency } from '../../../../utils/numbers'
 
 // Components
 import Button from '../../../common/buttons/button'
@@ -15,7 +16,8 @@ const PlanCard = ({
   metadata,
   onChange = (priceId) => { },
   buttonDisabled,
-  buttonText
+  buttonText,
+  paymentMethodExists = false
 }) => {
 
   let monthValue = amount / 100
@@ -24,35 +26,44 @@ const PlanCard = ({
   }
 
   return (
-    <div>
-      <h3>{name}</h3>
-      <p>{featuresConstants[`${metadata.benefits_id}_SUMMARY`]}</p>
-      {type === 'enterprise' ?
-        <div>Contact Us</div>
-        :
-        <div>
-          <div>{monthValue}</div>
-          <div>month</div>
-          {interval === 'year' &&
-            <div>{`billed ${amount / 100} anually`}</div>
-          }
-        </div>
-      }
-      <div>Key Features</div>
-      <ul>
+    <div className={styles.container}>
+      <h3>{name.toUpperCase()}</h3>
+      <p className={styles.description}>{featuresConstants[`${metadata.benefits_id}_SUMMARY`]}</p>
+      <div className={styles.pricing}>
+        {type === 'enterprise' ?
+          <div className={styles.contact}>Contact Us</div>
+          :
+          <>
+            <div className={styles.monthly}>
+              <div>{formatCurrency(monthValue)}</div>
+              <div>month</div>
+            </div>
+            {interval === 'year' &&
+              <div className={styles.anual}>{`billed ${formatCurrency(amount / 100)} anually`}</div>
+            }
+          </>
+        }
+      </div>
+      <div className={styles['key-header']}>Key Features:</div>
+      <ul className={styles.features}>
         {featuresConstants[`${metadata.benefits_id}_FEATURES`].map((feature) => (
           <li key={feature}>
-            <span>{feature}</span>
+            <div>✔</div>
+            <div>{feature}</div>
           </li>
         ))}
       </ul>
-      <Button
-        text={buttonText}
-        type='button'
-        disabled={buttonDisabled}
-        onClick={onChange}
-        styleType='primary'
-      />
+      {(!paymentMethodExists || type === 'enterprise')  ?
+        <Button
+          text={buttonText}
+          type='button'
+          disabled={buttonDisabled}
+          onClick={onChange}
+          styleType='primary'
+        />
+        :
+        <div className={styles['please-add']}>Please add a Payment method</div>
+      }
     </div>
   )
 }

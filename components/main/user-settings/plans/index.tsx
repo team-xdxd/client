@@ -17,18 +17,29 @@ const Plans = () => {
   const [productData, setProductData] = useState(undefined)
 
   const [selectedPlan, setSelectedPlan] = useState(undefined)
+  const [paymentMethod, setPaymentMethod] = useState(undefined)
 
   const { getPlan, plan } = useContext(TeamContext)
 
   useEffect(() => {
     getPlan()
     getBillingInfo()
+    getPaymentMethod()
   }, [])
 
   const getBillingInfo = async () => {
     try {
       const { data } = await planApi.getAvailableProducts()
       setProductData(data)
+    } catch (err) {
+      console.log(err)
+    }
+  }
+
+  const getPaymentMethod = async () => {
+    try {
+      const { data } = await planApi.getPaymentMethod()
+      setPaymentMethod(data)
     } catch (err) {
       console.log(err)
     }
@@ -66,11 +77,11 @@ const Plans = () => {
       {plan &&
         <>
           <Usage />
-          <div>
+          <div className={styles['section-buttons']}>
             <SectionButtonOption section='annual' />
             <SectionButtonOption section='monthly' />
           </div>
-          <ul>
+          <ul className={styles.products}>
             {productData && [...productData[activeCycle], constants.ENTERPRISE_PLAN].map(price => {
               let buttonText = 'Upgrade'
               if (price.id === plan.stripePriceId) {
@@ -84,7 +95,8 @@ const Plans = () => {
                   <PlanCard {...price}
                     onChange={price.type !== 'enterprise' ? () => openChangeModal(price) : redirectToContact}
                     buttonDisabled={price.id === plan.stripePriceId}
-                    buttonText={buttonText} />
+                    buttonText={buttonText}
+                    paymentMethodExists={paymentMethod} />
                 </li>
               )
             })}

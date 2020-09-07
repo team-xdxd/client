@@ -9,12 +9,12 @@ import Button from '../buttons/button'
 ReactModal.defaultStyles = {}
 
 // Used for the future
-const Base = ({ modalIsOpen, children, closeModal, confirmAction = () => { }, confirmText = '', headText = '', disabledConfirm = false }) => {
+const Base = ({ modalIsOpen, children, closeModal, confirmAction = () => { }, confirmText = '', headText = '', disabledConfirm = false, noHeightMax = false }) => {
 
   return (
     <ReactModal
       isOpen={modalIsOpen}
-      className={styles.modal}
+      className={`${styles.modal} ${noHeightMax && styles['no-height-max']}`}
       overlayClassName={styles.overlay}
       onRequestClose={closeModal}
       shouldCloseOnOverlayClick={true}

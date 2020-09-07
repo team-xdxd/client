@@ -22,7 +22,7 @@ const SubscriptionNameForm = () => {
       <h3>Company Name</h3>
       {team &&
         <div className={styles['form-container']}>
-          <div>
+          <div className={'fields-first'}>
             <FormInput
               InputComponent={
                 <Input
@@ -41,7 +41,7 @@ const SubscriptionNameForm = () => {
             <Button
               text='Save Changes'
               type='submit'
-              styleType='normal-height-primary'
+              styleType='input-height-primary'
             />
           </div>
         </div>

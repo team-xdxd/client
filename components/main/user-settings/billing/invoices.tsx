@@ -18,7 +18,6 @@ const Invoices = () => {
   const getInvoices = async () => {
     try {
       const { data: { hasMore, invoices } } = await planApi.getInvoices()
-
       setHasMore(hasMore)
       setInvoices(invoices)
     } catch (err) {
@@ -36,20 +35,20 @@ const Invoices = () => {
   }
 
   const Headers = ({ type = 'invoice' }) => (
-    <li>
+    <li className={styles.headers}>
       <div>Date</div>
       <div>Plan</div>
       {type === 'invoice' && <div>Status</div>}
       <div>Amount</div>
+      {type === 'invoice' && <div></div>}
     </li>
   )
-
-  console.log(invoices)
 
   const parsedInvoices = invoices
     .map(invoice => ({
       ...invoice,
-      date: (!isNaN(invoice.statusTransitions.paid_at) && new Date(invoice.statusTransitions.paid_at * 1000)) || ''
+      date: getInvoiceDate(invoice),
+      status: getInvoiceStatus(invoice)
     }))
   const parsedUpcoming = upcoming.map(upcoming => ({ ...upcoming, date: new Date(upcoming.date * 1000) }))
 
@@ -65,7 +64,7 @@ const Invoices = () => {
         ))}
       </ul>
 
-      <h3>Upcoming Charges</h3>
+      <h3 className={styles['upcoming-header']}>Upcoming Charges</h3>
       <ul>
         <Headers type='upcoming' />
         {parsedUpcoming.map((invoice, index) => (
@@ -79,3 +78,17 @@ const Invoices = () => {
 }
 
 export default Invoices
+
+const getInvoiceDate = (invoice) => {
+  if (invoice.status === 'paid') {
+    return (!isNaN(invoice.statusTransitions.paid_at) && new Date(invoice.statusTransitions.paid_at * 1000)) || ''
+  } else {
+    return new Date(invoice.statusTransitions.finalized_at * 1000)
+  }
+}
+
+const getInvoiceStatus = (invoice) => {
+  if(invoice.status === 'open'){
+    return 'in process'
+  } else return invoice.status
+}

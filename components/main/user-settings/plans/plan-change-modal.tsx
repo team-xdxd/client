@@ -1,4 +1,5 @@
 import styles from './plan-change-modal.module.css'
+import { formatCurrency } from '../../../../utils/numbers'
 
 // Components
 import BaseModal from '../../../common/modals/base'
@@ -21,35 +22,37 @@ const PlanChangeModal = ({ selectedPlan, setSelectedPlan, confirmPlanChange }) =
       confirmText={`Update to ${selectedPlan?.name}`}
       headText={'Confirm Plan Change'}
     >
-      <h3>Plan Princing details:</h3>
-      {selectedPlan &&
-        <>
-          {selectedPlan.invoicePreview.items.map(item => (
+      <div className={styles.container}>
+        <h3>Plan Princing details:</h3>
+        {selectedPlan &&
+          <>
+            {selectedPlan.invoicePreview.items.map(item => (
+              <div className={styles.item}>
+                <div className={styles['item-description']}>
+                  {`${item.description}:`}
+                </div>
+                <div className={styles['item-amount']}>
+                  {getAmount(item.amount)}
+                </div>
+              </div>
+            ))}
+            {selectedPlan.invoicePreview.startingBalance !== 0 &&
+              <div className={styles.item}>
+                <div className='pricing-detail-description'>
+                  Stored Balance:
+              </div>
+                <div className='pricing-detail-value'>
+                  {getAmount(selectedPlan.invoicePreview.startingBalance)}
+                </div>
+              </div>
+            }
             <div className={styles.item}>
-              <div className={styles['item-description']}>
-                {`${item.description}:`}
-              </div>
-              <div className={styles['item-amount']}>
-                {getAmount(item.amount)}
-              </div>
+              <h3 className={styles['item-description']}>Total</h3>
+              <div className={styles.total}>${selectedPlan.invoicePreview.amount / 100}</div>
             </div>
-          ))}
-          {selectedPlan.invoicePreview.startingBalance !== 0 &&
-            <div className={styles.item}>
-              <div className='pricing-detail-description'>
-                Stored Balance:
-              </div>
-              <div className='pricing-detail-value'>
-                {getAmount(selectedPlan.invoicePreview.startingBalance)}
-              </div>
-            </div>
-          }
-          <div className={styles.item}>
-            <h3 className={styles['item-description']}>Total</h3>
-            <div className={styles.total}>${selectedPlan.invoicePreview.amount / 100}</div>
-          </div>
-        </>
-      }
+          </>
+        }
+      </div>
     </BaseModal>
   )
 }

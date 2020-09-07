@@ -5,6 +5,10 @@
   margin-bottom: 3rem;
 }
 
+.no-bottom{
+  margin-bottom: 0;
+}
+
 .form > div {
   margin-bottom: 12px;
 }
@@ -32,16 +36,17 @@
   display: flex;
 }
 
-.city-state > div {
-  width: 100%;
+.fields-pair{
+  display: flex;
 }
 
-.city {
-  margin-right: 1rem;
+.fields-pair>div:first-child{
+  width: 50%;
+  margin-right: 5%;
 }
 
-.zip {
-  width: 150px;
+.fields-pair>div:last-child{
+  width: 45%;
 }
 
 .subscribe {
