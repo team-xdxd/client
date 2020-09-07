@@ -3,7 +3,7 @@ import styles from './index.module.css'
 import { loadStripe } from '@stripe/stripe-js'
 import { Elements } from '@stripe/react-stripe-js'
 
-import paymentApi from '../../server-api/payment'
+import paymentApi from '../../server-api/billing'
 
 // Components
 import SubscriptionSummary from './subscription-summary'
