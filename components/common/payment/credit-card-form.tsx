@@ -1,6 +1,7 @@
 import styles from './credit-card-form.module.css'
 
-import { useState } from 'react'
+import { useState, useEffect, useContext } from 'react'
+import { LocationContext } from '../../../context'
 
 import {
   CardNumberElement,
@@ -11,13 +12,11 @@ import {
 } from '@stripe/react-stripe-js'
 import { useForm } from 'react-hook-form'
 
-import states from '../../resources/data/states.json'
-
 // Components
-import AuthButton from '../common/buttons/auth-button'
-import FormInput from '../common/inputs/form-input'
-import Input from '../common/inputs/input'
-import Select from '../common/inputs/select'
+import AuthButton from '../buttons/auth-button'
+import FormInput from '../inputs/form-input'
+import Input from '../inputs/input'
+import Select from '../inputs/select'
 
 const elemOptions = {
   style: {
@@ -32,14 +31,21 @@ const elemOptions = {
   }
 }
 
-const stateOptions = states.map(state => ({ label: state.label, value: state.value }))
-
-const CreditCardForm = ({ subscribe, buttonDisabled }) => {
+const CreditCardForm = ({ onConfirm, buttonDisabled, buttonText = 'Subscribe' }) => {
   const { control, handleSubmit, errors } = useForm()
   const [state, setState] = useState({ label: '', value: '' })
+  const [country, setCountry] = useState({ label: '', value: '', code: '' })
   const [submitError, setSubmitError] = useState('')
   const stripe = useStripe()
   const elements = useElements()
+
+  const { countries, states, loadStates } = useContext(LocationContext)
+
+  useEffect(() => {
+    if (country.value && countries.length > 0) {
+      loadStates(country.value)
+    }
+  }, [country, countries])
 
   const onSubmit = async data => {
     try {
@@ -50,6 +56,7 @@ const CreditCardForm = ({ subscribe, buttonDisabled }) => {
         card: cardNumberElement,
         billing_details: {
           address: {
+            country: country.code,
             city: data.city,
             state: state.label,
             postal_code: data.zip,
@@ -63,7 +70,7 @@ const CreditCardForm = ({ subscribe, buttonDisabled }) => {
       }
       else {
         console.log(method.paymentMethod)
-        subscribe(method.paymentMethod.id)
+        onConfirm(method.paymentMethod.id)
       }
 
     } catch (err) {
@@ -120,7 +127,6 @@ const CreditCardForm = ({ subscribe, buttonDisabled }) => {
                 options={elemOptions} />
             </div>
           </div>
-
         </div>
         <div>
           <FormInput
@@ -140,6 +146,26 @@ const CreditCardForm = ({ subscribe, buttonDisabled }) => {
           />
         </div>
         <div className={styles['city-state']}>
+          <div >
+            <label>Country</label>
+            <Select
+              placeholder='Select Country'
+              options={countries}
+              onChange={(selected) => setCountry(selected)}
+              value={country}
+            />
+          </div>
+          <div >
+            <label>State</label>
+            <Select
+              placeholder='Select State'
+              options={states}
+              onChange={(selected) => setState(selected)}
+              value={state}
+            />
+          </div>
+        </div>
+        <div className={styles.zip}>
           <div className={styles.city}>
             <FormInput
               labId='city-form'
@@ -157,17 +183,6 @@ const CreditCardForm = ({ subscribe, buttonDisabled }) => {
               message={'This field should be between 2 and 25 characters long'}
             />
           </div>
-          <div >
-            <label>State</label>
-            <Select
-              placeholder='Select State'
-              options={stateOptions}
-              onChange={(selected) => setState(selected)}
-              value={state}
-            />
-          </div>
-        </div>
-        <div className={styles.zip}>
           <FormInput
             labId='zip-form'
             label='Zip Code'
@@ -188,7 +203,7 @@ const CreditCardForm = ({ subscribe, buttonDisabled }) => {
         }
         <div className={styles.subscribe}>
           <AuthButton
-            text='Subscribe'
+            text={buttonText}
             type='submit'
             disabled={buttonDisabled}
           />

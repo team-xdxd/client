@@ -7,6 +7,8 @@ export default ({ children }) => {
   const [states, setStates] = useState([])
   const [cities, setCities] = useState([])
 
+  const mapFn = (item) => ({ ...item, label: item.name, value: item.id })
+
   useEffect(() => {
     loadCountries()
   }, [])
@@ -14,7 +16,7 @@ export default ({ children }) => {
   const loadCountries = async () => {
     try {
       const { data } = await parameterApi.getCountries()
-      setCountries(data)
+      setCountries(data.map(mapFn))
     } catch (err) {
       console.log(err)
     }
@@ -23,7 +25,7 @@ export default ({ children }) => {
   const loadStates = async (countryId) => {
     try {
       const { data } = await parameterApi.getStates({ countryId })
-      setStates(data)
+      setStates(data.map(mapFn))
     } catch (err) {
       console.log(err)
     }
@@ -32,7 +34,7 @@ export default ({ children }) => {
   const loadCities = async (stateId) => {
     try {
       const { data } = await parameterApi.getCities({ stateId })
-      setCities(data)
+      setCities(data.map(mapFn))
     } catch (err) {
       console.log(err)
     }

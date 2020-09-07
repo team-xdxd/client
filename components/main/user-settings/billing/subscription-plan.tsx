@@ -2,9 +2,12 @@ import styles from './subscription-plan.module.css'
 import { useContext, useEffect, useState } from 'react'
 import { TeamContext } from '../../../../context'
 import { format } from 'date-fns'
+import Link from 'next/link'
+import planApi from '../../../../server-api/plan'
 
 // Components
 import Button from '../../../common/buttons/button'
+import BaseModal from '../../../common/modals/base'
 
 const SubscriptionData = ({ label, value }) => (
   <div className={styles.item}>
@@ -15,6 +18,8 @@ const SubscriptionData = ({ label, value }) => (
 
 const SubscriptionPlan = () => {
   const { plan } = useContext(TeamContext)
+
+  const [cancelOpen, setCancelOpen] = useState(false)
 
   const getFrequency = () => {
     if (plan) {
@@ -28,6 +33,14 @@ const SubscriptionPlan = () => {
     if (plan) {
       return Intl.NumberFormat('en-IN', { style: 'currency', currency: 'USD' })
         .format((plan.stripePrice.amount / 1000))
+    }
+  }
+
+  const cancelPlan = async () => {
+    try {
+      await planApi.cancelPlan()
+    } catch (err) {
+      console.log(err)
     }
   }
 
@@ -65,19 +78,31 @@ const SubscriptionPlan = () => {
             </div>
           </div>
           <div className={styles['button-actions']}>
-            <Button
-              text='Change Plan'
-              type='button'
-              styleType='primary'
-            />
+            <Link href='/main/user-settings/plans'>
+              <a>
+                <Button
+                  text='Change Plan'
+                  type='button'
+                  styleType='primary'
+                />
+              </a>
+            </Link>
             <Button
               text='Cancel Plan'
               type='button'
               styleType='secondary'
+              onClick={() => setCancelOpen(true)}
             />
           </div>
         </div>
       }
+      <BaseModal
+        closeModal={() => setCancelOpen(false)}
+        modalIsOpen={cancelOpen}
+        headText={'Are you sure you want to cancel your plan?'}
+        confirmAction={cancelPlan}
+        confirmText={'Cancel plan'} >
+      </BaseModal>
     </div>
   )
 }

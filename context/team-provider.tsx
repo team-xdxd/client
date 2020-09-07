@@ -10,8 +10,10 @@ export default ({ children }) => {
   const [plan, setPlan] = useState(null)
   const [teamMembers, setTeamMembers] = useState([])
 
-  const getTeam = async () => {
+  const getTeam = async (once = false) => {
     try {
+      // Skip if 'once' option set and team data already loaded
+      if (once && team) return
       const { data } = await teamApi.getTeam()
       setTeam(data)
     } catch (err) {

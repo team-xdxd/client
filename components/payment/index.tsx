@@ -7,7 +7,7 @@ import paymentApi from '../../server-api/payment'
 
 // Components
 import SubscriptionSummary from './subscription-summary'
-import CreditCardForm from './credit-card-form'
+import CreditCardForm from '../common/payment/credit-card-form'
 
 const stripePromise = loadStripe('pk_test_bK1C20PBomU24spmlMeg4AXp')
 
