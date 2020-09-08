@@ -1,0 +1,48 @@
+.container{
+  padding: 2rem 2rem 3rem 2rem;
+  text-align: center;
+  width: 100%;
+  max-width: 35rem;
+}
+
+.header{
+  font-weight: 700;
+}
+
+.header:first-of-type{
+  margin-bottom: 0;
+}
+
+.header:last-of-type{
+  margin-top: 0.5rem;
+}
+
+.desc{
+  color: var(--color-sec-blue);
+  font-weight: 600;
+}
+
+.container button{
+  margin-bottom: 1.5rem;
+}
+
+.container>h3{
+  font-weight: 600;
+}
+
+.container>ul{
+  
+  text-align: left;
+}
+.container>ul>li{
+  display: flex;  
+}
+
+.container>ul>li>div:first-child{
+  font-weight: 600;
+  margin-right: 1rem;
+}
+
+p.desc{
+  margin: 2rem 0;
+}

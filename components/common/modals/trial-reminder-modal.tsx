@@ -1,4 +1,4 @@
-import styles from './share-modal.module.css'
+import styles from './trial-reminder-modal.module.css'
 import { differenceInDays } from 'date-fns'
 import { useState, useEffect, useContext } from 'react'
 import { UserContext, TeamContext } from '../../../context'
@@ -55,30 +55,32 @@ const TrialReminderModal = () => {
     <Base
       modalIsOpen={active}
       closeModal={() => setActive(false)} >
-      <h2>{`Hi ${firstName}...Time Flies!`}</h2>
-      <h2>{`Your Free Trial Expires Tomorrow`}</h2>
-      <p>In order to keep your team operating at full strength with Sparkfive, subscribe today</p>
-      <Link href='/main/user-settings/plans'>
-        <a>
-          <Button
-            text='SUBSCRIBE NOW'
-            type='button'
-            styleType='primary'
-          />
-        </a>
-      </Link>
-      <h3>Unleash Your Brand</h3>
-      <ul>
-        {BENEFITS.map(({ name, desc }, index) => (
-          <li>
-            <div>{name}</div>
-            <div>{desc}</div>
-          </li>
-        ))}
-      </ul>
-      <p>Please don't hestitate to call us with any questions or contact us by email support@sparkfive.com</p>
-      <div>Sincerely,</div>
-      <div>The Sparkfive Team</div>
+      <div className={styles.container}>
+        <h2 className={styles.header}>{`Hi ${firstName}...Time Flies!`}</h2>
+        <h2 className={styles.header}>{`Your Free Trial Expires Tomorrow`}</h2>
+        <p className={styles.desc}>In order to keep your team operating at full strength with Sparkfive, subscribe today</p>
+        <Link href='/main/user-settings/plans'>
+          <a>
+            <Button
+              text='SUBSCRIBE NOW'
+              type='button'
+              styleType='input-height-primary'
+            />
+          </a>
+        </Link>
+        <h3>Unleash Your Brand</h3>
+        <ul>
+          {BENEFITS.map(({ name, desc }, index) => (
+            <li>
+              <div>{name}</div>
+              <div>{desc}</div>
+            </li>
+          ))}
+        </ul>
+        <p className={styles.desc}>Please don't hestitate to call us with any questions or contact us by email support@sparkfive.com</p>
+        <div className={styles.desc} >Sincerely,</div>
+        <div className={styles.desc}>The Sparkfive Team</div>
+      </div>
     </Base >
   )
 }
