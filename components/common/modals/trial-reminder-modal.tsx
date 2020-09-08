@@ -29,7 +29,7 @@ const TrialReminderModal = () => {
   const { user } = useContext(UserContext)
   const { team, getTeam } = useContext(TeamContext)
 
-  const [active, setActive] = useState(true)
+  const [active, setActive] = useState(false)
 
   useEffect(() => {
     getTeam(true)
