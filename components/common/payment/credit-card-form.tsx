@@ -51,20 +51,22 @@ const CreditCardForm = ({ onConfirm, buttonDisabled, buttonText = 'Subscribe', n
     try {
       const cardNumberElement = elements.getElement(CardNumberElement)
 
-      const method = await stripe.createPaymentMethod({
+      const paymentDetails = {
         type: 'card',
         card: cardNumberElement,
         billing_details: {
-          address: {
-            country: country.code,
-            city: data.city,
-            state: state.label,
-            postal_code: data.zip,
-            line1: data.address
-          },
-          name: data.name
+          address: {}
         }
-      })
+      }
+
+      if(data.name) paymentDetails.billing_details.name = data.name
+      if(country.code) paymentDetails.billing_details.address.country = country.code
+      if(data.city) paymentDetails.billing_details.address.city = data.city
+      if(state.label) paymentDetails.billing_details.address.state = state.label
+      if(data.zip) paymentDetails.billing_details.address.postal_code = data.zip
+      if(data.address) paymentDetails.billing_details.address.line1 = data.address
+
+      const method = await stripe.createPaymentMethod(paymentDetails)
       if (method.error) {
         setSubmitError(`We could not process your payment: ${method.error.message}`)
       }
