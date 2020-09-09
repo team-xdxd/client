@@ -9,13 +9,15 @@ import LocationContextProvider from '../../../context/location-provider'
 // Components
 import SideNavigation from './side-navigation'
 import Team from './team'
+import Company from './company'
 import Billing from './billing'
-import Plans from './plans'
+import Plan from './plan'
 
 const SETTING_OPTIONS_CONTENT = {
   profile: () => <></>,
   billing: Billing,
-  plans: Plans,
+  company: Company,
+  plan: Plan,
   security: () => <></>,
   team: Team,
   notifications: () => <></>,

@@ -6,7 +6,9 @@ import Link from 'next/link'
 
 const SETTING_OPTIONS = {
   profile: { label: 'Profile' },
+  company: { label: 'Company' },
   billing: { label: 'Billing' },
+  plan: { label: 'Plan' },
   security: { label: 'Security' },
   team: { label: 'Team' },
   notifications: { label: 'Notifications' },
@@ -21,9 +23,11 @@ const UserSettings = ({ activeView, setActiveView }) => {
       <ul>
         {Object.entries(SETTING_OPTIONS).map(([option, optionProps]) => (
           <Link href={`/main/user-settings/${option}`}>
-            <li className={`${styles.setting} ${activeView === option && styles.selected}`}>
-              <span>{optionProps.label}</span>
-            </li>
+            <a>
+              <li className={`${styles.setting} ${activeView === option && styles.selected}`}>
+                <span>{optionProps.label}</span>
+              </li>
+            </a>
           </Link>
         ))}
       </ul>

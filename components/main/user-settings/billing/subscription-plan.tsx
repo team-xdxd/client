@@ -84,7 +84,7 @@ const SubscriptionPlan = () => {
             </div>
           </div>
           <div className={styles['button-actions']}>
-            <Link href='/main/user-settings/plans'>
+            <Link href='/main/user-settings/plan'>
               <a>
                 <Button
                   text='Change Plan'
