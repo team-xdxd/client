@@ -4,20 +4,20 @@ import { TeamContext } from '../../../../context'
 
 // Components
 import SubscriptionNameForm from './subscription-name-form'
-import SubscriptionAddressForm from '../company/subscription-address-form'
-import SubscriptionPlan from './subscription-plan'
+import SubscriptionAddressForm from './subscription-address-form'
 
 const Subscription = () => {
 
-  const { getPlan } = useContext(TeamContext)
+  const { getTeam } = useContext(TeamContext)
 
   useEffect(() => {
-    getPlan()
+    getTeam()
   }, [])
 
   return (
     <div>
-      <SubscriptionPlan />
+      <SubscriptionNameForm />
+      <SubscriptionAddressForm />
     </div>
   )
 }

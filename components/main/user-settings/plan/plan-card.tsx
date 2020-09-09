@@ -53,7 +53,7 @@ const PlanCard = ({
           </li>
         ))}
       </ul>
-      {(!paymentMethodExists || type === 'enterprise')  ?
+      {(paymentMethodExists || type === 'enterprise')  ?
         <Button
           text={buttonText}
           type='button'
