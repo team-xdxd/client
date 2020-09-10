@@ -3,21 +3,30 @@ import { useState, useContext, useEffect } from 'react'
 import { TeamContext } from '../../../../context'
 
 // Components
-import SubscriptionNameForm from './subscription-name-form'
-import SubscriptionAddressForm from '../company/subscription-address-form'
 import SubscriptionPlan from './subscription-plan'
+import SubscriptionCheckout from './subscription-checkout'
 
-const Subscription = () => {
+const Subscription = ({ paymentMethod, getPaymentMethod }) => {
 
   const { getPlan } = useContext(TeamContext)
+  const [onCheckout, setOnCheckout] = useState(false)
 
   useEffect(() => {
     getPlan()
   }, [])
 
+  const goBack = () => {
+    getPaymentMethod()
+    setOnCheckout(false)
+  }
+
   return (
     <div>
-      <SubscriptionPlan />
+      {!onCheckout ?
+        <SubscriptionPlan goCheckout={() => setOnCheckout(true)} paymentMethod={paymentMethod} />
+        :
+        <SubscriptionCheckout goBack={goBack} />
+      }
     </div>
   )
 }

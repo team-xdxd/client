@@ -1,7 +1,7 @@
 import styles from './subscription-plan.module.css'
-import { useContext, useEffect, useState } from 'react'
+import { useContext, useState } from 'react'
 import { TeamContext } from '../../../../context'
-import { format } from 'date-fns'
+import { format, differenceInDays } from 'date-fns'
 import { formatCurrency } from '../../../../utils/numbers'
 import Link from 'next/link'
 import planApi from '../../../../server-api/plan'
@@ -18,7 +18,7 @@ const SubscriptionData = ({ label, value }) => (
   </div>
 )
 
-const SubscriptionPlan = () => {
+const SubscriptionPlan = ({ paymentMethod, goCheckout }) => {
   const { plan } = useContext(TeamContext)
 
   const [cancelOpen, setCancelOpen] = useState(false)
@@ -48,7 +48,10 @@ const SubscriptionPlan = () => {
   }
 
   let productName = plan?.stripeProduct.name
-  if (plan?.status === 'trial') productName += ' (Trial)'
+  if (plan?.status === 'trialing') {
+    const remainingDays = differenceInDays(new Date(), new Date(plan.endDate))
+    productName += ` (Trial - ${remainingDays} day(s) remaining)`
+  }
 
   return (
     <div className={styles.container}>
@@ -84,6 +87,14 @@ const SubscriptionPlan = () => {
             </div>
           </div>
           <div className={styles['button-actions']}>
+            {!paymentMethod && plan.status === 'trialing' &&
+              <Button
+                text='Subscribe'
+                type='button'
+                styleType='input-height-primary'
+                onClick={goCheckout}
+              />
+            }
             <Link href='/main/user-settings/plan'>
               <a>
                 <Button
