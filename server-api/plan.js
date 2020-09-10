@@ -3,7 +3,7 @@ const planUrl = `${process.env.SERVER_BASE_URL}/plans`
 
 export default {
   getPlanDetail: () => axios.get(planUrl),
-  changePlan: ({ priceId, subProrationDate }) => axios.put(planUrl, { priceId, subProrationDate }),
+  changePlan: ({ priceId, subProrationDate = null, paymentMethodId = '' }) => axios.put(planUrl, { priceId, subProrationDate, paymentMethodId }),
   cancelPlan: () => axios.put(`${planUrl}/cancel`, {}),
   getAvailableProducts: () => axios.get(`${planUrl}/products`),
   getInvoices: () => axios.get(`${planUrl}/invoices`),
