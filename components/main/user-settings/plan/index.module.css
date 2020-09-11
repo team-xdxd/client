@@ -1,3 +1,7 @@
+.section-buttons{
+  margin-top: 2.5rem;
+}
+
 .section-buttons button{
   margin-right: 2rem;
   font-size: 16px;
@@ -16,4 +20,16 @@
 
 .products>li:last-child{
   margin-left: 2rem;
+}
+
+.usage{
+  display: flex;
+  align-items: center;
+  padding: 1.5rem 0;
+  margin: 1.5rem 0;
+  border-bottom: 1px solid var(--color-secondary-border);
+}
+
+.usage h3{
+  margin-right: 3rem;
 }

@@ -90,6 +90,9 @@ const AuthLayout = ({ children }) => {
                   OverrideComp: () => <SettingsLink name='Billing' settingRef='billing' />
                 },
                 {
+                  OverrideComp: () => <SettingsLink name='Plan' settingRef='plan' />
+                },
+                {
                   OverrideComp: () => <SettingsLink name='Team' settingRef='team' />
                 },
                 { label: 'Log Out', onClick: logOut }

@@ -62,7 +62,7 @@ export const TeamContext = createContext({
     getTeamMembers: () => { },
 
     plan: null,
-    getPlan: () => { },
+    getPlan: (data) => { },
 
 })
 
