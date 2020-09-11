@@ -21,9 +21,10 @@ export default ({ children }) => {
     }
   }
 
-  const getPlan = async () => {
+  const getPlan = async ({ withStorageUsage = '' } = {}) => {
     try {
-      const { data } = await planApi.getPlanDetail()
+      const { data } = await planApi.getPlanDetail({ withStorageUsage })
+      console.log(data)
       setPlan(data)
     } catch (err) {
       console.log(err)

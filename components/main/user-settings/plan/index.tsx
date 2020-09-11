@@ -8,8 +8,8 @@ import { TeamContext } from '../../../../context'
 
 // Components
 import SectionButton from '../../../common/buttons/section-button'
+import DataUsage from '../../../common/usage/data-usage'
 import PlanCard from './plan-card'
-import Usage from './usage'
 import PlanChangeModal from './plan-change-modal'
 
 const Plans = () => {
@@ -22,7 +22,7 @@ const Plans = () => {
   const { getPlan, plan } = useContext(TeamContext)
 
   useEffect(() => {
-    getPlan()
+    getPlan({ withStorageUsage: true })
     getBillingInfo()
     getPaymentMethod()
   }, [])
@@ -50,14 +50,14 @@ const Plans = () => {
   }
 
   const redirectToContact = () => {
-
+    // Empty function for now
   }
 
   const confirmPlanChange = async () => {
     try {
       await planApi.changePlan({ priceId: selectedPlan.id, subProrationDate: selectedPlan.invoicePreview.prorationDate })
       setSelectedPlan(null)
-      await getPlan()
+      await getPlan({ withStorageUsage: true })
       toastUtils.success('Plan changed succesfully')
     } catch (err) {
       console.log(err)
@@ -76,7 +76,10 @@ const Plans = () => {
     <div className={styles.container}>
       {plan &&
         <>
-          <Usage />
+          <div className={styles.usage}>
+            <h3>Data Usage</h3>
+            <DataUsage limit={plan.benefit.storage} limitBytes={plan.storageLimitBytes} usage={plan.storageUsage} />
+          </div>
           <div className={styles['section-buttons']}>
             <SectionButtonOption section='annual' />
             <SectionButtonOption section='monthly' />
