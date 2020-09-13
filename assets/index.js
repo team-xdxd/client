@@ -122,3 +122,8 @@ export const Comments = {
   smile: require('./Icons/Utilities/Smile/icn-comments-smile.svg'),
   smileLight: require('./Icons/Utilities/Smile/icn-comments-smile-light.svg')
 }
+
+export const Integrations = {
+  google_drive: require('./Icons/Assets/icons8-google-drive-1.svg'),
+  dropbox: require('./Icons/Assets/Dropbox_Icon.svg'),
+}

@@ -10,6 +10,7 @@ import HeaderLink from '../layouts/header-link'
 import ToggleableAbsoluteWrapper from '../misc/toggleable-absolute-wrapper'
 import Dropdown from '../inputs/dropdown'
 import TrialReminderModal from '../modals/trial-reminder-modal'
+import UserPhoto from '../user/user-photo'
 
 const AuthLayout = ({ children }) => {
   const { user, logOut } = useContext(UserContext)
@@ -77,9 +78,7 @@ const AuthLayout = ({ children }) => {
               wrapperClass={styles.user}
               Wrapper={({ children }) => (
                 <>
-                  <img
-                    className={styles.profile}
-                    src={Utilities.memberProfile} />
+                  <UserPhoto photoUrl={user.profilePhoto} extraClass={styles.profile}/>
                   {user?.name}
                   {children}
                 </>
@@ -89,7 +88,13 @@ const AuthLayout = ({ children }) => {
                 <Dropdown
                   options={[
                     {
+                      OverrideComp: () => <SettingsLink name='Company' settingRef='company' />
+                    },
+                    {
                       OverrideComp: () => <SettingsLink name='Billing' settingRef='billing' />
+                    },
+                    {
+                      OverrideComp: () => <SettingsLink name='Plan' settingRef='plan' />
                     },
                     {
                       OverrideComp: () => <SettingsLink name='Team' settingRef='team' />

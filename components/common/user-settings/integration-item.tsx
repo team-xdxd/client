@@ -1,14 +1,15 @@
-import styles from './integrations-item.module.css'
+import styles from './integration-item.module.css'
+import { Integrations } from '../../../assets'
 
 // Components
 import Button from '../buttons/button'
 
-const IntegrationItem = ({ integrationName, icon, type = 'new', onClick }) => (
-  <div>
-    <div>
+const IntegrationItem = ({ integrationName, integrationId, type = 'new', onClick }) => (
+  <div className={styles.container}>
+    <div className={styles.name}>
       {integrationName}
     </div>
-    <img src={icon} />
+    <img src={Integrations[integrationId]} />
     <Button
       text={type === 'new' ? 'Add Integration' : 'View Settings'}
       type={'button'}

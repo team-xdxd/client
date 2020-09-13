@@ -1,0 +1,19 @@
+.container{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.name, .container button{
+  width: 10rem;
+}
+
+.name{
+  font-size: 17px;
+  font-weight: 500;
+}
+
+.container img{
+  width: 60px;
+  height: 60px;
+}

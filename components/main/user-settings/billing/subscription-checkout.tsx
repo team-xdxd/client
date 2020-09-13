@@ -26,7 +26,7 @@ const SubscriptionCheckout = ({ goBack }) => {
   const getInitialData = async () => {
     try {
       const { data } = await planApi.getAvailableProducts()
-      setProductData(data)
+      setProductData(data)      
     } catch (err) {
       // TODO: Handle error
       console.log(err)
@@ -34,8 +34,6 @@ const SubscriptionCheckout = ({ goBack }) => {
   }
 
   const subscribe = async (paymentMethodId) => {
-    console.log(paymentMethodId)
-    console.log(selectedPrice.id)
     try {
       await planApi.changePlan({ priceId: selectedPrice.id, paymentMethodId })
       await getPlan()

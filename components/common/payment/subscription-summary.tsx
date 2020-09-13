@@ -1,4 +1,6 @@
 import styles from './subscription-summary.module.css'
+import { formatCurrency } from '../../../utils/numbers'
+import { format } from 'date-fns'
 
 // Components
 import Select from '../inputs/select'
@@ -6,7 +8,7 @@ import Select from '../inputs/select'
 const DEFAULT_TRIAL_PRODUCT = process.env.DEFAULT_TRIAL_PRODUCT
 
 const SubscriptionSummary = ({ productData, setSelectedPrice, selectedPrice }) => {
-  const formattedToday = '2020-03-24'
+  const formattedToday = format(new Date(), 'MM/dd/yyyy')
 
   const annual = productData.annual.find(price => price.product === DEFAULT_TRIAL_PRODUCT)
   const monthly = productData.monthly.find(price => price.product === DEFAULT_TRIAL_PRODUCT)
@@ -16,8 +18,14 @@ const SubscriptionSummary = ({ productData, setSelectedPrice, selectedPrice }) =
   }
 
   const getInterval = (interval) => {
-    if(interval === 'year') return 'Annual'
+    if (interval === 'year') return 'Annual'
     else return 'Monthly'
+  }
+
+  const billingOptions = [annual, monthly].map(price => ({ ...price, label: `${price.name} ${getInterval(price.interval)} Plan`, value: price.id }))
+
+  if (!selectedPrice) {
+    setSelectedPrice(billingOptions[0])
   }
 
   return (
@@ -27,7 +35,7 @@ const SubscriptionSummary = ({ productData, setSelectedPrice, selectedPrice }) =
       <h5>Billing</h5>
       <Select
         placeholder='Select plan...'
-        options={[annual, monthly].map(price => ({ ...price, label: `${price.name} ${getInterval(price.interval)} Plan`, value: price.id }))}
+        options={billingOptions}
         onChange={(selected) => setSelectedPrice(selected)}
         value={selectedPrice ? { ...selectedPrice, label: `${selectedPrice.name} ${getInterval(selectedPrice.interval)} Plan`, value: selectedPrice.id } : null}
       />
@@ -35,7 +43,7 @@ const SubscriptionSummary = ({ productData, setSelectedPrice, selectedPrice }) =
       <div className={styles.due}>
         <h5>Due Now:</h5>
         {selectedPrice ?
-          <div>{Intl.NumberFormat('en-IN', { style: 'currency', currency: 'USD' }).format(selectedPrice.amount / 100)}</div>
+          <div>{formatCurrency(selectedPrice.amount / 100)}</div>
           :
           <div>-</div>
         }
@@ -45,7 +53,7 @@ const SubscriptionSummary = ({ productData, setSelectedPrice, selectedPrice }) =
       <div className={styles.savings}>
         <h5>Annual Savings</h5>
         {selectedPrice?.interval === 'year' ?
-          <div>{Intl.NumberFormat('en-IN', { style: 'currency', currency: 'USD' }).format(calcSavings() / 100)}</div>
+          <div>{formatCurrency(calcSavings() / 100)}</div>
           :
           <div>-</div>
         }

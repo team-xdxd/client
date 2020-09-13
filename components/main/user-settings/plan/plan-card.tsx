@@ -25,6 +25,15 @@ const PlanCard = ({
     monthValue = amount / 100 / 12
   }
 
+  const ChangeButton = () =>
+    <Button
+      text={buttonText}
+      type='button'
+      disabled={buttonDisabled}
+      onClick={onChange}
+      styleType='primary'
+    />
+
   return (
     <div className={styles.container}>
       <h3>{name.toUpperCase()}</h3>
@@ -53,14 +62,16 @@ const PlanCard = ({
           </li>
         ))}
       </ul>
-      {(paymentMethodExists || type === 'enterprise')  ?
-        <Button
-          text={buttonText}
-          type='button'
-          disabled={buttonDisabled}
-          onClick={onChange}
-          styleType='primary'
-        />
+      {(paymentMethodExists || type === 'enterprise') ?
+        <>
+          {type === 'enterprise' ?
+            <a href="mailto:sales@sparkfive.com">
+              <ChangeButton />
+            </a>
+            :
+            <ChangeButton />
+          }
+        </>
         :
         <div className={styles['please-add']}>Please add a Payment method</div>
       }

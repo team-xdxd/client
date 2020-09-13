@@ -43,8 +43,13 @@ export default function MyApp({ Component, pageProps }) {
       try {
         const { data } = await userApi.getUserData()
         setUser(data)
-        if (Router.pathname.indexOf('/main') === -1)
+        if (!data.firstTimeLogin) {
+          Router.replace('/main/setup')
+          userApi.patchUser({ firstTimeLogin: true })
+        }
+        else if (Router.pathname.indexOf('/main') === -1)
           Router.replace('/main/overview')
+
       } catch (err) {
         console.log(err)
         initialRedirect()

@@ -8,9 +8,9 @@ const PlanChangeModal = ({ selectedPlan, setSelectedPlan, confirmPlanChange }) =
 
   const getAmount = (amount) => {
     if (amount < 0) {
-      return `-$${amount * (-1) / 100}`
+      return `-${formatCurrency(amount * (-1) / 100)}`
     } else {
-      return `$${amount / 100}`
+      return `${formatCurrency(amount / 100)}`
     }
   }
 
@@ -48,7 +48,7 @@ const PlanChangeModal = ({ selectedPlan, setSelectedPlan, confirmPlanChange }) =
             }
             <div className={styles.item}>
               <h3 className={styles['item-description']}>Total</h3>
-              <div className={styles.total}>${selectedPlan.invoicePreview.amount / 100}</div>
+              <div className={styles.total}>{formatCurrency(selectedPlan.invoicePreview.amount / 100)}</div>
             </div>
           </>
         }
