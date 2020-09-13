@@ -5,10 +5,12 @@ import { GeneralImg } from '../../../assets'
 const AuthLayout = ({ children }) => (
   <>
     <header className={styles.header}>
-      <Link href='/'>
-        <img
-          className={styles['logo-img']}
-          src={GeneralImg.logoHorizontal} />
+      <Link href='/main/overview'>
+        <a>
+          <img
+            className={styles['logo-img']}
+            src={GeneralImg.logoHorizontal} />
+        </a>
       </Link>
     </header>
     {children}

@@ -1,4 +1,4 @@
-import Router from 'next/router'
+import Router, { useRouter } from 'next/router'
 import Head from 'next/head'
 // Import global css
 import '../styles/general.css'
@@ -79,12 +79,19 @@ export default function MyApp({ Component, pageProps }) {
     document.documentElement.style.setProperty('--vh', `${vh}px`)
   }
 
+  const router = useRouter()
+
+  useEffect(() => {
+    if (router) {
+      getUserData()
+    }
+  }, [router.route])
+
   useEffect(() => {
     resizeWindow()
     window.addEventListener('resize', () => {
       resizeWindow()
     })
-    getUserData()
     dragndropPolyfill()
   }, [])
 

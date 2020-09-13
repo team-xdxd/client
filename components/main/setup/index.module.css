@@ -1,0 +1,32 @@
+.container{
+  margin-top: 5%;
+}
+
+.container .content{
+  padding: 4rem;
+  width: 100%;
+  max-width: 900px;
+  position: relative;
+}
+
+.title{
+  margin-top:0;
+}
+
+.subtitle{
+  color: var(--color-sec-blue);
+  font-size: 18px;
+  padding-bottom: 1rem;
+  margin-bottom: 1rem;
+  border-bottom: 1px solid var(--color-secondary-border);
+}
+
+.action-buttons{
+  position: absolute;
+  right: 0;
+  bottom: -6rem;
+}
+
+.action-buttons button{
+  margin-left: 2rem;
+}
