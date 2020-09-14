@@ -1,4 +1,4 @@
-import Router from 'next/router'
+import Router, { useRouter } from 'next/router'
 import Head from 'next/head'
 // Import global css
 import '../styles/general.css'
@@ -43,8 +43,13 @@ export default function MyApp({ Component, pageProps }) {
       try {
         const { data } = await userApi.getUserData()
         setUser(data)
-        if (Router.pathname.indexOf('/main') === -1)
+        if (!data.firstTimeLogin) {
+          Router.replace('/main/setup')
+          userApi.patchUser({ firstTimeLogin: true })
+        }
+        else if (Router.pathname.indexOf('/main') === -1)
           Router.replace('/main/overview')
+
       } catch (err) {
         console.log(err)
         initialRedirect()
@@ -79,12 +84,19 @@ export default function MyApp({ Component, pageProps }) {
     document.documentElement.style.setProperty('--vh', `${vh}px`)
   }
 
+  const router = useRouter()
+
+  useEffect(() => {
+    if (router) {
+      getUserData()
+    }
+  }, [router.route])
+
   useEffect(() => {
     resizeWindow()
     window.addEventListener('resize', () => {
       resizeWindow()
     })
-    getUserData()
     dragndropPolyfill()
   }, [])
 

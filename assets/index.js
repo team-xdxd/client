@@ -30,6 +30,7 @@ export const Utilities = {
   add: require('./Icons/Utilities/Add +/icn-utilities-add+.svg'),
   addLight: require('./Icons/Utilities/Add +/icn-utilities-add+light.svg'),
   addWhite: require('./Icons/Utilities/Add +/icn-utilities-add+white.svg'),
+  addAlt: require('./Icons/Utilities/Add +/icn-utilities-add+alt.svg'),
   comment: require('./Icons/Utilities/Comments/icn-utilities-comments.svg'),
   commentLight: require('./Icons/Utilities/Comments/icn-utilities-comments-light.svg'),
   assignMember: require('./Icons/Utilities/Assign Member/icn-utilities-assignmember.svg'),
@@ -121,4 +122,9 @@ export const Comments = {
   mentionLight: require('./Icons/Utilities/@/icn-comments-mention-light.svg'),
   smile: require('./Icons/Utilities/Smile/icn-comments-smile.svg'),
   smileLight: require('./Icons/Utilities/Smile/icn-comments-smile-light.svg')
+}
+
+export const Integrations = {
+  google_drive: require('./Icons/Assets/icons8-google-drive-1.svg'),
+  dropbox: require('./Icons/Assets/Dropbox_Icon.svg'),
 }
