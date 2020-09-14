@@ -10,6 +10,7 @@ const ALLOWED_TYPES = 'image/png, image/jpeg'
 
 // Components
 import Button from '../buttons/button'
+import ButtonIcon from '../buttons/button-icon'
 
 const PhotoUpload = ({ userPhoto = '' }) => {
   const [currentPhoto, setCurrentPhoto] = useState(undefined)
@@ -70,10 +71,9 @@ const PhotoUpload = ({ userPhoto = '' }) => {
           />
         </>
         :
-        <Button
-          text='Upload Photo'
-          type='button'
-          styleType='primary'
+        <ButtonIcon
+          icon={Utilities.addAlt}
+          text='UPLOAD PHOTO'
           onClick={openUpload}
         />
       }

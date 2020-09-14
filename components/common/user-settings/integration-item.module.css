@@ -5,7 +5,7 @@
 }
 
 .name, .container button{
-  width: 10rem;
+  min-width: 202px;
 }
 
 .name{
@@ -13,7 +13,7 @@
   font-weight: 500;
 }
 
-.container img{
+.container>img{
   width: 60px;
   height: 60px;
 }

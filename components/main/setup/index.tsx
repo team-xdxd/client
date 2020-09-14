@@ -1,6 +1,7 @@
 import styles from './index.module.css'
 import { useEffect, useState, useContext } from 'react'
 import { UserContext } from '../../../context'
+import urlUtils from '../../../utils/url'
 import Router from 'next/router'
 
 // Components
@@ -11,7 +12,7 @@ import Button from '../../common/buttons/button'
 const Setup = () => {
 
   const { user } = useContext(UserContext)
-  
+
   const splitName = user?.name.split(' ')[0]
 
   const AVAILABLE_STEPS = {
@@ -41,6 +42,13 @@ const Setup = () => {
     }
   }
 
+  useEffect(() => {
+    const { step } = urlUtils.getQueryParameters()
+    if (step) {
+      setCurrentStep(AVAILABLE_STEPS[step as string])
+    }
+  }, [])
+
   const ActionButtons = ({ saveAction }) => (
     <div className={styles['action-buttons']}>
       <Button
@@ -48,6 +56,7 @@ const Setup = () => {
         type='button'
         onClick={goNext}
         styleType='secondary'
+        styleTypes={['round-corners', 'input-height']}
       />
       <Button
         text='LOOKS GREAT!'
@@ -57,6 +66,7 @@ const Setup = () => {
           goNext()
         }}
         styleType='primary'
+        styleTypes={['round-corners', 'input-height']}
       />
     </div>
   )

@@ -1,6 +1,7 @@
 import styles from './integrations.module.css'
 import { useState, useEffect } from 'react'
 import userApi from '../../../server-api/user'
+import cookiesUtil from '../../../utils/cookies'
 import parameterApi from '../../../server-api/parameter'
 
 // Components
@@ -34,19 +35,35 @@ const Integrations = ({ ActionButtons }) => {
     }
   }
 
+  const addIntegration = (integration) => {
+    cookiesUtil.set('integrationType', integration.type)
+    cookiesUtil.set('onSetup', 'true')
+    window.location.replace(integration.oauthUrl)
+  }
+
   const onSave = async () => {
 
   }
 
+  const userIntegrations = availableIntegrations.map(integration => {
+    const existingIntegration = integrations.find(userIntegration => userIntegration.type === integration.type)
+    if (existingIntegration) return {
+      ...integration,
+      ...existingIntegration
+    }
+    else return integration
+  })
+
   return (
     <div>
       <ul className={styles['integration-list']}>
-        {availableIntegrations.map(integration => (
+        {userIntegrations.map(integration => (
           <li key={integration.type}>
             <IntegrationItem
               integrationName={integration.name}
               integrationId={integration.type}
-              onClick={() => { }}
+              onClick={() => addIntegration(integration)}
+              createdAt={integration.createdAt}
             />
           </li>
         ))}
