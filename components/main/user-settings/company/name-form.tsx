@@ -1,4 +1,4 @@
-import styles from './subscription-name-form.module.css'
+import styles from './name-form.module.css'
 import { useContext, useState, useEffect } from 'react'
 import { TeamContext } from '../../../../context'
 import { useForm } from 'react-hook-form'
@@ -8,7 +8,7 @@ import Button from '../../../common/buttons/button'
 import FormInput from '../../../common/inputs/form-input'
 import Input from '../../../common/inputs/input'
 
-const SubscriptionNameForm = () => {
+const NameForm = () => {
   const { team, patchTeam } = useContext(TeamContext)
   const { control, handleSubmit, errors } = useForm()
 
@@ -50,4 +50,4 @@ const SubscriptionNameForm = () => {
   )
 }
 
-export default SubscriptionNameForm
+export default NameForm

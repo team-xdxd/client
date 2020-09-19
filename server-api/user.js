@@ -8,8 +8,7 @@ export default {
   signIn: (data) => axios.post(`${userUrl}/signin`, data),
   signUp: (data, queryData = {}) => axios.post(`${userUrl}/signup?${querystring.encode(queryData)}`, data),
   requestPasswordreset: (data) => axios.post(`${userUrl}/generate-password-reset`, data),
-  passwordReset: (data) => axios.post(`${userUrl}/password-reset`, data),
-  getTeamMembers: () => axios.get(`${userUrl}/members`),
+  passwordReset: (data) => axios.post(`${userUrl}/password-reset`, data),  
 
   uploadPhoto: (formData) => axios.post(`${userUrl}/photo`, formData, {
     headers: {
@@ -18,6 +17,8 @@ export default {
   }),
 
   patchUser: (data) => axios.patch(`${userUrl}`, data),
+  patchUserPassword: (data) => axios.patch(`${userUrl}/password`, data),
+  patchUserEmail: (data) => axios.patch(`${userUrl}/email`, data),
 
   addIntegration: (data) => axios.post(`${userUrl}/integrations`, data),
   getIntegrations: () => axios.get(`${userUrl}/integrations`),

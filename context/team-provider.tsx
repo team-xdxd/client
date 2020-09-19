@@ -1,7 +1,6 @@
 import { useState, useEffect } from 'react'
 import { TeamContext } from '../context'
 import toastUtils from '../utils/toast'
-import userApi from '../server-api/user'
 import teamApi from '../server-api/team'
 import planApi from '../server-api/plan'
 
@@ -43,7 +42,7 @@ export default ({ children }) => {
 
   const getTeamMembers = async () => {
     try {
-      const { data } = await userApi.getTeamMembers()
+      const { data } = await teamApi.getTeamMembers()
       setTeamMembers(data)
     } catch (err) {
       console.log(err)

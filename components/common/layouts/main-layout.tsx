@@ -78,7 +78,7 @@ const AuthLayout = ({ children }) => {
               wrapperClass={styles.user}
               Wrapper={({ children }) => (
                 <>
-                  <UserPhoto photoUrl={user.profilePhoto} extraClass={styles.profile}/>
+                  <UserPhoto photoUrl={user.profilePhoto} extraClass={styles.profile} />
                   {user?.name}
                   {children}
                 </>
@@ -87,18 +87,14 @@ const AuthLayout = ({ children }) => {
               Content={() => (
                 <Dropdown
                   options={[
-                    {
-                      OverrideComp: () => <SettingsLink name='Company' settingRef='company' />
-                    },
-                    {
-                      OverrideComp: () => <SettingsLink name='Billing' settingRef='billing' />
-                    },
-                    {
-                      OverrideComp: () => <SettingsLink name='Plan' settingRef='plan' />
-                    },
-                    {
-                      OverrideComp: () => <SettingsLink name='Team' settingRef='team' />
-                    },
+                    { OverrideComp: () => <SettingsLink name='Profile' settingRef='profile' /> },
+                    { OverrideComp: () => <SettingsLink name='Company' settingRef='company' /> },
+                    { OverrideComp: () => <SettingsLink name='Billing' settingRef='billing' /> },
+                    { OverrideComp: () => <SettingsLink name='Plan' settingRef='plan' /> },
+                    { OverrideComp: () => <SettingsLink name='Security' settingRef='security' /> },
+                    { OverrideComp: () => <SettingsLink name='Team' settingRef='team' /> },
+                    { OverrideComp: () => <SettingsLink name='Notifications' settingRef='notifications' /> },
+                    { OverrideComp: () => <SettingsLink name='Integrations' settingRef='integrations' /> },
                     { label: 'Log Out', onClick: logOut }
                   ]}
                 />

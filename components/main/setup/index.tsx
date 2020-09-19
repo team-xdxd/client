@@ -2,6 +2,7 @@ import styles from './index.module.css'
 import { useEffect, useState, useContext } from 'react'
 import { UserContext } from '../../../context'
 import urlUtils from '../../../utils/url'
+import userApi from '../../../server-api/user'
 import Router from 'next/router'
 
 // Components
@@ -33,12 +34,18 @@ const Setup = () => {
 
   const nextStep = AVAILABLE_STEPS[currentStep.next]
 
-  const goNext = () => {
+  const goNext = async () => {
     if (nextStep) {
       setCurrentStep(nextStep)
     } else {
       // No more steps, redirect to main menu
-      Router.replace('/main/overview')
+      try {
+        await userApi.patchUser({ firstTimeLogin: true })
+      } catch (err) {        
+        console.log(err)
+      } finally {
+        Router.replace('/main/overview')
+      }
     }
   }
 

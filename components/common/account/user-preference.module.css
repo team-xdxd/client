@@ -1,0 +1,16 @@
+.container,
+.radio-options {
+  display: flex;
+}
+
+.radio-options > div:last-child {
+  margin-left: 3rem;
+}
+
+.option > div:first-child {
+  margin-bottom: 0.5rem;
+}
+
+.option > img {
+  cursor: pointer;
+}

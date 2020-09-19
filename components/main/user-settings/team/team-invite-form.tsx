@@ -11,9 +11,11 @@ const TeamInvite = ({ mappedRoles, onInviteSend }) => {
   const [inviteEmail, setInviteEmail] = useState('')
   const [inviteRole, setInviteRole] = useState(undefined)
 
-  const onSubmitForm = (e) => {
+  const onSubmitForm = async (e) => {
     e.preventDefault()
-    onInviteSend(inviteEmail, inviteRole.value)
+    await onInviteSend(inviteEmail, inviteRole.value)
+    setInviteEmail('')
+    setInviteRole(undefined)
   }
 
   return (

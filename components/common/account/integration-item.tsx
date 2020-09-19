@@ -20,7 +20,7 @@ const IntegrationItem = ({ integrationName, integrationId, onClick, createdAt = 
           text={'Connected'}
           type={'button'}
           styleType={'secondary'}
-          styleTypes={['round-corners', 'input-height']}
+          styleTypes={['input-height']}
           disabled={true}
         />
         :

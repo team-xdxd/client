@@ -12,7 +12,7 @@ import DataUsage from '../../../common/usage/data-usage'
 import PlanCard from './plan-card'
 import PlanChangeModal from './plan-change-modal'
 
-const Plans = () => {
+const Plan = () => {
   const [activeCycle, setActiveCycle] = useState('annual')
   const [productData, setProductData] = useState(undefined)
 
@@ -115,4 +115,4 @@ const Plans = () => {
   )
 }
 
-export default Plans
+export default Plan

@@ -1,4 +1,4 @@
-import styles from './subscription-address-form.module.css'
+import styles from './address-form.module.css'
 import { useContext, useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { LocationContext, TeamContext } from '../../../../context'
@@ -9,7 +9,7 @@ import FormInput from '../../../common/inputs/form-input'
 import Input from '../../../common/inputs/input'
 import Select from '../../../common/inputs/select'
 
-const SubscriptionAddressForm = () => {
+const AddressForm = () => {
   const { control, handleSubmit, errors } = useForm()
 
   const { countries, states, loadStates } = useContext(LocationContext)
@@ -74,7 +74,7 @@ const SubscriptionAddressForm = () => {
                 control={control}
                 rules={{ minLength: 4, maxLength: 50 }}
                 errors={errors}
-                message={'This field should be between 4 and 30 characters long'}
+                message={'This field should be between 4 and 50 characters long'}
               />
               <div className={styles['fields-pair']}>
                 <div>
@@ -149,4 +149,4 @@ const SubscriptionAddressForm = () => {
   )
 }
 
-export default SubscriptionAddressForm
+export default AddressForm

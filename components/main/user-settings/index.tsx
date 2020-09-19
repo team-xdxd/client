@@ -8,20 +8,24 @@ import LocationContextProvider from '../../../context/location-provider'
 
 // Components
 import SideNavigation from './side-navigation'
+import Profile from './profile'
 import Team from './team'
 import Company from './company'
 import Billing from './billing'
 import Plan from './plan'
+import Security from './security'
+import Integrations from './integrations'
+import Notifications from './notifications'
 
 const SETTING_OPTIONS_CONTENT = {
-  profile: () => <></>,
+  profile: Profile,
   billing: Billing,
   company: Company,
   plan: Plan,
-  security: () => <></>,
+  security: Security,
   team: Team,
-  notifications: () => <></>,
-  integrations: () => <></>
+  notifications: Notifications,
+  integrations: Integrations
 }
 
 const UserSettings = () => {

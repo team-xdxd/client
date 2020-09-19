@@ -1,6 +1,6 @@
 import styles from './photo-upload.module.css'
-import { useState, useEffect, useRef } from 'react'
-
+import { useState, useEffect, useRef, useContext } from 'react'
+import { UserContext } from '../../../context'
 import toastUtils from '../../../utils/toast'
 import userApi from '../../../server-api/user'
 
@@ -15,6 +15,8 @@ import ButtonIcon from '../buttons/button-icon'
 const PhotoUpload = ({ userPhoto = '' }) => {
   const [currentPhoto, setCurrentPhoto] = useState(undefined)
   const [uploadedImage, setUploadedImage] = useState(undefined)
+
+  const { setUser } = useContext(UserContext)
 
   const fileBrowserRef = useRef(undefined)
 
@@ -44,7 +46,9 @@ const PhotoUpload = ({ userPhoto = '' }) => {
       const formData = new FormData()
       formData.append('photo', uploadedImage)
       const { data } = await userApi.uploadPhoto(formData)
+      setUser(data)
       toastUtils.success(`Photo updated.`)
+      setUploadedImage(undefined)
     } catch (err) {
       cancelPreview()
       console.log(err)
@@ -55,28 +59,31 @@ const PhotoUpload = ({ userPhoto = '' }) => {
   return (
     <div className={styles.container}>
       <img className={`${currentPhoto ? styles.current : styles['no-photo']}`} src={currentPhoto || Utilities.memberProfile} />
-      {uploadedImage ?
-        <>
-          <Button
-            text='Cancel'
-            type='button'
-            styleType='secondary'
-            onClick={cancelPreview}
+      <div>
+        {uploadedImage ?
+          <>
+            <Button
+              text='Cancel'
+              type='button'
+              styleType='secondary'
+              onClick={cancelPreview}
+            />
+            <Button
+              text='Save Changes'
+              type='button'
+              styleType='primary'
+              onClick={saveChanges}
+            />
+          </>
+          :
+          <ButtonIcon
+            icon={Utilities.addAlt}
+            text='UPLOAD PHOTO'
+            onClick={openUpload}
           />
-          <Button
-            text='Save Changes'
-            type='button'
-            styleType='primary'
-            onClick={saveChanges}
-          />
-        </>
-        :
-        <ButtonIcon
-          icon={Utilities.addAlt}
-          text='UPLOAD PHOTO'
-          onClick={openUpload}
-        />
-      }
+        }
+        <p className={styles.description}>Your Avatar appears in your team comments and notifications</p>
+      </div>
       <input id="file-input-id" ref={fileBrowserRef} style={{ display: 'none' }} type='file'
         onChange={onFileChange} accept={ALLOWED_TYPES} />
     </div>
