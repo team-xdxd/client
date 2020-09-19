@@ -3,12 +3,12 @@
   align-items: center;
 }
 
-.container button:first-of-type{
+.container button:first-of-type, .container button:last-of-type, .description{
   margin-left: 2rem;
 }
 
-.container button:last-of-type{
-  margin-left: 2rem;
+.description{
+  margin-bottom: 0;
 }
 
 .container button{
@@ -16,8 +16,8 @@
 }
 
 .current, .no-photo{
-  width: 80px;
-  height: 80px;
+  width: 85px;
+  height: 85px;
 }
 
 

@@ -4,7 +4,7 @@ import userApi from '../../../server-api/user'
 import { UserContext } from '../../../context'
 
 // Components
-import PhotoUpload from '../../common/user-settings/photo-upload'
+import PhotoUpload from '../../common/account/photo-upload'
 import Input from '../../common/inputs/input'
 
 const Profile = ({ ActionButtons }) => {

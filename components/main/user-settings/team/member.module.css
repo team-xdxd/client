@@ -11,7 +11,7 @@
 }
 
 .name-email {
-  flex: 1;
+  width: 80%;
 }
 
 .name-email > div:first-child {
@@ -22,4 +22,19 @@
 .name-email > div:last-child {
   color: var(--color-sec-text);
   font-weight: 400;
+}
+
+.role{
+  font-weight: 600;
+  width: 49px;
+}
+
+.details{
+  display: flex;
+}
+
+.action{
+  margin-left: 1rem;
+  color: var(--color-sec-text);
+  cursor: pointer;
 }

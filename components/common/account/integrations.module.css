@@ -1,0 +1,18 @@
+.integration-list{
+  margin: 2.5rem 2rem 0 2rem;
+}
+
+.integration-list li{
+  margin-bottom: 5rem;
+}
+
+.buttons{
+  display: flex;
+  border-bottom: 1px solid var(--color-secondary-border);
+  padding-bottom: 2rem;
+  margin-bottom: 2rem;
+}
+
+.buttons button{
+  margin-right: 3rem;
+}

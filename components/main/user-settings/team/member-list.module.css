@@ -1,3 +1,7 @@
-.container {
-  max-width: 40rem;
+.headers{
+  display: flex;  
+}
+
+.headers h3{
+  width: 33%;
 }

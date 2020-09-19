@@ -35,7 +35,7 @@ export default function MyApp({ Component, pageProps }) {
   // set up context following this: https://stackoverflow.com/questions/41030361/how-to-update-react-context-from-inside-a-child-component
   const [user, setUser] = useState(null)
 
-  const fetchUser = async (redirectLogin = false) => {
+  const fetchUser = async (redirectLogin = false) => {    
     if (redirectLogin) return Router.replace('/login')
     const jwt = cookiesUtils.get('jwt')
     if (jwt && Router.pathname.indexOf('/share') === -1) {
@@ -44,8 +44,7 @@ export default function MyApp({ Component, pageProps }) {
         const { data } = await userApi.getUserData()
         setUser(data)
         if (!data.firstTimeLogin) {
-          Router.replace('/main/setup')
-          userApi.patchUser({ firstTimeLogin: true })
+          Router.replace('/main/setup')          
         }
         else if (Router.pathname.indexOf('/main') === -1)
           Router.replace('/main/overview')
@@ -87,7 +86,7 @@ export default function MyApp({ Component, pageProps }) {
   const router = useRouter()
 
   useEffect(() => {
-    if (router) {
+    if (router.route ) {
       getUserData()
     }
   }, [router.route])

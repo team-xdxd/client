@@ -3,10 +3,10 @@ import { useState, useContext, useEffect } from 'react'
 import { TeamContext } from '../../../../context'
 
 // Components
-import SubscriptionNameForm from './subscription-name-form'
-import SubscriptionAddressForm from './subscription-address-form'
+import NameForm from './name-form'
+import AddressForm from './address-form'
 
-const Subscription = () => {
+const Company = () => {
 
   const { getTeam } = useContext(TeamContext)
 
@@ -16,10 +16,10 @@ const Subscription = () => {
 
   return (
     <div>
-      <SubscriptionNameForm />
-      <SubscriptionAddressForm />
+      <NameForm />
+      <AddressForm />
     </div>
   )
 }
 
-export default Subscription
+export default Company
