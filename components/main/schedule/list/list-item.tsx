@@ -7,6 +7,7 @@ import { Utilities } from '../../../../assets'
 import Button from '../../../common/buttons/button'
 import StatusBadge from '../../../common/misc/status-badge'
 import Type from '../../../common/misc/type'
+import UserPhoto from '../../../common/user/user-photo'
 
 const ListItem = ({ item }) => {
   const wasUpdated = item.createdAt !== item.updatedAt
@@ -40,6 +41,8 @@ const ListItem = ({ item }) => {
     }
   }
 
+  const owner = item.users?.find(user => user.isOwner)
+
   return (
     <div className={styles.item}>
       <div className={styles.info}>
@@ -65,9 +68,8 @@ const ListItem = ({ item }) => {
         {itemTime}
       </div>
       <div className={styles.owner}>
-        {/* TODO: Placeholder, fix when teams are implemented */}
-        <img src={Utilities.memberProfile} />
-        <span>{item.users[0]?.name}</span>
+        <UserPhoto photoUrl={owner?.profilePhoto} sizePx={20} />        
+        <span>{owner?.name}</span>
       </div>
       <div className={styles.action}>
         <Button

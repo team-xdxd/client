@@ -1,7 +1,6 @@
 import styles from './dropdown.module.css'
 
 const Dropdown = ({ options = [], additionalClass = '' }) => {
-  console.log(options)
   return (
     <ul className={`${styles.menu} ${additionalClass}`} >
       {options.map((option, index) => (

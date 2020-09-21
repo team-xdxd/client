@@ -15,7 +15,7 @@ import Fields from './campaign-fields'
 
 const CampaignDetail = () => {
 
-  const [campaign, setCampaign] = useState()
+  const [campaign, setCampaign] = useState(undefined)
 
   const [campaignNames, setCampaignNames] = useState([])
 
@@ -24,7 +24,7 @@ const CampaignDetail = () => {
   const [description, setDescription] = useState('')
   const [startDate, setStartDate] = useState()
   const [endDate, setEndDate] = useState()
-  const [owner, setOwner] = useState()
+  const [owner, setOwner] = useState(undefined)
   const [tags, setTags] = useState([])
   const [status, setStatus] = useState('')
 
@@ -91,10 +91,9 @@ const CampaignDetail = () => {
   }
 
   const setCampaignData = (data) => {
-    // TODO: get the correct owner
     setName(data.name)
-    setOwner(data.users[0])
-    setCollaborators(data.users)
+    setOwner(data.users.find(user => user.isOwner))
+    setCollaborators(data.users.filter(user => !user.isOwner))
     setDescription(data.description)
     setStartDate(data.startDate)
     setEndDate(data.endDate)
@@ -126,6 +125,30 @@ const CampaignDetail = () => {
       await campaignApi.removeTag(campaign.id, tags[index].id)
     } catch (err) {
       // TODO: Error if failure for whatever reason
+    }
+  }
+
+  const addCollaborator = async (user) => {
+    try {
+      // Only add if collaborator is not on list
+      if (owner.id === user.id || collaborators.find(collaborator => collaborator.id === user.id)) {
+        return await removeCollaborator(user)
+      }
+      setCollaborators(update(collaborators, { $push: [user] }))
+      await campaignApi.addCollaborators(campaign.id, { collaboratorIds: [user.id] })
+    } catch (err) {
+      console.log(err)
+    }
+  }
+
+  const removeCollaborator = async (user) => {
+    try {
+      const searchedCollaboratorIndex = collaborators.findIndex(collaborator => collaborator.id === user.id)
+      if (searchedCollaboratorIndex === -1) return
+      setCollaborators(update(collaborators, { $splice: [[searchedCollaboratorIndex, 1]] }))
+      await campaignApi.removeCollaborators(campaign.id, { collaboratorIds: [user.id] })
+    } catch (err) {
+      console.log(err)
     }
   }
 
@@ -173,6 +196,8 @@ const CampaignDetail = () => {
               setCollaborators={setCollaborators}
               addTag={addTag}
               removeTag={removeTag}
+              addCollaborator={addCollaborator}
+              removeCollaborator={removeCollaborator}
             />
           }
         </ItemSublayout>

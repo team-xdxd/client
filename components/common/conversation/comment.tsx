@@ -4,6 +4,7 @@ import { Utilities } from '../../../assets'
 import { format } from 'date-fns'
 
 // Components
+import UserPhoto from '../user/user-photo'
 
 const Comment = ({ content, mentions, createdAt, user }) => {
 
@@ -12,7 +13,7 @@ const Comment = ({ content, mentions, createdAt, user }) => {
   return (
     <div className={styles.container}>
       <div className={styles['main-content']}>
-        <img src={Utilities.memberProfile} className={styles['author-img']} />
+        <UserPhoto sizePx={27} photoUrl={user.profilePhoto} extraClass={styles['author-img']} />
         <Highlighter
           highlightClassName={styles.mention}
           searchWords={mentionNames}

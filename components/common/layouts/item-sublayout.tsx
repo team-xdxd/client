@@ -1,6 +1,7 @@
 import styles from './item-sublayout.module.css'
-import { useState, useRef } from 'react'
+import { useState, useEffect, useContext } from 'react'
 import { Utilities } from '../../../assets'
+import { TeamContext } from '../../../context'
 
 // Components
 import SectionButton from '../buttons/section-button'
@@ -22,6 +23,12 @@ const ItemSublayout = ({
 }) => {
   const [modalOpen, setModalOpen] = useState(false)
   const [activeMain, setActiveMain] = useState('details')
+
+  const { getTeamMembers } = useContext(TeamContext)
+
+  useEffect(() => {
+    getTeamMembers()
+  }, [])
 
   return (
     <div className={styles.container}>

@@ -60,13 +60,14 @@ const AuthLayout = ({ children }) => {
                 imgHover={Navigation.assetsSelected}
                 text='Assets'
               />
-              <HeaderLink
+              {/* TODO: Reports page will be implemented later */}
+              {/* <HeaderLink
                 active={Router.pathname.indexOf('reports') !== -1}
                 href='/main/reports'
                 img={Router.pathname.indexOf('reports') !== -1 ? Navigation.reportsSelected : Navigation.reports}
                 imgHover={Navigation.reportsSelected}
                 text='Reports'
-              />
+              /> */}
             </ul>
             <div className={styles['notifications-wrapper']}>
               <img
@@ -78,7 +79,7 @@ const AuthLayout = ({ children }) => {
               wrapperClass={styles.user}
               Wrapper={({ children }) => (
                 <>
-                  <UserPhoto photoUrl={user.profilePhoto} extraClass={styles.profile} />
+                  <UserPhoto photoUrl={user.profilePhoto} extraClass={styles.profile} sizePx={35}/>
                   {user?.name}
                   {children}
                 </>
