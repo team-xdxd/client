@@ -37,6 +37,7 @@
     "react-select": "^3.1.0",
     "react-time-picker": "^4.0.1",
     "react-toastify": "^5.5.0",
+    "react-tooltip": "^4.2.10",
     "react-waypoint": "^9.0.2",
     "textarea-caret": "^3.1.0",
     "universal-cookie": "^4.0.3",

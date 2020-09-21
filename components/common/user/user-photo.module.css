@@ -1,9 +1,3 @@
-.current,
-.no-photo {
-  width: 27px;
-  height: 27px;
-}
-
 .current {
   object-fit: cover;
   border-radius: 50%;

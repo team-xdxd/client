@@ -26,7 +26,9 @@ const TaskDetail = () => {
     description: '',
     project: null,
     endDate: null,
-    tags: []
+    tags: [],
+    users: [],
+    userId: ''
   })
 
   useEffect(() => {
@@ -91,6 +93,17 @@ const TaskDetail = () => {
       toastUtils.success('Task saved sucesfully')
     } catch (err) {
       // TODO: Error handling
+    }
+  }
+
+  const replaceTaskAssigned = async (user) => {
+    try {
+      if (!user) setEditableFields(update(editableFields, { users: { $set: [] } }))
+      else setEditableFields(update(editableFields, { users: { $set: [user] } }))
+      await taskApi.replaceAssigned(task?.id, { collaboratorId: user?.id })
+    } catch (err) {
+      console.log(err)
+      // TODO: Error if failure for whatever reason
     }
   }
 
@@ -175,11 +188,11 @@ const TaskDetail = () => {
         >
           {task &&
             <Fields
-              task={task}
               editableFields={editableFields}
               editFields={editFields}
               addTag={addTag}
               removeTag={removeTag}
+              replaceTaskAssigned={replaceTaskAssigned}
             />
           }
         </ItemSublayout>

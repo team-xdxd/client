@@ -69,6 +69,8 @@ const Team = () => {
         await teamApi.patchTeamMember(id, { roleId, permissions, updatePermissions })
       else
         await inviteApi.patchInvite(id, { roleId, permissions, updatePermissions })
+
+      toastUtils.success('Changes saved successfully')
     } catch (err) {
       console.log(err)
     }
@@ -113,7 +115,7 @@ const Team = () => {
             <h3>Role</h3>
           </div>
 
-          <MemberList members={teamMembers} type='user' setSelectedMember={setSelectedMember} setSelectedDeleteMember={setSelectedDeleteMember} />
+          <MemberList members={teamMembers} type='member' setSelectedMember={setSelectedMember} setSelectedDeleteMember={setSelectedDeleteMember} />
 
           <h3>Pending Invites</h3>
           <MemberList members={invites} type='invite' setSelectedMember={setSelectedMember} setSelectedDeleteMember={setSelectedDeleteMember} />

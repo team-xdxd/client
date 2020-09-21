@@ -9,24 +9,27 @@ import Router from 'next/router'
 // Components
 import TaskInput from '../../../common/inputs/task-input'
 import Button from '../../../common/buttons/button'
-import ToggleableAbsoluteWrapper from '../../../common/misc/toggleable-absolute-wrapper'
 import Dropdown from '../../../common/inputs/dropdown'
 import ConfirmModal from '../../../common/modals/confirm-modal'
+import SearchableUserList from '../../../common/user/searchable-user-list'
+import UserPhoto from '../../../common/user/user-photo'
 
-const TasksList = ({ tasks = [], createTask, removeTask, updateTask }) => {
+const TasksList = ({ tasks = [], createTask, removeTask, updateTask, replaceTaskAssigned }) => {
 
   const [inputVisible, setInputVisible] = useState(false)
   const [date, setDate] = useState()
+  const [selectedUser, setSelectedUser] = useState()
   const [name, setName] = useState('')
 
   const [hoverIndex, setHoverIndex] = useState(-1)
   const [visibleTaskDateIndex, setVisibleTaskDateIndex] = useState(-1)
   const [visibleMoreIndex, setVisibleMoreIndex] = useState(-1)
+  const [visibleMemberIndex, setVisibleMemberIndex] = useState(-1)
 
   const [activeIndex, setActiveIndex] = useState(-1)
 
   const sendCreateTask = () => {
-    createTask({ name, endDate: date })
+    createTask({ name, endDate: date, selectedUser })
     setDate(null)
     setName('')
     setInputVisible(false)
@@ -47,6 +50,13 @@ const TasksList = ({ tasks = [], createTask, removeTask, updateTask }) => {
     updateTask(visibleTaskDateIndex, { endDate })
     setHoverIndex(-1)
     setVisibleTaskDateIndex(-1)
+  }
+
+  const handleUserSelection = (user) => {
+    if (user.id === tasks[visibleMemberIndex].users[0]?.id) replaceTaskAssigned(visibleMemberIndex, undefined)
+    else replaceTaskAssigned(visibleMemberIndex, user)
+    setVisibleMemberIndex(-1)
+    setHoverIndex(-1)
   }
 
   const wrapperRefMore = useRef(null)
@@ -89,7 +99,25 @@ const TasksList = ({ tasks = [], createTask, removeTask, updateTask }) => {
     }
   }
 
+  const wrapperRefMember = useRef(null)
 
+  const handleClickOutsideMember = (event) => {
+    const className = event.target.getAttribute('class')
+    if (wrapperRefMember.current && !wrapperRefMember.current.contains(event.target) && className !== 'member-icon') {
+      setVisibleMemberIndex(-1)
+    }
+  }
+
+  const setVisibleMemberIndexAct = (e, index) => {
+    e.stopPropagation()
+    const newIndex = index === visibleMemberIndex ? -1 : index
+    setVisibleMemberIndex(newIndex)
+    if (index !== -1) {
+      document.addEventListener("mousedown", handleClickOutsideMember);
+    } else {
+      document.removeEventListener("mousedown", handleClickOutsideMember);
+    }
+  }
 
   const completedTasks = tasks.filter(task => task.status === 'completed')
   const completedPercentage = tasks.length > 0 ? completedTasks.length / tasks.length * 100 : 0
@@ -137,12 +165,16 @@ const TasksList = ({ tasks = [], createTask, removeTask, updateTask }) => {
                 <span>{`${task.endDate ? format(new Date(task.endDate), 'EEE MMM d') : 'No date'}`}</span>
               </div>
             </div>
-            <div className={`${styles['item-actions']} ${
-              (visibleTaskDateIndex === index ||
-                hoverIndex === index ||
-                visibleMoreIndex === index)
+            <div className={`${styles['item-actions']} ${(visibleTaskDateIndex === index ||
+              hoverIndex === index ||
+              visibleMoreIndex === index ||
+              visibleMemberIndex === index)
               && styles.visible}`}>
-              <img src={Utilities.assignMember} />
+              <div className='member-icon' onClick={(e) => setVisibleMemberIndexAct(e, index)}>
+                <UserPhoto noPhoto={Utilities.assignMember} sizePx={16}
+                  photoUrl={task.users[0] && (task.users[0].profilePhoto || Utilities.memberProfile)}
+                  tooltipId={`user-task-${task.id}`} tooltipText={task.users[0]?.name} />
+              </div>
               <img className='schedule-icon' src={Navigation.schedulePrimary}
                 onClick={(e) => setVisibleDateIndexAct(e, index)} />
               <img className='more-icon' src={Utilities.more}
@@ -158,11 +190,18 @@ const TasksList = ({ tasks = [], createTask, removeTask, updateTask }) => {
             {visibleMoreIndex === index &&
               <div className={styles['item-more']} ref={wrapperRefMore}>
                 <Dropdown
-                  options={[{ label: 'Delete' }]}
-                  onClick={() => {
-                    setActiveIndex(index)
-                  }}
+                  options={
+                    [{
+                      label: 'Delete', onClick: () => {
+                        setActiveIndex(index)
+                      }
+                    }]}
                 />
+              </div>
+            }
+            {visibleMemberIndex === index &&
+              <div className={styles['item-member']} ref={wrapperRefMember}>
+                <SearchableUserList onUserSelected={handleUserSelection} selectedList={[task.users[0]?.id]} />
               </div>
             }
           </li>
@@ -175,6 +214,8 @@ const TasksList = ({ tasks = [], createTask, removeTask, updateTask }) => {
             setDate={setDate}
             name={name}
             setName={setName}
+            selectedUser={selectedUser}
+            setSelectedUser={setSelectedUser}
           />
           <div className={styles.actions}>
             <Button
@@ -204,6 +245,8 @@ const TasksList = ({ tasks = [], createTask, removeTask, updateTask }) => {
           removeTask(activeIndex)
           setVisibleMoreIndex(-1)
           setActiveIndex(-1)
+          setVisibleMemberIndex(-1)
+          setVisibleTaskDateIndex(-1)
         }}
         confirmText={'Delete'}
         message={

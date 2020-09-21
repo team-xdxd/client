@@ -7,11 +7,6 @@
     flex-wrap: wrap;
   }
   
-  .container img {
-    width: 20px;
-    height: 20px;
-  }
-  
   .field {
     width: 25rem;
     padding: 30px 25px;
@@ -48,9 +43,29 @@
   
   .add img {
     margin-right: 8px;
+    width: 20px;
+    height: 20px;
   }
   
   .add span {
     display: inline-flex;
   }
   
+  .no-assign{
+    color: var(--color-sec-blue);
+    font-style: italic;
+    cursor: pointer;
+  }
+
+  .clickable{
+    cursor: pointer;
+  }
+
+  .image-wrapper{
+    position: relative;
+  }
+  
+  .user-list-wrapper {
+    position: absolute;
+    z-index: 300;
+  }

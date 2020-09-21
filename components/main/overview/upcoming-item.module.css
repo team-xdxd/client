@@ -48,10 +48,20 @@
   display: block;
 }
 
-.single-user img {
-  width: 27px;
-  height: auto;
+.multiple-users{
+  display: flex;
+}
+
+.single-user img,.multiple-users img{
   margin-right: 5px;
+}
+
+.multiple-users li:first-child img{
+  margin-left: 10px;
+}
+
+.multiple-users li:last-child img{
+  margin-right: 10px;
 }
 
 .edit-icon {
