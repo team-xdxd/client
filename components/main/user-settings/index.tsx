@@ -1,8 +1,9 @@
 import styles from './index.module.css'
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useContext } from 'react'
 import update from 'immutability-helper'
 import toastUtils from '../../../utils/toast'
 import urlUtils from '../../../utils/url'
+import { UserContext } from '../../../context'
 import { capitalCase } from 'change-case'
 import LocationContextProvider from '../../../context/location-provider'
 
@@ -16,19 +17,30 @@ import Plan from './plan'
 import Security from './security'
 import Integrations from './integrations'
 import Notifications from './notifications'
+import NoPermissionNotice from '../../common/misc/no-permission-notice'
 
-const SETTING_OPTIONS_CONTENT = {
-  profile: Profile,
-  billing: Billing,
-  company: Company,
-  plan: Plan,
-  security: Security,
-  team: Team,
-  notifications: Notifications,
-  integrations: Integrations
+import {
+  SETTINGS_BILLING,
+  SETTINGS_SECURITY,
+  SETTINGS_TEAM,
+  SETTINGS_COMPANY,
+  SETTINGS_PLAN
+} from '../../../constants/permissions'
+
+const SETTING_OPTIONS = {
+  profile: { label: 'Profile', permissions: [], content: Profile },
+  billing: { label: 'Billing', permissions: [SETTINGS_BILLING], content: Billing },
+  company: { label: 'Company', permissions: [SETTINGS_COMPANY], content: Company },
+  plan: { label: 'Plan', permissions: [SETTINGS_PLAN], content: Plan },
+  security: { label: 'Security', permissions: [SETTINGS_SECURITY], content: Security },
+  team: { label: 'Team', permissions: [SETTINGS_TEAM], content: Team },
+  notifications: { label: 'Notifications', permissions: [], content: Notifications },
+  integrations: { label: 'Integrations', permissions: [], content: Integrations },
 }
 
 const UserSettings = () => {
+
+  const { hasPermission } = useContext(UserContext)
 
   useEffect(() => {
     const activeView = urlUtils.getPathId()
@@ -38,18 +50,22 @@ const UserSettings = () => {
   const [activeView, setActiveView] = useState('')
 
   let ActiveContent = () => <></>
-  if (SETTING_OPTIONS_CONTENT[activeView]) ActiveContent = SETTING_OPTIONS_CONTENT[activeView]
+  if (SETTING_OPTIONS[activeView]) ActiveContent = SETTING_OPTIONS[activeView].content
 
   return (
     <main className={`${styles.container}`}>
       <LocationContextProvider>
         <SideNavigation
           activeView={activeView}
-          setActiveView={setActiveView}
+          SETTING_OPTIONS={SETTING_OPTIONS}
         />
         <section className={styles.content}>
           <h2>{capitalCase(activeView)}</h2>
-          <ActiveContent />
+          {hasPermission(SETTING_OPTIONS[activeView]?.permissions) ?
+            <ActiveContent />
+            :
+            <NoPermissionNotice />
+          }
         </section>
       </LocationContextProvider>
     </main>

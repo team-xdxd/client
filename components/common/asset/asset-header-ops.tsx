@@ -1,6 +1,8 @@
 import { useContext } from 'react'
-import { AssetContext } from '../../../context'
+import { AssetContext, UserContext } from '../../../context'
 import downloadUtils from '../../../utils/download'
+
+import { ASSET_DOWNLOAD } from '../../../constants/permissions'
 
 // Components
 import Button from '../../common/buttons/button'
@@ -11,6 +13,8 @@ const AssetHeaderOps = ({ isUnarchive = false }) => {
 		setAssets,
 		setActiveOperation
 	} = useContext(AssetContext)
+
+	const { hasPermission } = useContext(UserContext)
 
 	const selectedAssets = assets.filter(asset => asset.isSelected)
 
@@ -25,7 +29,7 @@ const AssetHeaderOps = ({ isUnarchive = false }) => {
 		<>
 			<Button text={'Delete'} type='button' styleType='tertiary' onClick={() => setActiveOperation('delete')} />
 			<Button text={isUnarchive ? 'Unarchive' : 'Archive'} type='button' styleType='tertiary' onClick={() => setActiveOperation(isUnarchive ? 'unarchive' : 'archive')} />
-			<Button text={'Download'} type='button' styleType='tertiary' onClick={downloadSelectedAssets} />
+			{hasPermission([ASSET_DOWNLOAD]) && <Button text={'Download'} type='button' styleType='tertiary' onClick={downloadSelectedAssets} />}
 			<Button text={'Move'} type='button' styleType='tertiary' onClick={() => setActiveOperation('move')} />
 			<Button text={'Copy'} type='button' styleType='tertiary' onClick={() => setActiveOperation('copy')} />
 			<Button text={'Share'} type='button' styleType='tertiary' onClick={() => setActiveOperation('share')} />

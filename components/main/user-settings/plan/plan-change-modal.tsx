@@ -23,7 +23,7 @@ const PlanChangeModal = ({ selectedPlan, setSelectedPlan, confirmPlanChange }) =
       headText={'Confirm Plan Change'}
     >
       <div className={styles.container}>
-        <h3>Plan Princing details:</h3>
+        <h3>Plan Pricing Details:</h3>
         {selectedPlan &&
           <>
             {selectedPlan.invoicePreview.items.map(item => (

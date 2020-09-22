@@ -4,6 +4,13 @@ import Link from 'next/link'
 import { GeneralImg, Navigation, Utilities } from '../../../assets'
 import { UserContext } from '../../../context'
 import Router from 'next/router'
+import {
+  SETTINGS_BILLING,
+  SETTINGS_SECURITY,
+  SETTINGS_TEAM,
+  SETTINGS_COMPANY,
+  SETTINGS_PLAN
+} from '../../../constants/permissions'
 
 // Components
 import HeaderLink from '../layouts/header-link'
@@ -11,9 +18,10 @@ import ToggleableAbsoluteWrapper from '../misc/toggleable-absolute-wrapper'
 import Dropdown from '../inputs/dropdown'
 import TrialReminderModal from '../modals/trial-reminder-modal'
 import UserPhoto from '../user/user-photo'
+import NoPermissionNotice from '../misc/no-permission-notice'
 
-const AuthLayout = ({ children }) => {
-  const { user, logOut } = useContext(UserContext)
+const MainLayout = ({ children, requiredPermissions = [] }) => {
+  const { user, logOut, hasPermission } = useContext(UserContext)
 
   const SettingsLink = ({ settingRef, name }) => (
     <Link href={`/main/user-settings/${settingRef}`}>
@@ -25,6 +33,18 @@ const AuthLayout = ({ children }) => {
       </a>
     </Link>
   )
+
+  const dropdownOptions = [
+    { OverrideComp: () => <SettingsLink name='Profile' settingRef='profile' /> }
+  ]
+  if (hasPermission([SETTINGS_COMPANY])) dropdownOptions.push({ OverrideComp: () => <SettingsLink name='Company' settingRef='company' /> })
+  if (hasPermission([SETTINGS_BILLING])) dropdownOptions.push({ OverrideComp: () => <SettingsLink name='Billing' settingRef='billing' /> })
+  if (hasPermission([SETTINGS_PLAN])) dropdownOptions.push({ OverrideComp: () => <SettingsLink name='Plan' settingRef='plan' /> })
+  if (hasPermission([SETTINGS_SECURITY])) dropdownOptions.push({ OverrideComp: () => <SettingsLink name='Security' settingRef='security' /> })
+  if (hasPermission([SETTINGS_TEAM])) dropdownOptions.push({ OverrideComp: () => <SettingsLink name='Team' settingRef='team' /> })
+  dropdownOptions.push({ OverrideComp: () => <SettingsLink name='Notifications' settingRef='notifications' /> })
+  dropdownOptions.push({ OverrideComp: () => <SettingsLink name='Integrations' settingRef='integrations' /> })
+  dropdownOptions.push({ label: 'Log Out', onClick: logOut })
 
   return (
     <>
@@ -79,7 +99,7 @@ const AuthLayout = ({ children }) => {
               wrapperClass={styles.user}
               Wrapper={({ children }) => (
                 <>
-                  <UserPhoto photoUrl={user.profilePhoto} extraClass={styles.profile} sizePx={35}/>
+                  <UserPhoto photoUrl={user.profilePhoto} extraClass={styles.profile} sizePx={35} />
                   {user?.name}
                   {children}
                 </>
@@ -87,22 +107,16 @@ const AuthLayout = ({ children }) => {
               contentClass={styles['user-dropdown']}
               Content={() => (
                 <Dropdown
-                  options={[
-                    { OverrideComp: () => <SettingsLink name='Profile' settingRef='profile' /> },
-                    { OverrideComp: () => <SettingsLink name='Company' settingRef='company' /> },
-                    { OverrideComp: () => <SettingsLink name='Billing' settingRef='billing' /> },
-                    { OverrideComp: () => <SettingsLink name='Plan' settingRef='plan' /> },
-                    { OverrideComp: () => <SettingsLink name='Security' settingRef='security' /> },
-                    { OverrideComp: () => <SettingsLink name='Team' settingRef='team' /> },
-                    { OverrideComp: () => <SettingsLink name='Notifications' settingRef='notifications' /> },
-                    { OverrideComp: () => <SettingsLink name='Integrations' settingRef='integrations' /> },
-                    { label: 'Log Out', onClick: logOut }
-                  ]}
+                  options={dropdownOptions}
                 />
               )}
             />
           </header>
-          {children}
+          {hasPermission(requiredPermissions) ?
+            children
+            :
+            <NoPermissionNotice />
+          }
           <footer className={styles.footer}>
             <TrialReminderModal />
           </footer>
@@ -112,4 +126,4 @@ const AuthLayout = ({ children }) => {
   )
 }
 
-export default AuthLayout
+export default MainLayout

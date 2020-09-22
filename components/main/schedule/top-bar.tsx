@@ -3,8 +3,10 @@ import { Utilities } from '../../../assets'
 import itemStatus from '../../../resources/data/item-status.json'
 import projectTypes from '../../../resources/data/project-types.json'
 import { capitalCase } from 'change-case'
-import { TeamContext } from '../../../context'
+import { TeamContext, UserContext } from '../../../context'
 import { useContext, useEffect } from 'react'
+
+import { CALENDAR_PRINT } from '../../../constants/permissions'
 
 // Components
 import SectionButton from '../../common/buttons/section-button'
@@ -21,6 +23,8 @@ const TopBar = ({ activeView, setActiveView, setCurrentDate, filters, setFilters
 
   const { getTeamMembers, teamMembers } = useContext(TeamContext)
 
+  const { hasPermission } = useContext(UserContext)
+
   useEffect(() => {
     getTeamMembers()
   }, [])
@@ -29,7 +33,7 @@ const TopBar = ({ activeView, setActiveView, setCurrentDate, filters, setFilters
     <section className={styles.container}>
       <div className={styles.options}>
         <img src={Utilities.search} onClick={() => setSearchVisible(true)} />
-        <img src={Utilities.print} onClick={() => window.print()} />
+        {hasPermission([CALENDAR_PRINT]) && <img src={Utilities.print} onClick={() => window.print()} />}
         <SectionButton
           text='List'
           active={activeView === 'list'}
