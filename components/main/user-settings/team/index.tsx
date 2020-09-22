@@ -62,10 +62,9 @@ const Team = () => {
     }
   }
 
-  const onDetailSaveChanges = async (id, { roleId, permissions, updatePermissions }) => {
-    // roleId, permissions: inputPermissions, updatePermissions
+  const onDetailSaveChanges = async (id, { roleId, permissions, updatePermissions }) => {    
     try {
-      if (selectedMember.type === 'user')
+      if (selectedMember.type === 'member')
         await teamApi.patchTeamMember(id, { roleId, permissions, updatePermissions })
       else
         await inviteApi.patchInvite(id, { roleId, permissions, updatePermissions })
@@ -79,7 +78,7 @@ const Team = () => {
   const deleteMember = async () => {
     try {
       const { id } = selectedDeleteMember.member
-      if (selectedDeleteMember.type === 'user') {
+      if (selectedDeleteMember.type === 'member') {
         await teamApi.disableTeamMember(id)
         setTeamMembers(update(teamMembers, {
           $splice: [[teamMembers.findIndex(member => member.id === id), 1]]
