@@ -6,6 +6,8 @@ import requestsUtils from '../utils/requests'
 
 import userApi from '../server-api/user'
 
+const allowedBase = ['/signup', '/share', '/reset-password', '/forgot-password']
+
 export default ({ children }) => {
   const [user, setUser] = useState(null)
   const [initialLoadFinished, setInitialLoadFinished] = useState(false)
@@ -33,7 +35,7 @@ export default ({ children }) => {
   }
 
   const initialRedirect = () => {
-    if (Router.pathname.indexOf('/signup') === -1 && Router.pathname.indexOf('/share') === -1) {
+    if (!allowedBase.some(url => Router.pathname.indexOf(url) !== -1)) {
       Router.replace('/login')
     }
   }
