@@ -17,7 +17,7 @@ const SignupForm = ({ inviteCode = '' }) => {
   const { control, handleSubmit, errors, getValues } = useForm()
   const [companySize, setCompanySize] = useState(undefined)
   const [submitError, setSubmitError] = useState('')
-  const { fetchUser } = useContext(UserContext)
+  const { afterAuth } = useContext(UserContext)
   const onSubmit = async fieldData => {
     try {
       const createData = {
@@ -29,8 +29,7 @@ const SignupForm = ({ inviteCode = '' }) => {
         companySize: companySize ? companySize.value : ''
       }
       const { data } = await userApi.signUp(createData, { inviteCode })
-      cookiesUtils.setUserJWT(data.token)
-      fetchUser()
+      await afterAuth(data)
     } catch (err) {
       if (err.response?.data?.message) {
         setSubmitError(err.response.data.message)

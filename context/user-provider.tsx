@@ -6,18 +6,27 @@ import requestsUtils from '../utils/requests'
 
 import userApi from '../server-api/user'
 
-const allowedBase = ['/signup', '/share', '/reset-password', '/forgot-password']
+const allowedBase = ['/signup', '/share', '/reset-password', '/forgot-password', '/two-factor']
 
 export default ({ children }) => {
   const [user, setUser] = useState(null)
   const [initialLoadFinished, setInitialLoadFinished] = useState(false)
 
   const router = useRouter()
+
   const fetchUser = async (redirectLogin = false) => {
     if (redirectLogin) return Router.replace('/login')
     const jwt = cookiesUtils.get('jwt')
-    if (jwt && Router.pathname.indexOf('/share') === -1) {
-      requestsUtils.setAuthToken(jwt)
+
+    if (jwt) requestsUtils.setAuthToken(jwt)
+
+    const needTwoFactor = cookiesUtils.get('twoFactor')
+    cookiesUtils.remove('twoFactor')
+    if (needTwoFactor && Router.pathname.indexOf('/two-factor') === -1) {
+      return Router.replace('/two-factor')
+    }
+
+    if (jwt && !needTwoFactor) {
       try {
         const { data } = await userApi.getUserData()
         setUser(data)
@@ -51,6 +60,14 @@ export default ({ children }) => {
     return requiredPermissions.some(perm => user.permissions.map(userPerm => userPerm.id).includes(perm))
   }
 
+  const afterAuth = ({ twoFactor, token }) => {
+    cookiesUtils.setUserJWT(token)
+    if (twoFactor) {
+      cookiesUtils.set('twoFactor', 'true')
+    }
+    fetchUser()
+  }
+
   useEffect(() => {
     if (router.route) {
       getUserData()
@@ -68,7 +85,8 @@ export default ({ children }) => {
     fetchUser,
     logOut,
     hasPermission,
-    initialLoadFinished
+    initialLoadFinished,
+    afterAuth
   }
 
   return (

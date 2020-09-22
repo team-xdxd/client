@@ -6,7 +6,8 @@ export const UserContext = createContext({
     setUser: (user) => { },
     fetchUser: (redirectUser) => { },
     logOut: () => { },
-    hasPermission: (requiredPermissions) => { return true }
+    hasPermission: (requiredPermissions) => { },
+    afterAuth: ({ twoFactor, token }) => { }
 })
 
 export const ThemeContext = createContext({
