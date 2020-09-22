@@ -12,7 +12,7 @@ import Spinner from '../components/common/spinners/spinner'
 // Simple redirect page
 const OauthCbPage = () => {
 
-  const { fetchUser } = useContext(UserContext)
+  const { afterAuth } = useContext(UserContext)
   useEffect(() => {
     // TODO: Include state string verification
     const { code } = urlUtils.getQueryParameters()
@@ -29,8 +29,7 @@ const OauthCbPage = () => {
         inviteCode = cookieInviteCode
       }
       const { data } = await authApi.signIn(provider, accessCode, { inviteCode })
-      cookiesUtil.setUserJWT(data.token)
-      fetchUser()
+      await afterAuth(data)
     } catch (err) {
       if (err.response?.data?.message) toastUtils.error(err.response.data.message)
       console.log(err)

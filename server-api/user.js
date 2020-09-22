@@ -7,8 +7,9 @@ export default {
   getUserData: () => axios.get(userUrl),
   signIn: (data) => axios.post(`${userUrl}/signin`, data),
   signUp: (data, queryData = {}) => axios.post(`${userUrl}/signup?${querystring.encode(queryData)}`, data),
+  validateTwoFactor: ({ twoFactorCode }) => axios.post(`${userUrl}/two-factor`, { twoFactorCode }),
   requestPasswordreset: (data) => axios.post(`${userUrl}/generate-password-reset`, data),
-  passwordReset: (data) => axios.post(`${userUrl}/password-reset`, data),  
+  passwordReset: (data) => axios.post(`${userUrl}/password-reset`, data),
 
   uploadPhoto: (formData) => axios.post(`${userUrl}/photo`, formData, {
     headers: {
