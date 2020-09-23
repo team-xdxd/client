@@ -170,3 +170,11 @@ ul {
 .emoji-mart-preview{
   display: none;
 }
+
+.visible-flex{
+  display: flex !important;
+}
+
+.visible-block{
+  display: flex !important;
+}

@@ -43,3 +43,26 @@
 .profile {
   margin-right: 10px;
 }
+
+.hamburger {
+  display: none;
+  color: white;
+  font-size: 25px;
+  cursor: pointer;
+  align-items: center;
+  flex: 1;
+}
+
+.hamburger:hover {
+  color: var(--color-sec-blue);
+}
+
+@media screen and (max-width: 1000px) {
+  .hamburger {
+    display: flex;
+  }
+
+  .navigation-links{
+    display: none;
+  }
+}
