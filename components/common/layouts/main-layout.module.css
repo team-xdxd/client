@@ -34,13 +34,12 @@
   align-items: center;
   cursor: pointer;
   position: relative;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-  overflow: hidden;
 }
 
 .name{
-
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
 }
 
 .user-dropdown {

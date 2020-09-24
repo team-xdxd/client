@@ -110,8 +110,8 @@ const MainLayout = ({ children, requiredPermissions = [] }) => {
               Wrapper={({ children }) => (
                 <>
                   <UserPhoto photoUrl={user.profilePhoto} extraClass={styles.profile} sizePx={35} />
-                  {user?.name}
-                  <span className={styles.name}>{children}</span>
+                  <span className={styles.name}>{user?.name}</span>
+                  {children}
                 </>
               )}
               contentClass={styles['user-dropdown']}

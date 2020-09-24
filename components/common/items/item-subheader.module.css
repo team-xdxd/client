@@ -1,3 +1,9 @@
+.header-additional-wrapper {
+  display: flex;
+  align-items: center;
+  flex: 1;
+}
+
 .draft-action {
   margin-right: 25px;
   color: var(--color-sec-ivory);
@@ -7,10 +13,31 @@
 }
 
 .draft-action:hover {
-  opacity: 0.5
+  opacity: 0.5;
 }
 
 .header-additional {
   margin-left: 25px;
   flex: 1;
+}
+
+@media screen and (max-width: 1000px) {
+  .header-additional-wrapper {
+    flex-wrap: wrap;
+    width: 100%;
+  }
+
+  .draft-action {
+    margin-top: 10px;
+  }
+
+  .header-additional {
+    margin-left: 0;
+    margin-right: 10px;
+    flex: 1;
+  }
+
+  .draft-action {
+    margin-right: 5px;
+  }
 }
