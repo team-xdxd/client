@@ -144,13 +144,15 @@ const SchedulingReport = () => {
           </div>
         </div>
         <div className={styles.content}>
-          <div className={styles.chart}>
-            {data &&
-              <ChartWrapper
-                chartObj={chartObj}
-                data={data}
-              />
-            }
+          <div className={styles['chart-wrapper']}>
+            <div className={styles.chart}>
+              {data &&
+                <ChartWrapper
+                  chartObj={chartObj}
+                  data={data}
+                />
+              }
+            </div>
           </div>
           <ul className={styles.totals}>
             {itemStatuses.map((status, index) =>

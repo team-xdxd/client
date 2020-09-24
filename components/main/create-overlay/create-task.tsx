@@ -26,7 +26,7 @@ const CreateTask = () => {
       return toastUtils.error('A task with that name already exists')
     }
     try {
-      const { data } = await taskApi.createTask(taskData)
+      const { data } = await taskApi.createTask({ taskData })
       Router.replace(`/main/tasks/${data.id}`)
     } catch (err) {
       // TODO: Show error message

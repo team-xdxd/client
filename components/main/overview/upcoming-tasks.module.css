@@ -17,3 +17,9 @@
   font-weight: 500;
   color: var(--color-sec-text);
 }
+
+@media screen and (max-width: 1000px) {
+  .container {
+    padding: 10px;
+  }
+}

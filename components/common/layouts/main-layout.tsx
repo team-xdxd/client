@@ -48,8 +48,8 @@ const MainLayout = ({ children, requiredPermissions = [] }) => {
   dropdownOptions.push({ OverrideComp: () => <SettingsLink name='Integrations' settingRef='integrations' /> })
   dropdownOptions.push({ label: 'Log Out', onClick: logOut })
 
-  const toggleHamurgerList = (type) => {
-    const classType = `visible-${type}`
+  const toggleHamurgerList = () => {
+    const classType = `visible-block`
     const { current } = pageListRef
     if (current?.classList.contains(classType)) current.classList.remove(classType)
     else current.classList.add(classType)
@@ -67,7 +67,7 @@ const MainLayout = ({ children, requiredPermissions = [] }) => {
                   src={GeneralImg.logo} />
               </a>
             </Link>
-            <div className={styles.hamburger} onClick={() toggleHamurgerList}>&#9776;</div>
+            <div className={styles.hamburger} onClick={toggleHamurgerList}>&#9776;</div>
             <ul className={styles['navigation-links']} ref={pageListRef}>
               <HeaderLink
                 active={Router.pathname.indexOf('overview') !== -1}
@@ -111,7 +111,7 @@ const MainLayout = ({ children, requiredPermissions = [] }) => {
                 <>
                   <UserPhoto photoUrl={user.profilePhoto} extraClass={styles.profile} sizePx={35} />
                   {user?.name}
-                  {children}
+                  <span className={styles.name}>{children}</span>
                 </>
               )}
               contentClass={styles['user-dropdown']}
