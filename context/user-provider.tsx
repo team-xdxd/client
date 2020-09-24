@@ -57,7 +57,7 @@ export default ({ children }) => {
 
   const hasPermission = (requiredPermissions = []) => {
     if (requiredPermissions.length === 0) return true
-    return requiredPermissions.some(perm => user.permissions.map(userPerm => userPerm.id).includes(perm))
+    return requiredPermissions.some(perm => user?.permissions.map(userPerm => userPerm.id).includes(perm))
   }
 
   const afterAuth = ({ twoFactor, token }) => {
