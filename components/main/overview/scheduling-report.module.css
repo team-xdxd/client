@@ -14,7 +14,7 @@
 .content-container {
   border: 1px solid var(--color-secondary-border);
   border-radius: 7px;
-  padding: 30px 20px 0 20px;
+  padding: 30px 20px;
 }
 
 .heading {
@@ -65,11 +65,15 @@
 }
 
 .month{
-  min-width: 170px;
+  min-width: 180px;
+}
+
+.chart-wrapper{
+  width: 30%;
 }
 
 .chart {
-  width: 30%;
+  width: 100%;
 }
 
 .totals {
@@ -95,4 +99,52 @@
 
 .agg-status {
   font-weight: 600;
+}
+
+@media screen and (max-width: 1000px) {
+  .container {
+    margin-bottom: 25px;
+  }
+
+  .container h4 {
+    margin-bottom: 15px;
+  }
+
+  .content-container {
+    padding: 15px 10px;
+  }
+
+  .heading {
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+
+  .month{
+    margin-top: 10px;
+  }
+
+  .content {
+    margin-top: 10px;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .chart-wrapper{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+  }
+
+  .chart {
+    width: 50%;
+  }
+
+  .totals {
+    width: 100%;
+    margin-left: 0;
+  }
+
+  .total {
+    font-size: 25px;
+  }
 }

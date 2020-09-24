@@ -38,3 +38,13 @@
   font-weight: 500;
   color: var(--color-sec-text);
 }
+
+@media screen and (max-width: 1000px) {
+  .container {
+    margin-bottom: 35px;
+  }
+
+  .heading {
+    margin-bottom: 15px;
+  }
+}

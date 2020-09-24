@@ -1,4 +1,4 @@
-import { useContext } from 'react'
+import { useContext, useRef } from 'react'
 import styles from './main-layout.module.css'
 import Link from 'next/link'
 import { GeneralImg, Navigation, Utilities } from '../../../assets'
@@ -23,6 +23,8 @@ import NoPermissionNotice from '../misc/no-permission-notice'
 const MainLayout = ({ children, requiredPermissions = [] }) => {
   const { user, logOut, hasPermission } = useContext(UserContext)
 
+  const pageListRef = useRef(null)
+
   const SettingsLink = ({ settingRef, name }) => (
     <Link href={`/main/user-settings/${settingRef}`}>
       <a>
@@ -46,6 +48,13 @@ const MainLayout = ({ children, requiredPermissions = [] }) => {
   dropdownOptions.push({ OverrideComp: () => <SettingsLink name='Integrations' settingRef='integrations' /> })
   dropdownOptions.push({ label: 'Log Out', onClick: logOut })
 
+  const toggleHamurgerList = () => {
+    const classType = `visible-block`
+    const { current } = pageListRef
+    if (current?.classList.contains(classType)) current.classList.remove(classType)
+    else current.classList.add(classType)
+  }
+
   return (
     <>
       {user &&
@@ -58,7 +67,8 @@ const MainLayout = ({ children, requiredPermissions = [] }) => {
                   src={GeneralImg.logo} />
               </a>
             </Link>
-            <ul className={styles['navigation-links']}>
+            <div className={styles.hamburger} onClick={toggleHamurgerList}>&#9776;</div>
+            <ul className={styles['navigation-links']} ref={pageListRef}>
               <HeaderLink
                 active={Router.pathname.indexOf('overview') !== -1}
                 href='/main/overview'
@@ -101,7 +111,7 @@ const MainLayout = ({ children, requiredPermissions = [] }) => {
                 <>
                   <UserPhoto photoUrl={user.profilePhoto} extraClass={styles.profile} sizePx={35} />
                   {user?.name}
-                  {children}
+                  <span className={styles.name}>{children}</span>
                 </>
               )}
               contentClass={styles['user-dropdown']}

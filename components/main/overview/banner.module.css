@@ -20,6 +20,18 @@
   color: var(--color-sec-ivory);
 }
 
-.container h1 span{
+.container h1 span {
   display: block;
+}
+
+@media screen and (max-width: 1000px) {
+  .container {    
+    height: 10rem;
+    position: relative;
+    margin-bottom: 25px;    
+  }
+
+  .container h1 {
+    left: 6rem;
+  }
 }

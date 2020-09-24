@@ -2,6 +2,7 @@
   background-color: var(--color-prim-navy);
   padding: 30px 32px;
   display: flex;
+  position: relative;
 }
 
 .logo-img {
@@ -33,6 +34,13 @@
   align-items: center;
   cursor: pointer;
   position: relative;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+.name{
+
 }
 
 .user-dropdown {
@@ -42,4 +50,46 @@
 
 .profile {
   margin-right: 10px;
+}
+
+.hamburger {
+  display: none;
+  color: white;
+  font-size: 25px;
+  cursor: pointer;
+  align-items: center;
+  flex: 1;
+  min-width: 2rem;
+}
+
+.hamburger:hover {
+  color: var(--color-sec-blue);
+}
+
+@media screen and (max-width: 1000px) {
+  .hamburger {
+    display: flex;
+  }
+
+  .header {
+    padding: 15px 16px;
+  }
+
+  .logo-img {
+    margin-right: 20px;
+  }
+
+  .navigation-links {
+    display: none;
+    position: absolute;
+    top: 5rem;
+    background-color: var(--color-prim-navy);
+    width: 100%;
+    left: 0;
+    z-index: 1;
+  }
+
+  .navigation-links li {
+    padding: 1rem;
+  }
 }
