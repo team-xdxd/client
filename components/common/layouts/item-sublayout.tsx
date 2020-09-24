@@ -1,5 +1,5 @@
 import styles from './item-sublayout.module.css'
-import { useState, useEffect, useContext } from 'react'
+import { useState, useEffect, useContext, useRef } from 'react'
 import { Utilities } from '../../../assets'
 import { TeamContext } from '../../../context'
 
@@ -9,6 +9,7 @@ import ConfirmModal from '../modals/confirm-modal'
 import Dropdown from '../inputs/dropdown'
 import ToggleableAbsoluteWrapper from '../misc/toggleable-absolute-wrapper'
 import ItemAssets from '../asset/item-assets'
+import IconClickable from '../buttons/icon-clickable'
 
 const ItemSublayout = ({
   SideComponent = null,
@@ -24,11 +25,20 @@ const ItemSublayout = ({
   const [modalOpen, setModalOpen] = useState(false)
   const [activeMain, setActiveMain] = useState('details')
 
+  const sideRef = useRef(null)
+
   const { getTeamMembers } = useContext(TeamContext)
 
   useEffect(() => {
     getTeamMembers()
   }, [])
+
+  const toggleSideMenu = () => {
+    const classType = `visible-none`
+    const { current } = sideRef
+    if (current?.classList.contains(classType)) current.classList.remove(classType)
+    else current.classList.add(classType)
+  }
 
   return (
     <div className={styles.container}>
@@ -62,14 +72,15 @@ const ItemSublayout = ({
       </div>
 
       {SideComponent && sideActive &&
-        <div className={styles['side-component']}>
+        <div ref={sideRef} className={styles['side-component']}>
           {SideComponent}
         </div>
       }
 
       <div className={styles['side-bar']}>
-        <div>
-          <img src={Utilities.closePanelLight} />
+        <div onClick={toggleSideMenu}>
+          <IconClickable src={Utilities.closePanelLight} onClick={toggleSideMenu}
+            additionalClass={sideRef.current?.classList.contains('visible-none') ? '' : ''} />
         </div>
         <div className={styles.separator}></div>
         <div className={styles.elements}>
