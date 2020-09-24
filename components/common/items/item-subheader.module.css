@@ -21,6 +21,10 @@
   flex: 1;
 }
 
+.break{
+  display: none;
+}
+
 @media screen and (max-width: 1000px) {
   .header-additional-wrapper {
     flex-wrap: wrap;
@@ -39,5 +43,11 @@
 
   .draft-action {
     margin-right: 5px;
+  }
+
+  .break{
+    flex-basis: 100%;
+    display: block;
+    margin-top: 10px;
   }
 }

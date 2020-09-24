@@ -182,6 +182,10 @@ ul {
   color: var(--color-prim-navy);
 }
 
+.mirror{
+  transform: scaleX(-1);
+}
+
 /* Emoji mart component */
 .emoji-mart-preview {
   display: none;
@@ -193,6 +197,10 @@ ul {
 
 .visible-block {
   display: block !important;
+}
+
+.visible-none {
+  display: none !important;
 }
 
 @media screen and (max-width: 1000px) {

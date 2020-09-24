@@ -41,7 +41,10 @@ const ItemSubHeader = ({
         </div>
 
         {!activeSearchOverlay && selectedAssets.length > 0 ?
-          <AssetHeaderOps />
+          <>
+            <div className={styles.break}></div>
+            <AssetHeaderOps />
+          </>
           :
           <>
             {hasAssets &&
@@ -52,9 +55,10 @@ const ItemSubHeader = ({
                 activeSearchOverlay={activeSearchOverlay}
                 setActiveSearchOverlay={setActiveSearchOverlay} />
             }
+            <div className={styles.break}></div>
             <button className={styles['draft-action']} onClick={() => Router.replace('/main/overview')}>
               Cancel
-          </button>
+            </button>
             {status === 'draft' &&
               <button className={styles['draft-action']} onClick={saveDraft}>
                 Save Draft
