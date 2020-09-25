@@ -1,5 +1,6 @@
 .container {
   padding: 30px 32px;
+  overflow: auto;
 }
 
 .types {
@@ -7,6 +8,7 @@
   justify-content: center;
   font-family: "Montserrat", sans-serif;
   font-weight: 500;
+  flex-wrap: wrap;
 }
 
 .container h2 {
@@ -63,11 +65,21 @@
   height: auto;
 }
 
-.x { 
+.x {
   font-weight: 900;
   font-family: monospace;
 }
 
 .chooseTitle {
   font-weight: 550;
+}
+
+@media screen and (max-width: 1000px) {
+  .back {
+    padding-left: 0;
+  }
+
+  .close {
+    padding-right: 0;
+  }
 }

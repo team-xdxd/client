@@ -4,13 +4,14 @@ import itemStatus from '../../../resources/data/item-status.json'
 import projectTypes from '../../../resources/data/project-types.json'
 import { capitalCase } from 'change-case'
 import { TeamContext, UserContext } from '../../../context'
-import { useContext, useEffect } from 'react'
+import { useContext, useEffect, useRef } from 'react'
 
 import { CALENDAR_PRINT } from '../../../constants/permissions'
 
 // Components
 import SectionButton from '../../common/buttons/section-button'
 import Button from '../../common/buttons/button'
+import IconClickable from '../../common/buttons/icon-clickable'
 import FiltersSelect from '../../common/inputs/filters-select'
 
 const typeOptions = [
@@ -28,6 +29,15 @@ const TopBar = ({ activeView, setActiveView, setCurrentDate, filters, setFilters
   useEffect(() => {
     getTeamMembers()
   }, [])
+
+  const filtersRef = useRef(null)
+
+  const toggleHamurgerList = () => {
+    const classType = `visible-block`
+    const { current } = filtersRef
+    if (current?.classList.contains(classType)) current.classList.remove(classType)
+    else current.classList.add(classType)
+  }
 
   return (
     <section className={styles.container}>
@@ -54,9 +64,12 @@ const TopBar = ({ activeView, setActiveView, setCurrentDate, filters, setFilters
           type='button'
           styleType='secondary'
           onClick={() => setCurrentDate(new Date())}
+          styleTypes={[styles['last-button']]}
         />
       </div>
-      <div className={styles.filters}>
+
+      <IconClickable src={Utilities.filter} additionalClass={styles.filter} onClick={toggleHamurgerList}/>
+      <div className={styles.filters} ref={filtersRef}>
         <div>
           <FiltersSelect
             options={allCampaigns.map(campaign => ({ label: campaign.name, value: campaign.id }))}

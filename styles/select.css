@@ -118,3 +118,12 @@
 .filter .select-prefix__option--is-selected:hover {
   background-color: #DEEBFF;
 }
+
+
+@media screen and (max-width: 1000px) {
+  .filter-schedule .select-prefix__menu {
+    width: 100%;
+    margin-left: 0;
+    font-size: 12px;
+  }
+}

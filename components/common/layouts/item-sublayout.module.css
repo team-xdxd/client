@@ -19,7 +19,7 @@
   width: 25rem;
 }
 
-.heading button{
+.heading button {
   margin-right: 1rem;
 }
 
@@ -99,4 +99,32 @@
 .children {
   display: flex;
   justify-content: center;
+}
+
+@media screen and (max-width: 1350px) {
+  .heading .double,
+  .heading .single {
+    width: 100%;
+  }
+}
+
+@media screen and (max-width: 1000px) {
+  .side-component {
+    position: absolute;
+    background-color: white;
+    right: 60px;
+    border-top: 1px solid var(--color-secondary-border);
+    border-bottom: 1px solid var(--color-secondary-border);
+    min-height: 50vh;
+  }
+}
+
+@media screen and (max-width: 500px) {
+  .main-component {
+    padding: 15px 16px;
+  }
+
+  .side-component {
+    width: calc(100% - 60px);
+  }
 }

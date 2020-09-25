@@ -49,7 +49,7 @@ const CreateCampaign = () => {
   return (
     <div className={`${styles.container}`}>
       <h2>Create New Campaign</h2>
-      <form onSubmit={handleSubmit(onSubmit)}>
+      <form onSubmit={handleSubmit(onSubmit)} className={'create-overlay-form'}>
         <div className={styles['input-wrapper']}>
           <FormInput
             InputComponent={

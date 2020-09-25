@@ -25,7 +25,6 @@ const ChartWrapper = ({ chartObj, data }) => {
   const updateChart = () => {
     if (chart) {
       chart.data = Object.assign({}, data)
-      console.log(chart.data)
       chart.update()
     }
   }
