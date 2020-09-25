@@ -1,6 +1,7 @@
 import styles from './upcoming-item.module.css'
 import { Utilities, Navigation } from '../../../assets'
 import { format } from 'date-fns'
+import Link from 'next/link'
 import Router from 'next/router'
 import urlUtils from '../../../utils/url'
 
@@ -12,10 +13,13 @@ import UserPhoto from '../../common/user/user-photo'
 
 const UpcomingItem = ({ name, date, status, users, detailUrl, deleteItem }) => (
   <li className={`${styles.container}`}>
-    <span className={styles.name} onClick={() => Router.replace(detailUrl)}>
-      {name}
-    </span>
-
+    <Link href={detailUrl} >
+      <a>
+        <span className={styles.name} >
+          {name}
+        </span>
+      </a>
+    </Link>
     <div className={styles.user}>
       {users.length <= 1 ?
         <div className={styles['single-user']}>

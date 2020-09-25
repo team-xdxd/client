@@ -18,3 +18,19 @@
   grid-area: schedule;
   box-sizing: content-box;
 }
+
+@media screen and (max-width: 1000px) {
+  .container{
+    padding: 17.5px 16px;
+  }
+
+  .content{
+    grid-template-areas: "schedule";
+    grid-template-columns: 100%;
+    grid-column-gap: 0%;
+  }
+
+  .side-panel {
+    display: none;
+  }
+}

@@ -20,7 +20,6 @@ const Invoices = () => {
       const { data: { hasMore, invoices } } = await planApi.getInvoices()
       setHasMore(hasMore)
       setInvoices(invoices)
-      console.log(invoices)
     } catch (err) {
       console.log(err)
     }

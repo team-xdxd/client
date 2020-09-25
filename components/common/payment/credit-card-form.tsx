@@ -71,7 +71,6 @@ const CreditCardForm = ({ onConfirm, buttonDisabled, buttonText = 'Subscribe', n
         setSubmitError(`We could not process your payment: ${method.error.message}`)
       }
       else {
-        console.log(method.paymentMethod)
         onConfirm(method.paymentMethod.id)
       }
 

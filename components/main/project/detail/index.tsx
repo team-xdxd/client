@@ -248,10 +248,6 @@ const ProjectDetail = () => {
     }
   }
 
-  useEffect(() => {
-    console.log(project)
-  }, [project])
-
   let SideComponent
   if (activeSideComponent === 'tasks')
     SideComponent = <TasksList
