@@ -15,7 +15,7 @@ import Input from '../common/inputs/input'
 const Form = () => {
   const { control, handleSubmit, errors } = useForm()
   const [submitError, setSubmitError] = useState('')
-  const { fetchUser } = useContext(UserContext)
+  const { afterAuth } = useContext(UserContext)
   const onSubmit = async loginData => {
     try {
       const signInData = {
@@ -23,8 +23,7 @@ const Form = () => {
         password: loginData.password
       }
       const { data } = await userApi.signIn(signInData)
-      cookiesUtils.setUserJWT(data.token)
-      fetchUser()
+      await afterAuth(data)
     } catch (err) {
       // TODO: Show error message
       if (err.response?.data?.message) {

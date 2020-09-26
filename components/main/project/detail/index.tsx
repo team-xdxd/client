@@ -19,7 +19,7 @@ import Fields from './project-fields'
 
 const ProjectDetail = () => {
 
-  const [project, setProject] = useState()
+  const [project, setProject] = useState(undefined)
 
   const [projectNames, setProjectNames] = useState([])
 
@@ -65,7 +65,6 @@ const ProjectDetail = () => {
       setProject(data)
     } catch (err) {
       console.log(err)
-      // TODO: Error handling
     }
   }
 
@@ -76,7 +75,6 @@ const ProjectDetail = () => {
       toastUtils.success('Project deleted sucesfully')
     } catch (err) {
       console.log(err)
-      // TODO: Handle error
     }
   }
 
@@ -85,7 +83,7 @@ const ProjectDetail = () => {
       const { data } = await projectApi.getProjects()
       setProjectNames(data.map(project => project.name))
     } catch (err) {
-      // TODO: Error handling
+      console.log(err)
     }
   }
 
@@ -117,18 +115,16 @@ const ProjectDetail = () => {
       setProject(data)
       toastUtils.success('Project saved sucesfully')
     } catch (err) {
-      // TODO: Error handling
       console.log(err)
     }
   }
 
   const setProjectData = (data) => {
-    console.log(data)
-    // TODO: get the correct owner
     setEditableFields({
       ...editableFields,
       ...data,
-      owner: data.users[0]
+      owner: data.users.find(user => user.isOwner),
+      collaborators: data.users.filter(user => !user.isOwner)
     })
     setStatus(data.status)
     setTasks(data.tasks)
@@ -147,7 +143,7 @@ const ProjectDetail = () => {
         }
         return data
       } catch (err) {
-        // TODO: Error if failure for whatever reason
+        console.log(err)
       }
     }
   }
@@ -158,13 +154,41 @@ const ProjectDetail = () => {
       await projectApi.removeTag(project.id, editableFields.tags[index].id)
     } catch (err) {
       console.log(err)
-      // TODO: Error if failure for whatever reason
     }
   }
 
-  const createTask = async (data) => {
+  const addCollaborator = async (user) => {
     try {
-      const newTaskResponse = await projectApi.addtask(project.id, data)
+      // Only add if collaborator is not on list
+      if (editableFields.owner.id === user.id || editableFields.collaborators.find(collaborator => collaborator.id === user.id)) {
+        return await removeCollaborator(user)
+      }
+      editFields('collaborators', update(editableFields.collaborators, { $push: [user] }))
+      await projectApi.addCollaborators(project.id, { collaboratorIds: [user.id] })
+    } catch (err) {
+      console.log(err)
+    }
+  }
+
+  const removeCollaborator = async (user) => {
+    try {
+      const searchedCollaboratorIndex = editableFields.collaborators.findIndex(collaborator => collaborator.id === user.id)
+      if (searchedCollaboratorIndex === -1) return
+      editFields('collaborators', update(editableFields.collaborators, { $splice: [[searchedCollaboratorIndex, 1]] }))
+      await projectApi.removeCollaborators(project.id, { collaboratorIds: [user.id] })
+    } catch (err) {
+      console.log(err)
+    }
+  }
+
+  const createTask = async ({ name, endDate, selectedUser }) => {
+    try {
+      const taskData = {
+        name,
+        endDate
+      }
+      const assignedUser = selectedUser?.id
+      const newTaskResponse = await projectApi.addtask(project.id, { taskData, assignedUser })
       setTasks(update(tasks, { $push: [newTaskResponse.data] }))
     } catch (err) {
       console.log(err)
@@ -182,6 +206,17 @@ const ProjectDetail = () => {
     }
   }
 
+  const replaceTaskAssigned = async (index, user) => {
+    try {
+      if (!user) setTasks(update(tasks, { [index]: { users: { $set: [] } } }))
+      else setTasks(update(tasks, { [index]: { users: { $set: [user] } } }))
+      await taskApi.replaceAssigned(tasks[index].id, { collaboratorId: user?.id })
+    } catch (err) {
+      console.log(err)
+      // TODO: Error if failure for whatever reason
+    }
+  }
+
   const removeTask = async (index) => {
     try {
       await taskApi.deleteTask(tasks[index].id)
@@ -192,7 +227,6 @@ const ProjectDetail = () => {
   }
 
   const editFields = (field, value) => {
-    console.log(value)
     setEditableFields({
       ...editableFields,
       [field]: value
@@ -221,6 +255,7 @@ const ProjectDetail = () => {
       createTask={createTask}
       removeTask={removeTask}
       updateTask={updateTask}
+      replaceTaskAssigned={replaceTaskAssigned}
     />
 
   else if (activeSideComponent === 'comments')
@@ -258,6 +293,8 @@ const ProjectDetail = () => {
               editFields={editFields}
               addTag={addTag}
               removeTag={removeTag}
+              addCollaborator={addCollaborator}
+              removeCollaborator={removeCollaborator}
             />
           }
         </ItemSublayout>

@@ -5,12 +5,10 @@
   border: 1px solid var(--color-secondary-border);
   border-radius: 7px;
   margin-bottom: 15px;
+
 }
 
 .name {
-  text-overflow: ellipsis;
-  white-space: nowrap;
-  overflow: hidden;
   width: 33.3%;
   cursor: pointer;
 }
@@ -21,6 +19,9 @@
 
 .user {
   width: 22.6%;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
 }
 
 .date {
@@ -48,10 +49,20 @@
   display: block;
 }
 
-.single-user img {
-  width: 27px;
-  height: auto;
+.multiple-users{
+  display: flex;
+}
+
+.single-user img,.multiple-users img{
   margin-right: 5px;
+}
+
+.multiple-users li:first-child img{
+  margin-left: 10px;
+}
+
+.multiple-users li:last-child img{
+  margin-right: 10px;
 }
 
 .edit-icon {
@@ -98,3 +109,31 @@
   }
 }
 
+@media screen and (max-width: 1000px) {
+  .container{
+    flex-wrap: wrap;
+    padding: 10px;
+  }
+
+  .name {
+    width: 50%;
+    margin-bottom: 10px;
+  }
+  
+  .user {
+    width: 50%;
+    margin-bottom: 10px;
+  }
+  
+  .date {
+    width: 33.2%;
+  }
+  
+  .badge {
+    width: 39.2%;
+  }
+
+  .actions {    
+    width: 25%;
+  }
+}

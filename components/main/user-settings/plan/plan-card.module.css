@@ -1,0 +1,82 @@
+.container {
+  text-align: center;
+  width: 20rem;
+  padding: 1rem 2rem;
+  border: 1px solid var(--color-sec-lightblue);
+  box-shadow: 13px 14px 21px -16px var(--color-sec-lightblue);
+}
+
+.container > h3 {
+  color: var(--color-prim-turquoise);
+}
+
+.description{
+  color: var(--color-sec-blue);
+  font-weight: 500;
+  text-align: left;
+  padding: 0 2rem;
+  display: flex;
+  align-items: center;
+  height: 66px;
+}
+
+.pricing{
+  height: 60px;
+}
+
+.contact{
+  font-size: 30px;
+}
+
+.monthly{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.anual{
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.monthly>div:first-child{
+  font-size: 28px;
+  font-weight: 600;
+  margin-right: 8px;
+}
+
+.monthly>div:last-child{
+  color: var(--color-prim-turquoise);
+  font-weight: 500;
+  font-size: 16px;
+}
+
+.key-header{
+  text-align: left;
+  margin-top: 2rem;
+}
+
+.features{
+  text-align: left;
+  margin-bottom: 2rem;
+}
+
+.features li{
+  display: flex;
+  margin-top: 1rem;
+}
+
+.features li div:first-child{
+  font-weight: 600;
+  margin-right: 1.5rem;
+}
+
+.container button, .please-add{
+  margin-bottom: 2rem;
+  height: 34px;
+}
+
+.please-add{
+  font-weight: 600;
+  color: var(--color-sec-blue);
+}

@@ -1,0 +1,21 @@
+.headers,
+.fields {
+  display: flex;
+}
+
+.fields{
+  padding-bottom: 2rem;
+  margin-bottom: 2rem;
+  border-bottom: 1px solid var(--color-secondary-border);
+}
+
+.headers > h3,
+.fields > div {
+  width: 33%;
+}
+
+.button-wrapper{
+  margin-top: 2rem;
+  display: flex;
+  justify-content: center;
+}

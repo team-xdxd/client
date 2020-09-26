@@ -11,39 +11,51 @@
   min-height: 70px;
 }
 
-.normal-height {
+.normal-height,
+.normal-height-primary {
   min-height: 34px;
 }
 
-.input-height {
+.input-height,
+.input-height-primary,
+.input-height-secondary {
   min-height: 48px;
 }
 
-.primary {
+.primary,
+.normal-height-primary,
+.input-height-primary {
   background-color: var(--color-prim-turquoise);
   color: white;
 }
 
-.secondary {
+.secondary,
+.input-height-secondary {
   background-color: white;
   border: 1px solid var(--color-secondary-border);
   color: var(--color-prim-navy);
 }
 
-.primary:hover {
+.primary:hover,
+.normal-height-primary:hover,
+.input-height-primary:hover {
   background-color: var(--color-prim-turquoise-hover);
 }
 
-.primary:disabled {
+.primary:disabled,
+.normal-height-primary:disabled,
+.input-height-primary:disabled {
   background-color: var(--color-prim-turquoise-hover);
   cursor: default;
 }
 
-.secondary:hover {
+.secondary:hover,
+.input-height-secondary:hover {
   background-color: var(--color-sec-lightivory);
 }
 
-.secondary:disabled {
+.secondary:disabled,
+.input-height-secondary:disabled {
   background-color: var(--color-sec-lightivory);
   cursor: default;
 }
@@ -54,9 +66,14 @@
 }
 
 .tertiary:hover {
-  opacity: 0.6
+  opacity: 0.6;
 }
 
 .tertiary:disabled {
   cursor: default;
+}
+
+/* Used for multi usually */
+.round-corners{
+  border-radius: 50px;
 }

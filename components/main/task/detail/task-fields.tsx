@@ -14,18 +14,22 @@ import ItemFieldWrapper from '../../../common/items/item-field-wrapper'
 import Select from '../../../common/inputs/select'
 import Tag from '../../../common/misc/tag'
 import ToggleableAbsoluteWrapper from '../../../common/misc/toggleable-absolute-wrapper'
+import UserPhoto from '../../../common/user/user-photo'
+import SearchableUserList from '../../../common/user/searchable-user-list'
 
 const TaskFields = ({
   editableFields: {
     endDate,
     project,
     description,
-    tags
+    tags,
+    users,
+    userId
   },
   addTag,
   removeTag,
   editFields,
-  task
+  replaceTaskAssigned
 }) => {
 
   const [activeInput, setActiveInput] = useState('')
@@ -140,14 +144,38 @@ const TaskFields = ({
     editFields('endDate', currentDate)
   }
 
+const handleAssignedChange = (user) => {
+  if(user.id === users[0]?.id) replaceTaskAssigned(undefined)
+  else replaceTaskAssigned(user)  
+}
+
   return (
     <div className={styles.container}>
       <div className={styles.field}>
         <ItemFieldWrapper
           title='Assigned To'
-          image={ItemFields.member}
-        >
-          <span>{task?.users[0].name}</span>
+          overrideIcon={true}
+          OverrideIconComp={() =>
+            <UserPhoto
+              photoUrl={users[0]?.profilePhoto}
+              sizePx={45} />}>
+          <ToggleableAbsoluteWrapper
+            closeOnAction={false}
+            Wrapper={({ children }) =>
+              <>
+                {users[0] ?
+                  <span className={styles.clickable}>{users[0].name}</span>
+                  :
+                  <span className={styles['no-assign']}>{'No Member Assigned'}</span>
+                }
+                {children}
+              </>
+            }
+            Content={() => <SearchableUserList
+              onUserSelected={handleAssignedChange} selectedList={users.map(colab => colab.id)} />}
+            wrapperClass={styles['image-wrapper']}
+            contentClass={styles['user-list-wrapper']}
+          />
         </ItemFieldWrapper>
       </div>
       <div className={styles.field}>

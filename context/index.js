@@ -5,7 +5,9 @@ export const UserContext = createContext({
     user: null,
     setUser: (user) => { },
     fetchUser: (redirectUser) => { },
-    logOut: () => { }
+    logOut: () => { },
+    hasPermission: (requiredPermissions) => { },
+    afterAuth: ({ twoFactor, token }) => { }
 })
 
 export const ThemeContext = createContext({
@@ -54,7 +56,25 @@ export const AssetContext = createContext({
 })
 
 export const TeamContext = createContext({
+    team: null,
+    patchTeam: (patchData) => { },
+    getTeam: (once) => { },
     teamMembers: [],
     setTeamMembers: (data) => { },
-    getTeamMembers: () => { }
+    getTeamMembers: () => { },
+
+    plan: null,
+    getPlan: (data) => { },
+
+})
+
+export const LocationContext = createContext({
+    countries: [],
+    loadCountries: () => { },
+
+    states: [],
+    loadStates: (countryId) => { },
+
+    cities: [],
+    loadCities: (stateId) => { },
 })

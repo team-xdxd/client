@@ -1,0 +1,6 @@
+.notice{
+  margin: 2rem;
+  font-style: italic;
+  font-weight: 600;
+  color: var(--color-sec-blue);
+}

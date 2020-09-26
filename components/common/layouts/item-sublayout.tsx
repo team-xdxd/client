@@ -1,6 +1,7 @@
 import styles from './item-sublayout.module.css'
-import { useState, useRef } from 'react'
+import { useState, useEffect, useContext } from 'react'
 import { Utilities } from '../../../assets'
+import { TeamContext } from '../../../context'
 
 // Components
 import SectionButton from '../buttons/section-button'
@@ -8,10 +9,10 @@ import ConfirmModal from '../modals/confirm-modal'
 import Dropdown from '../inputs/dropdown'
 import ToggleableAbsoluteWrapper from '../misc/toggleable-absolute-wrapper'
 import ItemAssets from '../asset/item-assets'
+import IconClickable from '../buttons/icon-clickable'
 
 const ItemSublayout = ({
   SideComponent = null,
-  sideActive = true,
   navElements = [],
   children,
   layout = 'double',
@@ -22,6 +23,18 @@ const ItemSublayout = ({
 }) => {
   const [modalOpen, setModalOpen] = useState(false)
   const [activeMain, setActiveMain] = useState('details')
+
+  const [sideOpen, setSideOpen] = useState(false)
+
+  const { getTeamMembers } = useContext(TeamContext)
+
+  useEffect(() => {
+    getTeamMembers()
+  }, [])
+
+  const toggleSideMenu = () => {
+    setSideOpen(!sideOpen)
+  }
 
   return (
     <div className={styles.container}>
@@ -54,23 +67,28 @@ const ItemSublayout = ({
         </div>
       </div>
 
-      {SideComponent && sideActive &&
+      {SideComponent && sideOpen &&
         <div className={styles['side-component']}>
           {SideComponent}
         </div>
       }
 
       <div className={styles['side-bar']}>
-        <div>
-          <img src={Utilities.closePanelLight} />
-        </div>
-        <div className={styles.separator}></div>
-        <div className={styles.elements}>
-          {navElements.map((navElement, index) => (
-            <img key={index} src={navElement.icon} onClick={navElement.onClick} />
-          ))}
-        </div>
-        <div className={styles.separator}></div>
+        {navElements.length > 0 &&
+          <>
+            <div >
+              <IconClickable src={Utilities.closePanelLight} onClick={toggleSideMenu}
+                additionalClass={!sideOpen && 'mirror'} />
+            </div>
+            <div className={styles.separator}></div>
+            <div className={styles.elements}>
+              {navElements.map((navElement, index) => (
+                <img key={index} src={navElement.icon} onClick={navElement.onClick} />
+              ))}
+            </div>
+            <div className={styles.separator}></div>
+          </>
+        }
         <ToggleableAbsoluteWrapper
           wrapperClass={styles.more}
           Wrapper={({ children }) => (

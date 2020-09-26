@@ -2,6 +2,7 @@
   display: flex;
   align-items: center;
   margin-bottom: 3rem;
+  position: relative;
 }
 
 .options {
@@ -37,4 +38,49 @@
   margin: 0 5px;
   z-index: 200;
   min-width: 160px;
+}
+
+.last-button{
+  margin-top: 0;
+}
+
+.filter{
+  display: none;
+}
+
+@media screen and (max-width: 1000px) {
+  .container{
+    margin-bottom: 1rem;
+  }
+
+  .options{
+    flex-wrap: wrap;
+  }
+
+  .options>button:last-child{
+    margin-top: 1rem;
+  }
+
+  .filter{
+    display: flex;
+    position: absolute;
+    right: 1rem;
+    width: 20px;
+    height: auto;
+  }
+
+  .filters {
+    display: none;
+    position: absolute;
+    width: 100%;
+    top: 3rem;
+    z-index: 300;
+    background-color: white;
+    padding: 20px;
+    border: 1px solid var(--color-secondary-border);
+  }
+
+  .filters>div{
+    margin-bottom: 10px;
+  }
 }

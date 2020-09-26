@@ -1,0 +1,40 @@
+.container {
+  display: flex;
+  width: 100%;
+  margin: 0.8rem 0;
+  padding: 0.8rem 0;
+  border-bottom: 1px solid var(--color-secondary-border);
+}
+
+.container:last-child {
+  border-bottom: none;
+}
+
+.name-email {
+  width: 80%;
+}
+
+.name-email > div:first-child {
+  font-size: 16px;
+  font-weight: 500;
+}
+
+.name-email > div:last-child {
+  color: var(--color-sec-text);
+  font-weight: 400;
+}
+
+.role{
+  font-weight: 600;
+  width: 49px;
+}
+
+.details{
+  display: flex;
+}
+
+.action{
+  margin-left: 1rem;
+  color: var(--color-sec-text);
+  cursor: pointer;
+}

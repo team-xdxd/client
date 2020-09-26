@@ -78,25 +78,33 @@ export default () => {
 	}
 
 	const archiveAssets = async () => {
+		modifyAssetsStage('archived', 'Assets archived successfully', 'Could not archive assets, please try again later.')
+	}
+
+	const unarchiveAssets = async () => {
+		modifyAssetsStage('draft', 'Assets unarchived successfully', 'Could not unarchive assets, please try again later.')
+	}
+
+	const modifyAssetsStage = async (stage, successMessage, errMessage) => {
 		try {
 			let updateAssets
 			if (!operationAsset) {
 				updateAssets = selectedAssets.map(assetItem => (
-					{ id: assetItem.asset.id, changes: { stage: 'archived' } }
+					{ id: assetItem.asset.id, changes: { stage } }
 				))
 			} else {
 				updateAssets = [{
-					id: operationAsset.asset.id, changes: { stage: 'archived' }
+					id: operationAsset.asset.id, changes: { stage }
 				}]
 			}
 
 			await assetApi.updateMultiple(updateAssets)
 			removeSelectedFromList()
 			closeModalAndClearOpAsset()
-			toastUtils.success('Assets archived successfully')
+			toastUtils.success(successMessage)
 		} catch (err) {
 			console.log(err)
-			toastUtils.error('Could not archive assets, please try again later.')
+			toastUtils.error(errMessage)
 		}
 	}
 
@@ -168,7 +176,8 @@ export default () => {
 			}
 		} catch (err) {
 			console.log(err)
-			toastUtils.error('Could not copy assets, please try again later.')
+			if (err.response?.status === 402) toastUtils.error(err.response.data.message)
+			else toastUtils.error('Could not copy assets, please try again later.')
 		}
 	}
 
@@ -242,6 +251,13 @@ export default () => {
 				confirmAction={archiveAssets}
 				confirmText={'Archive'}
 				message={`Archive ${operationLength} item(s)?`}
+			/>
+			<ConfirmModal
+				modalIsOpen={activeOperation === 'unarchive'}
+				closeModal={closeModalAndClearOpAsset}
+				confirmAction={unarchiveAssets}
+				confirmText={'Unarchive'}
+				message={`Unarchive ${operationLength} item(s)?`}
 			/>
 			<ConfirmModal
 				modalIsOpen={activeOperation === 'delete'}

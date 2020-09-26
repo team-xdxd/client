@@ -1,5 +1,5 @@
+import { useContext, useRef } from 'react'
 import styles from './main-layout.module.css'
-import { useContext } from 'react'
 import { ApolloProvider } from '@apollo/client'
 import Link from 'next/link'
 import { GeneralImg, Navigation, Utilities } from '../../../assets'
@@ -8,28 +8,73 @@ import Router from 'next/router'
 import graphqlClient from '../../../graphql/client'
 import AssetContextProvider from '../../../context/asset-provider'
 import TeamContextProvider from '../../../context/team-provider'
+import {
+  SETTINGS_BILLING,
+  SETTINGS_SECURITY,
+  SETTINGS_TEAM,
+  SETTINGS_COMPANY,
+  SETTINGS_PLAN
+} from '../../../constants/permissions'
 
 // Components
 import HeaderLink from '../layouts/header-link'
 import ToggleableAbsoluteWrapper from '../misc/toggleable-absolute-wrapper'
 import Dropdown from '../inputs/dropdown'
+import TrialReminderModal from '../modals/trial-reminder-modal'
+import UserPhoto from '../user/user-photo'
+import NoPermissionNotice from '../misc/no-permission-notice'
 import Notification from '../notifications/notification'
 
-const MainLayout = ({ children }) => {
-  const { user, logOut } = useContext(UserContext)
+const MainLayout = ({ children, requiredPermissions = [] }) => {
+  const { user, logOut, hasPermission } = useContext(UserContext)
+
+  const pageListRef = useRef(null)
+
+  const SettingsLink = ({ settingRef, name }) => (
+    <Link href={`/main/user-settings/${settingRef}`}>
+      <a>
+        <li>
+          <span></span>
+          <span>{name}</span>
+        </li>
+      </a>
+    </Link>
+  )
+
+  const dropdownOptions = [
+    { OverrideComp: () => <SettingsLink name='Profile' settingRef='profile' /> }
+  ]
+  if (hasPermission([SETTINGS_COMPANY])) dropdownOptions.push({ OverrideComp: () => <SettingsLink name='Company' settingRef='company' /> })
+  if (hasPermission([SETTINGS_BILLING])) dropdownOptions.push({ OverrideComp: () => <SettingsLink name='Billing' settingRef='billing' /> })
+  if (hasPermission([SETTINGS_PLAN])) dropdownOptions.push({ OverrideComp: () => <SettingsLink name='Plan' settingRef='plan' /> })
+  if (hasPermission([SETTINGS_SECURITY])) dropdownOptions.push({ OverrideComp: () => <SettingsLink name='Security' settingRef='security' /> })
+  if (hasPermission([SETTINGS_TEAM])) dropdownOptions.push({ OverrideComp: () => <SettingsLink name='Team' settingRef='team' /> })
+  dropdownOptions.push({ OverrideComp: () => <SettingsLink name='Notifications' settingRef='notifications' /> })
+  dropdownOptions.push({ OverrideComp: () => <SettingsLink name='Integrations' settingRef='integrations' /> })
+  dropdownOptions.push({ label: 'Log Out', onClick: logOut })
+
+  const toggleHamurgerList = () => {
+    const classType = `visible-block`
+    const { current } = pageListRef
+    if (current?.classList.contains(classType)) current.classList.remove(classType)
+    else current.classList.add(classType)
+  }
 
   return (
     <>
-      <ApolloProvider client={graphqlClient}>
-        <AssetContextProvider>
-          <TeamContextProvider>
+      {user &&
+        <>
+          <ApolloProvider client={graphqlClient}>
             <header className={styles.header}>
               <Link href='/main/overview'>
-                <img
-                  className={styles['logo-img']}
-                  src={GeneralImg.logo} />
+                <a>
+                  <img
+                    className={styles['logo-img']}
+                    src={GeneralImg.logo} />
+                </a>
               </Link>
-              <ul className={styles['navigation-links']}>
+              <div className={styles.hamburger} onClick={toggleHamurgerList}>&#9776;</div>
+              <ul className={styles['navigation-links']} ref={pageListRef}>
                 <HeaderLink
                   active={Router.pathname.indexOf('overview') !== -1}
                   href='/main/overview'
@@ -51,58 +96,51 @@ const MainLayout = ({ children }) => {
                   imgHover={Navigation.assetsSelected}
                   text='Assets'
                 />
-                <HeaderLink
-                  active={Router.pathname.indexOf('reports') !== -1}
-                  href='/main/reports'
-                  img={Router.pathname.indexOf('reports') !== -1 ? Navigation.reportsSelected : Navigation.reports}
-                  imgHover={Navigation.reportsSelected}
-                  text='Reports'
-                />
+                {/* TODO: Reports page will be implemented later */}
+                {/* <HeaderLink
+                active={Router.pathname.indexOf('reports') !== -1}
+                href='/main/reports'
+                img={Router.pathname.indexOf('reports') !== -1 ? Navigation.reportsSelected : Navigation.reports}
+                imgHover={Navigation.reportsSelected}
+                text='Reports'
+              /> */}
               </ul>
               <div className={styles['notifications-wrapper']}>
                 <img
                   className={styles.notifications}
                   src={Navigation.alert} />
-                <Notification />
+                  <Notification />
               </div>
 
               <ToggleableAbsoluteWrapper
                 wrapperClass={styles.user}
                 Wrapper={({ children }) => (
                   <>
-                    <img
-                      className={styles.profile}
-                      src={Utilities.memberProfile} />
-                    {user?.name}
+                    <UserPhoto photoUrl={user.profilePhoto} extraClass={styles.profile} sizePx={35} />
+                    <span className={styles.name}>{user?.name}</span>
                     {children}
                   </>
                 )}
                 contentClass={styles['user-dropdown']}
                 Content={() => (
                   <Dropdown
-                    options={[
-                      {
-                        OverrideComp: () => (
-                          <Link href='/main/user-settings/team'>
-                            <li>
-                              <span></span>
-                              <span>Team</span>
-                            </li>
-                          </Link>
-                        )
-                      },
-                      { label: 'Log Out', onClick: logOut }
-                    ]}
+                    options={dropdownOptions}
                   />
                 )}
               />
             </header>
-            {children}
+
+            {hasPermission(requiredPermissions) ?
+              children
+              :
+              <NoPermissionNotice />
+            }
             <footer className={styles.footer}>
+              <TrialReminderModal />
             </footer>
-          </TeamContextProvider>
-        </AssetContextProvider>
-      </ApolloProvider>
+          </ApolloProvider>
+        </>
+      }
     </>
   )
 }

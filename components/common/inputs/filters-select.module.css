@@ -27,3 +27,9 @@
   width: 15px;
   height: 15px;
 }
+
+@media screen and (max-width: 1000px) {
+  .filter {
+    min-width: 0;
+  }
+}

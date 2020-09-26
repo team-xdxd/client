@@ -1,0 +1,26 @@
+.container {
+  position: relative;
+  width: fit-content;
+}
+
+.container:hover .remove{
+  display: flex;
+}
+
+.remove {
+  display: none;
+  justify-content: center;
+  align-items: center;
+  color: var(--color-prim-navy);
+  border: 1px solid var(--color-secondary-border);
+  background-color: white;
+  border-radius: 50%;
+  cursor: pointer;
+  position: absolute;
+  top: -0.4rem;
+  right: -0.4rem;
+  width: 17px;
+  height: 17px;
+  font-size: 12px;
+  font-weight: bold;
+}

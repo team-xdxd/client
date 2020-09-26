@@ -1,0 +1,12 @@
+.container{
+  display: flex;
+}
+
+.bar{
+  width: 20rem;
+  margin-left: 3rem;
+}
+
+.bold{
+  font-weight: 600;
+}

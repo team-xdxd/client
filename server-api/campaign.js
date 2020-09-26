@@ -11,5 +11,8 @@ export default {
   deleteCampaign: (id) => axios.delete(`${campaignUrl}/${id}`),
   addProject: (id, data) => axios.post(`${campaignUrl}/${id}/projects`, data),
   addTag: (id, data) => axios.post(`${campaignUrl}/${id}/tags`, data),
-  removeTag: (id, tagId) => axios.delete(`${campaignUrl}/${id}/tags/${tagId}`)
+  removeTag: (id, tagId) => axios.delete(`${campaignUrl}/${id}/tags/${tagId}`),
+
+  addCollaborators: (id, data) => axios.post(`${campaignUrl}/${id}/collaborators`, data),
+  removeCollaborators: (id, data) => axios.delete(`${campaignUrl}/${id}/collaborators`, { data })
 }

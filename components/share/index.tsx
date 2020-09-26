@@ -7,7 +7,6 @@ import urlUtils from '../../utils/url'
 // Components
 import ShareItem from './share-item'
 
-
 const AssetShare = () => {
 
 	const [assets, setAssets] = useState([])

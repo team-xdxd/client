@@ -1,0 +1,15 @@
+.container{
+  max-width: 48rem;
+}
+
+.container > h3, .main-headers {
+  margin-top: 3rem;
+}
+
+.main-headers{
+  display: flex;
+}
+
+.main-headers>h3:first-child{
+  width: 80%;
+}

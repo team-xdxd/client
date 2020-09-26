@@ -1,0 +1,26 @@
+.container {
+  display: flex;
+}
+
+.container button{
+  margin-top: 18px;
+}
+
+.state-country{
+  display: flex;
+}
+
+.fields-pair{
+  display: flex;
+  margin-bottom: 14px;
+  margin-top: 28px;
+}
+
+.fields-pair>div:first-child{
+  width: 55%;
+  margin-right: 5%;
+}
+
+.fields-pair>div:last-child{
+  width: 40%;
+}

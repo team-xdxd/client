@@ -1,0 +1,34 @@
+.container{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.container>h3{
+  align-self: flex-start;
+}
+
+.group{
+  width: 80%;
+  max-width: 25rem;
+}
+
+.group > h4 {
+  color: var(--color-prim-navy);
+}
+
+.feature {
+  display: flex;
+  margin-bottom: 1rem;
+}
+
+.feature > div {
+  flex: 1;
+  margin-right: 3rem;
+}
+
+.feature img {
+  height: 20px;
+  width: auto;
+  cursor: pointer;
+}

@@ -1,6 +1,7 @@
 import styles from './upcoming-item.module.css'
 import { Utilities, Navigation } from '../../../assets'
 import { format } from 'date-fns'
+import Link from 'next/link'
 import Router from 'next/router'
 import urlUtils from '../../../utils/url'
 
@@ -8,26 +9,30 @@ import urlUtils from '../../../utils/url'
 import StatusBadge from '../../common/misc/status-badge'
 import ToggleableAbsoluteWrapper from '../../common/misc/toggleable-absolute-wrapper'
 import Dropdown from '../../common/inputs/dropdown'
+import UserPhoto from '../../common/user/user-photo'
 
-const UpcomingItem = ({ name, date, status, users, userPhoto = Utilities.memberProfile, detailUrl, deleteItem }) => (
+const UpcomingItem = ({ name, date, status, users, detailUrl, deleteItem }) => (
   <li className={`${styles.container}`}>
-    <span className={styles.name} onClick={() => Router.replace(detailUrl)}>
-      {name}
-    </span>
-
+    <Link href={detailUrl} >
+      <a>
+        <span className={styles.name} >
+          {name}
+        </span>
+      </a>
+    </Link>
     <div className={styles.user}>
       {users.length <= 1 ?
         <div className={styles['single-user']}>
-          <img src={userPhoto} />
+          <UserPhoto photoUrl={users[0].profilePhoto} sizePx={30} />
           <span>{users[0].name}</span>
         </div>
         :
-        <ul>
+        <ul className={styles['multiple-users']}>
           {users.map((user, index) => {
             if (index < 3)
               return (
                 <li>
-                  <img src={userPhoto} />
+                  <UserPhoto photoUrl={user.profilePhoto} sizePx={30} />
                 </li>
               )
           })}
@@ -48,7 +53,9 @@ const UpcomingItem = ({ name, date, status, users, userPhoto = Utilities.memberP
       <img className={styles['edit-icon']}
         src={Navigation.scheduleLight}
         onClick={() => Router.replace(detailUrl)} />
-      <img src={Utilities.assignMemberLight} />
+      <img className={styles['edit-icon']}
+        src={Utilities.assignMemberLight}
+        onClick={() => Router.replace(detailUrl)} />
       <ToggleableAbsoluteWrapper
         wrapperClass={styles['img-wrap']}
         Wrapper={({ children }) => (

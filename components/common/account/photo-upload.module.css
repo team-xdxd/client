@@ -1,0 +1,31 @@
+.container {
+  display: flex;
+  align-items: center;
+}
+
+.container button:first-of-type, .container button:last-of-type, .description{
+  margin-left: 2rem;
+}
+
+.description{
+  margin-bottom: 0;
+}
+
+.container button{
+  min-width: 150px;
+}
+
+.current, .no-photo{
+  width: 85px;
+  height: 85px;
+}
+
+
+.current {
+  object-fit: cover;
+  border-radius: 50%;
+}
+
+.no-photo {
+
+}

@@ -1,5 +1,7 @@
 import Head from 'next/head'
 
+import { CALENDAR_ACCESS } from '../../../../constants/permissions'
+
 // Components
 import MainLayout from '../../../../components/common/layouts/main-layout'
 import TaskDetail from '../../../../components/main/task/detail'
@@ -10,7 +12,7 @@ const TaskDetailPage = () => (
       <title>Task</title>
       <link rel="icon" href="/favicon.ico" />
     </Head>
-    <MainLayout>
+    <MainLayout requiredPermissions={[CALENDAR_ACCESS]}>
       <TaskDetail />
     </MainLayout>
   </>

@@ -1,6 +1,8 @@
 import styles from './asset-options.module.css'
 import { Utilities } from '../../../assets'
 
+import { ASSET_DOWNLOAD } from '../../../constants/permissions'
+
 // Components
 import IconClickable from '../buttons/icon-clickable'
 import Dropdown from '../inputs/dropdown'
@@ -19,16 +21,14 @@ const AssetOptions = ({
 }) => {
 	// onClick={() => downloadUtils.downloadFile(realUrl, assetDetail.name)}
 	const options = [
-		{ label: 'Download', onClick: downloadAsset },
+		{ label: 'Download', onClick: downloadAsset, permissions: [ASSET_DOWNLOAD] },
 		{ label: 'Comment', onClick: openComments },
 		{ label: 'Move', onClick: openMoveAsset },
 		{ label: 'Copy', onClick: openCopyAsset },
-		{ label: 'Archive', onClick: openArchiveAsset },
+		{ label: asset.stage !== 'archived' ? 'Archive' : 'Unarchive', onClick: openArchiveAsset },
 		{ label: 'Delete', onClick: openDeleteAsset },
 		{ label: 'Share', onClick: openShareAsset }
 	]
-
-	const filteredOptions = options.filter(option => asset.stage !== 'archived' || (asset.stage === 'archived' && option.label !== 'Archive'))
 
 	return (
 		<ToggleableAbsoluteWrapper
@@ -43,7 +43,7 @@ const AssetOptions = ({
 			Content={() => (
 				<div className={styles.more} >
 					<Dropdown
-						options={filteredOptions}
+						options={options}
 					/>
 				</div>
 			)}

@@ -19,6 +19,9 @@ import ToggleableAbsoluteWrapper from '../../../common/misc/toggleable-absolute-
 import Select from '../../../common/inputs/select'
 import Dropdown from '../../../common/inputs/dropdown'
 import Tag from '../../../common/misc/tag'
+import UserPhoto from '../../../common/user/user-photo'
+import SearchableUserList from '../../../common/user/searchable-user-list'
+import CollaboratorItem from '../../../common/items/collaborator-item'
 
 const ProjectFields = ({
   editableFields: {
@@ -37,7 +40,9 @@ const ProjectFields = ({
   addTag,
   removeTag,
   editFields,
-  project
+  project,
+  addCollaborator,
+  removeCollaborator
 }) => {
 
   const [activeInput, setActiveInput] = useState('')
@@ -166,8 +171,11 @@ const ProjectFields = ({
       <div className={'field'}>
         <ItemFieldWrapper
           title='Owner'
-          image={ItemFields.member}
-        >
+          overrideIcon={true}
+          OverrideIconComp={() =>
+            <UserPhoto
+              photoUrl={owner?.profilePhoto}
+              sizePx={45} />}>
           <span>{owner?.name}</span>
         </ItemFieldWrapper>
       </div>
@@ -380,16 +388,35 @@ const ProjectFields = ({
           }
         </ItemFieldWrapper>
       </div>
-      <div onClick={() => toggleActiveInput('collaborators')} className={'field'}>
+      <div className={`field`}>
         <ItemFieldWrapper
           title='Collaborators'
           image={ItemFields.member}
+          optionOnClick={() => toggleActiveInput('collaborators')}
         >
-          {/* TODO: Add images of collaborators when teams are implemented */}
-          <div className={'add'}>
-            <img src={Utilities.add} />
-            <span>Add Collaborator</span>
-          </div>
+          <ul className={styles['collaborator-list']}>
+            {collaborators.map(collaborator => (
+              <li key={collaborator.id}>
+                <CollaboratorItem photoUrl={collaborator.profilePhoto} onRemove={() => removeCollaborator(collaborator)} />
+              </li>
+            ))}
+          </ul>
+          <ToggleableAbsoluteWrapper
+            closeOnAction={false}
+            Wrapper={({ children }) =>
+              <>
+                <div className={'add'}>
+                  <img src={Utilities.add} />
+                  <span>Add Collaborator</span>
+                </div>
+                {children}
+              </>
+            }
+            Content={() => <SearchableUserList
+              onUserSelected={addCollaborator} filterOut={[owner.id]} selectedList={collaborators.map(colab => colab.id)} />}
+            wrapperClass={styles['image-wrapper']}
+            contentClass={styles['user-list-wrapper']}
+          />
         </ItemFieldWrapper>
       </div>
       <div className={`field pad-div`}></div>

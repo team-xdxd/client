@@ -2,7 +2,7 @@ import Head from 'next/head'
 
 // Components
 import MainLayout from '../../../../components/common/layouts/main-layout'
-import UserSettings from '../../../../components/main/users-settings'
+import UserSettings from '../../../../components/main/user-settings'
 
 const UserSettingsPage = () => (
   <>

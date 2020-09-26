@@ -12,12 +12,13 @@ const AssetSubheader = ({
   activeFolderData,
   activeFolder,
   setRenameModalOpen,
-  getFolders
+  getFolders,
+  activeSortFilter
 }) => {
 
   return (
     <SubHeader pageTitle={activeFolderData ? activeFolderData.name : 'Asset Library'} additionalClass={styles['asset-subheader']}
-      editable={activeFolderData} onAltEditionClick={() => setRenameModalOpen(true)} altEditionAction={true}
+      editable={activeFolderData} onAltEditionClick={() => setRenameModalOpen(true)}
       PreComponent={activeFolderData ? () => (
         <div className={styles['additional-folder-wrapper']}>
           <div className={styles.back} onClick={backToFolders}>
@@ -30,7 +31,7 @@ const AssetSubheader = ({
       <div className={styles.padding}>
       </div>
       {amountSelected > 0 ?
-        <AssetHeaderOps />
+        <AssetHeaderOps isUnarchive={activeSortFilter.mainFilter === 'archived'} />
         :
         <AssetAddition activeFolder={activeFolder} getFolders={getFolders} />
       }

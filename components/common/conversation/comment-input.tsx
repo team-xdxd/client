@@ -1,5 +1,6 @@
 import styles from './comment-input.module.css'
-import { useState, useRef, useEffect } from 'react'
+import { useState, useRef, useEffect, useContext } from 'react'
+import { UserContext } from '../../../context'
 import { Comments, Utilities } from '../../../assets'
 import { Picker } from 'emoji-mart'
 import getCaretCoordinates from 'textarea-caret'
@@ -8,6 +9,7 @@ import getCaretCoordinates from 'textarea-caret'
 import Button from '../buttons/button'
 import ToggleableAbsoluteWrapper from '../misc/toggleable-absolute-wrapper'
 import SearchableUserList from '../user/searchable-user-list'
+import UserPhoto from '../user/user-photo'
 
 const CommentInput = ({ style = 'comment', onSubmit }) => {
 
@@ -15,6 +17,8 @@ const CommentInput = ({ style = 'comment', onSubmit }) => {
   const [inputPosition, setInputPosition] = useState(0)
   const [activePosibleMention, setActivePosibleMention] = useState('')
   const [mentionStartPosition, setMentionStartPosition] = useState(-1)
+
+  const { user } = useContext(UserContext)
 
   const inputRef = useRef(null)
 
@@ -24,7 +28,7 @@ const CommentInput = ({ style = 'comment', onSubmit }) => {
         closeOnAction={false}
         Wrapper={({ children }) =>
           <>
-            <img src={Comments.smile} />
+            <img src={Comments.smileLight} />
             {children}
           </>
         }
@@ -45,7 +49,7 @@ const CommentInput = ({ style = 'comment', onSubmit }) => {
         closeOnAction={false}
         Wrapper={({ children }) =>
           <>
-            <img src={Comments.mention} />
+            <img src={Comments.mentionLight} />
             {children}
           </>
         }
@@ -129,7 +133,7 @@ const CommentInput = ({ style = 'comment', onSubmit }) => {
     <form onSubmit={submitComment}>
       <div className={styles['input-container']}>
         {style === 'reply' &&
-          <img src={Utilities.memberProfile} />
+          <UserPhoto photoUrl={user?.profilePhoto} sizePx={27} />
         }
         <textarea
           ref={inputRef}

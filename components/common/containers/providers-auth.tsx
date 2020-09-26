@@ -7,7 +7,7 @@ import cookiesUtil from '../../../utils/cookies'
 // Components
 import ProviderAuthButton from '../buttons/provider-auth-button'
 
-let ProvidersAuth = ({ inviteCode }) => {
+let ProvidersAuth = ({ inviteCode = '' }) => {
 
   const initiateOAuth = async (provider) => {
     try {

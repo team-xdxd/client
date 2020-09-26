@@ -30,6 +30,7 @@ export const Utilities = {
   add: require('./Icons/Utilities/Add +/icn-utilities-add+.svg'),
   addLight: require('./Icons/Utilities/Add +/icn-utilities-add+light.svg'),
   addWhite: require('./Icons/Utilities/Add +/icn-utilities-add+white.svg'),
+  addAlt: require('./Icons/Utilities/Add +/icn-utilities-add+alt.svg'),
   comment: require('./Icons/Utilities/Comments/icn-utilities-comments.svg'),
   commentLight: require('./Icons/Utilities/Comments/icn-utilities-comments-light.svg'),
   assignMember: require('./Icons/Utilities/Assign Member/icn-utilities-assignmember.svg'),
@@ -52,6 +53,7 @@ export const Utilities = {
   gridView: require('./Icons/Utilities/View Grid/icn-utilities-gridview.svg'),
   listView: require('./Icons/Utilities/View List/icn-utilities-listview.svg'),
   info: require('./Icons/Utilities/Information/icn-utilities-information.svg'),
+  filter: require('./Icons/External/filter.svg')
 }
 
 export const ProjectTypes = {
@@ -118,5 +120,12 @@ export const Assets = {
 
 export const Comments = {
   mention: require('./Icons/Utilities/@/icn-comments-mention.svg'),
+  mentionLight: require('./Icons/Utilities/@/icn-comments-mention-light.svg'),
   smile: require('./Icons/Utilities/Smile/icn-comments-smile.svg'),
+  smileLight: require('./Icons/Utilities/Smile/icn-comments-smile-light.svg')
+}
+
+export const Integrations = {
+  google_drive: require('./Icons/Assets/icons8-google-drive-1.svg'),
+  dropbox: require('./Icons/Assets/Dropbox_Icon.svg'),
 }

@@ -10,6 +10,8 @@
   padding: 8px 12px;
   background-color: var(--color-sec-ivory);
   color: var(--color-prim-navy);
+  border-top-left-radius: 5px;
+  border-bottom-left-radius: 5px;
 }
 
 .select-prefix__single-value{
@@ -20,6 +22,8 @@
 .select-prefix__indicators {
   background-color: var(--color-sec-ivory);
   color: var(--color-prim-navy);
+  border-top-right-radius: 5px;
+  border-bottom-right-radius: 5px;
 }
 
 .select-prefix__menu {
@@ -113,4 +117,13 @@
 
 .filter .select-prefix__option--is-selected:hover {
   background-color: #DEEBFF;
+}
+
+
+@media screen and (max-width: 1000px) {
+  .filter-schedule .select-prefix__menu {
+    width: 100%;
+    margin-left: 0;
+    font-size: 12px;
+  }
 }

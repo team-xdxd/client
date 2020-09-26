@@ -83,7 +83,7 @@ const ForgotPassword = () => {
             <div className={styles['button-wrapper']}>
               <AuthButton
                 type={'submit'}
-                text={'Reset PAssword'}
+                text={'Reset Password'}
               />
             </div>
           </form>
