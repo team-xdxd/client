@@ -17,6 +17,9 @@ const NotificationList = ({ notifications, onClear }) => (
 
       const date = new Date(notification.timestamp * 1000)
 
+      const urlIndex = notification.url.indexOf('/main')
+      const realUrl = notification.url.substring(urlIndex, notification.url.length)
+
       return (
         <li className={styles.notification} key={notification.notifId}>
           <div className={`${styles[notification.status]}`}></div>
@@ -28,7 +31,7 @@ const NotificationList = ({ notifications, onClear }) => (
               {format(date, 'p')}
             </div>
           </div>
-          <div className={styles.message} onClick={() => Router.replace(notification.url)}>
+          <div className={styles.message} onClick={() => Router.replace(realUrl)}>
             <div>
               {notification.message}
             </div>
