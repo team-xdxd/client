@@ -40,7 +40,6 @@ const TaskDetail = () => {
     try {
       const taskId = urlUtils.getPathId()
       const { data } = await taskApi.getTaskById(taskId)
-      console.log(data);
 
       setTaskData(data)
       setTask(data)

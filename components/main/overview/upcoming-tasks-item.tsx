@@ -1,8 +1,8 @@
 import styles from './upcoming-tasks-item.module.css'
 import { capitalCase } from 'change-case'
 import { GeneralImg, Navigation } from '../../../assets'
-import Router from 'next/router'
 import dateUtils from '../../../utils/date'
+import Link from 'next/link'
 
 import { format } from 'date-fns'
 
@@ -18,11 +18,14 @@ const UpcomingTasksItem = ({ name, status, date, detailUrl }) => {
   return (
     <li className={`${styles.container}`}>
       <div className={styles['name-status']}>
-        <span
-          onClick={() => Router.replace(detailUrl)}
-          className={`${styles.name} ${status === 'completed' && styles.completed}`}>
-          {name}
-        </span>
+        <Link href={detailUrl}>
+          <a>
+            <span              
+              className={`${styles.name} ${status === 'completed' && styles.completed}`}>
+              {name}
+            </span>
+          </a>
+        </Link>
         <span className={styles.status}>
           {capitalCase(status)}
         </span>

@@ -32,7 +32,7 @@ const DetailOverlay = ({ asset, realUrl, closeOverlay, openShareAsset = () => { 
   }, [])
 
   const checkInitialParams = () => {
-    if (initiaParams.side) {
+    if (initiaParams?.side) {
       setActiveSidecomponent(initiaParams.side)
     }
   }
@@ -43,7 +43,7 @@ const DetailOverlay = ({ asset, realUrl, closeOverlay, openShareAsset = () => { 
         setAssetDetail(asset)
       else {
         const { data } = await assetApi.getById(asset.id)
-        setAssetDetail(data)
+        setAssetDetail(data.asset)
       }
     } catch (err) {
       console.log(err)

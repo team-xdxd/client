@@ -1,7 +1,7 @@
 import { useContext, useRef } from 'react'
 import styles from './main-layout.module.css'
 import Link from 'next/link'
-import { GeneralImg, Navigation, Utilities } from '../../../assets'
+import { GeneralImg, Navigation } from '../../../assets'
 import { UserContext } from '../../../context'
 import Router from 'next/router'
 import {
@@ -19,6 +19,7 @@ import Dropdown from '../inputs/dropdown'
 import TrialReminderModal from '../modals/trial-reminder-modal'
 import UserPhoto from '../user/user-photo'
 import NoPermissionNotice from '../misc/no-permission-notice'
+import Notification from '../notifications/notification'
 
 const MainLayout = ({ children, requiredPermissions = [] }) => {
   const { user, logOut, hasPermission } = useContext(UserContext)
@@ -100,9 +101,7 @@ const MainLayout = ({ children, requiredPermissions = [] }) => {
               /> */}
             </ul>
             <div className={styles['notifications-wrapper']}>
-              <img
-                className={styles.notifications}
-                src={Navigation.alert} />
+              <Notification />
             </div>
 
             <ToggleableAbsoluteWrapper
@@ -122,6 +121,7 @@ const MainLayout = ({ children, requiredPermissions = [] }) => {
               )}
             />
           </header>
+
           {hasPermission(requiredPermissions) ?
             children
             :

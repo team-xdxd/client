@@ -42,7 +42,6 @@ const NestedSelect = ({ selectList, onApplyFilters }) => {
   }
 
   const setSelection = (selectValue, index) => {
-    console.log(tempSelections)
     setTempSelections(update(tempSelections, {
       [index]: { $set: selectValue }
     }))

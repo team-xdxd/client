@@ -1,0 +1,17 @@
+.container {
+  position: relative;
+}
+
+.container .bell {
+  width: 20px;
+}
+
+.new {
+  position: absolute;
+  border-radius: 50%;
+  width: 10px;
+  height: 10px;
+  background-color: var(--color-prim-red);
+  right: -7px;
+  top: -3px;
+}
