@@ -13,13 +13,15 @@ import UserPhoto from '../../common/user/user-photo'
 
 const UpcomingItem = ({ name, date, status, users, detailUrl, deleteItem }) => (
   <li className={`${styles.container}`}>
-    <Link href={detailUrl} >
-      <a>
-        <span className={styles.name} >
+
+    <span className={styles.name} >
+      <Link href={detailUrl} >
+        <a>
           {name}
-        </span>
-      </a>
-    </Link>
+        </a>
+      </Link>
+    </span>
+
     <div className={styles.user}>
       {users.length <= 1 ?
         <div className={styles['single-user']}>

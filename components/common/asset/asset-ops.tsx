@@ -121,9 +121,10 @@ export default () => {
 			} else {
 				await assetApi.deleteAsset(operationAsset.asset.id)
 				const assetIndex = assets.findIndex(assetItem => assetItem.asset.id === operationAsset.asset.id)
-				setAssets(update(assets, {
-					$splice: [[assetIndex, 1]]
-				}))
+				if (assetIndex !== -1)
+					setAssets(update(assets, {
+						$splice: [[assetIndex, 1]]
+					}))
 			}
 
 			closeModalAndClearOpAsset()

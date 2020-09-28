@@ -86,10 +86,6 @@
   .item-detail-cont {
     width: 100%;
   }
-  
-  .pad-div{
-    display: none;
-  }
 }
 
 @media screen and (max-width: 900px) {
@@ -101,5 +97,9 @@
 
   .item-detail-cont .field:last-child, .item-detail-cont .field-wide:last-child {
     border-bottom: 1px solid var(--color-secondary-border);
+  }
+
+  .pad-div{
+    display: none;
   }
 }

@@ -29,9 +29,11 @@ const ConversationList = ({ itemType, itemId }) => {
   const { teamMembers, getTeamMembers } = useContext(TeamContext)
 
   useEffect(() => {
-    getConversations()
-    getTeamMembers()
-  }, [])
+    if (itemType && itemId) {
+      getConversations()
+      getTeamMembers()
+    }
+  }, [itemType, itemId])
 
   const getConversations = async () => {
     try {

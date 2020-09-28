@@ -5,6 +5,7 @@ import { useEffect, useContext, useState } from 'react'
 import { AssetContext } from '../../../context'
 import toastUtils from '../../../utils/toast'
 import { Waypoint } from 'react-waypoint'
+import urlUtils from '../../../utils/url'
 import downloadUtils from '../../../utils/download'
 import assetsApi from '../../../server-api/asset'
 
@@ -15,6 +16,7 @@ import FolderListItem from '../folder/folder-list-item'
 import AssetThumbail from './asset-thumbail'
 import ListItem from './list-item'
 import AssetUpload from './asset-upload'
+import DetailOverlay from './detail-overlay'
 import ConfirmModal from '../modals/confirm-modal'
 import Button from '../buttons/button'
 
@@ -36,6 +38,23 @@ const AssetGrid = ({ activeView = 'grid', onFilesDataGet, toggleSelected, mode =
   const [activeAssetId, setActiveAssetId] = useState('')
 
   const [activeSearchOverlay, setActiveSearchOverlay] = useState(false)
+
+  const [initAsset, setInitAsset] = useState(undefined)
+
+  useEffect(() => {
+    const { assetId, side } = urlUtils.getQueryParameters()
+    if (assetId)
+      getInitialAsset(assetId)
+  }, [])
+
+  const getInitialAsset = async (id) => {
+    try {
+      const { data } = await assetsApi.getById(id)
+      setInitAsset(data)
+    } catch (err) {
+      console.log(err)
+    }
+  }
 
   const openArchiveAsset = asset => {
     setActiveAssetId(asset.id)
@@ -233,6 +252,17 @@ const AssetGrid = ({ activeView = 'grid', onFilesDataGet, toggleSelected, mode =
         }
         modalIsOpen={activeArchiveAsset}
       />
+
+      {/* Overlay exclusive to page load assets */}
+      {initAsset &&
+        <DetailOverlay
+          asset={initAsset.asset}
+          realUrl={initAsset.realUrl}
+          initiaParams={{ side: 'comments' }}
+          openShareAsset={() => beginAssetOperation({ asset: initAsset }, 'share')}
+          openDeleteAsset={() => openDeleteAsset(initAsset.asset.id)}
+          closeOverlay={() => setInitAsset(undefined)} />
+      }
     </section >
   )
 }

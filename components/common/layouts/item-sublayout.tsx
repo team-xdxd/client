@@ -2,6 +2,9 @@ import styles from './item-sublayout.module.css'
 import { useState, useEffect, useContext } from 'react'
 import { Utilities } from '../../../assets'
 import { TeamContext } from '../../../context'
+import {
+  isMobile
+} from "react-device-detect"
 
 // Components
 import SectionButton from '../buttons/section-button'
@@ -30,6 +33,9 @@ const ItemSublayout = ({
 
   useEffect(() => {
     getTeamMembers()
+    if (!isMobile) {
+      setSideOpen(true)
+    }
   }, [])
 
   const toggleSideMenu = () => {

@@ -1,6 +1,6 @@
 import { useState, useRef } from 'react'
 
-const ToggleableAbsoluteWrapper = ({ Wrapper, Content, wrapperClass = '', contentClass = '', closeOnAction = true }) => {
+const ToggleableAbsoluteWrapper = ({ Wrapper, Content, wrapperClass = '', contentClass = '', closeOnAction = true, onCloseAction = false, onClose = () => { } }) => {
 
   const wrapperRef = useRef(null)
   const contentRef = useRef(null)
@@ -16,6 +16,10 @@ const ToggleableAbsoluteWrapper = ({ Wrapper, Content, wrapperClass = '', conten
   const setDropdownOpen = (e, visible) => {
     if (e)
       e.stopPropagation()
+
+    if (visible === false && onCloseAction) {
+      onClose()
+    }
     setIsOpen(visible)
     if (visible) {
       document.addEventListener("mousedown", handleClickOutside);

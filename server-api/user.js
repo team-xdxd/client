@@ -23,5 +23,7 @@ export default {
 
   addIntegration: (data) => axios.post(`${userUrl}/integrations`, data),
   getIntegrations: () => axios.get(`${userUrl}/integrations`),
-  modifyIntegration: (id, data) => axios.patch(`${userUrl}/integrations/${id}`, data)
+  modifyIntegration: (id, data) => axios.patch(`${userUrl}/integrations/${id}`, data),
+
+  getsubscriptionHeaders: () => axios.get(`${userUrl}/subscription-headers`)
 }
