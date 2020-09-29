@@ -1,9 +1,11 @@
 import styles from './top-bar.module.css'
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useContext } from 'react'
+import { UserContext } from '../../../context'
 import { Utilities } from '../../../assets'
 import selectOptions from './select-options'
 import campaignApi from '../../../server-api/campaign'
 import tagApi from '../../../server-api/tag'
+import { CALENDAR_ACCESS } from '../../../constants/permissions'
 
 // Components
 import SectionButton from '../../common/buttons/section-button'
@@ -24,6 +26,8 @@ const TopBar = ({
   const [campaignsFilter, setCampaignsFilter] = useState([])
   const [tagsFilter, setTagsFilter] = useState([])
 
+  const { hasPermission } = useContext(UserContext)
+
   useEffect(() => {
     getCampaignsTagsFilters()
   }, [])
@@ -34,8 +38,10 @@ const TopBar = ({
         label: item.name,
         value: item.id
       })
-      const campaingsResponse = await campaignApi.getCampaigns()
-      setCampaignsFilter(campaingsResponse.data.map(selectValueMapFn))
+      if (hasPermission([CALENDAR_ACCESS])) {
+        const campaingsResponse = await campaignApi.getCampaigns()
+        setCampaignsFilter(campaingsResponse.data.map(selectValueMapFn))
+      }
       const tagsResponse = await tagApi.getTags()
       setTagsFilter(tagsResponse.data.map(selectValueMapFn))
     } catch (err) {
@@ -87,7 +93,8 @@ const TopBar = ({
               {
                 options: campaignsFilter,
                 placeholder: 'Campaigns',
-                value: activeSortFilter.filterCampaigns
+                value: activeSortFilter.filterCampaigns,
+                hidden: !hasPermission([CALENDAR_ACCESS])
               },
               {
                 options: selectOptions.channels,

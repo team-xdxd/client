@@ -2,7 +2,7 @@ import styles from './detail-side-panel.module.css'
 import update from 'immutability-helper'
 import CreatableSelect from 'react-select/creatable';
 
-import { AssetContext } from '../../../context'
+import { AssetContext, UserContext } from '../../../context'
 import { useEffect, useState, useContext } from 'react'
 import { format } from 'date-fns'
 import { capitalCase } from 'change-case'
@@ -13,6 +13,10 @@ import assetApi from '../../../server-api/asset'
 import projectApi from '../../../server-api/project'
 import taskApi from '../../../server-api/task'
 import { Utilities } from '../../../assets'
+
+import {
+  CALENDAR_ACCESS
+} from '../../../constants/permissions'
 
 // Components
 import Tag from '../misc/tag'
@@ -33,6 +37,7 @@ const SidePanel = ({ asset, updateAsset, isShare }) => {
   } = asset
 
   const { assets, setAssets } = useContext(AssetContext)
+  const { hasPermission } = useContext(UserContext)
 
   const [inputTags, setInputTags] = useState([])
   const [inputProjects, setInputProjects] = useState([])
@@ -43,18 +48,28 @@ const SidePanel = ({ asset, updateAsset, isShare }) => {
 
   useEffect(() => {
     if (!isShare) {
-      getInputData()
+      getTagsInputData()
+      if (hasPermission([CALENDAR_ACCESS])) {
+        getInputData()
+      }
     }
   }, [])
 
   const getInputData = async () => {
     try {
-      const tagsResponse = await tagApi.getTags()
-      setInputTags(tagsResponse.data)
       const projectsResponse = await projectApi.getProjects()
       setInputProjects(projectsResponse.data)
       const tasksResponse = await taskApi.getTasks()
       setInputTasks(tasksResponse.data)
+    } catch (err) {
+      // TODO: Maybe show error?
+    }
+  }
+
+  const getTagsInputData = async () => {
+    try {
+      const tagsResponse = await tagApi.getTags()
+      setInputTags(tagsResponse.data)
     } catch (err) {
       // TODO: Maybe show error?
     }
@@ -237,7 +252,7 @@ const SidePanel = ({ asset, updateAsset, isShare }) => {
               </li>
             ))}
           </ul>
-          {!isShare &&
+          {!isShare && hasPermission([CALENDAR_ACCESS]) &&
             <>
               {activeDropdown === 'projects' ?
                 <div className={`tag-select ${styles['select-wrapper']}`}>
@@ -276,7 +291,7 @@ const SidePanel = ({ asset, updateAsset, isShare }) => {
               </li>
             ))}
           </ul>
-          {!isShare &&
+          {!isShare && hasPermission([CALENDAR_ACCESS]) &&
             <>
               {activeDropdown === 'tasks' ?
                 <div className={`tag-select ${styles['select-wrapper']}`}>

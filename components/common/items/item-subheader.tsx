@@ -1,8 +1,8 @@
 import styles from './item-subheader.module.css'
 import { useContext, useState } from 'react'
 import Router from 'next/router'
-import { AssetContext } from '../../../context'
-import Link from 'next/link'
+import { AssetContext, UserContext } from '../../../context'
+import { ASSET_ACCESS } from '../../../constants/permissions'
 
 // Components
 import SubHeader from '../layouts/sub-header'
@@ -23,6 +23,7 @@ const ItemSubHeader = ({
   itemId = ''
 }) => {
   const { assets } = useContext(AssetContext)
+  const { hasPermission } = useContext(UserContext)
   const [activeSearchOverlay, setActiveSearchOverlay] = useState(false)
   const selectedAssets = assets.filter(asset => asset.isSelected)
   const [renameModalOpen, setRenameModalOpen] = useState(false)
@@ -47,7 +48,7 @@ const ItemSubHeader = ({
           </>
           :
           <>
-            {hasAssets &&
+            {hasAssets && hasPermission([ASSET_ACCESS]) &&
               <AssetAddition
                 folderAdd={false}
                 type={type}
