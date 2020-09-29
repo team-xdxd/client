@@ -77,7 +77,7 @@ const Overview = () => {
 
   const getTasks = async () => {
     try {
-      const { data } = await taskApi.getTasks({ fromDate: DEFAULT_DATE })
+      const { data } = await taskApi.getOwnedTasks({ fromDate: DEFAULT_DATE })
       setTasks(data)
     } catch (err) {
       // TODO: Display error or something

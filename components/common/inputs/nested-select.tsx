@@ -66,15 +66,17 @@ const NestedSelect = ({ selectList, onApplyFilters }) => {
           <div className={styles['select-list']}>
             {selectList.map((selectData, index) => (
               <div key={index}>
-                <FiltersSelect
-                  options={selectData.options}
-                  placeholder={selectData.placeholder}
-                  isClearable={true}
-                  styleType='filter filter-schedule'
-                  value={tempSelections[index]}
-                  closeMenuOnSelect={true}
-                  onChange={(selected) => setSelection(selected, index)}
-                />
+                {!selectData.hidden &&
+                  <FiltersSelect
+                    options={selectData.options}
+                    placeholder={selectData.placeholder}
+                    isClearable={true}
+                    styleType='filter filter-schedule'
+                    value={tempSelections[index]}
+                    closeMenuOnSelect={true}
+                    onChange={(selected) => setSelection(selected, index)}
+                  />
+                }
               </div>
             ))}
           </div>

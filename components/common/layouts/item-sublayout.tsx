@@ -1,10 +1,12 @@
 import styles from './item-sublayout.module.css'
 import { useState, useEffect, useContext } from 'react'
 import { Utilities } from '../../../assets'
-import { TeamContext } from '../../../context'
+import { TeamContext, UserContext } from '../../../context'
 import {
   isMobile
 } from "react-device-detect"
+
+import { ASSET_ACCESS } from '../../../constants/permissions'
 
 // Components
 import SectionButton from '../buttons/section-button'
@@ -30,6 +32,7 @@ const ItemSublayout = ({
   const [sideOpen, setSideOpen] = useState(false)
 
   const { getTeamMembers } = useContext(TeamContext)
+  const { hasPermission } = useContext(UserContext)
 
   useEffect(() => {
     getTeamMembers()
@@ -52,7 +55,7 @@ const ItemSublayout = ({
               active={activeMain === 'details'}
               onClick={() => setActiveMain('details')}
             />
-            {hasAssets &&
+            {hasAssets && hasPermission([ASSET_ACCESS]) &&
               <SectionButton
                 text='Assets'
                 active={activeMain === 'assets'}

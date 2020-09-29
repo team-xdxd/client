@@ -6,6 +6,7 @@ const taskUrl = `${process.env.SERVER_BASE_URL}/tasks`
 export default {
   getTaskById: (id) => axios.get(`${taskUrl}/${id}`),
   getTasks: (queryParams) => axios.get(`${taskUrl}?${queryString.stringify(queryParams)}`),
+  getOwnedTasks: (queryParams) => axios.get(`${taskUrl}/own?${queryString.stringify(queryParams)}`),
   createTask: ({ taskData, assignedUser = '' }) => axios.post(taskUrl, { taskData, assignedUser }),
   updateTask: (id, data) => axios.patch(`${taskUrl}/${id}`, data),
   deleteTask: (id) => axios.delete(`${taskUrl}/${id}`),

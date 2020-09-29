@@ -13,7 +13,7 @@ const CreateOverlay = ({ type = '', setType, closeOverlay }) => {
   return (
     <div className={`app-overlay ${styles.container}`}>
       <div className={styles.top}>
-        <div className={styles.back} onClick={() => setType('')}>
+        <div className={styles.back} onClick={closeOverlay}>
           {
             type &&
             <>
