@@ -28,3 +28,9 @@
 .select-add img{
   margin-right: 5px;
 }
+
+@media screen and (max-width: 1200px) {
+  .container{
+    min-width: 25rem;
+  }
+}

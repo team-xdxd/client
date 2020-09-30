@@ -6,7 +6,7 @@ const SubHeader = ({
   pageTitle,
   children,
   editable = false,
-  additionalClass = '',
+  additionalClass = '',  
   PreComponent = null,
   onAltEditionClick = () => { }
 }) => {

@@ -44,3 +44,21 @@
     align-items: center;
     height: 71px;
   }
+
+  .item>*:last-child{
+    margin-left: 2rem;
+  }
+
+  @media screen and (max-width: 900px) {
+    .header {
+      display: none;
+    }
+
+    .name{
+      width: 42%;
+    }
+
+    .field_name{
+      width: 28%;
+    }
+  }

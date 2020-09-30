@@ -2,7 +2,10 @@ import { capitalCase } from 'change-case'
 import styles from './type-badge-extended.module.css'
 import { ProjectTypeChannel, ProjectTypes, ProjectType, Utilities } from '../../../assets'
 
-const StatusBadge = ({ type, socialChannel, name, isMultiple = false, isLast = false, time }) => {
+// Components
+import UserPhoto from '../../common/user/user-photo'
+
+const TypeBadgeExtended = ({ type, socialChannel, name, photo, isMultiple = false, isLast = false, time }) => {
   let icon = ProjectTypes[type]
   if (type !== 'campaign' && type !== 'task') {
     icon = ProjectType[type]
@@ -11,7 +14,7 @@ const StatusBadge = ({ type, socialChannel, name, isMultiple = false, isLast = f
     <div className={`${styles[type]} ${styles.container} ${isMultiple && styles.multiple} type-badge`}>
       {isMultiple ?
         <>
-          <img src={Utilities.memberProfile} />
+          <UserPhoto sizePx={22} photoUrl={photo} />
           <div className={`${styles.name} name`}>
             {name}
           </div>
@@ -30,7 +33,7 @@ const StatusBadge = ({ type, socialChannel, name, isMultiple = false, isLast = f
             }
           </div>
           <div className={styles.icons}>
-            <img src={Utilities.memberProfile} />
+            <UserPhoto sizePx={22} photoUrl={photo} />
             <img src={socialChannel ? ProjectTypeChannel[socialChannel.toLowerCase()] : icon} />
           </div>
         </>
@@ -40,4 +43,4 @@ const StatusBadge = ({ type, socialChannel, name, isMultiple = false, isLast = f
   )
 }
 
-export default StatusBadge
+export default TypeBadgeExtended

@@ -60,70 +60,76 @@ const ListItem = ({
           <div className={styles.header}>
 
             <h4> </h4>
-            <h4>Name</h4>
-            <h4>Stage</h4>
-            <h4>Type</h4>
-            <h4>Extension</h4>
-            <h4>Size</h4>
-            <h4>Created At</h4>
-            <h4></h4>
+            <div className={styles['headers-content']}>
+              <h4>Name</h4>
+              <h4>Stage</h4>
+              <h4>Type</h4>
+              <h4>Extension</h4>
+              <h4>Size</h4>
+              <h4>Created At</h4>
+              <h4></h4>
+            </div>
           </div>
         }
         <div className={styles.item}>
-          <div className={`${styles['selectable-wrapper']} ${isSelected && styles['selected-wrapper']}`}>
-            {!isLoading &&
-              <>
-                {isSelected ?
-                  <IconClickable src={Utilities.radioButtonEnabled} additionalClass={styles['select-icon']} onClick={toggleSelected} />
-                  :
-                  <IconClickable src={Utilities.radioButtonNormal} additionalClass={styles['select-icon']} onClick={toggleSelected} />
-                }
-              </>
-            }
-          </div>
-          <div className={`${styles.thumbnail} ${isLoading && 'loadable'}`}>
-            {asset.type === 'image' && <AssetImg assetImg={thumbailUrl} type={asset.type} name={asset.name} />}
-            {asset.type === 'video' &&
-              <video preload='metadata'>
-                <source src={realUrl}
-                  type={`video/${asset.extension}`} />
-              </video>
-            }
-          </div>
-          <div className={`${styles.name} ${isLoading && 'loadable'}`} onClick={() => setOverlayProperties({ ...DEFAULT_DETAIL_PROPS, visible: !overlayProperties.visible })}>
-            {asset.name}
-          </div>
-          <div className={styles.status}>
-            {isUploading && 'Uplaoding...'}
-            {!isLoading && !isUploading && <StatusBadge status={asset.stage} />}
-          </div>
-          <div className={`${styles.field_name} ${isLoading && 'loadable'}`}>
-            {!isUploading && asset.type}
-          </div>
-          <div className={styles.field_name}>
-            {!isLoading && asset.extension}
-          </div>
-          <div className={styles.field_name}>
-            {asset.size && filesize(asset.size)}
-          </div>
-          <div className={`${styles.field_name} ${isLoading && 'loadable'}`}>
-            {format(new Date(asset.createdAt), dateFormat)}
-          </div>
-          {!isLoading && !isUploading &&
-            <div>
-              <AssetOptions
-                asset={asset}
-                openArchiveAsset={openArchiveAsset}
-                openDeleteAsset={openDeleteAsset}
-                openMoveAsset={openMoveAsset}
-                realUrl={realUrl}
-                downloadAsset={downloadAsset}
-                openShareAsset={openShareAsset}
-                openCopyAsset={openCopyAsset}
-                openComments={openComments}
-              />
+          <div className={styles.photo}>
+            <div className={`${styles['selectable-wrapper']} ${isSelected && styles['selected-wrapper']}`}>
+              {!isLoading &&
+                <>
+                  {isSelected ?
+                    <IconClickable src={Utilities.radioButtonEnabled} additionalClass={styles['select-icon']} onClick={toggleSelected} />
+                    :
+                    <IconClickable src={Utilities.radioButtonNormal} additionalClass={styles['select-icon']} onClick={toggleSelected} />
+                  }
+                </>
+              }
             </div>
-          }
+            <div className={`${styles.thumbnail} ${isLoading && 'loadable'}`}>
+              {asset.type === 'image' && <AssetImg assetImg={thumbailUrl} type={asset.type} name={asset.name} />}
+              {asset.type === 'video' &&
+                <video preload='metadata'>
+                  <source src={realUrl}
+                    type={`video/${asset.extension}`} />
+                </video>
+              }
+            </div>
+          </div>
+          <div className={styles.info}>
+            <div className={`${styles.name} ${isLoading && 'loadable'}`} onClick={() => setOverlayProperties({ ...DEFAULT_DETAIL_PROPS, visible: !overlayProperties.visible })}>
+              {asset.name}
+            </div>
+            <div className={styles.status}>
+              {isUploading && 'Uplaoding...'}
+              {!isLoading && !isUploading && <StatusBadge status={asset.stage} />}
+            </div>
+            <div className={`${styles.field_name} ${isLoading && 'loadable'}`}>
+              {!isUploading && asset.type}
+            </div>
+            <div className={styles.field_name}>
+              {!isLoading && asset.extension}
+            </div>
+            <div className={styles.field_name}>
+              {asset.size && filesize(asset.size)}
+            </div>
+            <div className={`${styles.field_name} ${isLoading && 'loadable'}`}>
+              {format(new Date(asset.createdAt), dateFormat)}
+            </div>
+            {!isLoading && !isUploading &&
+              <div>
+                <AssetOptions
+                  asset={asset}
+                  openArchiveAsset={openArchiveAsset}
+                  openDeleteAsset={openDeleteAsset}
+                  openMoveAsset={openMoveAsset}
+                  realUrl={realUrl}
+                  downloadAsset={downloadAsset}
+                  openShareAsset={openShareAsset}
+                  openCopyAsset={openCopyAsset}
+                  openComments={openComments}
+                />
+              </div>
+            }
+          </div>
         </div>
       </div>
       {overlayProperties.visible &&
