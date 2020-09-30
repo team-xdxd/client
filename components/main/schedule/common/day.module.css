@@ -13,6 +13,10 @@
   padding-top: 1rem;
 }
 
+.day-number-week-name{
+  display: none;
+}
+
 .day-header {
   display: flex;
   align-items: center;
@@ -65,4 +69,13 @@
 
 .week .more{
   margin-top: 10px;
+}
+
+@media screen and (max-width: 1000px) {
+  .day{
+    height: 139px;
+  }
+  .day-number-week-name{
+    display: block;
+  }
 }

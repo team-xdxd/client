@@ -2,10 +2,12 @@
   display: flex;
   align-items: center;
   margin-bottom: 3rem;
+  position: relative;
 }
 
 .filters {
   display: flex;
+  flex-wrap: wrap;
   flex: 1;
 }
 
@@ -36,8 +38,64 @@
   min-width: 160px;
 }
 
-.nested-wrapper{
+.nested-wrapper {
   display: flex;
   align-items: center;
   margin: 0 5px;
+}
+
+.filter {
+  display: none;
+}
+
+@media screen and (max-width: 1200px) {
+  .container {
+    margin-bottom: 1rem;
+  }
+
+  .options {
+    flex-wrap: wrap;
+    margin-right: 1rem;
+    margin-left: 1rem;
+  }
+
+  .options > button {
+    margin-bottom: 10px;
+  }
+
+  .filter {
+    display: flex;
+    position: absolute;
+    right: 0;
+    width: 20px;
+    height: auto;
+  }
+
+  .calendar {
+    display: flex;
+    position: absolute;
+    left: 0;
+    width: 20px;
+    height: auto;
+  }
+
+  .sec-filters {
+    display: none;
+    right: 0;
+    flex-wrap: wrap;
+    position: absolute;
+    top: 2rem;
+    z-index: 300;
+    background-color: white;
+    padding: 20px;
+    border: 1px solid var(--color-secondary-border);
+  }
+
+  .sec-filters > * {
+    margin-bottom: 10px;
+  }
+
+  .print {
+    display: none;
+  }
 }

@@ -125,6 +125,7 @@ const Day = ({
       {hasDayHeader &&
         <div className={styles['day-header']}>
           <div className={styles['day-number']}>{dateFormat(date)}</div>
+          <div className={`${styles['day-number']} ${styles['day-number-week-name']}`}>{`- ${format(date, 'EEE')}`}</div>
           {date.getDate() === today.getDate() && isSameMonth(date, today) &&
             <div className={styles['today-dot']}></div>
           }

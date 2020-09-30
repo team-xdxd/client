@@ -53,7 +53,8 @@ export const Utilities = {
   gridView: require('./Icons/Utilities/View Grid/icn-utilities-gridview.svg'),
   listView: require('./Icons/Utilities/View List/icn-utilities-listview.svg'),
   info: require('./Icons/Utilities/Information/icn-utilities-information.svg'),
-  filter: require('./Icons/External/filter.svg')
+  filter: require('./Icons/External/filter.svg'),
+  calendar:  require('./Icons/Navigation/icn-nav-schedule-alt.svg')
 }
 
 export const ProjectTypes = {

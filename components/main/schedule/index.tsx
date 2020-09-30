@@ -1,5 +1,5 @@
 import styles from './index.module.css'
-import { useState, useEffect } from 'react'
+import { useState, useRef, useEffect } from 'react'
 import campaignApi from '../../../server-api/campaign'
 import projectApi from '../../../server-api/project'
 import taskApi from '../../../server-api/task'
@@ -56,6 +56,8 @@ const Schedule = () => {
     owner: null,
     member: null
   })
+
+  const sideRef = useRef(undefined)
 
   useEffect(() => {
     getAllCampaigns()
@@ -177,7 +179,7 @@ const Schedule = () => {
     return filterObj
   }
 
-  const findUsersFn = (filterMember) => (user) =>  user.id === filterMember.value && user.isOwner
+  const findUsersFn = (filterMember) => (user) => user.id === filterMember.value && user.isOwner
 
   const evalCampaignsWithFilters = (campaign) => {
     if (filters.campaign?.length > 0 && filters.campaign.findIndex(filterCampaign => campaign.id === filterCampaign.value) === -1) return false
@@ -271,7 +273,6 @@ const Schedule = () => {
     <>
       <ScheduleSubHeader
         displayDate={displayDate}
-        currentDate={currentDate}
         setCurrentDate={setCurrentDate}
         openCreateOVerlay={openCreateOVerlay}
       />
@@ -284,10 +285,11 @@ const Schedule = () => {
           setFilters={setFilters}
           allCampaigns={allCampaigns}
           setSearchVisible={setSearchVisible}
+          sideRef={sideRef}
         />
         {activeView !== 'month' ?
           <div className={styles.content}>
-            <div className={styles['side-panel']}>
+            <div className={styles['side-panel']} ref={sideRef}>
               <SidePanel
                 currentDate={currentDate}
                 setCurrentDate={setCurrentDate}

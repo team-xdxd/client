@@ -10,6 +10,7 @@
   grid-template-rows: minmax(0, 1fr);
   column-gap: 1px;
   row-gap: 1px;
+  min-width: 980px;
 }
 
 .day-of-week > div {

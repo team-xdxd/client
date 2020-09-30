@@ -40,7 +40,7 @@ const ListItem = ({ item }) => {
       itemTime = format(new Date(item.endDate), 'h:mm a')
     }
   }
-
+  
   const owner = item.users?.find(user => user.isOwner)
 
   return (

@@ -20,7 +20,7 @@ const typeOptions = [
   ...projectTypes
 ]
 
-const TopBar = ({ activeView, setActiveView, setCurrentDate, filters, setFilters, allCampaigns, setSearchVisible }) => {
+const TopBar = ({ activeView, setActiveView, setCurrentDate, filters, setFilters, allCampaigns, setSearchVisible, sideRef }) => {
 
   const { getTeamMembers, teamMembers } = useContext(TeamContext)
 
@@ -33,8 +33,17 @@ const TopBar = ({ activeView, setActiveView, setCurrentDate, filters, setFilters
   const filtersRef = useRef(null)
 
   const toggleHamurgerList = () => {
-    const classType = `visible-block`
+    const classType = `visible-flex`
     const { current } = filtersRef
+    sideRef?.current?.classList.remove(classType)
+    if (current?.classList.contains(classType)) current.classList.remove(classType)
+    else current.classList.add(classType)
+  }
+
+  const toggleCalendarView = () => {
+    const classType = `visible-block`
+    const { current } = sideRef
+    filtersRef.current?.classList.remove(classType)
     if (current?.classList.contains(classType)) current.classList.remove(classType)
     else current.classList.add(classType)
   }
@@ -43,13 +52,13 @@ const TopBar = ({ activeView, setActiveView, setCurrentDate, filters, setFilters
     <section className={styles.container}>
       <div className={styles.options}>
         <img src={Utilities.search} onClick={() => setSearchVisible(true)} />
-        {hasPermission([CALENDAR_PRINT]) && <img src={Utilities.print} onClick={() => window.print()} />}
+        {hasPermission([CALENDAR_PRINT]) && <img src={Utilities.print} className={styles.print} onClick={() => window.print()} />}
         <SectionButton
           text='List'
           active={activeView === 'list'}
           onClick={() => setActiveView('list')}
         />
-        <SectionButton
+        <SectionButton 
           text='Week'
           active={activeView === 'week'}
           onClick={() => setActiveView('week')}
@@ -68,7 +77,8 @@ const TopBar = ({ activeView, setActiveView, setCurrentDate, filters, setFilters
         />
       </div>
 
-      <IconClickable src={Utilities.filter} additionalClass={styles.filter} onClick={toggleHamurgerList}/>
+      {activeView !== 'month' && <IconClickable src={Utilities.calendar} additionalClass={styles.calendar} onClick={toggleCalendarView} />}
+      <IconClickable src={Utilities.filter} additionalClass={styles.filter} onClick={toggleHamurgerList} />
       <div className={styles.filters} ref={filtersRef}>
         <div>
           <FiltersSelect

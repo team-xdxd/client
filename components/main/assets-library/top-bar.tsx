@@ -1,5 +1,5 @@
 import styles from './top-bar.module.css'
-import { useEffect, useState, useContext } from 'react'
+import { useEffect, useState, useContext, useRef } from 'react'
 import { UserContext } from '../../../context'
 import { Utilities } from '../../../assets'
 import selectOptions from './select-options'
@@ -12,6 +12,7 @@ import SectionButton from '../../common/buttons/section-button'
 import NestedSelect from '../../common/inputs/nested-select'
 import Select from '../../common/inputs/select'
 import Button from '../../common/buttons/button'
+import IconClickable from '../../common/buttons/icon-clickable'
 
 const TopBar = ({
   activeSortFilter,
@@ -27,7 +28,6 @@ const TopBar = ({
   const [tagsFilter, setTagsFilter] = useState([])
 
   const { hasPermission } = useContext(UserContext)
-
   useEffect(() => {
     getCampaignsTagsFilters()
   }, [])
@@ -66,9 +66,18 @@ const TopBar = ({
     })
   }
 
+  const filtersRef = useRef(null)
+
+  const toggleHamurgerList = () => {
+    const classType = `visible-flex`
+    const { current } = filtersRef
+    if (current?.classList.contains(classType)) current.classList.remove(classType)
+    else current.classList.add(classType)
+  }
+
   return (
     <section className={styles.container}>
-      <div className={styles.filters}>
+      <div className={styles.filters} >
         <img src={Utilities.search} onClick={setActiveSearchOverlay} />
         {selectOptions.views.map(view => (
           <>
@@ -83,7 +92,8 @@ const TopBar = ({
           </>
         ))}
       </div>
-      <div className={styles['sec-filters']}>
+      <IconClickable src={Utilities.filter} additionalClass={styles.filter} onClick={toggleHamurgerList} />
+      <div className={styles['sec-filters']} ref={filtersRef}>
         {activeSortFilter.mainFilter !== 'folders' && <Button type='button' text='Select All' styleType='secondary' onClick={selectAll} />}
         <img src={Utilities.gridView} onClick={() => setActiveView('grid')} />
         <img src={Utilities.listView} onClick={() => setActiveView('list')} />
