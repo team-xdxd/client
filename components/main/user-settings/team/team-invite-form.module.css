@@ -1,17 +1,40 @@
 .form {
   display: flex;
+  flex-wrap: wrap;
   max-width: 40rem;
 }
 
 .form input{
   flex: 1;
+  min-width: 150px;
 }
 
 .form .role-select-wrapper{
-  width: 150px;
+  min-width: 150px;
   margin: 0 2rem;
 }
 
 .form button{
   
+}
+
+@media screen and (max-width: 630px){
+  .form input{
+    margin-bottom: 10px;
+  }
+  
+  .form .role-select-wrapper{
+    margin-bottom: 10px;    
+  }
+  
+  .form button{
+    margin-bottom: 10px;
+  }
+}
+
+@media screen and (max-width: 477px){
+  .form .role-select-wrapper{
+    margin-right: 0;   
+    margin-left: 0;     
+  }
 }

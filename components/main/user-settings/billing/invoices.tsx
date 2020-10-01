@@ -45,12 +45,16 @@ const Invoices = () => {
   )
 
   const parsedInvoices = invoices
+    .filter(({ product, status, statusTransitions }) => product !== 'Free' && (status !== 'draft' || statusTransitions.finalized_at))
     .map(invoice => ({
       ...invoice,
       date: getInvoiceDate(invoice),
       status: getInvoiceStatus(invoice)
     }))
-  const parsedUpcoming = upcoming.map(upcoming => ({ ...upcoming, date: new Date(upcoming.date * 1000) }))
+
+  const parsedUpcoming = upcoming
+    .filter(({ product }) => product !== 'Free')
+    .map(upcoming => ({ ...upcoming, date: new Date(upcoming.date * 1000) }))
 
   return (
     <div>
@@ -88,7 +92,7 @@ const getInvoiceDate = (invoice) => {
 }
 
 const getInvoiceStatus = (invoice) => {
-  if(invoice.status === 'open'){
+  if (invoice.status === 'open') {
     return 'in process'
   } else return invoice.status
 }

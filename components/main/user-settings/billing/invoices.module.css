@@ -1,12 +1,22 @@
-.headers{
+.headers {
   display: flex;
   font-weight: 600;
 }
 
-.headers>div{
+.headers > div {
   width: 20%;
 }
 
-.upcoming-header{
+.upcoming-header {
   margin-top: 3rem;
+}
+
+@media screen and (max-width: 650px) {
+  .headers {
+    display: none;
+  }
+
+  .upcoming-header {
+    display: none;
+  }
 }

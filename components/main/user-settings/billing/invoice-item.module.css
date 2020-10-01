@@ -7,3 +7,16 @@
 .container>div{
   width: 20%;
 }
+
+@media screen and (max-width: 650px){
+  .container{
+    flex-wrap: wrap;
+    border-bottom: 1px solid var(--color-secondary-border);
+  }
+
+  .container>*{
+    min-width: 5rem;
+    margin-right: 1rem;
+    margin-bottom: 10px;
+  }
+}

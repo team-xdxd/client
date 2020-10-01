@@ -10,6 +10,7 @@
 
 .form{
   display: flex;
+  flex-wrap: wrap;
 }
 .change-password-button{
   align-self: flex-end;

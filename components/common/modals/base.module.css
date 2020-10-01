@@ -47,7 +47,7 @@
   padding: 20px;
   border-bottom: 1px solid var(--color-secondary-border);
   font-size: 17px;
-  width: 35rem;
+  width: 35rem;  
   align-items: center;
 }
 
@@ -75,4 +75,16 @@
 
 .buttons>div {
   margin-left: 5px;
+}
+
+@media screen and (max-width: 717px) {
+  .text {
+    width: 25rem;      
+  }
+}
+
+@media screen and (max-width: 500px) {
+  .text {
+    width: 15rem;      
+  }
 }

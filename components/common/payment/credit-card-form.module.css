@@ -1,11 +1,11 @@
 .container {
   padding: 35px 25px;
-  width: 400px;
+  width: 100%;
   max-width: 400px;
   margin-bottom: 3rem;
 }
 
-.no-bottom{
+.no-bottom {
   margin-bottom: 0;
 }
 
@@ -36,16 +36,16 @@
   display: flex;
 }
 
-.fields-pair{
+.fields-pair {
   display: flex;
 }
 
-.fields-pair>div:first-child{
+.fields-pair > div:first-child {
   width: 50%;
   margin-right: 5%;
 }
 
-.fields-pair>div:last-child{
+.fields-pair > div:last-child {
   width: 45%;
 }
 
@@ -58,4 +58,32 @@
   font-weight: 500;
   display: block;
   margin-bottom: 8px;
+}
+
+@media screen and (max-width: 650px) {
+  .expiry-cvc,
+  .city-state {
+    flex-wrap: wrap;
+  }
+
+  .fields-pair {
+    flex-wrap: wrap;
+  }
+
+  .stripe-elem-expiry {    
+    width: 100%;
+  }
+
+  .fields-pair > div:first-child {
+    width: 100%;
+    margin-right: 0;
+  }
+  
+  .fields-pair > div:last-child {
+    width: 100%;
+  }
+
+  .container {
+    padding: 17.5px 12.5px;
+  }
 }

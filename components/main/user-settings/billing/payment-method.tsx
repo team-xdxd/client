@@ -50,6 +50,7 @@ const PaymentMethod = ({paymentMethod, setPaymentMethod}) => {
       <BaseModal
         closeModal={() => setModalActive(false)}
         noHeightMax={true}
+        additionalClasses={['visible-block']}
         modalIsOpen={modalActive}>
         <CreditCardForm
           onConfirm={updatePaymentMethod}
