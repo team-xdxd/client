@@ -68,3 +68,17 @@
 .seen {
   background-color: var(--color-sec-blue);
 }
+
+
+@media screen and (max-width: 900px){
+  .list {
+    width: max-content;
+    right: -11rem;
+  }
+}
+
+@media screen and (max-width: 500px){
+  .list {
+    max-width: 20rem;
+  }
+}

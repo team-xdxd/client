@@ -17,3 +17,15 @@
 .selected, .setting:hover {
   background-color: var(--color-sec-lightblue);
 }
+
+@media screen and (max-width: 1100px){
+  .container {
+    position: absolute;
+    grid-area: unset;
+    background-color: white;
+    border-top: 1px solid var(--color-secondary-border);
+    width: 200px;
+    z-index: 1;
+    top: 2.5rem;
+  }
+}

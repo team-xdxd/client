@@ -3,6 +3,10 @@
   display: flex;
 }
 
+.container{
+  flex-wrap: wrap;
+}
+
 .radio-options > div:last-child {
   margin-left: 3rem;
 }
