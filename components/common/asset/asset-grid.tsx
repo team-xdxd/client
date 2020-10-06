@@ -20,7 +20,13 @@ import DetailOverlay from './detail-overlay'
 import ConfirmModal from '../modals/confirm-modal'
 import Button from '../buttons/button'
 
-const AssetGrid = ({ activeView = 'grid', onFilesDataGet, toggleSelected, mode = 'assets', activeSortFilter = {}, folders = [],
+const AssetGrid = ({
+  activeView = 'grid',
+  onFilesDataGet,
+  toggleSelected,
+  mode = 'assets',
+  activeSortFilter = {},
+  folders = [],
   deleteFolder = (id) => { },
   itemSize = 'regular',
   activeFolder = '',
@@ -42,7 +48,7 @@ const AssetGrid = ({ activeView = 'grid', onFilesDataGet, toggleSelected, mode =
   const [initAsset, setInitAsset] = useState(undefined)
 
   useEffect(() => {
-    const { assetId, side } = urlUtils.getQueryParameters()
+    const { assetId } = urlUtils.getQueryParameters()
     if (assetId)
       getInitialAsset(assetId)
   }, [])
@@ -107,8 +113,7 @@ const AssetGrid = ({ activeView = 'grid', onFilesDataGet, toggleSelected, mode =
     downloadUtils.downloadFile(assetItem.realUrl, assetItem.asset.name)
   }
 
-  const shouldShowUpload = (mode === 'assets' && assets.length === 0) || (mode === 'folders' && folders.length === 0)
-
+  const shouldShowUpload = activeSearchOverlay || (mode === 'assets' && assets.length === 0) || (mode === 'folders' && folders.length === 0)
 
   return (
     <section className={styles.container}>

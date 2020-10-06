@@ -1,6 +1,11 @@
 import { createContext } from 'react'
 import { create } from 'domain'
 
+export const LoadingContext = createContext({
+    isLoading: false,
+    setIsLoading: (value) => { }
+})
+
 export const UserContext = createContext({
     user: null,
     setUser: (user) => { },

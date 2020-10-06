@@ -1,6 +1,6 @@
 import Router, { useRouter } from 'next/router'
-import { useState, useEffect } from 'react'
-import { UserContext } from '../context'
+import { useState, useEffect, useContext } from 'react'
+import { LoadingContext, UserContext } from '../context'
 import cookiesUtils from '../utils/cookies'
 import requestsUtils from '../utils/requests'
 
@@ -12,9 +12,11 @@ export default ({ children }) => {
   const [user, setUser] = useState(null)
   const [initialLoadFinished, setInitialLoadFinished] = useState(false)
 
+  const { setIsLoading } = useContext(LoadingContext)
+
   const router = useRouter()
 
-  const fetchUser = async (redirectLogin = false) => {
+  const fetchUser = async (redirectLogin = false) => {    
     if (redirectLogin) return Router.replace('/login')
     const jwt = cookiesUtils.get('jwt')
 
@@ -28,9 +30,10 @@ export default ({ children }) => {
 
     if (jwt && !needTwoFactor) {
       try {
+        setIsLoading(true)
         const { data } = await userApi.getUserData()
         setUser(data)
-        if (!data.firstTimeLogin) {
+        if (!data.firstTimeLogin && Router.pathname.indexOf('/main/setup') === -1) {
           Router.replace('/main/setup')
         }
         else if (Router.pathname.indexOf('/main') === -1)
@@ -39,6 +42,8 @@ export default ({ children }) => {
       } catch (err) {
         console.log(err)
         initialRedirect()
+      } finally{
+        setIsLoading(false)
       }
     } else initialRedirect()
   }

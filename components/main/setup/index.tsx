@@ -51,6 +51,7 @@ const Setup = () => {
 
   useEffect(() => {
     const { step } = urlUtils.getQueryParameters()
+    console.log(step)
     if (step) {
       setCurrentStep(AVAILABLE_STEPS[step as string])
     }
