@@ -2,7 +2,7 @@ import { useContext, useRef } from 'react'
 import styles from './main-layout.module.css'
 import Link from 'next/link'
 import { GeneralImg, Navigation } from '../../../assets'
-import { UserContext } from '../../../context'
+import { UserContext, LoadingContext } from '../../../context'
 import Router from 'next/router'
 import {
   SETTINGS_BILLING,
@@ -20,10 +20,11 @@ import TrialReminderModal from '../modals/trial-reminder-modal'
 import UserPhoto from '../user/user-photo'
 import NoPermissionNotice from '../misc/no-permission-notice'
 import Notification from '../notifications/notification'
+import SpinnerOverlay from '../spinners/spinner-overlay'
 
 const MainLayout = ({ children, requiredPermissions = [] }) => {
   const { user, logOut, hasPermission } = useContext(UserContext)
-
+  const { isLoading } = useContext(LoadingContext)
   const pageListRef = useRef(null)
 
   const SettingsLink = ({ settingRef, name }) => (
@@ -121,7 +122,7 @@ const MainLayout = ({ children, requiredPermissions = [] }) => {
               )}
             />
           </header>
-
+          {isLoading && <SpinnerOverlay />}
           {hasPermission(requiredPermissions) ?
             children
             :

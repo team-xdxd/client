@@ -21,6 +21,7 @@ import { LanguageContext, ThemeContext } from '../context'
 import AssetContextProvider from '../context/asset-provider'
 import TeamContextProvider from '../context/team-provider'
 import UserContextProvider from '../context/user-provider'
+import LoadingContextProvider from '../context/loading-provider'
 
 import requestUtils from '../utils/requests'
 
@@ -53,20 +54,21 @@ export default function MyApp({ Component, pageProps }) {
   }, [])
 
   return (
-
-    <UserContextProvider >
-      <LanguageContext.Provider value={languageValue}>
-        <ThemeContext.Provider value={themeValue}>
-          <AssetContextProvider>
-            <TeamContextProvider>
-              <Head>
-                <script type="text/javascript" src="https://www.dropbox.com/static/api/2/dropins.js" id="dropboxjs" data-app-key={`gtwo80vc34l8vjd`}></script>
-              </Head>
-              <Component {...pageProps} />
-            </TeamContextProvider>
-          </AssetContextProvider>
-        </ThemeContext.Provider>
-      </LanguageContext.Provider>
-    </UserContextProvider>
+    <LoadingContextProvider>
+      <UserContextProvider >
+        <LanguageContext.Provider value={languageValue}>
+          <ThemeContext.Provider value={themeValue}>
+            <AssetContextProvider>
+              <TeamContextProvider>
+                <Head>
+                  <script type="text/javascript" src="https://www.dropbox.com/static/api/2/dropins.js" id="dropboxjs" data-app-key={`gtwo80vc34l8vjd`}></script>
+                </Head>
+                <Component {...pageProps} />
+              </TeamContextProvider>
+            </AssetContextProvider>
+          </ThemeContext.Provider>
+        </LanguageContext.Provider>
+      </UserContextProvider>
+    </LoadingContextProvider>
   )
 }

@@ -1,9 +1,8 @@
 import { useState, useContext } from 'react'
 import { useForm } from 'react-hook-form'
 import styles from './signup-form.module.css'
-import { UserContext } from '../../context'
+import { UserContext, LoadingContext } from '../../context'
 import userApi from '../../server-api/user'
-import cookiesUtils from '../../utils/cookies'
 
 // Components
 import AuthButton from '../common/buttons/auth-button'
@@ -18,8 +17,10 @@ const SignupForm = ({ inviteCode = '' }) => {
   const [companySize, setCompanySize] = useState(undefined)
   const [submitError, setSubmitError] = useState('')
   const { afterAuth } = useContext(UserContext)
+  const { setIsLoading } = useContext(LoadingContext)
   const onSubmit = async fieldData => {
     try {
+      setIsLoading(true)
       const createData = {
         email: fieldData.email,
         name: fieldData.name,
@@ -36,6 +37,8 @@ const SignupForm = ({ inviteCode = '' }) => {
       } else {
         setSubmitError('Something went wrong, please try again later')
       }
+    } finally {
+      setIsLoading(false)
     }
   }
 

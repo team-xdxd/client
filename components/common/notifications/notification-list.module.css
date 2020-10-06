@@ -2,7 +2,7 @@
   width: 40rem;
   position: absolute;
   background-color: white;
-  z-index: 10;
+  z-index: 1000;
   right: 0;
   padding: 15px;
   border: 1px solid var(--color-secondary-border);

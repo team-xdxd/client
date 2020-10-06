@@ -1,6 +1,6 @@
 import { useState, useContext } from 'react'
 import styles from './login-form.module.css'
-import { UserContext } from '../../context'
+import { UserContext, LoadingContext } from '../../context'
 import Link from 'next/link'
 import Router from 'next/router'
 import { useForm } from 'react-hook-form'
@@ -16,8 +16,10 @@ const Form = () => {
   const { control, handleSubmit, errors } = useForm()
   const [submitError, setSubmitError] = useState('')
   const { afterAuth } = useContext(UserContext)
+  const { setIsLoading } = useContext(LoadingContext)
   const onSubmit = async loginData => {
     try {
+      setIsLoading(true)
       const signInData = {
         email: loginData.email,
         password: loginData.password
@@ -31,6 +33,8 @@ const Form = () => {
       } else {
         setSubmitError('Something went wrong, please try again later')
       }
+    } finally {
+      setIsLoading(false)
     }
   }
 
