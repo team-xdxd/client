@@ -14,7 +14,9 @@ const UpcomingTasks = ({ tasks = [] }) => (
             date={task.endDate}
             name={task.name}
             status={task.status}
+            projectName={task.project?.name}
             detailUrl={`/main/tasks/${task.id}`}
+            projectDetailUrl={`/main/projects/${task.project?.id}`}
           />
         ))}
       </ul>

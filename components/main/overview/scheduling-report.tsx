@@ -1,7 +1,7 @@
 import styles from './scheduling-report.module.css'
 import chartUtils from '../../../utils/chart'
 import { useState, useEffect } from 'react'
-import itemStatuses from '../../../resources/data/item-status.json'
+import statusData from '../../../resources/data/item-status.json'
 
 import campaignApi from '../../../server-api/campaign'
 import projectApi from '../../../server-api/project'
@@ -21,6 +21,8 @@ for (let i = 0; i < 9; i++) {
   availableMonths.push(currentDate)
   currentDate = addMonths(currentDate, 1)
 }
+
+const itemStatuses = statusData.filter(status => status !== 'past_due')
 
 const SchedulingReport = () => {
 
@@ -89,6 +91,7 @@ const SchedulingReport = () => {
           '#800356',
           '#ff7438',
           '#ffb638',
+          // '#fa373d'
         ],
         data: itemStatuses.map(status => totalsObj[status].total)
       }],

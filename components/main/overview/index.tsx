@@ -98,10 +98,8 @@ const Overview = () => {
         openCreateOVerlay={openCreateOVerlay}
       />
       <main className={`${styles.container}`}>
+        <h1>{`Welcome back, ${user?.name.split(' ')[0]}`}</h1>
         <section className={styles['first-section']}>
-          <Banner
-            userName={user?.name}
-          />
           <SchedulingReport />
           <Upcoming
             type='project'

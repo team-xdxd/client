@@ -28,3 +28,10 @@
   background-color: var(--color-sec-lightyellow);
 }
 
+.alt-color-wine{
+  background-color: var(--color-sec-lightwine);
+}
+
+.alt-color-orange{
+  background-color: var(--color-sec-lightorange);
+}

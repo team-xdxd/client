@@ -39,7 +39,13 @@ const ItemSubHeader = ({
           {status &&
             <StatusBadge status={status} />
           }
+          {type === 'task' && status !== 'completed' &&
+            <button className={styles['draft-action']} onClick={() => changeStatus('completed')}>
+              Mark as Complete
+            </button>
+          }
         </div>
+
 
         {!activeSearchOverlay && selectedAssets.length > 0 ?
           <>
@@ -65,7 +71,7 @@ const ItemSubHeader = ({
                 Save Draft
             </button>
             }
-            {status === 'scheduled' &&
+            {(status !== 'draft') &&
               <button className={styles['draft-action']} onClick={() => changeStatus('draft')}>
                 Change to Draft
             </button>
@@ -77,7 +83,7 @@ const ItemSubHeader = ({
                 type='button'
               />
             }
-            {status === 'scheduled' &&
+            {status !== 'draft' &&
               <NavButton
                 text='Save'
                 onClick={saveDraft}

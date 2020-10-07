@@ -13,7 +13,7 @@
 }
 
 .open {
-  background-color: var(--color-sec-lightwine);
+  background-color: var(--color-sec-lightturquoise);
 }
 
 .scheduled {
@@ -21,9 +21,13 @@
 }
 
 .completed {
-  background-color: var(--color-sec-lightturquoise);
+  background-color: var(--color-sec-lightwine);
 }
 
 .archived {
+  background-color: var(--color-sec-lightred);
+}
+
+.past_due{
   background-color: var(--color-sec-lightred);
 }

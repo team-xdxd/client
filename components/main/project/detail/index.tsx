@@ -238,6 +238,10 @@ const ProjectDetail = () => {
       return toastUtils.error('You must add an Deadline Date')
     }
 
+    if (newStatus === 'scheduled' && editableFields.publishDate < new Date()) {
+      return toastUtils.error('You cannot schedule if the Publish Date is in the past')
+    }
+
     try {
       setStatus(newStatus)
       await saveProject()
