@@ -301,7 +301,7 @@ const ProjectFields = ({
           </ItemFieldWrapper>
         </div>
       }
-      {(project.type !== 'email' && project.type !== 'articles' && project.type === 'banners') &&
+      {(project.type !== 'email' && project.type !== 'articles' && project.type !== 'banners') &&
         <ToggleableAbsoluteWrapper
           wrapperClass='field'
           contentClass='dropdown'
