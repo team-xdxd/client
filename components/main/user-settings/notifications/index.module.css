@@ -1,9 +1,10 @@
-.container{
+.preferences{
   padding-bottom: 2rem;
   border-bottom: 1px solid var(--color-secondary-border);
+  margin-bottom: 2rem;
 }
 
-.container, .radio-options{
+.radio-options{
   display: flex;
 }
 

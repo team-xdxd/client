@@ -157,6 +157,10 @@ const CampaignDetail = () => {
       return toastUtils.error('You must add an End Date')
     }
 
+    if (newStatus === 'scheduled' && endDate < new Date()) {
+      return toastUtils.error('You cannot schedule if the End Date is in the past')
+    }
+
     try {
       setStatus(newStatus)
       await saveCampaign()

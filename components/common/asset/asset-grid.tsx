@@ -143,6 +143,7 @@ const AssetGrid = ({
                 <li className={styles['grid-item']} key={assetItem.asset.id || index}>
                   <AssetThumbail
                     {...assetItem}
+                    type={type}
                     toggleSelected={() => toggleSelected(assetItem.asset.id)}
                     openArchiveAsset={() => openArchiveAsset(assetItem.asset)}
                     openDeleteAsset={() => openDeleteAsset(assetItem.asset.id)}
@@ -150,6 +151,7 @@ const AssetGrid = ({
                     openCopyAsset={() => beginAssetOperation({ asset: assetItem }, 'copy')}
                     openShareAsset={() => beginAssetOperation({ asset: assetItem }, 'share')}
                     downloadAsset={() => downloadAsset(assetItem)}
+                    openRemoveAsset={() => beginAssetOperation({ asset: assetItem }, 'remove_item')}
                   />
                 </li>
               )
@@ -173,6 +175,7 @@ const AssetGrid = ({
               return (
                 <li className={styles['regular-item']} key={assetItem.asset.id || index}>
                   <ListItem
+                    type={type}
                     assetItem={assetItem}
                     index={index}
                     toggleSelected={() => toggleSelected(assetItem.asset.id)}
@@ -182,6 +185,7 @@ const AssetGrid = ({
                     openCopyAsset={() => beginAssetOperation({ asset: assetItem }, 'copy')}
                     openShareAsset={() => beginAssetOperation({ asset: assetItem }, 'share')}
                     downloadAsset={() => downloadAsset(assetItem)}
+                    openRemoveAsset={() => beginAssetOperation({ asset: assetItem }, 'remove_item')}
                   />
                 </li>
               )

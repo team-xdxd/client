@@ -11,10 +11,12 @@ const ALLOWED_TYPES = 'image/png, image/jpeg'
 // Components
 import Button from '../buttons/button'
 import ButtonIcon from '../buttons/button-icon'
+import Spinner from '../spinners/spinner'
 
 const PhotoUpload = ({ userPhoto = '' }) => {
   const [currentPhoto, setCurrentPhoto] = useState(undefined)
   const [uploadedImage, setUploadedImage] = useState(undefined)
+  const [isUploading, setIsUploading] = useState(false)
 
   const { setUser } = useContext(UserContext)
 
@@ -30,9 +32,11 @@ const PhotoUpload = ({ userPhoto = '' }) => {
     fileBrowserRef.current.click()
   }
 
-  const onFileChange = (e) => {
-    setCurrentPhoto(URL.createObjectURL(e.target.files[0]))
-    setUploadedImage(e.target.files[0])
+  const onFileChange = async (e) => {
+    // setCurrentPhoto(URL.createObjectURL(e.target.files[0]))
+    // Commented for now
+    // setUploadedImage(e.target.files[0])
+    await saveChanges(e.target.files[0])
     fileBrowserRef.current.value = ''
   }
 
@@ -41,10 +45,11 @@ const PhotoUpload = ({ userPhoto = '' }) => {
     setCurrentPhoto(userPhoto)
   }
 
-  const saveChanges = async () => {
+  const saveChanges = async (uploadImg) => {
     try {
+      setIsUploading(true)
       const formData = new FormData()
-      formData.append('photo', uploadedImage)
+      formData.append('photo', uploadImg)
       const { data } = await userApi.uploadPhoto(formData)
       setUser(data)
       toastUtils.success(`Photo updated.`)
@@ -53,12 +58,15 @@ const PhotoUpload = ({ userPhoto = '' }) => {
       cancelPreview()
       console.log(err)
       toastUtils.error('Could not update photo, please try again later.')
+    } finally {
+      setIsUploading(false)
     }
   }
 
   return (
     <div className={styles.container}>
-      <img className={`${currentPhoto ? styles.current : styles['no-photo']}`} src={currentPhoto || Utilities.memberProfile} />
+      {!isUploading && <img className={`${currentPhoto ? styles.current : styles['no-photo']}`} src={currentPhoto || Utilities.memberProfile} />}
+      {isUploading && <div className={styles.loading}><Spinner /></div>}
       <div>
         {uploadedImage ?
           <>

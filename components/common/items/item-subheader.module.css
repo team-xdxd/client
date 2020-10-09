@@ -19,6 +19,11 @@
 .header-additional {
   margin-left: 25px;
   flex: 1;
+  display: flex;
+}
+
+.header-additional>button {
+  margin-left: 5px;
 }
 
 .break{

@@ -37,8 +37,8 @@
 
 .legend span:first-child {
   border-radius: 50%;
-  height: 10px;
-  width: 10px;
+  min-height: 10px;
+  min-width: 10px;
 }
 
 .legend span:first-child.draft {
@@ -51,6 +51,10 @@
 
 .legend span:first-child.completed {
   background-color: var(--color-prim-wine);
+}
+
+.legend span:first-child.past_due {
+  background-color: var(--color-prim-red);
 }
 
 .legend span:last-child {
@@ -146,5 +150,13 @@
 
   .total {
     font-size: 25px;
+  }
+
+  .agg-status {
+    font-size: 12px;
+  }
+  
+  .legend span:last-child {
+    font-size: 12px;
   }
 }

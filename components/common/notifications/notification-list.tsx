@@ -4,16 +4,22 @@ import { format } from 'date-fns'
 
 // Components
 
-const NotificationList = ({ notifications, onClear }) => (
-  <ul className={styles.list}>
+const NotificationList = ({ notifications, onClear = (notif) => { }, onMarkRead = (notif) => { }, mode = 'header' }) => (
+  <ul className={`${styles.list} ${styles[mode]}`}>
     {notifications.length === 0 &&
       'You don\'t have any new notifications'
     }
     {notifications.map(notification => {
 
       const content = JSON.parse(notification.item).content
-      const formattedContent = content.length > 65 ?
-        `"${content.substring(0, 65)}..."` : `"${content}"`
+      let formattedContent
+
+      if (mode === 'header') {
+        formattedContent = content.length > 65 ?
+          `"${content.substring(0, 65)}..."` : `"${content}"`
+      } else {
+        formattedContent = content
+      }
 
       const date = new Date(notification.timestamp * 1000)
 
@@ -39,7 +45,10 @@ const NotificationList = ({ notifications, onClear }) => (
               {formattedContent}
             </div>
           </div>
-          <div className={styles.clear} onClick={() => onClear(notification)}>clear</div>
+          <div className={styles.action} onClick={
+            mode === 'header' ? () => onClear(notification) : () => onMarkRead(notification)}>
+            {mode === 'header' ? 'clear' : 'mark as seen'}
+          </div>
         </li>
       )
     })}

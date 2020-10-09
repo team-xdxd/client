@@ -154,6 +154,10 @@ const TaskDetail = () => {
       return toastUtils.error('You must add an Deadline Date')
     }
 
+    if (newStatus === 'scheduled' && editableFields.endDate < new Date()) {
+      return toastUtils.error('You cannot schedule if the End Date is in the past')
+    }
+
     try {
       setStatus(newStatus)
       await saveTask()
@@ -172,7 +176,6 @@ const TaskDetail = () => {
         changeName={(name) => editFields('name', name)}
         status={status}
         changeStatus={changeStatus}
-        resetPageTittle={() => editFields('name', task?.name)}
         hasAssets={true}
         type='task'
         itemId={task?.id}

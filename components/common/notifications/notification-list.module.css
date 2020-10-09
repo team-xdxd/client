@@ -17,7 +17,13 @@
   border-bottom: 1px solid var(--color-secondary-border);
 }
 
-.message {  
+.page .notification {
+  margin-bottom: 10px;
+  padding-bottom: 10px;
+  padding-top: 10px;
+}
+
+.message {
   margin-right: 10px;
   cursor: pointer;
 }
@@ -36,23 +42,30 @@
   color: var(--color-sec-blue);
 }
 
-.date{
+.date {
   font-size: 13px;
   color: var(--color-sec-blue);
   margin-right: 10px;
+  min-width: 58px;
 }
 
-.clear {
+.action {
   flex: 1;
   text-align: right;
   cursor: pointer;
   color: var(--color-sec-blue);
+  min-width: 34px;
 }
 
-.clear:hover {
+.page .action {
+  min-width: 93px;
+}
+
+.action:hover {
   opacity: 0.6;
 }
 
+.cleared,
 .new,
 .seen {
   border-radius: 50%;
@@ -65,20 +78,38 @@
   background-color: var(--color-prim-red);
 }
 
+.cleared,
 .seen {
   background-color: var(--color-sec-blue);
 }
 
-
-@media screen and (max-width: 900px){
+@media screen and (max-width: 900px) {
   .list {
     width: max-content;
     right: -11rem;
   }
+
+  .page {
+    width: 100%;
+    right: 0;
+    flex-wrap: wrap;
+  }
 }
 
-@media screen and (max-width: 500px){
+@media screen and (max-width: 500px) {
   .list {
     max-width: 20rem;
   }
+
+  .page {
+    max-width: 100%;
+  }
+}
+
+.page {
+  position: relative;
+  border: none;
+  width: 100%;
+  z-index: 0;
+  padding: 0;
 }
