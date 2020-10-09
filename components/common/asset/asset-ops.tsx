@@ -1,8 +1,11 @@
 import { AssetContext } from '../../../context'
 import { useState, useContext, useEffect } from 'react'
 import assetApi from '../../../server-api/asset'
+import projectApi from '../../../server-api/project'
+import taskApi from '../../../server-api/task'
 import folderApi from '../../../server-api/folder'
 import toastUtils from '../../../utils/toast'
+import { useRouter } from 'next/router'
 import update from 'immutability-helper'
 
 // Components
@@ -27,11 +30,38 @@ export default () => {
 		activePageMode
 	} = useContext(AssetContext)
 
+	const router = useRouter()
+
+	const [currentItem, setCurrentItem] = useState({
+		type: '',
+		id: ''
+	})
+
 	useEffect(() => {
 		if (activeOperation === 'move' || activeOperation === 'copy') {
 			getFolders()
 		}
 	}, [activeOperation])
+
+	useEffect(() => {
+		const { asPath } = router
+		if (asPath.indexOf('project') !== -1) {
+			setCurrentItem({
+				type: 'project',
+				id: asPath.split('/')[3]
+			})
+		} else if (asPath.indexOf('task') !== -1) {
+			setCurrentItem({
+				type: 'task',
+				id: asPath.split('/')[3]
+			})
+		} else {
+			setCurrentItem({
+				type: '',
+				id: ''
+			})
+		}
+	}, [router.asPath])
 
 	const getFolders = async () => {
 		try {
@@ -192,6 +222,41 @@ export default () => {
 		}
 	}
 
+	const removeSelectedAssetsFromItem = async () => {
+		try {
+			if (!operationAsset) {
+				if (currentItem.type === 'project') {
+					await projectApi.associateAssets(currentItem.id, { assetIds: selectedAssets.map(assetItem => assetItem.asset.id) }, { operation: 'disassociate' })
+				} else if (currentItem.type === 'task') {
+					await taskApi.associateAssets(currentItem.id, { assetIds: selectedAssets.map(assetItem => assetItem.asset.id) }, { operation: 'disassociate' })
+				}
+				const newAssets = assets.filter(existingAsset => {
+					const searchedAssetIndex = selectedAssets.findIndex(assetListItem => existingAsset.asset.id === assetListItem.asset.id)
+					return searchedAssetIndex === -1
+				})
+
+				setAssets(newAssets)
+			} else {
+				if (currentItem.type === 'project') {
+					await projectApi.associateAssets(currentItem.id, { assetIds: [operationAsset.asset.id] }, { operation: 'disassociate' })
+				} else if (currentItem.type === 'task') {
+					await taskApi.associateAssets(currentItem.id, { assetIds: [operationAsset.asset.id] }, { operation: 'disassociate' })					
+				}
+				const assetIndex = assets.findIndex(assetItem => assetItem.asset.id === operationAsset.asset.id)
+				if (assetIndex !== -1)
+					setAssets(update(assets, {
+						$splice: [[assetIndex, 1]]
+					}))
+			}
+
+			closeModalAndClearOpAsset()
+			toastUtils.success('Assets removed successfully')
+		} catch (err) {
+			console.log(err)
+			toastUtils.error('Could not remove assets, please try again later.')
+		}
+	}
+
 	const removeSelectedFromList = () => {
 		if (!operationAsset) {
 			const newAssets = assets.filter(existingAsset => {
@@ -266,6 +331,13 @@ export default () => {
 				confirmAction={deleteSelectedAssets}
 				confirmText={'Delete'}
 				message={`Delete ${operationLength} item(s)?`}
+			/>
+			<ConfirmModal
+				modalIsOpen={activeOperation === 'remove_item'}
+				closeModal={closeModalAndClearOpAsset}
+				confirmAction={removeSelectedAssetsFromItem}
+				confirmText={'Remove'}
+				message={`Remove ${operationLength} item(s) from ${currentItem.type}?`}
 			/>
 		</>
 	)

@@ -50,7 +50,7 @@ const ItemSubHeader = ({
         {!activeSearchOverlay && selectedAssets.length > 0 ?
           <>
             <div className={styles.break}></div>
-            <AssetHeaderOps />
+            <AssetHeaderOps itemType={type} />
           </>
           :
           <>

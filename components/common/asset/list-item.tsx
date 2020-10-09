@@ -17,6 +17,7 @@ import AssetOptions from './asset-options'
 const DEFAULT_DETAIL_PROPS = { visible: false, side: 'detail' }
 
 const ListItem = ({
+  type,
   assetItem: {
     asset,
     thumbailUrl,
@@ -32,7 +33,8 @@ const ListItem = ({
   openShareAsset = () => { },
   openCopyAsset = () => { },
   openArchiveAsset = () => { },
-  downloadAsset = () => { }
+  downloadAsset = () => { },
+  openRemoveAsset = () => { }
 }) => {
 
   const dateFormat = 'MMM do, yyyy h:mm a'
@@ -117,6 +119,7 @@ const ListItem = ({
             {!isLoading && !isUploading &&
               <div>
                 <AssetOptions
+                  itemType={type}
                   asset={asset}
                   openArchiveAsset={openArchiveAsset}
                   openDeleteAsset={openDeleteAsset}

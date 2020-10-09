@@ -14,6 +14,7 @@ import AssetOptions from './asset-options'
 const DEFAULT_DETAIL_PROPS = { visible: false, side: 'detail' }
 
 const AssetThumbail = ({
+  type,
   asset,
   thumbailUrl,
   realUrl,
@@ -26,7 +27,8 @@ const AssetThumbail = ({
   openCopyAsset = () => { },
   openShareAsset = () => { },
   openArchiveAsset = () => { },
-  downloadAsset = () => { }
+  downloadAsset = () => { },
+  openRemoveAsset = () => { }
 }) => {
 
   const [overlayProperties, setOverlayProperties] = useState(DEFAULT_DETAIL_PROPS)
@@ -77,6 +79,7 @@ const AssetThumbail = ({
             <div className='secondary-text'>{format(new Date(asset.createdAt), 'MMM d, yyyy, p')}</div>
             {!isUploading &&
               <AssetOptions
+                itemType={type}
                 asset={asset}
                 openArchiveAsset={openArchiveAsset}
                 openDeleteAsset={openDeleteAsset}
@@ -85,6 +88,7 @@ const AssetThumbail = ({
                 downloadAsset={downloadAsset}
                 openShareAsset={openShareAsset}
                 openComments={openComments}
+                openRemoveAsset={openRemoveAsset}
                 realUrl={realUrl}
               />
             }

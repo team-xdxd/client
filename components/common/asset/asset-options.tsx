@@ -10,6 +10,7 @@ import ToggleableAbsoluteWrapper from '../misc/toggleable-absolute-wrapper'
 
 const AssetOptions = ({
 	realUrl,
+	itemType = '',
 	asset,
 	downloadAsset,
 	openMoveAsset,
@@ -17,7 +18,8 @@ const AssetOptions = ({
 	openArchiveAsset,
 	openDeleteAsset,
 	openShareAsset,
-	openComments
+	openComments,
+	openRemoveAsset
 }) => {
 	// onClick={() => downloadUtils.downloadFile(realUrl, assetDetail.name)}
 	const options = [
@@ -29,6 +31,10 @@ const AssetOptions = ({
 		{ label: 'Delete', onClick: openDeleteAsset },
 		{ label: 'Share', onClick: openShareAsset }
 	]
+
+	if (itemType) {
+		options.push({ label: 'Remove', onClick: openRemoveAsset })
+	}
 
 	return (
 		<ToggleableAbsoluteWrapper

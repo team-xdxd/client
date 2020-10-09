@@ -11,6 +11,7 @@ import '../styles/search.css'
 import '../styles/loading-skeleton.css'
 import '../styles/billing-settings.css'
 import '../styles/overlays.css'
+import '../styles/toast.css'
 import 'react-day-picker/lib/style.css'
 import 'emoji-mart/css/emoji-mart.css'
 // Import stripe as a side effect so it helps detect fraudulent activy

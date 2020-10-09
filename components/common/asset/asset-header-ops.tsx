@@ -7,7 +7,7 @@ import { ASSET_DOWNLOAD } from '../../../constants/permissions'
 // Components
 import Button from '../../common/buttons/button'
 
-const AssetHeaderOps = ({ isUnarchive = false }) => {
+const AssetHeaderOps = ({ isUnarchive = false, itemType = '' }) => {
 	const {
 		assets,
 		setAssets,
@@ -33,6 +33,7 @@ const AssetHeaderOps = ({ isUnarchive = false }) => {
 			<Button text={'Move'} type='button' styleType='tertiary' onClick={() => setActiveOperation('move')} />
 			<Button text={'Copy'} type='button' styleType='tertiary' onClick={() => setActiveOperation('copy')} />
 			<Button text={'Share'} type='button' styleType='tertiary' onClick={() => setActiveOperation('share')} />
+			{itemType && <Button text={'Remove'} type='button' styleType='tertiary' onClick={() => setActiveOperation('remove_item')} />}
 			<Button text={`Deselect All (${selectedAssets.length})`} type='button' styleType='primary' onClick={deselectAll} />
 		</>
 	)
