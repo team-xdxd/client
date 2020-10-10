@@ -20,7 +20,9 @@ const permissions = {
   SETTINGS_BILLING: 'settings_billing',
   SETTINGS_PLAN: 'settings_plan',
   SETTINGS_SECURITY: 'settings_security',
-  SETTINGS_TEAM: 'settings_team'
+  SETTINGS_TEAM: 'settings_team',
+
+  SUPERADMIN_ACCESS: 'super_admin'
 }
 
 module.exports = permissions

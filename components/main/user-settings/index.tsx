@@ -13,7 +13,8 @@ import {
   SETTINGS_SECURITY,
   SETTINGS_TEAM,
   SETTINGS_COMPANY,
-  SETTINGS_PLAN
+  SETTINGS_PLAN,
+  SUPERADMIN_ACCESS
 } from '../../../constants/permissions'
 
 // Components
@@ -25,6 +26,7 @@ import Billing from './billing'
 import Plan from './plan'
 import Security from './security'
 import Integrations from './integrations'
+import SuperAdmin from './super-admin'
 import Notifications from './notifications'
 import NoPermissionNotice from '../../common/misc/no-permission-notice'
 import Button from '../../common/buttons/button'
@@ -39,6 +41,7 @@ const SETTING_OPTIONS = {
   team: { label: 'Team', permissions: [SETTINGS_TEAM], content: Team },
   notifications: { label: 'Notifications', permissions: [], content: Notifications },
   integrations: { label: 'Integrations', permissions: [], content: Integrations },
+  ['super-admin']: { label: 'Super Admin', permissions: [SUPERADMIN_ACCESS], content: SuperAdmin },
 }
 
 const UserSettings = () => {
