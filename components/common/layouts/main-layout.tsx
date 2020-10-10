@@ -3,13 +3,15 @@ import styles from './main-layout.module.css'
 import Link from 'next/link'
 import { GeneralImg, Navigation } from '../../../assets'
 import { UserContext, LoadingContext } from '../../../context'
+import cookiesUtils from '../../../utils/cookies'
 import Router from 'next/router'
 import {
   SETTINGS_BILLING,
   SETTINGS_SECURITY,
   SETTINGS_TEAM,
   SETTINGS_COMPANY,
-  SETTINGS_PLAN
+  SETTINGS_PLAN,
+  SUPERADMIN_ACCESS
 } from '../../../constants/permissions'
 
 // Components
@@ -21,6 +23,7 @@ import UserPhoto from '../user/user-photo'
 import NoPermissionNotice from '../misc/no-permission-notice'
 import Notification from '../notifications/notification'
 import SpinnerOverlay from '../spinners/spinner-overlay'
+import Button from '../buttons/button'
 
 const MainLayout = ({ children, requiredPermissions = [] }) => {
   const { user, logOut, hasPermission } = useContext(UserContext)
@@ -38,6 +41,14 @@ const MainLayout = ({ children, requiredPermissions = [] }) => {
     </Link>
   )
 
+  const adminJWT = cookiesUtils.get('adminToken')
+
+  const getBackToAdmin = async () => {
+    cookiesUtils.setUserJWT(adminJWT)
+    cookiesUtils.remove('adminToken')
+    Router.reload()
+  }
+
   const dropdownOptions = [
     { OverrideComp: () => <SettingsLink name='Profile' settingRef='profile' /> }
   ]
@@ -49,6 +60,7 @@ const MainLayout = ({ children, requiredPermissions = [] }) => {
   dropdownOptions.push({ OverrideComp: () => <SettingsLink name='Notifications' settingRef='notifications' /> })
   dropdownOptions.push({ OverrideComp: () => <SettingsLink name='Integrations' settingRef='integrations' /> })
   dropdownOptions.push({ label: 'Log Out', onClick: logOut })
+  if (hasPermission([SUPERADMIN_ACCESS])) dropdownOptions.push({ OverrideComp: () => <SettingsLink name='Super Admin' settingRef='super-admin' /> })
 
   const toggleHamurgerList = () => {
     const classType = `visible-block`
@@ -128,6 +140,15 @@ const MainLayout = ({ children, requiredPermissions = [] }) => {
             :
             <NoPermissionNotice />
           }
+          {adminJWT &&
+            <div className={styles['superadmin-back']} >
+              <Button 
+                text='Go back to Superadmin'
+                type='button'
+                styleType='secondary'
+                onClick={getBackToAdmin}
+              />                
+            </div>}
           <footer className={styles.footer}>
             <TrialReminderModal />
           </footer>

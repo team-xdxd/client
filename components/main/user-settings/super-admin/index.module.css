@@ -1,0 +1,9 @@
+.list{
+  margin-top: 2rem;
+}
+
+.action{
+  display: flex;
+  justify-content: center;
+  margin-top: 2rem;
+}
