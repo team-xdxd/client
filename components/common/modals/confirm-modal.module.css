@@ -3,7 +3,8 @@
   padding: 20px;
   border-bottom: 1px solid var(--color-secondary-border);
   font-size: 17px;
-  width: 35rem;
+  max-width: 35rem;
+  width: 100%;
   align-items: center;
 }
 

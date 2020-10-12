@@ -43,12 +43,6 @@
   align-items: center;
 }
 
-.multiple img:first-child,
-.icons img:first-child {
-  width: 22px;
-  height: 22px;
-}
-
 .multiple *:last-child img {
   display: none;
 }
@@ -76,8 +70,8 @@
   background-color: var(--color-sec-lightyellow);
 }
 
-.article {
-  background-color: var(---color-sec-lightwine);
+.articles {
+  background-color: var(--color-sec-lightwine);
 }
 
 .banners {

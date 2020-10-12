@@ -1,6 +1,8 @@
 .container {
   display: grid;
-  grid-template-areas: "first-section second-section";
+  grid-template-areas:
+    "title title"
+    "first-section second-section";
   grid-template-columns: 62% 35%;
   grid-column-gap: 3%;
   font-weight: 500;
@@ -21,6 +23,10 @@
   margin-top: 40px;
 }
 
+.second-section{
+  margin-top: 84px;
+}
+
 .first-section {
   grid-area: first-section;
   /* width: 60rem;
@@ -32,7 +38,15 @@
   /* width: 25rem; */
 }
 
-@media screen and (max-width: 1023px) {
+.container > h1 {
+  margin-top: 60px;
+  margin-bottom: 40px;
+  grid-area: title;
+  font-weight: normal;
+  font-size: 38px;
+}
+
+@media screen and (max-width: 1000px) {
   .container {
     display: flex;
     flex-wrap: wrap;
@@ -47,5 +61,12 @@
     width: 100%;
     max-width: 25rem;
     margin-bottom: 45px;
+    margin-top: 25px;
+  }
+
+  .container > h1 {
+    margin-top: 40px;
+    margin-bottom: 20px;
+    font-size: 28px;
   }
 }

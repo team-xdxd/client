@@ -50,12 +50,12 @@
   background-color: var(--color-sec-lightyellow);
 }
 
-.article {
-  background-color: var(---color-sec-lightwine);
+.articles {
+  background-color: var(--color-sec-lightwine);
 }
 
 .banners {
-  background-color: var(--color-sec-lightblue);
+  background-color: var(--color-sec-lightivory);
 }
 
 .email {

@@ -17,3 +17,11 @@
   background-color: var(--color-prim-turquoise-hover);
   cursor: default;
 }
+
+@media screen and (max-width: 1000px) {
+  .container {
+    min-width: 0;
+    font-size: 13px;
+    padding: 6px 20px;
+  }
+}

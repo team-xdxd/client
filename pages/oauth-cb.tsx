@@ -3,46 +3,51 @@ import Router from 'next/router'
 import { UserContext } from '../context'
 import authApi from '../server-api/auth'
 import cookiesUtil from '../utils/cookies'
+import urlUtils from '../utils/url'
+import toastUtils from '../utils/toast'
+
+// Components
+import Spinner from '../components/common/spinners/spinner'
 
 // Simple redirect page
 const OauthCbPage = () => {
 
-  const { fetchUser } = useContext(UserContext)
+  const { afterAuth } = useContext(UserContext)
   useEffect(() => {
     // TODO: Include state string verification
-    const queryParams = window.location.search.substr(1).split('&')
-    const accessCode = decodeURIComponent(getFromQueryParams(queryParams, 'code'))
-    signIn(accessCode)
+    const { code } = urlUtils.getQueryParameters()
+    signIn(decodeURIComponent(code as string))
   }, [])
 
   const signIn = async (accessCode) => {
+    const provider = cookiesUtil.get('oauthProvider')
+    const cookieInviteCode = cookiesUtil.get('inviteCode')
     try {
-      const provider = cookiesUtil.get('oauthProvider')
-      const { data } = await authApi.signIn(provider, accessCode)
-      cookiesUtil.setUserJWT(data.token)
-      fetchUser()
+      let inviteCode
+      // Check if inviteCode is valid
+      if (cookieInviteCode && cookieInviteCode !== 'undefined') {
+        inviteCode = cookieInviteCode
+      }
+      const { data } = await authApi.signIn(provider, accessCode, { inviteCode })
+      await afterAuth(data)
     } catch (err) {
+      if (err.response?.data?.message) toastUtils.error(err.response.data.message)
       console.log(err)
+      if (cookieInviteCode && cookieInviteCode !== 'undefined') {
+        Router.replace(`/signup?inviteCode=${cookieInviteCode}`)
+      } else {
+        Router.replace('/login')
+      }
+    } finally {
+      cookiesUtil.remove('inviteCode')
     }
   }
 
   return (
-    <div className="container">
-      {/* TODO: Replace with prettier loading indicator */}
-      Loading...
+    <div className="container" style={{ display: 'flex', justifyContent: 'center', marginTop: '4rem' }}>
+      <Spinner />
     </div>
   )
 }
 
 export default OauthCbPage
-
-
-const getFromQueryParams = (queryParams, parameter) => {
-  let foundCode;
-  queryParams.forEach(element => {
-    if (element.includes(parameter + "=")) {
-      foundCode = element.split(parameter + "=")[1];
-    }
-  });
-  return foundCode;
-}

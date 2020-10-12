@@ -1,11 +1,18 @@
 import { createContext } from 'react'
 import { create } from 'domain'
 
+export const LoadingContext = createContext({
+    isLoading: false,
+    setIsLoading: (value) => { }
+})
+
 export const UserContext = createContext({
     user: null,
     setUser: (user) => { },
-    fetchUser: () => { },
-    logOut: () => { }
+    fetchUser: (redirectUser) => { },
+    logOut: () => { },
+    hasPermission: (requiredPermissions) => { return true },
+    afterAuth: ({ twoFactor, token }) => { }
 })
 
 export const ThemeContext = createContext({
@@ -51,4 +58,28 @@ export const AssetContext = createContext({
 
     addedIds: [],
     setAddedIds: (idList) => { }
+})
+
+export const TeamContext = createContext({
+    team: null,
+    patchTeam: (patchData) => { },
+    getTeam: (once) => { },
+    teamMembers: [],
+    setTeamMembers: (data) => { },
+    getTeamMembers: () => { },
+
+    plan: null,
+    getPlan: (data) => { },
+
+})
+
+export const LocationContext = createContext({
+    countries: [],
+    loadCountries: () => { },
+
+    states: [],
+    loadStates: (countryId) => { },
+
+    cities: [],
+    loadCities: (stateId) => { },
 })

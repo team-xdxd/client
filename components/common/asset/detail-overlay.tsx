@@ -7,25 +7,42 @@ import { AssetContext } from '../../../context'
 import toastUtils from '../../../utils/toast'
 import update from 'immutability-helper'
 import downloadUtils from '../../../utils/download'
+import {
+  isMobile
+} from "react-device-detect"
 
 // Components
 import SidePanel from './detail-side-panel'
+import ConversationList from '../conversation/conversation-list'
 import IconClickable from '../buttons/icon-clickable'
 import Button from '../buttons/button'
 import AssetImg from './asset-img'
 import RenameModal from '../modals/rename-modal'
 
-const DetailOverlay = ({ asset, realUrl, closeOverlay, openShareAsset = () => { }, openDeleteAsset = () => { }, isShare = false }) => {
+const DetailOverlay = ({ asset, realUrl, closeOverlay, openShareAsset = () => { }, openDeleteAsset = () => { }, isShare = false, initiaParams }) => {
 
   const [assetDetail, setAssetDetail] = useState()
 
   const [renameModalOpen, setRenameModalOpen] = useState(false)
 
+  const [activeSideComponent, setActiveSidecomponent] = useState('detail')
+
   const { assets, setAssets } = useContext(AssetContext)
+
+  const [sideOpen, setSideOpen] = useState(true)
 
   useEffect(() => {
     getDetail()
+    checkInitialParams()
+    if (isMobile)
+      toggleSideMenu()
   }, [])
+
+  const checkInitialParams = () => {
+    if (initiaParams?.side) {
+      setActiveSidecomponent(initiaParams.side)
+    }
+  }
 
   const getDetail = async () => {
     try {
@@ -33,7 +50,7 @@ const DetailOverlay = ({ asset, realUrl, closeOverlay, openShareAsset = () => { 
         setAssetDetail(asset)
       else {
         const { data } = await assetApi.getById(asset.id)
-        setAssetDetail(data)
+        setAssetDetail(data.asset)
       }
     } catch (err) {
       console.log(err)
@@ -72,6 +89,19 @@ const DetailOverlay = ({ asset, realUrl, closeOverlay, openShareAsset = () => { 
     }
   }
 
+  const toggleSideMenu = (value = null) => {
+    console.log(value)
+    if (value === null)
+      setSideOpen(!sideOpen)
+    else
+      setSideOpen(value)
+  }
+
+  const changeActiveSide = (side) => {
+    setActiveSidecomponent(side)
+    setSideOpen(true)
+  }
+
   return (
     <div className={`app-overlay ${styles.container}`}>
       {assetDetail &&
@@ -108,14 +138,35 @@ const DetailOverlay = ({ asset, realUrl, closeOverlay, openShareAsset = () => { 
           </div>
         </section>
       }
-      {assetDetail &&
+      {sideOpen &&
         <section className={styles.side}>
-          <SidePanel asset={assetDetail} updateAsset={updateAsset} isShare={isShare} />
+          {assetDetail && activeSideComponent === 'detail' &&
+            <SidePanel asset={assetDetail} updateAsset={updateAsset} isShare={isShare} />
+          }
+          {!isShare && activeSideComponent === 'comments' &&
+            < ConversationList itemId={asset?.id} itemType='assets' />
+          }
         </section>
       }
       {!isShare &&
         <section className={styles.menu}>
-          <IconClickable src={Utilities.delete} onClick={openDeleteAsset} />
+          <IconClickable src={Utilities.closePanelLight} onClick={() => toggleSideMenu()}
+            additionalClass={`${styles['menu-icon']} ${!sideOpen && 'mirror'} ${styles.expand}`} />
+          <div className={`${styles.separator} ${styles.expand}`}></div>
+          <IconClickable
+            src={Utilities.delete}
+            additionalClass={styles['menu-icon']}
+            onClick={openDeleteAsset} />
+          <div className={styles.separator}></div>
+          <IconClickable
+            src={Utilities.info}
+            additionalClass={styles['menu-icon']}
+            onClick={() => changeActiveSide('detail')} />
+          <IconClickable
+            src={Utilities.comment}
+            additionalClass={styles['menu-icon']}
+            onClick={() => changeActiveSide('comments')} />
+
         </section>
       }
       <RenameModal

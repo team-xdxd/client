@@ -3,11 +3,11 @@ import styles from './index.module.css'
 import { loadStripe } from '@stripe/stripe-js'
 import { Elements } from '@stripe/react-stripe-js'
 
-import paymentApi from '../../server-api/payment'
+import paymentApi from '../../server-api/billing'
 
 // Components
 import SubscriptionSummary from './subscription-summary'
-import CreditCardForm from './credit-card-form'
+import CreditCardForm from '../common/payment/credit-card-form'
 
 const stripePromise = loadStripe('pk_test_bK1C20PBomU24spmlMeg4AXp')
 

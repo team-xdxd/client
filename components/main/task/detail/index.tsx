@@ -6,6 +6,7 @@ import update from 'immutability-helper'
 import Router from 'next/router'
 import taskApi from '../../../../server-api/task'
 import toastUtils from '../../../../utils/toast'
+import urlUtils from '../../../../utils/url'
 
 // Components
 import ItemSubheader from '../../../common/items/item-subheader'
@@ -25,7 +26,9 @@ const TaskDetail = () => {
     description: '',
     project: null,
     endDate: null,
-    tags: []
+    tags: [],
+    users: [],
+    userId: ''
   })
 
   useEffect(() => {
@@ -35,9 +38,8 @@ const TaskDetail = () => {
 
   const getTask = async () => {
     try {
-      const splitPath = window.location.pathname.split('/')
-      const { data } = await taskApi.getTaskById(splitPath[splitPath.length - 1])
-      console.log(data);
+      const taskId = urlUtils.getPathId()
+      const { data } = await taskApi.getTaskById(taskId)
 
       setTaskData(data)
       setTask(data)
@@ -93,6 +95,17 @@ const TaskDetail = () => {
     }
   }
 
+  const replaceTaskAssigned = async (user) => {
+    try {
+      if (!user) setEditableFields(update(editableFields, { users: { $set: [] } }))
+      else setEditableFields(update(editableFields, { users: { $set: [user] } }))
+      await taskApi.replaceAssigned(task?.id, { collaboratorId: user?.id })
+    } catch (err) {
+      console.log(err)
+      // TODO: Error if failure for whatever reason
+    }
+  }
+
   const setTaskData = (data) => {
     // TODO: get the correct owner
     setEditableFields({
@@ -141,6 +154,10 @@ const TaskDetail = () => {
       return toastUtils.error('You must add an Deadline Date')
     }
 
+    if (newStatus === 'scheduled' && editableFields.endDate < new Date()) {
+      return toastUtils.error('You cannot schedule if the End Date is in the past')
+    }
+
     try {
       setStatus(newStatus)
       await saveTask()
@@ -159,7 +176,6 @@ const TaskDetail = () => {
         changeName={(name) => editFields('name', name)}
         status={status}
         changeStatus={changeStatus}
-        resetPageTittle={() => editFields('name', task?.name)}
         hasAssets={true}
         type='task'
         itemId={task?.id}
@@ -174,11 +190,11 @@ const TaskDetail = () => {
         >
           {task &&
             <Fields
-              task={task}
               editableFields={editableFields}
               editFields={editFields}
               addTag={addTag}
               removeTag={removeTag}
+              replaceTaskAssigned={replaceTaskAssigned}
             />
           }
         </ItemSublayout>

@@ -21,6 +21,9 @@ const DayWeek = ({ item, socialChannel, type, isMultiple, time }) => {
       setBeingDragged(true)
     }
   }
+  
+  console.log(item)
+  const owner = item.users?.find(user => user.isOwner)
 
   return (
     <>
@@ -38,6 +41,7 @@ const DayWeek = ({ item, socialChannel, type, isMultiple, time }) => {
           time={time}
           name={item.name}
           isMultiple={isMultiple}
+          photo={owner?.profilePhoto}
         />
       </div>
       {!item.startDate &&
@@ -49,6 +53,7 @@ const DayWeek = ({ item, socialChannel, type, isMultiple, time }) => {
             time={time}
             name={item.name}
             isMultiple={isMultiple}
+            photo={owner?.profilePhoto}
           />
         </div>
       }

@@ -1,13 +1,13 @@
 import styles from './upcoming-tasks-item.module.css'
 import { capitalCase } from 'change-case'
 import { GeneralImg, Navigation } from '../../../assets'
-import Router from 'next/router'
 import dateUtils from '../../../utils/date'
+import Link from 'next/link'
 
 import { format } from 'date-fns'
 
 // TODO: Det if a task is today, yesterday or tomorrow?
-const UpcomingTasksItem = ({ name, status, date, detailUrl }) => {
+const UpcomingTasksItem = ({ name, status, date, detailUrl, projectName, projectDetailUrl }) => {
 
   let specialText = ''
   if (date) {
@@ -18,11 +18,26 @@ const UpcomingTasksItem = ({ name, status, date, detailUrl }) => {
   return (
     <li className={`${styles.container}`}>
       <div className={styles['name-status']}>
-        <span
-          onClick={() => Router.replace(detailUrl)}
-          className={`${styles.name} ${status === 'completed' && styles.completed}`}>
-          {name}
-        </span>
+        <div className={styles.names}>
+          <Link href={detailUrl}>
+            <a>
+              <span
+                className={`${styles.name} ${status === 'completed' && styles.completed}`}>
+                {name}
+              </span>
+            </a>
+          </Link>
+          {projectName &&
+            <Link href={projectDetailUrl}>
+              <a>
+                <span
+                  className={`${styles['project-name']}`}>
+                  {`Project: ${projectName}`}
+                </span>
+              </a>
+            </Link>
+          }
+        </div>
         <span className={styles.status}>
           {capitalCase(status)}
         </span>

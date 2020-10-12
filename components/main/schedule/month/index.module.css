@@ -13,7 +13,8 @@
   display: grid;
   grid-template-columns: repeat(7, minmax(0, 1fr));
   grid-template-rows: minmax(0, 1fr);
-  gap: 1px;
+  gap: 1px;  
+  min-width: 980px;
 }
 
 .day-of-week {
@@ -36,23 +37,6 @@
   scrollbar-color: var(--color-sec-lightblue) white; */
 }
 
-/* width */
-/* .date-grid-container::-webkit-scrollbar {
-  width: 10px;
-  height: 15px;
-} */
-
-/* Track */
-/* .date-grid-container::-webkit-scrollbar-track {
-  border-radius: 10px;
-} */
-
-/* Handle */
-/* .date-grid-container::-webkit-scrollbar-thumb {
-  background: var(--color-sec-lightblue);
-  border-radius: 10px;
-} */
-
 .overflow-disabled {
   overflow-y: hidden;
 }
@@ -61,7 +45,7 @@
   margin-top: 0.5em;
   width: 100%;
   background-color: var(--color-secondary-border);
-  border: 1px solid var(--color-secondary-border);
+  border: 1px solid var(--color-secondary-border);  
 }
 
 .loading {
@@ -71,4 +55,10 @@
   width: calc(100% - 35px);
   height: 60vh;
   background-color: rgba(255, 255, 255, 0.7);
+}
+
+@media screen and (max-width: 1000px) {
+  .day-of-week{
+    display: none;
+  }
 }

@@ -1,10 +1,8 @@
 import { useState, useContext } from 'react'
-import Router from 'next/router'
 import { useForm } from 'react-hook-form'
 import styles from './signup-form.module.css'
-import { UserContext } from '../../context'
+import { UserContext, LoadingContext } from '../../context'
 import userApi from '../../server-api/user'
-import cookiesUtils from '../../utils/cookies'
 
 // Components
 import AuthButton from '../common/buttons/auth-button'
@@ -14,13 +12,15 @@ import Select from '../common/inputs/select'
 
 import companySizeOptions from '../../resources/data/company-sizes.json'
 
-const SignupForm = ({ }) => {
+const SignupForm = ({ inviteCode = '' }) => {
   const { control, handleSubmit, errors, getValues } = useForm()
-  const [companySize, setCompanySize] = useState()
+  const [companySize, setCompanySize] = useState(undefined)
   const [submitError, setSubmitError] = useState('')
-  const { fetchUser } = useContext(UserContext)
+  const { afterAuth } = useContext(UserContext)
+  const { setIsLoading } = useContext(LoadingContext)
   const onSubmit = async fieldData => {
     try {
+      setIsLoading(true)
       const createData = {
         email: fieldData.email,
         name: fieldData.name,
@@ -29,15 +29,16 @@ const SignupForm = ({ }) => {
         password: fieldData.password,
         companySize: companySize ? companySize.value : ''
       }
-      const { data } = await userApi.signUp(createData)
-      cookiesUtils.setUserJWT(data.token)
-      fetchUser()
+      const { data } = await userApi.signUp(createData, { inviteCode })
+      await afterAuth(data)
     } catch (err) {
       if (err.response?.data?.message) {
         setSubmitError(err.response.data.message)
       } else {
         setSubmitError('Something went wrong, please try again later')
       }
+    } finally {
+      setIsLoading(false)
     }
   }
 
@@ -88,29 +89,33 @@ const SignupForm = ({ }) => {
           errors={errors}
         />
       </div>
-      <div>
-        <FormInput
-          InputComponent={
-            <Input
-              type='text'
-              placeholder='Company Name'
-            />
-          }
-          name='company'
-          control={control}
-          rules={{ minLength: 2, maxLength: 40, required: true }}
-          message={'This field should be between 2 and 40 characters long'}
-          errors={errors}
-        />
-      </div>
-      <div>
-        <Select
-          placeholder='Company Size...'
-          options={companySizeOptions}
-          onChange={selected => setCompanySize(selected)}
-          value={companySize}
-        />
-      </div>
+      {!inviteCode &&
+        <div>
+          <FormInput
+            InputComponent={
+              <Input
+                type='text'
+                placeholder='Company Name'
+              />
+            }
+            name='company'
+            control={control}
+            rules={{ minLength: 2, maxLength: 40, required: true }}
+            message={'This field should be between 2 and 40 characters long'}
+            errors={errors}
+          />
+        </div>
+      }
+      {!inviteCode &&
+        <div>
+          <Select
+            placeholder='Company Size...'
+            options={companySizeOptions}
+            onChange={selected => setCompanySize(selected)}
+            value={companySize}
+          />
+        </div>
+      }
       <div>
         <FormInput
           InputComponent={

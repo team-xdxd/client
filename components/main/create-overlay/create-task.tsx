@@ -26,7 +26,7 @@ const CreateTask = () => {
       return toastUtils.error('A task with that name already exists')
     }
     try {
-      const { data } = await taskApi.createTask(taskData)
+      const { data } = await taskApi.createTask({ taskData })
       Router.replace(`/main/tasks/${data.id}`)
     } catch (err) {
       // TODO: Show error message
@@ -50,24 +50,24 @@ const CreateTask = () => {
   return (
     <div className={`${styles.container}`}>
       <h2>Create New Task</h2>
-      <form onSubmit={handleSubmit(onSubmit)}>
-        <div className={styles['button-select-wrapper']}>
-          <div className={styles['input-wrapper']}>
-            <FormInput
-              InputComponent={
-                <Input
-                  type='text'
-                  placeholder='Name Your Task'
-                  styleType='regular'
-                />
-              }
-              name='name'
-              control={control}
-              message={'This field should be between 1 and 30 characters long'}
-              rules={{ minLength: 1, maxLength: 30, required: true }}
-              errors={errors}
-            />
-          </div>
+      <form onSubmit={handleSubmit(onSubmit)} className={'create-overlay-form'}>
+        <div className={styles['input-wrapper']}>
+          <FormInput
+            InputComponent={
+              <Input
+                type='text'
+                placeholder='Name Your Task'
+                styleType='regular'
+              />
+            }
+            name='name'
+            control={control}
+            message={'This field should be between 1 and 30 characters long'}
+            rules={{ minLength: 1, maxLength: 30, required: true }}
+            errors={errors}
+          />
+        </div>
+        <div className={styles['button-wrapper']}>
           <Button
             type={'submit'}
             text={'Next'}

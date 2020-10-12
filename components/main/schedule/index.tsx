@@ -1,5 +1,5 @@
 import styles from './index.module.css'
-import { useState, useEffect } from 'react'
+import { useState, useRef, useEffect } from 'react'
 import campaignApi from '../../../server-api/campaign'
 import projectApi from '../../../server-api/project'
 import taskApi from '../../../server-api/task'
@@ -53,8 +53,11 @@ const Schedule = () => {
     campaign: null,
     status: null,
     type: null,
-    owner: null
+    owner: null,
+    member: null
   })
+
+  const sideRef = useRef(undefined)
 
   useEffect(() => {
     getAllCampaigns()
@@ -176,9 +179,12 @@ const Schedule = () => {
     return filterObj
   }
 
+  const findUsersFn = (filterMember) => (user) => user.id === filterMember.value && user.isOwner
+
   const evalCampaignsWithFilters = (campaign) => {
     if (filters.campaign?.length > 0 && filters.campaign.findIndex(filterCampaign => campaign.id === filterCampaign.value) === -1) return false
     if (filters.status?.length > 0 && filters.status.findIndex(filterStatus => campaign.status === filterStatus.value) === -1) return false
+    if (filters.member?.length > 0 && filters.member.findIndex(filterMember => campaign.users.find(findUsersFn(filterMember))) === -1) return false
 
     return true
   }
@@ -187,6 +193,7 @@ const Schedule = () => {
     if (filters.status?.length > 0 && filters.status.findIndex(filterStatus => project.status === filterStatus.value) === -1) return false
     if (filters.type?.length > 0 && filters.type.findIndex(filterType => project.type === filterType.value) === -1) return false
     if (filters.campaign?.length > 0 && filters.campaign.findIndex(filterCampaign => project.campaignId === filterCampaign.value) === -1) return false
+    if (filters.member?.length > 0 && filters.member.findIndex(filterMember => project.users.find(findUsersFn(filterMember))) === -1) return false
 
     return true
   }
@@ -194,6 +201,7 @@ const Schedule = () => {
   const evalTasksWithFilters = (task) => {
     if (filters.status?.length > 0 && filters.status.findIndex(filterStatus => task.status === filterStatus.value) === -1) return false
     if (filters.campaign?.length > 0 && filters.campaign.findIndex(filterCampaign => task.project?.campaignId === filterCampaign.value) === -1) return false
+    if (filters.member?.length > 0 && filters.member.findIndex(filterMember => task.users.find(findUsersFn(filterMember))) === -1) return false
 
     return true
   }
@@ -265,7 +273,6 @@ const Schedule = () => {
     <>
       <ScheduleSubHeader
         displayDate={displayDate}
-        currentDate={currentDate}
         setCurrentDate={setCurrentDate}
         openCreateOVerlay={openCreateOVerlay}
       />
@@ -278,10 +285,11 @@ const Schedule = () => {
           setFilters={setFilters}
           allCampaigns={allCampaigns}
           setSearchVisible={setSearchVisible}
+          sideRef={sideRef}
         />
         {activeView !== 'month' ?
           <div className={styles.content}>
-            <div className={styles['side-panel']}>
+            <div className={styles['side-panel']} ref={sideRef}>
               <SidePanel
                 currentDate={currentDate}
                 setCurrentDate={setCurrentDate}

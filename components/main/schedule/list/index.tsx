@@ -51,10 +51,10 @@ const List = ({ mixedList, currentDate }) => {
             <h4>{key}</h4>
             {index === 0 &&
               <>
-                <h4>Status</h4>
-                <h4>Type</h4>
-                <h4>Time</h4>
-                <h4>Owner</h4>
+                <h4 className={styles['header-prop']}>Status</h4>
+                <h4 className={styles['header-prop']}>Type</h4>
+                <h4 className={styles['header-prop']}>Time</h4>
+                <h4 className={styles['header-prop']}>Owner</h4>
               </>
             }
           </div>

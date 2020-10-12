@@ -42,6 +42,7 @@ const ShareItem = ({
 			</div>
 			{visibleOverlay &&
 				<DetailOverlay
+					initiaParams={{ side: 'detail' }}
 					asset={asset}
 					realUrl={realUrl}
 					isShare={true}

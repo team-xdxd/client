@@ -1,5 +1,6 @@
 [
   "completed",
   "scheduled",
+  "past_due",
   "draft"
 ]

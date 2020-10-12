@@ -1,0 +1,44 @@
+.container {
+  padding: 18px;
+  margin-top: 1.3rem;
+}
+
+.container:last-child {
+  padding: 5px 14px;
+  margin-bottom: 1.3rem;
+}
+
+.main-content {
+  display: flex;
+  font-size: 15px;
+  font-weight: 500;
+}
+
+.main-content > img {
+  width: 27px;
+  height: 27px;
+  margin-right: 10px;
+  margin-top: -5px;
+}
+
+.author-date {
+  margin-top: 5px;
+  display: flex;
+  font-size: 12px;
+  font-weight: 500;
+  margin-left: 37px;
+}
+
+.author-date > span:first-child {
+  display: inline-flex;
+  margin-right: 10px;
+}
+
+.author-date > span:last-child {
+  color: var(--color-sec-blue);
+}
+
+.mention {
+  color: var(--color-prim-turquoise);
+}
+

@@ -1,46 +1,18 @@
-import { useEffect, useState } from 'react'
 import Head from 'next/head'
-import Link from 'next/link'
 
-import AuthButton from '../components/common/auth-button'
+// Components
+import Spinner from '../components/common/spinners/spinner'
 
-import userApi from '../server-api/user'
-
-import requestsUtils from '../utils/requests'
-import cookiesUtils from '../utils/cookies'
-
-const Home = () => {
-
-  const [user, setUser] = useState({
-    id: '',
-    email: '',
-    name: '',
-    phone: '',
-    network: '',
-    team: {
-      id: '',
-      company: '',
-      companySize: ''
-    }
-  })
-
-  useEffect(() => {
-    getInitialData()
-  }, [])
-
-  const getInitialData = async () => {
-    const token = cookiesUtils.get('jwt')
-    if (token) {
-      requestsUtils.setAuthToken(token)
-      const { data } = await userApi.getUserData()
-      setUser(data)
-    }
-  }
-
-  return (
-    <div className="container">     
+const MainPage = () => (
+  <>
+    <Head>
+      <title>Sparkfive</title>
+      <link rel="icon" href="/favicon.ico" />
+    </Head>
+    <div className="container" style={{ display: 'flex', justifyContent: 'center', marginTop: '4rem' }}>
+      <Spinner />
     </div>
-  )
-}
+  </>
+)
 
-export default Home
+export default MainPage

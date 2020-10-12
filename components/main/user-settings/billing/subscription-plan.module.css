@@ -1,0 +1,38 @@
+.sub-container {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.subscription-data {
+  flex: 1;
+  margin-right: 20%;
+}
+
+.plan {
+  width: 100%;
+  margin-bottom: 28px;
+}
+
+.prop-pair {
+  display: flex;
+  margin-bottom: 28px;
+}
+
+.prop-pair > div {
+  width: 50%;
+}
+
+.value {
+  font-weight: 500;
+  font-size: 16px;
+  margin-top: 5px;
+}
+
+.button-actions {
+  display: flex;
+  flex-direction: column;
+}
+
+.button-actions button{
+  margin-bottom: 26px;
+}

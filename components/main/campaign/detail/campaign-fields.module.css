@@ -1,0 +1,21 @@
+.image-wrapper{
+  position: relative;
+}
+
+.user-list-wrapper {
+  position: absolute;
+  z-index: 300;
+}
+
+.user-list-wrapper {
+  top: 1.5rem;
+}
+
+.collaborator-list{
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.collaborator-list li{
+  margin-right: 0.7rem;
+}

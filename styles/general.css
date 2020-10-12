@@ -57,8 +57,6 @@ a {
   /* no underline */
 }
 
-h1, h2, h3, h4 {}
-
 h1 {
   font-size: 35px;
   margin: 0;
@@ -78,13 +76,19 @@ mark {
   color: inherit;
 }
 
-*, *:before, *:after {
+*,
+*:before,
+*:after {
   -webkit-box-sizing: inherit;
   -moz-box-sizing: inherit;
   box-sizing: inherit;
 }
 
-button, input, optgroup, select, textarea {
+button,
+input,
+optgroup,
+select,
+textarea {
   font-family: inherit;
   /* 1 */
   font-size: 100%;
@@ -100,7 +104,8 @@ button, input, optgroup, select, textarea {
  * 1. Show the overflow in Edge.
  */
 
-button, input {
+button,
+input {
   /* 1 */
   overflow: visible;
 }
@@ -110,7 +115,8 @@ button, input {
  * 1. Remove the inheritance of text transform in Firefox.
  */
 
-button, select {
+button,
+select {
   /* 1 */
   text-transform: none;
 }
@@ -119,7 +125,10 @@ button, select {
  * Correct the inability to style clickable types in iOS and Safari.
  */
 
-button, [type="button"], [type="reset"], [type="submit"] {
+button,
+[type="button"],
+[type="reset"],
+[type="submit"] {
   -webkit-appearance: button;
 }
 
@@ -148,7 +157,8 @@ ul {
   box-shadow: 23px 24px 51px -16px var(--color-sec-lightblue);
 }
 
-.ReactModal__Html--open, .ReactModal__Body--open {
+.ReactModal__Html--open,
+.ReactModal__Body--open {
   overflow: hidden;
   /* prevents background page from scrolling when the modal is open */
 }
@@ -164,4 +174,31 @@ ul {
   background-color: white;
   z-index: 2000;
   color: var(--color-prim-navy);
+}
+
+.mirror{
+  transform: scaleX(-1);
+}
+
+/* Emoji mart component */
+.emoji-mart-preview {
+  display: none;
+}
+
+.visible-flex {
+  display: flex !important;
+}
+
+.visible-block {
+  display: block !important;
+}
+
+.visible-none {
+  display: none !important;
+}
+
+@media screen and (max-width: 1000px) {
+  h1 {
+    font-size: 25px;
+  }
 }

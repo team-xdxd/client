@@ -1,0 +1,17 @@
+.preferences{
+  padding-bottom: 2rem;
+  border-bottom: 1px solid var(--color-secondary-border);
+  margin-bottom: 2rem;
+}
+
+.radio-options{
+  display: flex;
+}
+
+.radio-options>div:last-child{
+  margin-left: 3rem;
+}
+
+.option>div:first-child{
+  margin-bottom: 0.5rem;
+}

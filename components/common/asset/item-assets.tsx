@@ -73,7 +73,8 @@ const ItemAssets = ({ type, itemId }) => {
     } catch (err) {
       setAssets(currentDataClone)
       console.log(err)
-      toastUtils.error('Could not upload assets, please try again later.')
+      if (err.response?.status === 402) toastUtils.error(err.response.data.message)
+      else toastUtils.error('Could not upload assets, please try again later.')
     }
   }
 
@@ -96,6 +97,7 @@ const ItemAssets = ({ type, itemId }) => {
           mode='assets'
           type={type}
           itemId={itemId}
+          itemSize={'medium'}
         />
       </div>
       <AssetOps />

@@ -1,0 +1,19 @@
+.container {
+  padding: 1rem;
+}
+
+.item {
+  display: flex;
+  align-items: center;
+  margin-top: 5px;
+}
+
+.item > div:first-child,
+.item > h3 {
+  flex: 1;
+}
+
+.item > div:last-child {
+  width: 5rem;
+  font-weight: 500;
+}

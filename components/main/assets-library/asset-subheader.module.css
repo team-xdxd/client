@@ -9,6 +9,10 @@
   left: 4rem;
 }
 
+.asset-subheader{
+  justify-content: flex-end;
+}
+
 .asset-subheader button {
   margin-left: 0.5rem;
 }

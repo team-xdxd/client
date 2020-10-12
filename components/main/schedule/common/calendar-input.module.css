@@ -82,3 +82,14 @@
   border-radius: 50%;
   color: var(--color-prim-navy);
 }
+
+@media screen and (max-width: 1200px) {
+  .calendar {
+    width: 100%;
+  }
+
+  .day-of-week div,
+  .day {
+    height: 32px;
+  }
+}

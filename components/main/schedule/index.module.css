@@ -1,8 +1,8 @@
-.container{
+.container {
   padding: 35px 32px;
 }
 
-.content{
+.content {
   display: grid;
   grid-template-areas: "side-panel schedule";
   grid-template-columns: 17% 80%;
@@ -17,4 +17,34 @@
 .schedule {
   grid-area: schedule;
   box-sizing: content-box;
+}
+
+@media screen and (max-width: 1200px) {
+  .container {
+    padding: 17.5px 16px;
+  }
+
+  .content {
+    grid-template-areas: "schedule";
+    grid-template-columns: 100%;
+    grid-column-gap: 0%;
+    position: relative;
+  }
+
+  .side-panel {
+    width: 20rem;
+    display: none;
+    position: absolute;
+    z-index: 300;
+    background-color: white;
+    padding: 20px;
+    border: 1px solid var(--color-secondary-border);
+    top: -1rem;
+  }
+}
+
+@media screen and (max-width: 1000px) {
+  .content {
+    overflow-x: auto;
+  }
 }

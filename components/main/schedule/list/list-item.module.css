@@ -61,3 +61,26 @@
   justify-content: flex-end;
   flex: 1;
 }
+
+@media screen and (max-width: 1000px) {
+  .item {
+    flex-wrap: wrap;
+  }
+
+  .info {
+    width: 250px;
+    margin-bottom: 5px;
+  }
+
+  .status,
+  .type,
+  .time {
+    width: 130px;
+    margin-bottom: 5px;
+  }
+
+  .owner {
+    width: 150px;
+    margin-bottom: 5px;
+  }
+}

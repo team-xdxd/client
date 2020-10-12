@@ -1,6 +1,12 @@
 import styles from './item-sublayout.module.css'
-import { useState, useRef } from 'react'
+import { useState, useEffect, useContext } from 'react'
 import { Utilities } from '../../../assets'
+import { TeamContext, UserContext } from '../../../context'
+import {
+  isMobile
+} from "react-device-detect"
+
+import { ASSET_ACCESS } from '../../../constants/permissions'
 
 // Components
 import SectionButton from '../buttons/section-button'
@@ -8,10 +14,10 @@ import ConfirmModal from '../modals/confirm-modal'
 import Dropdown from '../inputs/dropdown'
 import ToggleableAbsoluteWrapper from '../misc/toggleable-absolute-wrapper'
 import ItemAssets from '../asset/item-assets'
+import IconClickable from '../buttons/icon-clickable'
 
 const ItemSublayout = ({
   SideComponent = null,
-  sideActive = true,
   navElements = [],
   children,
   layout = 'double',
@@ -23,6 +29,22 @@ const ItemSublayout = ({
   const [modalOpen, setModalOpen] = useState(false)
   const [activeMain, setActiveMain] = useState('details')
 
+  const [sideOpen, setSideOpen] = useState(false)
+
+  const { getTeamMembers } = useContext(TeamContext)
+  const { hasPermission } = useContext(UserContext)
+
+  useEffect(() => {
+    getTeamMembers()
+    if (!isMobile) {
+      setSideOpen(true)
+    }
+  }, [])
+
+  const toggleSideMenu = () => {
+    setSideOpen(!sideOpen)
+  }
+
   return (
     <div className={styles.container}>
       <div className={styles['main-component']}>
@@ -33,7 +55,7 @@ const ItemSublayout = ({
               active={activeMain === 'details'}
               onClick={() => setActiveMain('details')}
             />
-            {hasAssets &&
+            {hasAssets && hasPermission([ASSET_ACCESS]) &&
               <SectionButton
                 text='Assets'
                 active={activeMain === 'assets'}
@@ -54,23 +76,28 @@ const ItemSublayout = ({
         </div>
       </div>
 
-      {SideComponent && sideActive &&
+      {SideComponent && sideOpen &&
         <div className={styles['side-component']}>
           {SideComponent}
         </div>
       }
 
       <div className={styles['side-bar']}>
-        <div>
-          <img src={Utilities.closePanelLight} />
-        </div>
-        <div className={styles.separator}></div>
-        <div className={styles.elements}>
-          {navElements.map((navElement, index) => (
-            <img key={index} src={navElement.icon} onClick={navElement.onClick} />
-          ))}
-        </div>
-        <div className={styles.separator}></div>
+        {navElements.length > 0 &&
+          <>
+            <div >
+              <IconClickable src={Utilities.closePanelLight} onClick={toggleSideMenu}
+                additionalClass={!sideOpen && 'mirror'} />
+            </div>
+            <div className={styles.separator}></div>
+            <div className={styles.elements}>
+              {navElements.map((navElement, index) => (
+                <img key={index} src={navElement.icon} onClick={navElement.onClick} />
+              ))}
+            </div>
+            <div className={styles.separator}></div>
+          </>
+        }
         <ToggleableAbsoluteWrapper
           wrapperClass={styles.more}
           Wrapper={({ children }) => (

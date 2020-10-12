@@ -1,0 +1,52 @@
+.container {
+  width: 250px;
+  background-color: white;
+  border: 1px solid var(--color-secondary-border);
+  border-radius: 5px;
+}
+
+.empty {
+  width: 0;
+}
+
+.term {
+  border: none;
+  background-color: inherit;
+  color: inherit;
+  padding: 0.5rem 2rem;
+  margin: 0.2rem 0;
+}
+
+.term,
+.dropdown {
+  width: 100%;
+}
+
+.container .dropdown {
+  position: relative;
+  border: none;
+}
+
+.no-add {
+  padding: 12px;
+  font-size: 14px;
+  color: var(--color-sec-blue);
+}
+
+.container .search-result {
+  display: block;
+  font-size: 14px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+  flex: 1;
+}
+
+.user-item {
+  display: flex;
+}
+
+.user-item>img {
+  width: 13px;
+  height: 13px;
+}

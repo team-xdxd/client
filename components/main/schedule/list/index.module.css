@@ -9,13 +9,19 @@
 }
 
 .header h4:first-child {
-  width: 28%
+  width: 28%;
 }
 
 .header h4:last-child {
   flex: 1;
 }
 
-.day{
+.day {
   margin-bottom: 2.5rem;
+}
+
+@media screen and (max-width: 1000px) {
+  .header-prop {
+    display: none;
+  }
 }

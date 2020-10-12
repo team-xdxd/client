@@ -1,0 +1,18 @@
+.container, .password-form{
+  border-top: 1px solid var(--color-secondary-border);
+  padding-top: 2rem;
+  margin-top: 2rem;
+}
+
+.container button{
+  min-width: 170px;
+}
+
+.form{
+  display: flex;
+  flex-wrap: wrap;
+}
+.change-password-button{
+  align-self: flex-end;
+  margin-bottom: 15px;
+}

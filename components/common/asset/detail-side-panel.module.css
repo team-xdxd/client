@@ -10,7 +10,7 @@
   margin-top: 1.5rem;
 }
 
-.tags-list{
+.container .field-wrapper .tags-list{
   margin-top: 0.7rem;
 }
 
@@ -27,4 +27,10 @@
 
 .select-add img{
   margin-right: 5px;
+}
+
+@media screen and (max-width: 1200px) {
+  .container{
+    min-width: 25rem;
+  }
 }

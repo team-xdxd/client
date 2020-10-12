@@ -1,15 +1,18 @@
 import styles from './top-bar.module.css'
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useContext, useRef } from 'react'
+import { UserContext } from '../../../context'
 import { Utilities } from '../../../assets'
 import selectOptions from './select-options'
 import campaignApi from '../../../server-api/campaign'
 import tagApi from '../../../server-api/tag'
+import { CALENDAR_ACCESS } from '../../../constants/permissions'
 
 // Components
 import SectionButton from '../../common/buttons/section-button'
 import NestedSelect from '../../common/inputs/nested-select'
 import Select from '../../common/inputs/select'
 import Button from '../../common/buttons/button'
+import IconClickable from '../../common/buttons/icon-clickable'
 
 const TopBar = ({
   activeSortFilter,
@@ -24,6 +27,7 @@ const TopBar = ({
   const [campaignsFilter, setCampaignsFilter] = useState([])
   const [tagsFilter, setTagsFilter] = useState([])
 
+  const { hasPermission } = useContext(UserContext)
   useEffect(() => {
     getCampaignsTagsFilters()
   }, [])
@@ -34,8 +38,10 @@ const TopBar = ({
         label: item.name,
         value: item.id
       })
-      const campaingsResponse = await campaignApi.getCampaigns()
-      setCampaignsFilter(campaingsResponse.data.map(selectValueMapFn))
+      if (hasPermission([CALENDAR_ACCESS])) {
+        const campaingsResponse = await campaignApi.getCampaigns()
+        setCampaignsFilter(campaingsResponse.data.map(selectValueMapFn))
+      }
       const tagsResponse = await tagApi.getTags()
       setTagsFilter(tagsResponse.data.map(selectValueMapFn))
     } catch (err) {
@@ -60,9 +66,18 @@ const TopBar = ({
     })
   }
 
+  const filtersRef = useRef(null)
+
+  const toggleHamurgerList = () => {
+    const classType = `visible-flex`
+    const { current } = filtersRef
+    if (current?.classList.contains(classType)) current.classList.remove(classType)
+    else current.classList.add(classType)
+  }
+
   return (
     <section className={styles.container}>
-      <div className={styles.filters}>
+      <div className={styles.filters} >
         <img src={Utilities.search} onClick={setActiveSearchOverlay} />
         {selectOptions.views.map(view => (
           <>
@@ -77,8 +92,9 @@ const TopBar = ({
           </>
         ))}
       </div>
-      <div className={styles['sec-filters']}>
-        {activeSortFilter.mainFilter !== 'folders' && <Button type='button' text='Select All' styleType='primary' onClick={selectAll} />}
+      <IconClickable src={Utilities.filter} additionalClass={styles.filter} onClick={toggleHamurgerList} />
+      <div className={styles['sec-filters']} ref={filtersRef}>
+        {activeSortFilter.mainFilter !== 'folders' && <Button type='button' text='Select All' styleType='secondary' onClick={selectAll} />}
         <img src={Utilities.gridView} onClick={() => setActiveView('grid')} />
         <img src={Utilities.listView} onClick={() => setActiveView('list')} />
         <div className={styles['nested-wrapper']}>
@@ -87,7 +103,8 @@ const TopBar = ({
               {
                 options: campaignsFilter,
                 placeholder: 'Campaigns',
-                value: activeSortFilter.filterCampaigns
+                value: activeSortFilter.filterCampaigns,
+                hidden: !hasPermission([CALENDAR_ACCESS])
               },
               {
                 options: selectOptions.channels,

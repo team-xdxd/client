@@ -1,0 +1,7 @@
+.headers{
+  display: flex;  
+}
+
+.headers h3{
+  width: 33%;
+}

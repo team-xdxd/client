@@ -1,0 +1,30 @@
+.container {
+  min-width: 25rem;
+  width: 20%;
+  padding: 1.5rem 1rem;
+}
+
+.container .title {
+  display: flex;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.container .title span {
+  font-weight: 600;
+  padding-right: 15px;
+}
+
+.container h2 {
+  margin: 0;
+  flex: 1;
+  font-weight: 600;
+  padding-left: 15px;
+}
+
+@media screen and (max-width: 500px){
+  .container {
+    min-width: 0;
+    width: 100%;
+  }
+}

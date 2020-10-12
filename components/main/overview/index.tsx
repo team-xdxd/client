@@ -16,8 +16,6 @@ import Upcoming from './upcoming'
 import UpcomingTasks from './upcoming-tasks'
 import CreateOverlay from '../create-overlay'
 
-// name, status, date
-
 const Overview = () => {
   const [createVisible, setCreateVisible] = useState(false)
   const [createType, setCreateType] = useState('')
@@ -79,7 +77,7 @@ const Overview = () => {
 
   const getTasks = async () => {
     try {
-      const { data } = await taskApi.getTasks({ fromDate: DEFAULT_DATE })
+      const { data } = await taskApi.getOwnedTasks({ fromDate: DEFAULT_DATE })
       setTasks(data)
     } catch (err) {
       // TODO: Display error or something
@@ -100,10 +98,8 @@ const Overview = () => {
         openCreateOVerlay={openCreateOVerlay}
       />
       <main className={`${styles.container}`}>
+        <h1>{`Welcome back, ${user?.name.split(' ')[0]}`}</h1>
         <section className={styles['first-section']}>
-          <Banner
-            userName={user?.name}
-          />
           <SchedulingReport />
           <Upcoming
             type='project'

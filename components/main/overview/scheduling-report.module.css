@@ -14,7 +14,7 @@
 .content-container {
   border: 1px solid var(--color-secondary-border);
   border-radius: 7px;
-  padding: 30px 20px 0 20px;
+  padding: 30px 20px;
 }
 
 .heading {
@@ -37,8 +37,8 @@
 
 .legend span:first-child {
   border-radius: 50%;
-  height: 10px;
-  width: 10px;
+  min-height: 10px;
+  min-width: 10px;
 }
 
 .legend span:first-child.draft {
@@ -53,6 +53,10 @@
   background-color: var(--color-prim-wine);
 }
 
+.legend span:first-child.past_due {
+  background-color: var(--color-prim-red);
+}
+
 .legend span:last-child {
   display: inline-flex;
   margin-left: 5px;
@@ -65,11 +69,15 @@
 }
 
 .month{
-  min-width: 170px;
+  min-width: 180px;
+}
+
+.chart-wrapper{
+  width: 30%;
 }
 
 .chart {
-  width: 30%;
+  width: 100%;
 }
 
 .totals {
@@ -95,4 +103,60 @@
 
 .agg-status {
   font-weight: 600;
+}
+
+@media screen and (max-width: 1000px) {
+  .container {
+    margin-bottom: 25px;
+  }
+
+  .container h4 {
+    margin-bottom: 15px;
+  }
+
+  .content-container {
+    padding: 15px 10px;
+  }
+
+  .heading {
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+
+  .month{
+    margin-top: 10px;
+  }
+
+  .content {
+    margin-top: 10px;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .chart-wrapper{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+  }
+
+  .chart {
+    width: 50%;
+  }
+
+  .totals {
+    width: 100%;
+    margin-left: 0;
+  }
+
+  .total {
+    font-size: 25px;
+  }
+
+  .agg-status {
+    font-size: 12px;
+  }
+  
+  .legend span:last-child {
+    font-size: 12px;
+  }
 }

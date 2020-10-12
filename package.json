@@ -13,9 +13,12 @@
     "axios": "^0.19.2",
     "change-case": "^4.1.1",
     "chart.js": "^2.9.3",
+    "cross-fetch": "^3.0.5",
     "date-fns": "^2.12.0",
+    "emoji-mart": "^3.0.0",
     "file-saver": "^2.0.2",
     "filesize": "^6.1.0",
+    "graphql": "^15.3.0",
     "immutability-helper": "^3.0.2",
     "jszip": "^3.5.0",
     "next": "9.2.2",
@@ -24,6 +27,7 @@
     "rc-progress": "^2.5.2",
     "react": "16.12.0",
     "react-day-picker": "^7.4.0",
+    "react-device-detect": "^1.13.1",
     "react-dom": "16.12.0",
     "react-drag-drop-container": "^6.1.1",
     "react-dropzone": "^11.0.1",
@@ -35,12 +39,16 @@
     "react-select": "^3.1.0",
     "react-time-picker": "^4.0.1",
     "react-toastify": "^5.5.0",
+    "react-tooltip": "^4.2.10",
     "react-waypoint": "^9.0.2",
+    "subscriptions-transport-ws": "^0.9.18",
+    "textarea-caret": "^3.1.0",
     "universal-cookie": "^4.0.3",
+    "websocket": "^1.0.32",
     "yup": "^0.28.4"
   },
   "devDependencies": {
-    "@types/node": "^13.7.6",
+    "@types/node": "^13.13.16",
     "@types/react": "^16.9.23",
     "typescript": "^3.8.2"
   }

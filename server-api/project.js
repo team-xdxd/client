@@ -9,9 +9,12 @@ export default {
   createProject: (data) => axios.post(projectUrl, data),
   updateProject: (id, data) => axios.patch(`${projectUrl}/${id}`, data),
   deleteProject: (id) => axios.delete(`${projectUrl}/${id}`),
-  addtask: (id, data) => axios.post(`${projectUrl}/${id}/tasks`, data),
+  addtask: (id, { taskData, assignedUser }) => axios.post(`${projectUrl}/${id}/tasks`, { taskData, assignedUser }),
   removeTask: (id, taskId) => axios.delete(`${projectUrl}/${id}/task/${taskId}`),
   addTag: (id, data) => axios.post(`${projectUrl}/${id}/tags`, data),
   removeTag: (id, tagId) => axios.delete(`${projectUrl}/${id}/tags/${tagId}`),
-  associateAssets: (id, { assetIds }) => axios.patch(`${projectUrl}/${id}/assets`, {assetIds})
+  associateAssets: (id, { assetIds }, queryParams = {}) => axios.patch(`${projectUrl}/${id}/assets?${queryString.stringify(queryParams)}`, { assetIds }),
+
+  addCollaborators: (id, data) => axios.post(`${projectUrl}/${id}/collaborators`, data),
+  removeCollaborators: (id, data) => axios.delete(`${projectUrl}/${id}/collaborators`, { data })
 }

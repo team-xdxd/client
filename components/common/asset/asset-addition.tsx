@@ -72,7 +72,8 @@ const AssetAddition = ({
 		} catch (err) {
 			setAssets(currentDataClone)
 			console.log(err)
-			toastUtils.error('Could not upload assets, please try again later.')
+			if (err.response?.status === 402) toastUtils.error(err.response.data.message)
+			else toastUtils.error('Could not upload assets, please try again later.')
 		}
 	}
 
@@ -93,14 +94,16 @@ const AssetAddition = ({
 				})
 			})
 			setAssets([...newPlaceholders, ...currentDataClone])
-			const { data } = await assetApi.importAssets('dropbox', files.map(file => ({ link: file.link, name: file.name })), getCreationParameters())
+			console.log(files)
+			const { data } = await assetApi.importAssets('dropbox', files.map(file => ({ link: file.link, name: file.name, size: file.bytes })), getCreationParameters())
 			setAssets([...data, ...currentDataClone])
 			toastUtils.success('Assets imported.')
 		} catch (err) {
 			//TODO: Handle error
 			setAssets(currentDataClone)
 			console.log(err)
-			toastUtils.error('Could not import assets, please try again later.')
+			if (err.response?.status === 402) toastUtils.error(err.response.data.message)
+			else toastUtils.error('Could not import assets, please try again later.')
 		}
 	}
 
@@ -165,7 +168,8 @@ const AssetAddition = ({
 			//TODO: Handle error
 			setAssets(currentDataClone)
 			console.log(err)
-			toastUtils.error('Could not import assets, please try again later.')
+			if (err.response?.status === 402) toastUtils.error(err.response.data.message)
+			else toastUtils.error('Could not import assets, please try again later.')
 		}
 	}
 

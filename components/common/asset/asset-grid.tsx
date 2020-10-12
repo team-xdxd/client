@@ -5,6 +5,7 @@ import { useEffect, useContext, useState } from 'react'
 import { AssetContext } from '../../../context'
 import toastUtils from '../../../utils/toast'
 import { Waypoint } from 'react-waypoint'
+import urlUtils from '../../../utils/url'
 import downloadUtils from '../../../utils/download'
 import assetsApi from '../../../server-api/asset'
 
@@ -15,11 +16,19 @@ import FolderListItem from '../folder/folder-list-item'
 import AssetThumbail from './asset-thumbail'
 import ListItem from './list-item'
 import AssetUpload from './asset-upload'
+import DetailOverlay from './detail-overlay'
 import ConfirmModal from '../modals/confirm-modal'
 import Button from '../buttons/button'
 
-const AssetGrid = ({ activeView = 'grid', onFilesDataGet, toggleSelected, mode = 'assets', activeSortFilter = {}, folders = [],
+const AssetGrid = ({
+  activeView = 'grid',
+  onFilesDataGet,
+  toggleSelected,
+  mode = 'assets',
+  activeSortFilter = {},
+  folders = [],
   deleteFolder = (id) => { },
+  itemSize = 'regular',
   activeFolder = '',
   type = '',
   itemId = '',
@@ -31,14 +40,31 @@ const AssetGrid = ({ activeView = 'grid', onFilesDataGet, toggleSelected, mode =
   const { assets, setAssets, setActiveOperation, setOperationAsset, nextPage, setOperationFolder } = useContext(AssetContext)
 
   const [deleteModalOpen, setDeleteModalOpen] = useState(false)
-  const [archiveModalOpen, setArchiveModalOpen] = useState(false)
+  const [activeArchiveAsset, setActiveArchiveAsset] = useState(undefined)
   const [activeAssetId, setActiveAssetId] = useState('')
 
   const [activeSearchOverlay, setActiveSearchOverlay] = useState(false)
 
-  const openArchiveAsset = id => {
-    setActiveAssetId(id)
-    setArchiveModalOpen(true)
+  const [initAsset, setInitAsset] = useState(undefined)
+
+  useEffect(() => {
+    const { assetId } = urlUtils.getQueryParameters()
+    if (assetId)
+      getInitialAsset(assetId)
+  }, [])
+
+  const getInitialAsset = async (id) => {
+    try {
+      const { data } = await assetsApi.getById(id)
+      setInitAsset(data)
+    } catch (err) {
+      console.log(err)
+    }
+  }
+
+  const openArchiveAsset = asset => {
+    setActiveAssetId(asset.id)
+    setActiveArchiveAsset(asset)
   }
 
   const openDeleteAsset = id => {
@@ -62,17 +88,18 @@ const AssetGrid = ({ activeView = 'grid', onFilesDataGet, toggleSelected, mode =
   }
 
   const archiveAsset = async id => {
+    const newState = activeArchiveAsset?.stage !== 'archived' ? 'archived' : 'draft'
     try {
-      await assetsApi.updateAsset(id, { updateData: { stage: 'archived' } })
+      await assetsApi.updateAsset(id, { updateData: { stage: newState } })
       const assetIndex = assets.findIndex(assetItem => assetItem.asset.id === id)
       setAssets(update(assets, {
         $splice: [[assetIndex, 1]]
       }))
-      toastUtils.success('Assets archived successfully')
+      toastUtils.success(`Assets ${newState === 'archived' ? 'archived' : 'unarchived'} successfully`)
     }
     catch (err) {
       // TODO: Error handling
-      toastUtils.error('Could not archive assets, please try again later.')
+      toastUtils.error(`Could not ${newState === 'archived' ? 'archive' : 'unarchive'} assets, please try again later.`)
     }
   }
 
@@ -86,7 +113,7 @@ const AssetGrid = ({ activeView = 'grid', onFilesDataGet, toggleSelected, mode =
     downloadUtils.downloadFile(assetItem.realUrl, assetItem.asset.name)
   }
 
-  const shouldShowUpload = (mode === 'assets' && assets.length === 0) || (mode === 'folders' && folders.length === 0)
+  const shouldShowUpload = activeSearchOverlay || (mode === 'assets' && assets.length === 0) || (mode === 'folders' && folders.length === 0)
 
   return (
     <section className={styles.container}>
@@ -110,19 +137,21 @@ const AssetGrid = ({ activeView = 'grid', onFilesDataGet, toggleSelected, mode =
       }
       <div className={styles['list-wrapper']}>
         {activeView === 'grid' &&
-          <ul className={styles['grid-list']}>
+          <ul className={`${styles['grid-list']} ${styles[itemSize]}`}>
             {mode === 'assets' && assets.map((assetItem, index) => {
               return (
                 <li className={styles['grid-item']} key={assetItem.asset.id || index}>
                   <AssetThumbail
                     {...assetItem}
+                    type={type}
                     toggleSelected={() => toggleSelected(assetItem.asset.id)}
-                    openArchiveAsset={() => openArchiveAsset(assetItem.asset.id)}
+                    openArchiveAsset={() => openArchiveAsset(assetItem.asset)}
                     openDeleteAsset={() => openDeleteAsset(assetItem.asset.id)}
                     openMoveAsset={() => beginAssetOperation({ asset: assetItem }, 'move')}
                     openCopyAsset={() => beginAssetOperation({ asset: assetItem }, 'copy')}
                     openShareAsset={() => beginAssetOperation({ asset: assetItem }, 'share')}
                     downloadAsset={() => downloadAsset(assetItem)}
+                    openRemoveAsset={() => beginAssetOperation({ asset: assetItem }, 'remove_item')}
                   />
                 </li>
               )
@@ -146,6 +175,7 @@ const AssetGrid = ({ activeView = 'grid', onFilesDataGet, toggleSelected, mode =
               return (
                 <li className={styles['regular-item']} key={assetItem.asset.id || index}>
                   <ListItem
+                    type={type}
                     assetItem={assetItem}
                     index={index}
                     toggleSelected={() => toggleSelected(assetItem.asset.id)}
@@ -155,6 +185,7 @@ const AssetGrid = ({ activeView = 'grid', onFilesDataGet, toggleSelected, mode =
                     openCopyAsset={() => beginAssetOperation({ asset: assetItem }, 'copy')}
                     openShareAsset={() => beginAssetOperation({ asset: assetItem }, 'share')}
                     downloadAsset={() => downloadAsset(assetItem)}
+                    openRemoveAsset={() => beginAssetOperation({ asset: assetItem }, 'remove_item')}
                   />
                 </li>
               )
@@ -216,20 +247,31 @@ const AssetGrid = ({ activeView = 'grid', onFilesDataGet, toggleSelected, mode =
 
       {/* Archive modal */}
       <ConfirmModal
-        closeModal={() => setArchiveModalOpen(false)}
+        closeModal={() => setActiveArchiveAsset(undefined)}
         confirmAction={() => {
           archiveAsset(activeAssetId)
           setActiveAssetId('')
-          setArchiveModalOpen(false)
+          setActiveArchiveAsset(undefined)
         }}
-        confirmText={'Archive'}
+        confirmText={`${activeArchiveAsset?.stage !== 'archived' ? 'Archive' : 'Unarchive'}`}
         message={
           <span>
-            Are you sure you want to &nbsp;<strong>Archive</strong>&nbsp; this asset?
+            Are you sure you want to &nbsp;<strong>{`${activeArchiveAsset?.stage !== 'archived' ? 'Archive' : 'Unarchive'}`}</strong>&nbsp; this asset?
         </span>
         }
-        modalIsOpen={archiveModalOpen}
+        modalIsOpen={activeArchiveAsset}
       />
+
+      {/* Overlay exclusive to page load assets */}
+      {initAsset &&
+        <DetailOverlay
+          asset={initAsset.asset}
+          realUrl={initAsset.realUrl}
+          initiaParams={{ side: 'comments' }}
+          openShareAsset={() => beginAssetOperation({ asset: initAsset }, 'share')}
+          openDeleteAsset={() => openDeleteAsset(initAsset.asset.id)}
+          closeOverlay={() => setInitAsset(undefined)} />
+      }
     </section >
   )
 }

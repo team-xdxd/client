@@ -1,8 +1,11 @@
 import { AssetContext } from '../../../context'
 import { useState, useContext, useEffect } from 'react'
 import assetApi from '../../../server-api/asset'
+import projectApi from '../../../server-api/project'
+import taskApi from '../../../server-api/task'
 import folderApi from '../../../server-api/folder'
 import toastUtils from '../../../utils/toast'
+import { useRouter } from 'next/router'
 import update from 'immutability-helper'
 
 // Components
@@ -27,11 +30,38 @@ export default () => {
 		activePageMode
 	} = useContext(AssetContext)
 
+	const router = useRouter()
+
+	const [currentItem, setCurrentItem] = useState({
+		type: '',
+		id: ''
+	})
+
 	useEffect(() => {
 		if (activeOperation === 'move' || activeOperation === 'copy') {
 			getFolders()
 		}
 	}, [activeOperation])
+
+	useEffect(() => {
+		const { asPath } = router
+		if (asPath.indexOf('project') !== -1) {
+			setCurrentItem({
+				type: 'project',
+				id: asPath.split('/')[3]
+			})
+		} else if (asPath.indexOf('task') !== -1) {
+			setCurrentItem({
+				type: 'task',
+				id: asPath.split('/')[3]
+			})
+		} else {
+			setCurrentItem({
+				type: '',
+				id: ''
+			})
+		}
+	}, [router.asPath])
 
 	const getFolders = async () => {
 		try {
@@ -78,25 +108,33 @@ export default () => {
 	}
 
 	const archiveAssets = async () => {
+		modifyAssetsStage('archived', 'Assets archived successfully', 'Could not archive assets, please try again later.')
+	}
+
+	const unarchiveAssets = async () => {
+		modifyAssetsStage('draft', 'Assets unarchived successfully', 'Could not unarchive assets, please try again later.')
+	}
+
+	const modifyAssetsStage = async (stage, successMessage, errMessage) => {
 		try {
 			let updateAssets
 			if (!operationAsset) {
 				updateAssets = selectedAssets.map(assetItem => (
-					{ id: assetItem.asset.id, changes: { stage: 'archived' } }
+					{ id: assetItem.asset.id, changes: { stage } }
 				))
 			} else {
 				updateAssets = [{
-					id: operationAsset.asset.id, changes: { stage: 'archived' }
+					id: operationAsset.asset.id, changes: { stage }
 				}]
 			}
 
 			await assetApi.updateMultiple(updateAssets)
 			removeSelectedFromList()
 			closeModalAndClearOpAsset()
-			toastUtils.success('Assets archived successfully')
+			toastUtils.success(successMessage)
 		} catch (err) {
 			console.log(err)
-			toastUtils.error('Could not archive assets, please try again later.')
+			toastUtils.error(errMessage)
 		}
 	}
 
@@ -113,9 +151,10 @@ export default () => {
 			} else {
 				await assetApi.deleteAsset(operationAsset.asset.id)
 				const assetIndex = assets.findIndex(assetItem => assetItem.asset.id === operationAsset.asset.id)
-				setAssets(update(assets, {
-					$splice: [[assetIndex, 1]]
-				}))
+				if (assetIndex !== -1)
+					setAssets(update(assets, {
+						$splice: [[assetIndex, 1]]
+					}))
 			}
 
 			closeModalAndClearOpAsset()
@@ -168,7 +207,8 @@ export default () => {
 			}
 		} catch (err) {
 			console.log(err)
-			toastUtils.error('Could not copy assets, please try again later.')
+			if (err.response?.status === 402) toastUtils.error(err.response.data.message)
+			else toastUtils.error('Could not copy assets, please try again later.')
 		}
 	}
 
@@ -179,6 +219,41 @@ export default () => {
 		} catch (err) {
 			console.log(err)
 			toastUtils.error('Could not create folder, please try again later.')
+		}
+	}
+
+	const removeSelectedAssetsFromItem = async () => {
+		try {
+			if (!operationAsset) {
+				if (currentItem.type === 'project') {
+					await projectApi.associateAssets(currentItem.id, { assetIds: selectedAssets.map(assetItem => assetItem.asset.id) }, { operation: 'disassociate' })
+				} else if (currentItem.type === 'task') {
+					await taskApi.associateAssets(currentItem.id, { assetIds: selectedAssets.map(assetItem => assetItem.asset.id) }, { operation: 'disassociate' })
+				}
+				const newAssets = assets.filter(existingAsset => {
+					const searchedAssetIndex = selectedAssets.findIndex(assetListItem => existingAsset.asset.id === assetListItem.asset.id)
+					return searchedAssetIndex === -1
+				})
+
+				setAssets(newAssets)
+			} else {
+				if (currentItem.type === 'project') {
+					await projectApi.associateAssets(currentItem.id, { assetIds: [operationAsset.asset.id] }, { operation: 'disassociate' })
+				} else if (currentItem.type === 'task') {
+					await taskApi.associateAssets(currentItem.id, { assetIds: [operationAsset.asset.id] }, { operation: 'disassociate' })					
+				}
+				const assetIndex = assets.findIndex(assetItem => assetItem.asset.id === operationAsset.asset.id)
+				if (assetIndex !== -1)
+					setAssets(update(assets, {
+						$splice: [[assetIndex, 1]]
+					}))
+			}
+
+			closeModalAndClearOpAsset()
+			toastUtils.success('Assets removed successfully')
+		} catch (err) {
+			console.log(err)
+			toastUtils.error('Could not remove assets, please try again later.')
 		}
 	}
 
@@ -244,11 +319,25 @@ export default () => {
 				message={`Archive ${operationLength} item(s)?`}
 			/>
 			<ConfirmModal
+				modalIsOpen={activeOperation === 'unarchive'}
+				closeModal={closeModalAndClearOpAsset}
+				confirmAction={unarchiveAssets}
+				confirmText={'Unarchive'}
+				message={`Unarchive ${operationLength} item(s)?`}
+			/>
+			<ConfirmModal
 				modalIsOpen={activeOperation === 'delete'}
 				closeModal={closeModalAndClearOpAsset}
 				confirmAction={deleteSelectedAssets}
 				confirmText={'Delete'}
 				message={`Delete ${operationLength} item(s)?`}
+			/>
+			<ConfirmModal
+				modalIsOpen={activeOperation === 'remove_item'}
+				closeModal={closeModalAndClearOpAsset}
+				confirmAction={removeSelectedAssetsFromItem}
+				confirmText={'Remove'}
+				message={`Remove ${operationLength} item(s) from ${currentItem.type}?`}
 			/>
 		</>
 	)

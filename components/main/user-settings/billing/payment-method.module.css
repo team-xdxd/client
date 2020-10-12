@@ -1,0 +1,8 @@
+.card-info{
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.card-info>*{
+  margin-bottom: 10px;
+}

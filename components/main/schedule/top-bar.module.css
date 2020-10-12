@@ -2,6 +2,7 @@
   display: flex;
   align-items: center;
   margin-bottom: 3rem;
+  position: relative;
 }
 
 .options {
@@ -31,10 +32,72 @@
 
 .filters {
   display: flex;
+  flex-wrap: wrap;
 }
 
-.filters>div{
+.filters > div {
   margin: 0 5px;
   z-index: 200;
   min-width: 160px;
+}
+
+.last-button {
+  margin-top: 0;
+}
+
+.filter,
+.calendar {
+  display: none;
+}
+
+@media screen and (max-width: 1200px) {
+  .container {
+    margin-bottom: 1rem;
+  }
+
+  .options {
+    flex-wrap: wrap;
+    margin-right: 1rem;
+    margin-left: 1rem;
+  }
+
+  .options > button {
+    margin-bottom: 10px;
+  }
+
+  .filter {
+    display: flex;
+    position: absolute;
+    right: 0;
+    width: 20px;
+    height: auto;
+  }
+
+  .calendar {
+    display: flex;
+    position: absolute;
+    left: 0;
+    width: 20px;
+    height: auto;
+  }
+
+  .filters {
+    display: none;
+    flex-wrap: wrap;
+    right: 0;
+    position: absolute;
+    top: 2rem;
+    z-index: 300;
+    background-color: white;
+    padding: 20px;
+    border: 1px solid var(--color-secondary-border);
+  }
+
+  .filters > div {
+    margin-bottom: 10px;
+  }
+
+  .print{
+    display: none;
+  }
 }

@@ -1,0 +1,23 @@
+.container{
+  margin-top: 2.5rem;
+}
+
+.container p{
+  color: var(--color-sec-blue);
+  font-size: 15px;
+}
+
+.profile-photo>div{
+  margin-left: 2rem;
+  margin-top: 2rem;
+}
+
+.client-name{
+  margin-top: 4rem;
+}
+
+.client-name input{
+  margin-top: 0.5rem;
+  margin-left: 2rem;
+  width: 20rem;
+}

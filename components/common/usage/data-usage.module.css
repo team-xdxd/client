@@ -1,0 +1,19 @@
+.container{
+  display: flex;
+}
+
+.bar{
+  width: 20rem;
+  margin-left: 3rem;
+}
+
+.bold{
+  font-weight: 600;
+}
+
+@media screen and (max-width: 472px){
+  .bar{
+    width: 10rem;
+    margin-left: 3rem;
+  }
+}

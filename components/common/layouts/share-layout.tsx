@@ -1,20 +1,22 @@
 import styles from './share-layout.module.css'
 import { GeneralImg, Navigation, Utilities } from '../../../assets'
-import Router from 'next/router'
+import AssetContextProvider from '../../../context/asset-provider'
 
-const AuthLayout = ({ children }) => {
+const ShareLayout = ({ children }) => {
 	return (
 		<>
-			<header className={styles.header}>
-				<img
-					className={styles['logo-img']}
-					src={GeneralImg.logo} />
-			</header>
-			{children}
-			<footer className={styles.footer}>
-			</footer>
+			<AssetContextProvider>
+				<header className={styles.header}>
+					<img
+						className={styles['logo-img']}
+						src={GeneralImg.logo} />
+				</header>
+				{children}
+				<footer className={styles.footer}>
+				</footer>
+			</AssetContextProvider>
 		</>
 	)
 }
 
-export default AuthLayout
+export default ShareLayout

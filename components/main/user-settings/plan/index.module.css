@@ -1,0 +1,39 @@
+.section-buttons{
+  margin-top: 2.5rem;
+}
+
+.section-buttons button{
+  margin-right: 2rem;
+  font-size: 16px;
+}
+
+.products{
+  display: flex;
+  /* flex-wrap: wrap; */
+  margin-top: 2rem;
+}
+
+.products>li{
+  margin-right: 1rem;
+  margin-left: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.usage{
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  padding: 1.5rem 0;
+  margin: 1.5rem 0;
+  border-bottom: 1px solid var(--color-secondary-border);
+}
+
+.usage h3{
+  margin-right: 3rem;
+}
+
+@media screen and (max-width: 1420px){
+  .products{
+    flex-wrap: wrap;
+  }
+}

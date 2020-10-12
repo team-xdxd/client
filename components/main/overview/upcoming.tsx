@@ -13,9 +13,9 @@ const Upcoming = ({ type, items = [], addOnClick = () => { }, deleteItem }) => {
   return <div className={`${styles.container}`}>
     <div className={styles.heading}>
       <h4>Upcoming {capitalCase(`${type}s`)}</h4>
-      <div className={styles.action}>
+      <div className={styles.action} onClick={addOnClick}>
         <img src={Utilities.addLight} />
-        <span onClick={addOnClick}>
+        <span >
           Add {capitalCase(type)}
         </span>
       </div>
