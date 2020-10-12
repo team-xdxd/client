@@ -25,7 +25,7 @@ const Notification = () => {
       // Get auth subscription headers from server
       const { data: { initheaders, subHeaders, subData } } = await notificationApi.getSubscriptionAuthData()
       appSyncSubscription.initConnection({
-        uri: process.env.AWS_APPSYNC_GRAPHQL_REALTIMEURL,
+        uri: process.env.APPSYNC_GRAPHQL_REALTIMEURL,
         queryParams: {
           // All header values need to be string, otherwise the connection attmept gets a 400 err
           header: btoa(JSON.stringify({ ...initheaders, 'Content-Length': initheaders['Content-Length'].toString() })),
