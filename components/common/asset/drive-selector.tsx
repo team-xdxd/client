@@ -12,8 +12,8 @@ const DriveSelector = ({ children, onFilesSelect }) => {
     }
 
     return (
-        <GooglePicker clientId={'1053631313639-o0m00gdem0cgd3agg6i4o0iop657llkk.apps.googleusercontent.com'}
-            developerKey={'AIzaSyAqsbbj0ufdPdUO7tQwkvU1gAPn19hTo3s'}
+        <GooglePicker clientId={process.env.GOOGLE_CLIENT_ID}
+            developerKey={process.env.GOOGLE_DEVELOPER_KEY}
             scope={['https://www.googleapis.com/auth/drive.readonly']}
             onChange={selectDriveFiles}
             onAuthenticate={token => cookiesUtils.set('gdriveToken', token)}
