@@ -8,7 +8,7 @@ import SubscriptionCheckout from './subscription-checkout'
 
 const Subscription = ({ paymentMethod, getPaymentMethod }) => {
 
-  const { getPlan } = useContext(TeamContext)
+  const { getPlan, plan } = useContext(TeamContext)
   const [onCheckout, setOnCheckout] = useState(false)
 
   useEffect(() => {
@@ -25,7 +25,7 @@ const Subscription = ({ paymentMethod, getPaymentMethod }) => {
       {!onCheckout ?
         <SubscriptionPlan goCheckout={() => setOnCheckout(true)} paymentMethod={paymentMethod} />
         :
-        <SubscriptionCheckout goBack={goBack} />
+        <SubscriptionCheckout goBack={goBack} checkoutProduct={plan?.stripeProduct?.id} />
       }
     </div>
   )

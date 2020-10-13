@@ -5,3 +5,7 @@
 .button-wrapper {
   margin-top: 24px;
 }
+
+.plan-desc>span{
+  font-weight: 600;
+}

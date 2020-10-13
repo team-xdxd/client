@@ -1,4 +1,4 @@
-import { useState, useContext } from 'react'
+import { useState, useContext, useEffect } from 'react'
 import { useForm } from 'react-hook-form'
 import styles from './signup-form.module.css'
 import { UserContext, LoadingContext } from '../../context'
@@ -12,7 +12,8 @@ import Select from '../common/inputs/select'
 
 import companySizeOptions from '../../resources/data/company-sizes.json'
 
-const SignupForm = ({ inviteCode = '' }) => {
+const SignupForm = ({ inviteCode = '', priceData }) => {
+
   const { control, handleSubmit, errors, getValues } = useForm()
   const [companySize, setCompanySize] = useState(undefined)
   const [submitError, setSubmitError] = useState('')
@@ -29,7 +30,7 @@ const SignupForm = ({ inviteCode = '' }) => {
         password: fieldData.password,
         companySize: companySize ? companySize.value : ''
       }
-      const { data } = await userApi.signUp(createData, { inviteCode })
+      const { data } = await userApi.signUp(createData, { inviteCode, priceId: priceData?.priceId })
       await afterAuth(data)
     } catch (err) {
       if (err.response?.data?.message) {
@@ -148,6 +149,9 @@ const SignupForm = ({ inviteCode = '' }) => {
       </div>
       {submitError &&
         <p className='submit-error'>{submitError}</p>
+      }
+      {priceData &&
+        <p className={styles['plan-desc']}>You will be subscribed to the trial of <span>{priceData.product}</span> on signup</p>
       }
       <div className={styles['button-wrapper']}>
         <AuthButton

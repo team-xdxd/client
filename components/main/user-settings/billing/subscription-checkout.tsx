@@ -12,7 +12,7 @@ import CreditCardForm from '../../../common/payment/credit-card-form'
 
 const stripePromise = loadStripe('pk_test_bK1C20PBomU24spmlMeg4AXp')
 
-const SubscriptionCheckout = ({ goBack }) => {
+const SubscriptionCheckout = ({ goBack, checkoutProduct }) => {
 
   const [productData, setProductData] = useState(undefined)
   const [selectedPrice, setSelectedPrice] = useState(null)
@@ -52,6 +52,7 @@ const SubscriptionCheckout = ({ goBack }) => {
             productData={productData}
             setSelectedPrice={setSelectedPrice}
             selectedPrice={selectedPrice}
+            checkoutProduct={checkoutProduct}
           />
           <Elements stripe={stripePromise}>
             <CreditCardForm

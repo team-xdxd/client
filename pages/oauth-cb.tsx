@@ -22,13 +22,14 @@ const OauthCbPage = () => {
   const signIn = async (accessCode) => {
     const provider = cookiesUtil.get('oauthProvider')
     const cookieInviteCode = cookiesUtil.get('inviteCode')
+    const signupPrice = cookiesUtil.get('signupPrice')
     try {
       let inviteCode
       // Check if inviteCode is valid
       if (cookieInviteCode && cookieInviteCode !== 'undefined') {
         inviteCode = cookieInviteCode
       }
-      const { data } = await authApi.signIn(provider, accessCode, { inviteCode })
+      const { data } = await authApi.signIn(provider, accessCode, { inviteCode, signupPrice })
       await afterAuth(data)
     } catch (err) {
       if (err.response?.data?.message) toastUtils.error(err.response.data.message)
@@ -40,6 +41,7 @@ const OauthCbPage = () => {
       }
     } finally {
       cookiesUtil.remove('inviteCode')
+      cookiesUtil.remove('signupPrice')
     }
   }
 
