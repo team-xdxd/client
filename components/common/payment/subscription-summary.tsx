@@ -7,11 +7,11 @@ import Select from '../inputs/select'
 
 const DEFAULT_TRIAL_PRODUCT = process.env.DEFAULT_TRIAL_PRODUCT
 
-const SubscriptionSummary = ({ productData, setSelectedPrice, selectedPrice }) => {
+const SubscriptionSummary = ({ productData, setSelectedPrice, selectedPrice, checkoutProduct = DEFAULT_TRIAL_PRODUCT }) => {
   const formattedToday = format(new Date(), 'MM/dd/yyyy')
 
-  const annual = productData.annual.find(price => price.product === DEFAULT_TRIAL_PRODUCT)
-  const monthly = productData.monthly.find(price => price.product === DEFAULT_TRIAL_PRODUCT)
+  const annual = productData.annual.find(price => price.product === checkoutProduct)
+  const monthly = productData.monthly.find(price => price.product === checkoutProduct)
 
   const calcSavings = () => {
     return monthly.amount * 12 - annual.amount

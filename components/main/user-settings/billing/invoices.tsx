@@ -45,7 +45,7 @@ const Invoices = () => {
   )
 
   const parsedInvoices = invoices
-    .filter(({ product, status, statusTransitions }) => product !== 'Free' && (status !== 'draft' || statusTransitions.finalized_at))
+    .filter(({ product, status, statusTransitions }) => product !== process.env.STRIPE_EXPIRE_PRODUCT_NAME && (status !== 'draft' || statusTransitions.finalized_at))
     .map(invoice => ({
       ...invoice,
       date: getInvoiceDate(invoice),
@@ -53,7 +53,7 @@ const Invoices = () => {
     }))
 
   const parsedUpcoming = upcoming
-    .filter(({ product }) => product !== 'Free')
+    .filter(({ product }) => product !== process.env.STRIPE_EXPIRE_PRODUCT_NAME)
     .map(upcoming => ({ ...upcoming, date: new Date(upcoming.date * 1000) }))
 
   return (

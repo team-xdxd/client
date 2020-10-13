@@ -49,7 +49,7 @@ const SubscriptionPlan = ({ paymentMethod, goCheckout }) => {
 
   let productName = plan?.stripeProduct.name
   if (plan?.status === 'trialing') {
-    const remainingDays = differenceInDays(new Date(), new Date(plan.endDate))
+    const remainingDays = differenceInDays(new Date(plan.endDate), new Date())
     productName += ` (Trial - ${remainingDays} day(s) remaining)`
   }
 
