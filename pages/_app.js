@@ -62,7 +62,7 @@ export default function MyApp({ Component, pageProps }) {
             <AssetContextProvider>
               <TeamContextProvider>
                 <Head>
-                  <script type="text/javascript" src="https://www.dropbox.com/static/api/2/dropins.js" id="dropboxjs" data-app-key={`gtwo80vc34l8vjd`}></script>
+                  <script type="text/javascript" src="https://www.dropbox.com/static/api/2/dropins.js" id="dropboxjs" data-app-key={process.env.DROPBOX_API_KEY}></script>
                 </Head>
                 <Component {...pageProps} />
               </TeamContextProvider>
