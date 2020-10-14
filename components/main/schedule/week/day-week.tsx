@@ -22,7 +22,6 @@ const DayWeek = ({ item, socialChannel, type, isMultiple, time }) => {
     }
   }
   
-  console.log(item)
   const owner = item.users?.find(user => user.isOwner)
 
   return (

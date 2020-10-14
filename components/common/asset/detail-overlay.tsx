@@ -90,7 +90,6 @@ const DetailOverlay = ({ asset, realUrl, closeOverlay, openShareAsset = () => { 
   }
 
   const toggleSideMenu = (value = null) => {
-    console.log(value)
     if (value === null)
       setSideOpen(!sideOpen)
     else

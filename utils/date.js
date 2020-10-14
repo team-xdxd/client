@@ -113,10 +113,6 @@ export default {
             return -1
           } else return 0
         })
-        if (newMappedItems.find(item => item.data.id === '95bb02b0-3324-4718-9d90-18cc3e433a87')) {
-          console.log(newMappedItems)
-        }
-
         newItems[dateKey] = newMappedItems
       }
     })
