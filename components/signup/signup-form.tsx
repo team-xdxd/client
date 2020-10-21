@@ -33,13 +33,12 @@ const SignupForm = ({ inviteCode = '', priceData }) => {
       const { data } = await userApi.signUp(createData, { inviteCode, priceId: priceData?.priceId })
       await afterAuth(data)
     } catch (err) {
+      setIsLoading(false)
       if (err.response?.data?.message) {
         setSubmitError(err.response.data.message)
       } else {
         setSubmitError('Something went wrong, please try again later')
       }
-    } finally {
-      setIsLoading(false)
     }
   }
 
