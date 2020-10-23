@@ -67,7 +67,7 @@ export default function MyApp({ Component, pageProps }) {
                 <Head>
                   <script type="text/javascript" src="https://www.dropbox.com/static/api/2/dropins.js" id="dropboxjs" data-app-key={process.env.DROPBOX_API_KEY}></script>
                 </Head>
-                <FBPixel />
+                {process.env.INCLUDE_PIXEL === 'yes' && <FBPixel />}
                 <Component {...pageProps} />
               </TeamContextProvider>
             </AssetContextProvider>
