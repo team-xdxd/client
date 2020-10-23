@@ -24,6 +24,9 @@ import TeamContextProvider from '../context/team-provider'
 import UserContextProvider from '../context/user-provider'
 import LoadingContextProvider from '../context/loading-provider'
 
+// FB pixel
+import FBPixel from '../components/common/scripts/fb-pixel'
+
 import requestUtils from '../utils/requests'
 
 import { toast } from 'react-toastify';
@@ -63,6 +66,9 @@ export default function MyApp({ Component, pageProps }) {
               <TeamContextProvider>
                 <Head>
                   <script type="text/javascript" src="https://www.dropbox.com/static/api/2/dropins.js" id="dropboxjs" data-app-key={process.env.DROPBOX_API_KEY}></script>
+                </Head>
+                <Head>
+                  <FBPixel />
                 </Head>
                 <Component {...pageProps} />
               </TeamContextProvider>
