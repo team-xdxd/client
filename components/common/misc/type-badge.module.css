@@ -1,5 +1,5 @@
 .container {
-  height: 30px;
+  height: 35px;
   width: 100%;
   display: flex;
   border-radius: 20px;
@@ -60,4 +60,7 @@
 
 .email {
   background-color: var(--color-sec-lightorange);
+}
+.project-task {
+  font-weight: bold;
 }
