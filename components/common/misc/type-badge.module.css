@@ -1,10 +1,15 @@
 .container {
-  height: 35px;
+  height: 30px;
   width: 100%;
   display: flex;
   border-radius: 20px;
   align-items: center;
   box-sizing: border-box;
+}
+.hover-task:hover {
+  border-radius: 0%;
+  border-top-left-radius: 20px 20px;
+  border-top-right-radius: 20px 20px;
 }
 
 .container img {
@@ -40,6 +45,40 @@
 
 .task {
   background-color: var(--color-sec-lightblue);
+  position: relative;
+}
+
+.hover-task:hover .project-task {
+  display: block;
+  border-bottom-left-radius: 20px 20px;
+  border-bottom-right-radius: 20px 20px;
+}
+
+.project-task {
+  display: none;
+  position: absolute;
+  z-index: 999;
+  height: 30px;
+  width: 100%;
+  /* border-radius: 20px; */
+  left: 0;
+  background-color: white;
+  border: 2px solid var(--color-sec-lightblue);
+  top: 30px;
+}
+.project-task img {
+  position: absolute;
+  margin: 0 auto;
+  top: 50%;
+  transform: translateY(-50%);
+  margin-left: 15px;
+}
+.project-task p {
+  position: absolute;
+  margin: 0 auto;
+  top: 50%;
+  transform: translateY(-50%);
+  margin-left: 35px;
 }
 
 .social {
@@ -61,6 +100,4 @@
 .email {
   background-color: var(--color-sec-lightorange);
 }
-.project-task {
-  font-weight: bold;
-}
+

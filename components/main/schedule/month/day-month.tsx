@@ -35,7 +35,7 @@ const DayMonth = ({ item, socialChannel, type, isMultiple }) => {
           type={type}
           name={item.name}
           isMultiple={isMultiple}
-          projectTask={item.project?.name}
+          projectTask={item.project}
         />
       </div>
       {!item.startDate &&
@@ -46,7 +46,7 @@ const DayMonth = ({ item, socialChannel, type, isMultiple }) => {
             type={type}
             name={item.name}
             isMultiple={isMultiple}
-            projectTask={item.project?.name}
+            projectTask={item.project}
           />
         </div>
       }
