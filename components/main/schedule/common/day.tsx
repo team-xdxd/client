@@ -1,6 +1,7 @@
 import styles from './day.module.css'
 import { format } from 'date-fns'
 import { useState, useRef, useEffect } from 'react'
+import { Utilities } from '../../../../assets'
 
 const isSameMonth = (date, targetDate) => {
   return date.getMonth() === targetDate.getMonth()
@@ -121,10 +122,13 @@ const Day = ({
         onDragDrop(e)
       }}
     >
+      <div className={`add ${styles['add']}`}>
+        <img src={Utilities.add} />
+      </div>
       {Waypoint}
       {hasDayHeader &&
         <div className={styles['day-header']}>
-          <div className={styles['day-number']}>{dateFormat(date)}</div>
+          <div className={styles['day-number']}>{dateFormat(date)} </div>
           <div className={`${styles['day-number']} ${styles['day-number-week-name']}`}>{`- ${format(date, 'EEE')}`}</div>
           {date.getDate() === today.getDate() && isSameMonth(date, today) &&
             <div className={styles['today-dot']}></div>
