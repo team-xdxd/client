@@ -16,7 +16,7 @@ const StatusBadge = ({ type, socialChannel, name, isMultiple = false }) => {
       <div className={`${styles.name} name`}>
         {name}
       </div>
-      <div className={`${styles['more-task']}`} onClick={() =>(alert("I am an alert box!"))}>
+      <div className={`${styles['more-task']}`}>
         <img src={Utilities.more} />
       </div>
     </div>
