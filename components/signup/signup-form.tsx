@@ -12,9 +12,9 @@ import Select from '../common/inputs/select'
 
 import companySizeOptions from '../../resources/data/company-sizes.json'
 
-const SignupForm = ({ inviteCode = '', priceData }) => {
+const SignupForm = ({ inviteCode = '', priceData, email }) => {
 
-  const { control, handleSubmit, errors, getValues } = useForm()
+  const { control, handleSubmit, errors, getValues, setValue } = useForm()
   const [companySize, setCompanySize] = useState(undefined)
   const [submitError, setSubmitError] = useState('')
   const { afterAuth } = useContext(UserContext)
@@ -41,6 +41,10 @@ const SignupForm = ({ inviteCode = '', priceData }) => {
       }
     }
   }
+
+  useEffect(() => {
+    setValue('email', email)
+  }, [email])
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className={styles.container}>

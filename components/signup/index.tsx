@@ -14,12 +14,17 @@ const Signup = () => {
 
   const [shareInviteCode, setShareInviteCode] = useState(undefined)
   const [priceData, setPriceData] = useState(undefined)
+  const [defaultEmail, setDefaultEmail] = useState('')
   const { setIsLoading } = useContext(LoadingContext)
 
   useEffect(() => {
-    const { inviteCode } = urlUtils.getQueryParameters()
+    const { inviteCode, email } = urlUtils.getQueryParameters()
     if (inviteCode) {
       setShareInviteCode(inviteCode)
+    }
+
+    if (email) {
+      setDefaultEmail(email as string)
     }
 
     if (!inviteCode) {
@@ -50,9 +55,9 @@ const Signup = () => {
         title='Get started for FREE today'
         subtitle='No credit card required - 14 day free trial'
       >
-        <SignupForm inviteCode={shareInviteCode} priceData={priceData} />
+        <SignupForm inviteCode={shareInviteCode} priceData={priceData} email={defaultEmail} />
         <div className={styles.or}>OR</div>
-        <ProvidersAuth inviteCode={shareInviteCode} priceData={priceData}/>
+        <ProvidersAuth inviteCode={shareInviteCode} priceData={priceData} />
       </AuthContainer>
       {!shareInviteCode && <p className='nav-text'>Already have an account? <Link href='/login'><span>Log In</span></Link></p>}
     </main>
