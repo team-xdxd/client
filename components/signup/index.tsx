@@ -48,7 +48,7 @@ const Signup = () => {
     <main className={`${styles.container} container-centered`}>
       <AuthContainer
         title='Get started for FREE today'
-        subtitle='No credit card required - 10 day free trial'
+        subtitle='No credit card required - 14 day free trial'
       >
         <SignupForm inviteCode={shareInviteCode} priceData={priceData} />
         <div className={styles.or}>OR</div>
