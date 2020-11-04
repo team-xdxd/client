@@ -27,6 +27,9 @@ import LoadingContextProvider from '../context/loading-provider'
 // FB pixel
 import FBPixel from '../components/common/scripts/fb-pixel'
 
+// Google analytics
+import GoogleAnalytics from '../components/common/scripts/google-analytics'
+
 import requestUtils from '../utils/requests'
 
 import { toast } from 'react-toastify';
@@ -68,6 +71,7 @@ export default function MyApp({ Component, pageProps }) {
                   <script type="text/javascript" src="https://www.dropbox.com/static/api/2/dropins.js" id="dropboxjs" data-app-key={process.env.DROPBOX_API_KEY}></script>
                 </Head>
                 {process.env.INCLUDE_PIXEL === 'yes' && <FBPixel />}
+                {process.env.INCLUDE_GOOGLE_ANALYTICS === 'yes' && <GoogleAnalytics />}
                 <Component {...pageProps} />
               </TeamContextProvider>
             </AssetContextProvider>

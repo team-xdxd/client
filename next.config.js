@@ -10,6 +10,7 @@ module.exports = withImages({
     GOOGLE_CLIENT_ID: process.env.GOOGLE_CLIENT_ID || '1053631313639-o0m00gdem0cgd3agg6i4o0iop657llkk.apps.googleusercontent.com',
     GOOGLE_DEVELOPER_KEY: process.env.GOOGLE_DEVELOPER_KEY || 'AIzaSyAqsbbj0ufdPdUO7tQwkvU1gAPn19hTo3s',
     APPSYNC_GRAPHQL_REALTIMEURL: process.env.APPSYNC_GRAPHQL_REALTIMEURL || 'wss://it7l2l7v25dvhhet4izohabywu.appsync-realtime-api.us-east-1.amazonaws.com/graphql',
-    INCLUDE_PIXEL: process.env.INCLUDE_PIXEL || 'no'
+    INCLUDE_PIXEL: process.env.INCLUDE_PIXEL || 'no',
+    INCLUDE_GOOGLE_ANALYTICS: process.env.INCLUDE_GOOGLE_ANALYTICS || 'no'
   },
 })
