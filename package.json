@@ -32,6 +32,7 @@
     "react-dom": "16.12.0",
     "react-drag-drop-container": "^6.1.1",
     "react-dropzone": "^11.0.1",
+    "react-ga": "^3.2.0",
     "react-google-picker": "^0.1.0",
     "react-highlight-words": "^0.16.0",
     "react-hook-form": "^5.1.3",
