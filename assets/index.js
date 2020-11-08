@@ -85,7 +85,9 @@ export const ProjectType = {
   email: require('./Icons/Project Type/Email/icn-projecttype-email.svg'),
   emailLight: require('./Icons/Project Type/Email/icn-projecttype-email-light.svg'),
   banners: require('./Icons/Project Type/AD/icn-projecttype-ad.svg'),
-  bannersLight: require('./Icons/Project Type/AD/icn-projecttype-ad-light.svg')
+  bannersLight: require('./Icons/Project Type/AD/icn-projecttype-ad-light.svg'),
+  social: require('./Icons/Project Type/Social/icn-projecttype-social.svg'),
+  socialLight: require('./Icons/Project Type/Social/icn-projecttype-social-light.svg'),
 }
 
 export const ProjectTypeChannel = {
