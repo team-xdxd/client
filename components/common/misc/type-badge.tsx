@@ -1,5 +1,5 @@
 import { capitalCase } from 'change-case'
-import { useRef, useState } from 'react'
+import { useRef, useState, useEffect } from 'react'
 import styles from './type-badge.module.css'
 import { ProjectTypeChannel, ProjectTypes, ProjectType } from '../../../assets'
 import Router from 'next/router'
@@ -7,14 +7,14 @@ import detectIt from 'detect-it';
 
 const TypeBadge = ({ type, socialChannel, name, isMultiple = false, projectTask }) => {
 
-  const [showProjectTask, setShowProjectTask] = useState(false)
+  const [showProjectTask1, setShowProjectTask1] = useState('')
+  const [showProjectTask2, setShowProjectTask2] = useState('')
 
   let icon = ProjectTypes[type]
   if (type !== 'campaign' && type !== 'task') {
     icon = ProjectType[type]
   }
 
-  const taskRef = useRef(null)
   const projectRef = useRef(null)
 
   let projectName = null
@@ -34,32 +34,40 @@ const TypeBadge = ({ type, socialChannel, name, isMultiple = false, projectTask 
     }
   }
 
-  // const redirectToProject = (e) => {
-  //   e.stopPropagation()
-  //   Router.replace(`/main/projects/${projectTask.id}`)
-  // }
-
   const hoverOnMobile = (e) => {
-    if (detectIt.deviceType === 'touchOnly') {
+    if (projectTask && detectIt.deviceType === 'touchOnly') {
       e.stopPropagation()
-      //taskRef.current.classList.add('test')
-      setShowProjectTask(true)
-      
-    } else {
-      e.stopPropagation()
-      Router.replace(`/main/projects/${projectTask.id}`)
+      setShowProjectTask1('hoverMobileClass1')
+      setShowProjectTask2('hoverMobileClass2')
+      if (showProjectTask1) {
+        setShowProjectTask1('')
+        setShowProjectTask2('')
+        Router.replace(`/main/projects/${projectTask.id}`)
+      }
     }
   }
 
-  console.log(detectIt.deviceType)
-  console.log(showProjectTask)
+  useEffect(() => {
+    const handleClickOutside = (e) => {
+      if (projectRef.current && !projectRef.current.contains(e.target)) {
+        setShowProjectTask1('')
+        setShowProjectTask2('')
+      }
+    }
+    document.addEventListener('click', handleClickOutside)
+    return () => {
+      document.removeEventListener('click', handleClickOutside)
+    }
+  }, [projectRef])
+
 
   return (
-    <div ref={projectRef} onClick={hoverOnMobile} className={`${projectTask && showProjectTask && styles['hover-task']} ${styles[type]} ${styles.container} ${isMultiple && styles.multiple} type-badge`}>
+    <div onClick={hoverOnMobile} ref={projectRef}
+      className={`${projectTask && styles['hover-task']} ${projectTask && styles[showProjectTask1]} ${styles[type]} ${styles.container} ${isMultiple && styles.multiple} type-badge`}>
       <img src={socialChannel ? ProjectTypeChannel[socialChannel.toLowerCase()] : icon} />
       <div className={`${styles.name} name`}>
         {name}
-        <div ref={taskRef} className={`${styles['project-task']}`}><img src={projectTypeIcon} /><p>{projectName}</p></div>
+        <div className={`${styles['project-task']} ${projectTask && styles[showProjectTask2]}`}><img src={projectTypeIcon} /><p>{projectName}</p></div>
       </div>
     </div>
   )
