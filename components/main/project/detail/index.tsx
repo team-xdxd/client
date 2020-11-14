@@ -295,7 +295,6 @@ const ProjectDetail = () => {
         collaboratorsIds.push(editableFields.collaborators[collaborator].id);
 
       const tasksDuplicated = [];
-      // tasksIds.push(editableFields.tasks[task].id);
       for (let task in editableFields.tasks)
         tasksDuplicated.push({
           name: editableFields.tasks[task].name,
