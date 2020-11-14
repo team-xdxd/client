@@ -297,16 +297,20 @@ const ProjectDetail = () => {
       //   task: editableFields.tasks,
       //   ownerId: editableFields.owner.id,
       // };
-      const collaboratorsId = editableFields.collaborators.filter(
-        (collaboratorId) => collaboratorId.id
-      );
+      // const collaboratorsId = editableFields.collaborators.filter(
+      //   (collaboratorId) => collaboratorId.id
+      // );
+      const collaboratorsIds = [];
+      for (let i in editableFields.collaborators)
+        collaboratorsIds.push(editableFields.collaborators.id);
+
       const projectInfo = {
         dataProject: {
           name: editableFields.name,
           type: editableFields.type,
         },
         campaignId: editableFields.campaignId,
-        collaborators: collaboratorsId,
+        collaboratorsIds: collaboratorsIds,
       };
       console.log("tried", projectInfo);
       await projectApi.createDuplicatedProject(projectInfo);
