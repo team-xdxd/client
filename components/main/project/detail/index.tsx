@@ -290,30 +290,31 @@ const ProjectDetail = () => {
 
   const duplicateProject = async () => {
     try {
-      // const projectInfo = {
-      //   name: editableFields.name,
-      //   campaignId: editableFields.campaignId,
-      //   collaborators: editableFields.collaborators,
-      //   task: editableFields.tasks,
-      //   ownerId: editableFields.owner.id,
-      // };
-      // const collaboratorsId = editableFields.collaborators.filter(
-      //   (collaboratorId) => collaboratorId.id
-      // );
       const collaboratorsIds = [];
-      for (let i in editableFields.collaborators)
-        collaboratorsIds.push(editableFields.collaborators.id);
+      for (let collaborator in editableFields.collaborators)
+        collaboratorsIds.push(editableFields.collaborators[collaborator].id);
+
+      const tasksDuplicated = [];
+      // tasksIds.push(editableFields.tasks[task].id);
+      for (let task in editableFields.tasks)
+        tasksDuplicated.push({
+          name: editableFields.tasks[task].name,
+          description: editableFields.tasks[task].description,
+          userId: editableFields.tasks[task].userId,
+        });
 
       const projectInfo = {
         dataProject: {
           name: editableFields.name,
           type: editableFields.type,
+          campaign_id: editableFields.campaignId,
         },
-        campaignId: editableFields.campaignId,
-        collaboratorsIds: collaboratorsIds,
+        collaboratorIds: collaboratorsIds,
+        tasks: tasksDuplicated,
       };
       console.log("tried", projectInfo);
-      await projectApi.createDuplicatedProject(projectInfo);
+      const { data } = await projectApi.createDuplicatedProject(projectInfo);
+      Router.replace(`/main/projects/${data.id}`);
     } catch (error) {
       console.log("There is an error on duplicateProject", error);
     }
