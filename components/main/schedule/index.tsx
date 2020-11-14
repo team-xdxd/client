@@ -53,7 +53,6 @@ const Schedule = () => {
     campaign: null,
     status: null,
     type: null,
-    owner: null,
     member: null
   })
 
@@ -179,7 +178,7 @@ const Schedule = () => {
     return filterObj
   }
 
-  const findUsersFn = (filterMember) => (user) => user.id === filterMember.value && user.isOwner
+  const findUsersFn = (filterMember) => (user) => user.id === filterMember.value
 
   const evalCampaignsWithFilters = (campaign) => {
     if (filters.campaign?.length > 0 && filters.campaign.findIndex(filterCampaign => campaign.id === filterCampaign.value) === -1) return false
@@ -234,7 +233,6 @@ const Schedule = () => {
       const newDate = new Date(targetDate.setHours(existingDate.getHours(), existingDate.getSeconds()))
       const itemIndex = mixedList.findIndex(searchedItem => searchedItem.id === item.id)
 
-      let updatedIem
       // targetDate
       if (item.itemType === 'campaign') {
         setMixedList(update(mixedList,
