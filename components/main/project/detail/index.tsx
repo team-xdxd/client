@@ -290,12 +290,23 @@ const ProjectDetail = () => {
 
   const duplicateProject = async () => {
     try {
+      // const projectInfo = {
+      //   name: editableFields.name,
+      //   campaignId: editableFields.campaignId,
+      //   collaborators: editableFields.collaborators,
+      //   task: editableFields.tasks,
+      //   ownerId: editableFields.owner.id,
+      // };
+      const collaboratorsId = editableFields.collaborators.filter(
+        (collaboratorId) => collaboratorId.id
+      );
       const projectInfo = {
-        name: editableFields.name,
+        dataProject: {
+          name: editableFields.name,
+          type: editableFields.type,
+        },
         campaignId: editableFields.campaignId,
-        collaborators: editableFields.collaborators,
-        task: editableFields.tasks,
-        ownerId: editableFields.owner.id,
+        collaborators: collaboratorsId,
       };
       console.log("tried", projectInfo);
       await projectApi.createDuplicatedProject(projectInfo);
