@@ -78,3 +78,17 @@
     display: block;
   }
 }
+
+.day .add img {
+  display: none;
+}
+
+.day:hover .add img {
+  display: block;
+  width: 15px;
+  height: 15px;
+  position: absolute;
+  top: 8px;
+  right: 7px;
+  cursor: pointer;
+}
