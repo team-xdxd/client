@@ -41,7 +41,8 @@ const ProjectDetail = () => {
     publishDate: null,
     owner: null,
     tags: [],
-    channel: null
+    channel: null,
+    tasks: []
   })
 
   useEffect(() => {
@@ -252,6 +253,36 @@ const ProjectDetail = () => {
     }
   }
 
+  const duplicateProject = async () => {
+    try {
+      const collaboratorsIds = [];
+      for (let collaborator in editableFields.collaborators)
+        collaboratorsIds.push(editableFields.collaborators[collaborator].id)
+
+      const tasksDuplicated = []
+      for (let task in editableFields.tasks)
+        tasksDuplicated.push({
+          name: editableFields.tasks[task].name,
+          description: editableFields.tasks[task].description,
+          userId: editableFields.tasks[task].userId,
+        })
+
+      const projectInfo = {
+        dataProject: {
+          name: editableFields.name,
+          type: editableFields.type,
+          campaign_id: editableFields.campaignId,
+        },
+        collaboratorIds: collaboratorsIds,
+        tasks: tasksDuplicated
+      }
+      const { data } = await projectApi.createDuplicatedProject(projectInfo)
+      Router.replace(`/main/projects/${data.id}`)
+    } catch (error) {
+      console.log("There is an error on duplicateProject", error);
+    }
+  }
+
   let SideComponent
   if (activeSideComponent === 'tasks')
     SideComponent = <TasksList
@@ -289,6 +320,9 @@ const ProjectDetail = () => {
             { icon: Utilities.comment, onClick: () => { setActiveSidecomponent('comments') } }
           ]}
           SideComponent={SideComponent}
+          // temporary
+          project={editableFields}
+          duplicateProject={duplicateProject}
         >
           {project &&
             <Fields
