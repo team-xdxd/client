@@ -22,12 +22,8 @@ export default {
       { assetIds }
     ),
 
-  addCollaborators: (id, data) =>
-    axios.post(`${projectUrl}/${id}/collaborators`, data),
-  removeCollaborators: (id, data) =>
-    axios.delete(`${projectUrl}/${id}/collaborators`, { data }),
+  addCollaborators: (id, data) => axios.post(`${projectUrl}/${id}/collaborators`, data),
+  removeCollaborators: (id, data) => axios.delete(`${projectUrl}/${id}/collaborators`, { data }),
 
-  // endpoint for duplicate
-  createDuplicatedProject: (data) =>
-    axios.post(`${projectUrl}/duplicate`, data),
-};
+  createDuplicatedProject: (data) => axios.post(`${projectUrl}/duplicate`, data)
+}

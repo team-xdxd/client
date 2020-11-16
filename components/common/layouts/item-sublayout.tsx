@@ -21,10 +21,9 @@ const ItemSublayout = ({
   layout = "double",
   type = "item",
   hasAssets = false,
-  itemId = "",
-  deleteItem = () => {},
-  project,
-  duplicateProject,
+  itemId = '',
+  deleteItem = () => { },
+  duplicateProject
 }) => {
   const [modalOpen, setModalOpen] = useState(false);
   const [activeMain, setActiveMain] = useState("details");
@@ -107,21 +106,19 @@ const ItemSublayout = ({
               {children}
             </>
           )}
-          contentClass={styles["more-drop"]}
-          Content={() => (
-            <Dropdown
-              options={[
-                { label: "Delete", onClick: () => setModalOpen(true) },
-                {
-                  label: "Duplicate",
-                  onClick: () => {
-                    duplicateProject();
-                    console.log(project);
-                  },
-                },
-              ]}
-            />
-          )}
+          contentClass={styles['more-drop']}
+          Content={() => {
+
+            const options = []
+            if (duplicateProject) options.push({ label: 'Duplicate', onClick: () => duplicateProject() })
+            options.push({ label: 'Delete', onClick: () => setModalOpen(true) })
+
+            return (
+              <Dropdown
+                options={options}
+              />
+            )
+          }}
         />
       </div>
       {/* Delete modal */}
