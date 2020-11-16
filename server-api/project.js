@@ -25,5 +25,5 @@ export default {
   addCollaborators: (id, data) => axios.post(`${projectUrl}/${id}/collaborators`, data),
   removeCollaborators: (id, data) => axios.delete(`${projectUrl}/${id}/collaborators`, { data }),
 
-  createDuplicatedProject: (data) => axios.post(`${projectUrl}/duplicate`, data)
+  createDuplicatedProject: (id) => axios.post(`${projectUrl}/${id}/duplicate`)
 }
