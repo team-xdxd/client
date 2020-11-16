@@ -51,7 +51,7 @@
 .loading {
   position: absolute;
   z-index: 10000;
-  max-width: 1400px;
+  max-width: 1800px;
   width: calc(100% - 35px);
   height: 60vh;
   background-color: rgba(255, 255, 255, 0.7);

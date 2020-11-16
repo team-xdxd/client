@@ -16,5 +16,7 @@ export default {
   associateAssets: (id, { assetIds }, queryParams = {}) => axios.patch(`${projectUrl}/${id}/assets?${queryString.stringify(queryParams)}`, { assetIds }),
 
   addCollaborators: (id, data) => axios.post(`${projectUrl}/${id}/collaborators`, data),
-  removeCollaborators: (id, data) => axios.delete(`${projectUrl}/${id}/collaborators`, { data })
+  removeCollaborators: (id, data) => axios.delete(`${projectUrl}/${id}/collaborators`, { data }),
+
+  createDuplicatedProject: (data) => axios.post(`${projectUrl}/duplicate`, data)
 }

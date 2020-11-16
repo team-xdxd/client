@@ -4,7 +4,8 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "next build && next export",
+    "build": "next build",
+    "build-static": "next build && next export",
     "start": "next start"
   },
   "dependencies": {
@@ -15,6 +16,7 @@
     "chart.js": "^2.9.3",
     "cross-fetch": "^3.0.5",
     "date-fns": "^2.12.0",
+    "detect-it": "^3.0.7",
     "emoji-mart": "^3.0.0",
     "file-saver": "^2.0.2",
     "filesize": "^6.1.0",
@@ -31,6 +33,7 @@
     "react-dom": "16.12.0",
     "react-drag-drop-container": "^6.1.1",
     "react-dropzone": "^11.0.1",
+    "react-ga": "^3.2.0",
     "react-google-picker": "^0.1.0",
     "react-highlight-words": "^0.16.0",
     "react-hook-form": "^5.1.3",

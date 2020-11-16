@@ -5,11 +5,16 @@ import { ProjectTypeChannel, ProjectTypes, ProjectType, Utilities } from '../../
 // Components
 import UserPhoto from '../../common/user/user-photo'
 
-const TypeBadgeExtended = ({ type, socialChannel, name, photo, isMultiple = false, isLast = false, time }) => {
+const TypeBadgeExtended = ({ type, socialChannel, name, photo, isMultiple = false, isLast = false, time, projectTask }) => {
   let icon = ProjectTypes[type]
   if (type !== 'campaign' && type !== 'task') {
     icon = ProjectType[type]
   }
+  let projectName = null
+  if(type === 'task'){
+    projectName = `${projectTask} > `
+  }
+
   return (
     <div className={`${styles[type]} ${styles.container} ${isMultiple && styles.multiple} type-badge`}>
       {isMultiple ?
