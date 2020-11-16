@@ -40,7 +40,7 @@ const ListItem = ({ item }) => {
       itemTime = format(new Date(item.endDate), 'h:mm a')
     }
   }
-  
+
   const owner = item.users?.find(user => user.isOwner)
 
   return (
@@ -68,7 +68,7 @@ const ListItem = ({ item }) => {
         {itemTime}
       </div>
       <div className={styles.owner}>
-        <UserPhoto photoUrl={owner?.profilePhoto} sizePx={20} />        
+        <UserPhoto photoUrl={owner?.profilePhoto} sizePx={20} />
         <span>{owner?.name}</span>
       </div>
       <div className={styles.action}>
@@ -78,6 +78,9 @@ const ListItem = ({ item }) => {
           styleType='primary'
           onClick={() => Router.replace(`/main/${item.itemType}s/${item.id}`)}
         />
+        <div className={`${styles['more-task']}`}>
+          <img src={Utilities.more} />
+        </div>
       </div>
     </div>
   )
