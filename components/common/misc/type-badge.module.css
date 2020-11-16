@@ -5,6 +5,7 @@
   border-radius: 20px;
   align-items: center;
   box-sizing: border-box;
+  position: relative;
 }
 .hover-task:hover, .hoverMobileClass1 {
   border-radius: 0%;
@@ -107,3 +108,23 @@
   background-color: var(--color-sec-lightorange);
 }
 
+.container .more-task {
+  display: none;
+}
+.container:hover .more-task {
+  display: block;
+  border: var(--color-prim-navy) 1px solid;
+  border-radius: 50%;
+  padding: 2px;
+  background-color: white;
+  position: absolute;
+  right: -2px;
+  z-index: 999;
+}
+.more-task img {
+  display: block;
+  margin: 0 auto;
+  width: 10px;
+  height: 10px;
+  transform: rotate(90deg)
+}

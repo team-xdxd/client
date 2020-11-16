@@ -1,7 +1,7 @@
 import { capitalCase } from 'change-case'
 import { useRef, useState, useEffect } from 'react'
 import styles from './type-badge.module.css'
-import { ProjectTypeChannel, ProjectTypes, ProjectType } from '../../../assets'
+import { ProjectTypeChannel, ProjectTypes, ProjectType, Utilities } from '../../../assets'
 import Router from 'next/router'
 import detectIt from 'detect-it';
 
@@ -60,7 +60,6 @@ const TypeBadge = ({ type, socialChannel, name, isMultiple = false, projectTask 
     }
   }, [projectRef])
 
-
   return (
     <div onClick={hoverOnMobile} ref={projectRef}
       className={`${projectTask && styles['hover-task']} ${projectTask && styles[showProjectTask1]} ${styles[type]} ${styles.container} ${isMultiple && styles.multiple} type-badge`}>
@@ -68,6 +67,9 @@ const TypeBadge = ({ type, socialChannel, name, isMultiple = false, projectTask 
       <div className={`${styles.name} name`}>
         {name}
         <div className={`${styles['project-task']} ${projectTask && styles[showProjectTask2]}`}><img src={projectTypeIcon} /><p>{projectName}</p></div>
+      </div>
+      <div className={`${styles['more-task']}`}>
+        <img src={Utilities.more} />
       </div>
     </div>
   )
