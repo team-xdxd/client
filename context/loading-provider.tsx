@@ -8,6 +8,7 @@ export default ({ children }) => {
     isLoading,
     setIsLoading
   }
+
   return (
     <LoadingContext.Provider value={loadingValue}>
       {children}

@@ -17,12 +17,17 @@ import 'emoji-mart/css/emoji-mart.css'
 // Import stripe as a side effect so it helps detect fraudulent activy
 import '@stripe/stripe-js';
 import dragndropPolyfill from '../polyfills/dragndroptouch'
+import ReactGA from 'react-ga'
 import { useState, useEffect } from 'react'
+import { useRouter } from 'next/router'
 import { LanguageContext, ThemeContext } from '../context'
 import AssetContextProvider from '../context/asset-provider'
 import TeamContextProvider from '../context/team-provider'
 import UserContextProvider from '../context/user-provider'
 import LoadingContextProvider from '../context/loading-provider'
+
+// FB pixel
+import FBPixel from '../components/common/scripts/fb-pixel'
 
 import requestUtils from '../utils/requests'
 
@@ -45,6 +50,8 @@ export default function MyApp({ Component, pageProps }) {
     document.documentElement.style.setProperty('--vh', `${vh}px`)
   }
 
+  const router = useRouter()
+
   useEffect(() => {
     requestUtils.setForbiddenInterceptor()
     resizeWindow()
@@ -52,7 +59,17 @@ export default function MyApp({ Component, pageProps }) {
       resizeWindow()
     })
     dragndropPolyfill()
+    if (process.env.INCLUDE_GOOGLE_ANALYTICS === 'yes') {
+      ReactGA.initialize('UA-170704013-1')
+    }
   }, [])
+
+  useEffect(() => {
+    if (process.env.INCLUDE_GOOGLE_ANALYTICS === 'yes') {
+      ReactGA.ga('set', 'page', router.asPath);
+      ReactGA.ga('send', 'pageview');
+    }
+  }, [router.asPath])
 
   return (
     <LoadingContextProvider>
@@ -64,6 +81,7 @@ export default function MyApp({ Component, pageProps }) {
                 <Head>
                   <script type="text/javascript" src="https://www.dropbox.com/static/api/2/dropins.js" id="dropboxjs" data-app-key={process.env.DROPBOX_API_KEY}></script>
                 </Head>
+                {process.env.INCLUDE_PIXEL === 'yes' && <FBPixel />}
                 <Component {...pageProps} />
               </TeamContextProvider>
             </AssetContextProvider>

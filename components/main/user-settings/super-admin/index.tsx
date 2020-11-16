@@ -24,11 +24,13 @@ const SuperAdmin = () => {
     getUsers()
   }, [])
 
-  const getUsers = async ({ page = 1, searchTerm = term } = {}) => {
+  const getUsers = async ({ page = 1, searchTerm = term, reset = false } = {}) => {
     try {
+      let newUsers = userData.users
+      if (reset) newUsers = []
       const { data } = await superAdminApi.getUsers({ term: searchTerm, page })
       setUserData({
-        users: [...userData.users, ...data.users],
+        users: [...newUsers, ...data.users],
         currentPage: page,
         total: data.total
       })
@@ -40,7 +42,8 @@ const SuperAdmin = () => {
   const searchAndGetUsers = (searchTerm) => {
     getUsers({
       searchTerm,
-      page: 1
+      page: 1,
+      reset: true
     })
     setTerm(searchTerm)
   }

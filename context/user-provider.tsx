@@ -16,7 +16,7 @@ export default ({ children }) => {
 
   const router = useRouter()
 
-  const fetchUser = async (redirectLogin = false) => {    
+  const fetchUser = async (redirectLogin = false) => {
     if (redirectLogin) return Router.replace('/login')
     const jwt = cookiesUtils.get('jwt')
 
@@ -34,15 +34,15 @@ export default ({ children }) => {
         const { data } = await userApi.getUserData()
         setUser(data)
         if (!data.firstTimeLogin && Router.pathname.indexOf('/main/setup') === -1) {
-          Router.replace('/main/setup')
+          await Router.replace('/main/setup')
         }
         else if (Router.pathname.indexOf('/main') === -1)
-          Router.replace('/main/overview')
+          await Router.replace('/main/overview')
 
       } catch (err) {
         console.log(err)
         initialRedirect()
-      } finally{
+      } finally {
         setIsLoading(false)
       }
     } else initialRedirect()
@@ -65,12 +65,12 @@ export default ({ children }) => {
     return requiredPermissions.some(perm => user?.permissions.map(userPerm => userPerm.id).includes(perm))
   }
 
-  const afterAuth = ({ twoFactor, token }) => {
+  const afterAuth = async ({ twoFactor, token }) => {
     cookiesUtils.setUserJWT(token)
     if (twoFactor) {
       cookiesUtils.set('twoFactor', 'true')
     }
-    fetchUser()
+    await fetchUser()
   }
 
   useEffect(() => {

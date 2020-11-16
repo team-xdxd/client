@@ -24,7 +24,8 @@ const ItemSublayout = ({
   type = 'item',
   hasAssets = false,
   itemId = '',
-  deleteItem = () => { }
+  deleteItem = () => { },
+  duplicateProject
 }) => {
   const [modalOpen, setModalOpen] = useState(false)
   const [activeMain, setActiveMain] = useState('details')
@@ -109,7 +110,10 @@ const ItemSublayout = ({
           contentClass={styles['more-drop']}
           Content={() => (
             <Dropdown
-              options={[{ label: 'Delete', onClick: () => setModalOpen(true) }]}
+              options={[
+                { label: 'Duplicate', onClick: () => duplicateProject() },
+                { label: 'Delete', onClick: () => setModalOpen(true) }
+              ]}
             />
           )}
         />

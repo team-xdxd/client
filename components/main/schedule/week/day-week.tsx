@@ -41,6 +41,7 @@ const DayWeek = ({ item, socialChannel, type, isMultiple, time }) => {
           name={item.name}
           isMultiple={isMultiple}
           photo={owner?.profilePhoto}
+          projectTask={item.project?.name}
         />
       </div>
       {!item.startDate &&
@@ -53,6 +54,7 @@ const DayWeek = ({ item, socialChannel, type, isMultiple, time }) => {
             name={item.name}
             isMultiple={isMultiple}
             photo={owner?.profilePhoto}
+            projectTask={item.project?.name}
           />
         </div>
       }

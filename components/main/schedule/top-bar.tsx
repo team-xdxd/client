@@ -24,7 +24,7 @@ const TopBar = ({ activeView, setActiveView, setCurrentDate, filters, setFilters
 
   const { getTeamMembers, teamMembers } = useContext(TeamContext)
 
-  const { hasPermission } = useContext(UserContext)
+  const { hasPermission, user } = useContext(UserContext)
 
   useEffect(() => {
     getTeamMembers()
@@ -58,7 +58,7 @@ const TopBar = ({ activeView, setActiveView, setCurrentDate, filters, setFilters
           active={activeView === 'list'}
           onClick={() => setActiveView('list')}
         />
-        <SectionButton 
+        <SectionButton
           text='Week'
           active={activeView === 'week'}
           onClick={() => setActiveView('week')}
@@ -112,8 +112,10 @@ const TopBar = ({ activeView, setActiveView, setCurrentDate, filters, setFilters
         </div>
         <div>
           <FiltersSelect
-            options={teamMembers.map(member => ({ label: member.name, value: member.id }))}
-            placeholder='Owner'
+            options={teamMembers
+              .filter(member => user.roleId !== 'user' || member.id === user.id)
+              .map(member => ({ label: member.name, value: member.id }))}
+            placeholder='Member'
             styleType='filter filter-schedule'
             onChange={(selected) => setFilters({ ...filters, member: selected })}
             value={filters.member}
