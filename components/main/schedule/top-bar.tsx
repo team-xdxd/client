@@ -115,7 +115,7 @@ const TopBar = ({ activeView, setActiveView, setCurrentDate, filters, setFilters
             options={teamMembers
               .filter(member => user.roleId !== 'user' || member.id === user.id)
               .map(member => ({ label: member.name, value: member.id }))}
-            placeholder='Member'
+            placeholder='Team'
             styleType='filter filter-schedule'
             onChange={(selected) => setFilters({ ...filters, member: selected })}
             value={filters.member}

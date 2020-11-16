@@ -108,14 +108,18 @@ const ItemSublayout = ({
             </>
           )}
           contentClass={styles['more-drop']}
-          Content={() => (
-            <Dropdown
-              options={[
-                { label: 'Duplicate', onClick: () => duplicateProject() },
-                { label: 'Delete', onClick: () => setModalOpen(true) }
-              ]}
-            />
-          )}
+          Content={() => {
+
+            const options = []
+            if (duplicateProject) options.push({ label: 'Duplicate', onClick: () => duplicateProject() })
+            options.push({ label: 'Delete', onClick: () => setModalOpen(true) })
+
+            return (
+              <Dropdown
+                options={options}
+              />
+            )
+          }}
         />
       </div>
       {/* Delete modal */}

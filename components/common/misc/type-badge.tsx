@@ -60,13 +60,18 @@ const TypeBadge = ({ type, socialChannel, name, isMultiple = false, projectTask 
     }
   }, [projectRef])
 
+  const redirectProject = (e) => {
+    e.stopPropagation()
+    Router.replace(`/main/projects/${projectTask.id}`)
+  }
+
   return (
     <div onClick={hoverOnMobile} ref={projectRef}
       className={`${projectTask && styles['hover-task']} ${projectTask && styles[showProjectTask1]} ${styles[type]} ${styles.container} ${isMultiple && styles.multiple} type-badge`}>
       <img src={socialChannel ? ProjectTypeChannel[socialChannel.toLowerCase()] : icon} />
       <div className={`${styles.name} name`}>
         {name}
-        <div className={`${styles['project-task']} ${projectTask && styles[showProjectTask2]}`}><img src={projectTypeIcon} /><p>{projectName}</p></div>
+        <div onClick={redirectProject} className={`${styles['project-task']} ${projectTask && styles[showProjectTask2]}`}><img src={projectTypeIcon} /><p>{projectName}</p></div>
       </div>
       <div className={`${styles['more-task']}`}>
         <img src={Utilities.more} />

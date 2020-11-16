@@ -70,6 +70,11 @@
   margin-bottom: 15px;
 }
 
+.side-bar > div:last-child img {
+  padding-bottom: 0;
+  margin-bottom: 0;
+}
+
 .elements {
   padding-top: 30px;
   display: flex;
