@@ -16,6 +16,7 @@ import TopBar from './top-bar'
 import List from './list'
 import Week from './week'
 import Month from './month'
+import Router from 'next/router'
 
 const Schedule = () => {
 
@@ -139,9 +140,9 @@ const Schedule = () => {
 
   const mixAndOrderData = (campaignsData, projectsData, tasksData) => {
     const mixed = [
-      ...campaignsData.map(campaign => ({ ...campaign, itemType: 'campaign' })),
-      ...projectsData.map(project => ({ ...project, itemType: 'project' })),
-      ...tasksData.map(task => ({ ...task, itemType: 'task' })),
+      ...campaignsData.map(campaign => ({ ...campaign, itemType: 'campaign', dropdownOpts: getDropdownOpts(campaign, 'campaign') })),
+      ...projectsData.map(project => ({ ...project, itemType: 'project', dropdownOpts: getDropdownOpts(project, 'project') })),
+      ...tasksData.map(task => ({ ...task, itemType: 'task', dropdownOpts: getDropdownOpts(task, 'task') })),
     ]
     mixed
       .sort((itemA, itemB) => {
@@ -248,12 +249,35 @@ const Schedule = () => {
         await taskApi.updateTask(item.id, { endDate: newDate })
       }
 
-
-
     } catch (err) {
       console.log(err)
       toastUtils.error('Could not change date')
     }
+  }
+
+  const getDropdownOpts = (item, type) => {
+    const options = []
+    switch (type) {
+      case 'project':
+        options.push({
+          label: 'Duplicate',
+          onClick: async () => {
+            try {
+              const { data } = await projectApi.createDuplicatedProject(item.id)
+              Router.replace(`/main/projects/${data.id}`)
+            } catch (err) {
+              toastUtils.error('Could not duplciate project')
+            }
+          }
+        })
+        break
+      case 'task':
+        break
+      default:
+        // Default is campaign
+        break
+    }
+    return options
   }
 
 

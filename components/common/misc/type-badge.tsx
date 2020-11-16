@@ -3,9 +3,12 @@ import { useRef, useState, useEffect } from 'react'
 import styles from './type-badge.module.css'
 import { ProjectTypeChannel, ProjectTypes, ProjectType, Utilities } from '../../../assets'
 import Router from 'next/router'
-import detectIt from 'detect-it';
+import detectIt from 'detect-it'
 
-const TypeBadge = ({ type, socialChannel, name, isMultiple = false, projectTask }) => {
+import ToggleableAbsoluteWrapper from './toggleable-absolute-wrapper'
+import Dropdown from '../inputs/dropdown'
+
+const TypeBadge = ({ type, socialChannel, name, isMultiple = false, projectTask, dropdownOptions = [] }) => {
 
   const [showProjectTask1, setShowProjectTask1] = useState('')
   const [showProjectTask2, setShowProjectTask2] = useState('')
@@ -73,9 +76,24 @@ const TypeBadge = ({ type, socialChannel, name, isMultiple = false, projectTask 
         {name}
         <div onClick={redirectProject} className={`${styles['project-task']} ${projectTask && styles[showProjectTask2]}`}><img src={projectTypeIcon} /><p>{projectName}</p></div>
       </div>
-      <div className={`${styles['more-task']}`}>
-        <img src={Utilities.more} />
-      </div>
+      {dropdownOptions.length > 0 &&
+        <ToggleableAbsoluteWrapper
+          wrapperClass={`${styles['more-task']}`}
+          Wrapper={({ children }) => (
+            <>
+              <img src={Utilities.more} />
+              {children}
+            </>
+          )}
+          Content={() => {
+            return (
+              <Dropdown
+                options={dropdownOptions}
+              />
+            )
+          }}
+        />
+      }
     </div>
   )
 }

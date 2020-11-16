@@ -36,6 +36,7 @@ const DayMonth = ({ item, socialChannel, type, isMultiple }) => {
           name={item.name}
           isMultiple={isMultiple}
           projectTask={item.project}
+          dropdownOptions={item.dropdownOpts}
         />
       </div>
       {!item.startDate &&
