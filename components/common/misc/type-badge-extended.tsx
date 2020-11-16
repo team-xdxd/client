@@ -29,8 +29,13 @@ const TypeBadgeExtended = ({ type, socialChannel, name, photo, isMultiple = fals
         </>
         :
         <>
-          <div className={`${styles.name} ${styles['name-extended']} name`}>
-            {projectName}{name}
+          <div className={styles.row}>
+            <div className={`${styles.name} ${styles['name-extended']} name`}>
+              {name}
+            </div>
+            <div className={`${styles['more-task']}`}>
+              <img src={Utilities.more} />
+            </div>
           </div>
           <div className={styles.hour}>
             {time &&
