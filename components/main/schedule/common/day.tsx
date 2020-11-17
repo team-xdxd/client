@@ -3,6 +3,10 @@ import { format } from 'date-fns'
 import { useState, useRef, useEffect } from 'react'
 import { Utilities } from '../../../../assets'
 
+// Components
+import ToggleableAbsoluteWrapper from '../../../common/misc/toggleable-absolute-wrapper'
+import Dropdown from '../../../common/inputs/dropdown'
+
 const isSameMonth = (date, targetDate) => {
   return date.getMonth() === targetDate.getMonth()
 }
@@ -124,9 +128,38 @@ const Day = ({
         onDragDrop(e)
       }}
     >
-      <div className={`add ${styles['add']}`}>
-        <img src={Utilities.add} />
-      </div>
+      <ToggleableAbsoluteWrapper
+        wrapperClass={`add ${styles['add']}`}
+        contentClass={styles.dropdown}
+        Wrapper={({ children }) => (
+          <>
+            <img src={Utilities.add} />
+            {children}
+          </>
+        )}
+        Content={() => {
+          return (
+            <Dropdown
+              options={[
+                {
+                  label: 'Project',
+                  onClick: () => {
+                    setCreateType('project')
+                    setCreateVisible(true)
+                  }
+                },
+                {
+                  label: 'Task',
+                  onClick: () => {
+                    setCreateType('task')
+                    setCreateVisible(true)
+                  }
+                }
+              ]}
+            />
+          )
+        }}
+      />
       {Waypoint}
       {hasDayHeader &&
         <div className={styles['day-header']}>
