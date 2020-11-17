@@ -5,6 +5,7 @@ import { ProjectTypeChannel, ProjectTypes, ProjectType, Utilities } from '../../
 import Router from 'next/router'
 import detectIt from 'detect-it'
 
+// Components
 import ToggleableAbsoluteWrapper from './toggleable-absolute-wrapper'
 import Dropdown from '../inputs/dropdown'
 
@@ -79,6 +80,7 @@ const TypeBadge = ({ type, socialChannel, name, isMultiple = false, projectTask,
       {dropdownOptions.length > 0 &&
         <ToggleableAbsoluteWrapper
           wrapperClass={`${styles['more-task']}`}
+          contentClass={styles.dropdown}
           Wrapper={({ children }) => (
             <>
               <img src={Utilities.more} />

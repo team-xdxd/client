@@ -42,6 +42,7 @@ const DayWeek = ({ item, socialChannel, type, isMultiple, time }) => {
           isMultiple={isMultiple}
           photo={owner?.profilePhoto}
           projectTask={item.project?.name}
+          dropdownOptions={item.dropdownOpts}
         />
       </div>
       {!item.startDate &&

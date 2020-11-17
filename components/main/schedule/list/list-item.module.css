@@ -70,6 +70,7 @@
   z-index: 999;
   margin: 9px 0px 0 12px;
   height: 12px;
+  cursor: pointer;
 
 }
 .more-task img {
@@ -101,4 +102,8 @@
     width: 150px;
     margin-bottom: 5px;
   }
+}
+
+.dropdown{
+  right: 0;
 }

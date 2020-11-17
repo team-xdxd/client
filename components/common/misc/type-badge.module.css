@@ -128,3 +128,7 @@
   height: 10px;
   transform: rotate(90deg)
 }
+
+.dropdown{
+  right: 0;
+}

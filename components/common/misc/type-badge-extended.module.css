@@ -107,3 +107,7 @@
 .email {
   background-color: var(--color-sec-lightorange);
 }
+
+.dropdown{
+  right: 0;
+}

@@ -8,6 +8,8 @@ import Button from '../../../common/buttons/button'
 import StatusBadge from '../../../common/misc/status-badge'
 import Type from '../../../common/misc/type'
 import UserPhoto from '../../../common/user/user-photo'
+import ToggleableAbsoluteWrapper from '../../../common/misc/toggleable-absolute-wrapper'
+import Dropdown  from '../../../common/inputs/dropdown'
 
 const ListItem = ({ item }) => {
   const wasUpdated = item.createdAt !== item.updatedAt
@@ -78,9 +80,25 @@ const ListItem = ({ item }) => {
           styleType='primary'
           onClick={() => Router.replace(`/main/${item.itemType}s/${item.id}`)}
         />
-        <div className={`${styles['more-task']}`}>
-          <img src={Utilities.more} />
-        </div>
+        {item.dropdownOpts.length > 0 &&
+          <ToggleableAbsoluteWrapper
+            wrapperClass={`${styles['more-task']}`}
+            contentClass={styles.dropdown}
+            Wrapper={({ children }) => (
+              <>
+                <img src={Utilities.more} />
+                {children}
+              </>
+            )}
+            Content={() => {
+              return (
+                <Dropdown
+                  options={item.dropdownOpts}
+                />
+              )
+            }}
+          />
+        }
       </div>
     </div>
   )
