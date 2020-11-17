@@ -108,6 +108,6 @@
   background-color: var(--color-sec-lightorange);
 }
 
-.dropdown{
+.dropdown ul{
   right: 0;
 }
