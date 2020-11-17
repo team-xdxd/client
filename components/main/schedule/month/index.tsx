@@ -17,7 +17,9 @@ const Month = ({
   mixedList,
   updateItem,
   setCurrentDate,
-  setActiveView
+  setActiveView,
+  setCreateType,
+  setCreateVisible
 }) => {
 
   const dayRef = useRef(null)
@@ -199,6 +201,8 @@ const Month = ({
                     onDragDrop(e.dataTransfer.getData("itemId"), date)
                     e.dataTransfer.clearData()
                   }}
+                  setCreateType={setCreateType}
+                  setCreateVisible={setCreateVisible}
                 />
               )
             })}

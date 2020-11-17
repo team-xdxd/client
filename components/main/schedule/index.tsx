@@ -336,6 +336,8 @@ const Schedule = () => {
                   updateItem={updateItem}
                   setCurrentDate={setCurrentDate}
                   setActiveView={setActiveView}
+                  setCreateType={setCreateType}
+                  setCreateVisible={setCreateVisible}
                 />
               </div>
             }
@@ -350,6 +352,8 @@ const Schedule = () => {
             setCurrentDate={setCurrentDate}
             setActiveView={setActiveView}
             monthRange={monthRange}
+            setCreateType={setCreateType}
+            setCreateVisible={setCreateVisible}
           />
         }
       </main>

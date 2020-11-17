@@ -29,7 +29,9 @@ const Day = ({
   onDragDrop,
   setActiveView,
   setCurrentDate,
-  Waypoint = <></>
+  Waypoint = <></>,
+  setCreateType,
+  setCreateVisible
 }) => {
   const dayRef = useRef()
 
