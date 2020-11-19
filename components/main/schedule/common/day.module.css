@@ -79,11 +79,11 @@
   }
 }
 
-.day .add img {
+.day .add {
   display: none;
 }
 
-.day:hover .add img {
+.day:hover .add {
   display: block;
   width: 15px;
   height: 15px;
