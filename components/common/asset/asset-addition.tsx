@@ -19,7 +19,7 @@ import FolderModal from "../folder/folder-modal";
 import IconClickable from "../buttons/icon-clickable";
 
 const ALLOWED_TYPES =
-  "image/png, image/jpeg, image/gif, video/mp4, video/mov, video/wmv, .pdf, .doc, .docx, .html, .xls, .ppt, .pptx";
+  "image/png, image/jpeg, application/pdf, image/gif, video/mp4, video/mov, video/wmv, application/vnd.ms-powerpoint, application/vnd.openxmlformats-officedocument.presentationml.presentation";
 
 const AssetAddition = ({
   activeFolder = "",
@@ -43,10 +43,10 @@ const AssetAddition = ({
     isDragActive,
     acceptedFiles,
   } = useDropzone({
-    accept:
-      "image/png, image/jpeg, image/gif, video/mp4, video/mov, application/msword, application/pdf, video/wmv, .pdf, .doc, .docx, .html, .xls, .ppt, .pptx",
+    // accept:
+    //   "application/pdf, image/png, image/jpeg, image/gif, video/mp4, video/mov, application/msword, , video/wmv, .pdf, .doc, .docx, .html, .xls, .ppt, .pptx",
+    accept: "application/pdf",
   });
-  console.log("estos son accepted files", acceptedFiles);
   const {
     assets,
     setAssets,
@@ -83,6 +83,7 @@ const AssetAddition = ({
           formData.append("asset", file.path || file.originalFile);
         });
       setAssets([...newPlaceholders, ...currentDataClone]);
+      console.log("checking 2", files);
       console.log("formdata", formData);
 
       const { data } = await assetApi.uploadAssets(
