@@ -10,7 +10,7 @@ import Button from '../../common/buttons/button'
 import FormInput from '../../common/inputs/form-input'
 import Input from '../../common/inputs/input'
 
-const CreateTask = () => {
+const CreateTask = ({ endDate, alertnewItem }) => {
 
   const { control, handleSubmit, errors } = useForm()
   const [submitError, setSubmitError] = useState('')
@@ -22,12 +22,21 @@ const CreateTask = () => {
   }, [])
 
   const onSubmit = async taskData => {
+    const createData = { ...taskData }
     if (taskNames.includes(taskData.name)) {
       return toastUtils.error('A task with that name already exists')
     }
     try {
-      const { data } = await taskApi.createTask({ taskData })
-      Router.replace(`/main/tasks/${data.id}`)
+      if (endDate) createData.endDate = endDate
+      const { data } = await taskApi.createTask({ taskData: createData })
+
+      // Only redirect if publish date is not present
+      if (!endDate) {
+        Router.replace(`/main/tasks/${data.id}`)
+      } else {
+        alertnewItem({ item: data, type: 'task' })
+      }
+
     } catch (err) {
       // TODO: Show error message
       if (err.response?.data?.message) {

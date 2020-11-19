@@ -33,6 +33,9 @@ const Schedule = () => {
   const [searchVisible, setSearchVisible] = useState(false)
 
   const [createType, setCreateType] = useState('')
+  const [createEndDate, setCreateEndDate] = useState('')
+
+  const [newItem, setNewItem] = useState(undefined)
 
   const [campaigns, setCampaigns] = useState([])
   const [projects, setProjects] = useState([])
@@ -81,6 +84,25 @@ const Schedule = () => {
     if (initialLoaded)
       applyLightFiltersAndOrder()
   }, [filters])
+
+  useEffect(() => {
+    if (newItem) {
+      setCreateVisible(false)
+      let newMappedItem
+      switch (newItem.type) {
+        case 'task':
+          newMappedItem = mapTaskMixed(newItem.item)
+          break
+        default:
+          // Default is project
+          newMappedItem = mapProjectsMixed(newItem.item)
+          break
+      }
+      const newMixedList = [...mixedList, newMappedItem]
+      sortMixed(newMixedList)
+      setMixedList(newMixedList)
+    }
+  }, [newItem])
 
   const getAllCampaigns = async () => {
     try {
@@ -140,11 +162,20 @@ const Schedule = () => {
 
   const mixAndOrderData = (campaignsData, projectsData, tasksData) => {
     const mixed = [
-      ...campaignsData.map(campaign => ({ ...campaign, itemType: 'campaign', dropdownOpts: getDropdownOpts(campaign, 'campaign') })),
-      ...projectsData.map(project => ({ ...project, itemType: 'project', dropdownOpts: getDropdownOpts(project, 'project') })),
-      ...tasksData.map(task => ({ ...task, itemType: 'task', dropdownOpts: getDropdownOpts(task, 'task') })),
+      ...campaignsData.map(mapCampaignMixed),
+      ...projectsData.map(mapProjectsMixed),
+      ...tasksData.map(mapTaskMixed),
     ]
-    mixed
+    sortMixed(mixed)
+    setMixedList(mixed)
+  }
+
+  const mapCampaignMixed = campaign => ({ ...campaign, itemType: 'campaign', dropdownOpts: getDropdownOpts(campaign, 'campaign') })
+  const mapProjectsMixed = project => ({ ...project, itemType: 'project', dropdownOpts: getDropdownOpts(project, 'project') })
+  const mapTaskMixed = task => ({ ...task, itemType: 'task', dropdownOpts: getDropdownOpts(task, 'task') })
+
+  const sortMixed = (mixedList) => {
+    mixedList
       .sort((itemA, itemB) => {
         const aDateKey = getItemDateKey(itemA)
         const bDateKey = getItemDateKey(itemB)
@@ -165,7 +196,6 @@ const Schedule = () => {
         else
           return 0
       })
-    setMixedList(mixed)
   }
 
   const getCommonFilters = () => {
@@ -220,6 +250,7 @@ const Schedule = () => {
   }
 
   const openCreateOVerlay = (type) => {
+    setCreateEndDate('')
     setCreateVisible(true)
     setCreateType(type)
   }
@@ -338,6 +369,7 @@ const Schedule = () => {
                   setActiveView={setActiveView}
                   setCreateType={setCreateType}
                   setCreateVisible={setCreateVisible}
+                  setCreateEndDate={setCreateEndDate}
                 />
               </div>
             }
@@ -354,6 +386,7 @@ const Schedule = () => {
             monthRange={monthRange}
             setCreateType={setCreateType}
             setCreateVisible={setCreateVisible}
+            setCreateEndDate={setCreateEndDate}
           />
         }
       </main>
@@ -361,7 +394,9 @@ const Schedule = () => {
         <CreateOverlay
           type={createType}
           setType={setCreateType}
+          endDate={createEndDate}
           closeOverlay={() => setCreateVisible(false)}
+          alertnewItem={setNewItem}
         />
       }
       {searchVisible &&

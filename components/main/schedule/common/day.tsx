@@ -35,7 +35,8 @@ const Day = ({
   setCurrentDate,
   Waypoint = <></>,
   setCreateType,
-  setCreateVisible
+  setCreateVisible,
+  setCreateEndDate
 }) => {
   const dayRef = useRef()
 
@@ -144,6 +145,7 @@ const Day = ({
                 {
                   label: 'Project',
                   onClick: () => {
+                    setCreateEndDate(date)
                     setCreateType('project')
                     setCreateVisible(true)
                   }
@@ -151,6 +153,7 @@ const Day = ({
                 {
                   label: 'Task',
                   onClick: () => {
+                    setCreateEndDate(date)
                     setCreateType('task')
                     setCreateVisible(true)
                   }

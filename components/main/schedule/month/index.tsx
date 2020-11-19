@@ -19,7 +19,8 @@ const Month = ({
   setCurrentDate,
   setActiveView,
   setCreateType,
-  setCreateVisible
+  setCreateVisible,
+  setCreateEndDate
 }) => {
 
   const dayRef = useRef(null)
@@ -189,6 +190,7 @@ const Month = ({
                   id={dayKey}
                   setActiveView={setActiveView}
                   setCurrentDate={setCurrentDate}
+                  setCreateEndDate={setCreateEndDate}
                   currentDate={currentDate}
                   displayDate={displayDate}
                   date={date}

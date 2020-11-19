@@ -14,7 +14,7 @@ import Select from "../../common/inputs/select";
 
 import projectTypes from "../../../resources/data/project-types.json";
 
-const CreateProject = () => {
+const CreateProject = ({ publishDate, alertnewItem }) => {
   const { control, handleSubmit, errors } = useForm();
   const [submitError, setSubmitError] = useState("");
   const [type, setType] = useState();
@@ -33,13 +33,20 @@ const CreateProject = () => {
       return toastUtils.error("The project mubst have a type");
     }
     try {
-      console.log(projectData);
-      const { data } = await projectApi.createProject({
+      const createData = {
         ...projectData,
         type: type.value,
-      });
+      }
+      if (publishDate) createData.publishDate = publishDate
+      const { data } = await projectApi.createProject(createData)
 
-      Router.replace(`/main/projects/${data.id}`);
+      // Only redirect if publish date is not present
+      if (!publishDate) {
+        Router.replace(`/main/projects/${data.id}`);
+      } else {
+        alertnewItem({ item: data, type: 'project' })
+      }
+
     } catch (err) {
       // TODO: Show error message
       if (err.response?.data?.message) {

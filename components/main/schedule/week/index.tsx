@@ -10,7 +10,7 @@ import DayWeek from './day-week'
 
 const weekDaysLabel = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']
 
-const Week = ({ currentDate, mixedList, updateItem, setActiveView, setCurrentDate, setCreateType, setCreateVisible }) => {
+const Week = ({ currentDate, mixedList, updateItem, setActiveView, setCurrentDate, setCreateType, setCreateVisible, setCreateEndDate }) => {
   const [weekDays, setWeekDays] = useState([])
   const [mappedItems, setMappedItems] = useState({})
 
@@ -72,6 +72,7 @@ const Week = ({ currentDate, mixedList, updateItem, setActiveView, setCurrentDat
               currentDate={currentDate}
               setCreateType={setCreateType}
               setCreateVisible={setCreateVisible}
+              setCreateEndDate={setCreateEndDate}
               date={day.date}
               key={index}
               itemList={itemList}

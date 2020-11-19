@@ -9,7 +9,7 @@ import CreateProject from './create-project'
 import CreateTask from './create-task'
 import CreateItem from './create-item'
 
-const CreateOverlay = ({ type = '', setType, closeOverlay }) => {
+const CreateOverlay = ({ type = '', setType, closeOverlay, endDate = '', alertnewItem = undefined }) => {
   return (
     <div className={`app-overlay ${styles.container}`}>
       <div className={styles.top}>
@@ -62,11 +62,11 @@ const CreateOverlay = ({ type = '', setType, closeOverlay }) => {
       }
       {
         type === 'project' &&
-        <CreateProject />
+        <CreateProject publishDate={endDate} alertnewItem={alertnewItem}/>
       }
       {
         type === 'task' &&
-        <CreateTask />
+        <CreateTask endDate={endDate} alertnewItem={alertnewItem}/>
       }
     </div >
   )
