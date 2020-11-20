@@ -120,7 +120,7 @@ const AssetGrid = ({
       {(shouldShowUpload || isDragging) &&
         <AssetUpload
           onDragText={'Drop files here to upload'}
-          preDragText={shouldShowUpload ? `Drag and drop your files here to upload (png, jpg, gif or mp4)` : ''}
+          preDragText={shouldShowUpload ? `Drag and drop your files here to upload (png, jpg, gif, doc, xlsx, pdf or mp4)` : ''}
           onFilesDataGet={onFilesDataGet} />
       }
       {shouldShowUpload &&

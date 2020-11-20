@@ -17,6 +17,8 @@ import ConversationList from '../conversation/conversation-list'
 import IconClickable from '../buttons/icon-clickable'
 import Button from '../buttons/button'
 import AssetImg from './asset-img'
+import AssetApplication from './asset-application'
+import AssetText from './asset-text'
 import RenameModal from '../modals/rename-modal'
 
 const DetailOverlay = ({ asset, realUrl, closeOverlay, openShareAsset = () => { }, openDeleteAsset = () => { }, isShare = false, initiaParams }) => {
@@ -127,6 +129,8 @@ const DetailOverlay = ({ asset, realUrl, closeOverlay, openShareAsset = () => { 
             {assetDetail.type === 'image' &&
               <AssetImg name={assetDetail.name} assetImg={realUrl} />
             }
+            {assetDetail.type === 'application' && <AssetApplication extension={assetDetail.extension} />}
+            {assetDetail.type === 'text' && <AssetText extension={assetDetail.extension} />}
             {assetDetail.type === 'video' &&
               <video controls>
                 <source src={realUrl}

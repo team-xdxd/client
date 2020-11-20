@@ -123,7 +123,6 @@ const AssetAddition = ({
 	}
 
 	const openDropboxSelector = (files) => {
-		//png, jpg, gif or mp4
 		const options = {
 			success: onDropboxFilesSelection,
 			linkType: 'direct',
@@ -197,7 +196,7 @@ const AssetAddition = ({
 	const dropdownOptions = [
 		{
 			label: 'Upload',
-			text: 'png, jpg, gif or mp4',
+			text: 'png, jpg, mp4 and more',
 			onClick: () => fileBrowserRef.current.click(),
 			icon: Assets.file
 		},
