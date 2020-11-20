@@ -35,7 +35,7 @@ const AssetThumbail = ({
   const [overlayProperties, setOverlayProperties] = useState(
     DEFAULT_DETAIL_PROPS
   );
-  console.log("asset", asset.extension);
+
 
   useEffect(() => {
     if (overlayProperties.visible) {

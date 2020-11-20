@@ -57,7 +57,7 @@ const AssetAddition = ({
 
   // upload document
   const onFilesDataGet = async (files) => {
-    console.log("checking", files);
+
 
     const currentDataClone = [...assets];
     try {
@@ -83,8 +83,7 @@ const AssetAddition = ({
           formData.append("asset", file.path || file.originalFile);
         });
       setAssets([...newPlaceholders, ...currentDataClone]);
-      console.log("checking 2", files);
-      console.log("formdata", formData);
+
 
       const { data } = await assetApi.uploadAssets(
         formData,
@@ -96,11 +95,11 @@ const AssetAddition = ({
         setAssets([...data, ...currentDataClone]);
         setAddedIds(data.map((assetItem) => assetItem.asset.id));
       }
-      console.log("Esto es la data que retorna uploadAssets", data);
+
 
       toastUtils.success(`${data.length} Asset(s) uploaded.`);
     } catch (err) {
-      console.log("No se ha subido el archivo");
+
 
       setAssets(currentDataClone);
       console.log(err);

@@ -9,6 +9,8 @@ import { useState } from 'react'
 // Components
 import AssetImg from '../../common/asset/asset-img'
 import AssetVideo from '../../common/asset/asset-video'
+import AssetApplication from '../../common/asset/asset-application'
+import AssetText from '../../common/asset/asset-text'
 import DetailOverlay from '../../common/asset/detail-overlay'
 import IconClickable from '../../common/buttons/icon-clickable'
 
@@ -16,7 +18,7 @@ const SearchItem = ({ assetItem, term, openShareAsset, openDeleteAsset, toggleSe
 
   const { asset, thumbailUrl, realUrl, isLoading = false, isSelected } = assetItem
   const [visibleOverlay, setVisibleOVerlay] = useState(false)
-
+  console.log("busqueda", asset)
   return (
     <>
       <li
@@ -33,6 +35,8 @@ const SearchItem = ({ assetItem, term, openShareAsset, openDeleteAsset, toggleSe
         <div className={`${styles['image-wrapper']} ${isLoading && 'loadable'} ${enabledSelect && styles['image-selectable']}`}>
           {asset.type === 'image' && <AssetImg assetImg={thumbailUrl} type={asset.type} name={asset.name} />}
           {asset.type === 'video' && <AssetVideo asset={asset} realUrl={realUrl} additionalClass={styles['video-wrapper']} />}
+          {asset.type === 'application' && <AssetApplication extension={asset.extension} />}
+          {asset.type === 'text' && <AssetText extension={asset.extension} />}
         </div>
         <div className={`${styles.name} ${isLoading && 'loadable'}`} onClick={() => !isLoading ? setVisibleOVerlay(true) : () => { }}>
           <Highlighter
@@ -52,14 +56,14 @@ const SearchItem = ({ assetItem, term, openShareAsset, openDeleteAsset, toggleSe
             />
           }
         </div>
-        <div className={`${styles.extension} ${isLoading && 'loadable'}`}>
+        {/* <div className={`${styles.extension} ${isLoading && 'loadable'}`}>
           <Highlighter
             highlightClassName={'search-highlight'}
             searchWords={[term]}
             autoEscape={true}
             textToHighlight={asset.extension}
           />
-        </div>
+        </div> */}
         <div className={styles.folder}>
           {!isLoading &&
             <Highlighter

@@ -311,11 +311,11 @@ const ProjectDetail = () => {
         collaboratorIds: collaboratorsIds,
         tasks: tasksDuplicated,
       };
-      console.log("tried", projectInfo);
+
       const { data } = await projectApi.createDuplicatedProject(projectInfo);
       Router.replace(`/main/projects/${data.id}`);
     } catch (error) {
-      console.log("There is an error on duplicateProject", error);
+      console.log("There is an error", error);
     }
   };
 

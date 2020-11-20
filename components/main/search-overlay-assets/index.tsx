@@ -23,7 +23,7 @@ const SearchOverlayAssets = ({ closeOverlay, importEnabled = false, importAssets
       setAssets(data, replace)
     } catch (err) {
       // TODO: Handle this error
-      console.log(err)
+      console.log("There is an error", err)
     }
   }
 

@@ -18,6 +18,8 @@ import IconClickable from '../buttons/icon-clickable'
 import Button from '../buttons/button'
 import AssetImg from './asset-img'
 import RenameModal from '../modals/rename-modal'
+import AssetApplication from './asset-application'
+import AssetText from './asset-text'
 
 const DetailOverlay = ({ asset, realUrl, closeOverlay, openShareAsset = () => { }, openDeleteAsset = () => { }, isShare = false, initiaParams }) => {
 
@@ -134,6 +136,8 @@ const DetailOverlay = ({ asset, realUrl, closeOverlay, openShareAsset = () => { 
                   Sorry, your browser doesn't support video playback.
             </video>
             }
+            {asset.type === 'application' && <AssetApplication extension={asset.extension} />}
+            {asset.type === 'text' && <AssetText extension={asset.extension} />}
           </div>
         </section>
       }
