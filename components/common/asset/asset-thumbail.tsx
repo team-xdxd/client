@@ -6,6 +6,8 @@ import { useState, useEffect } from 'react'
 // Components
 import AssetImg from './asset-img'
 import AssetVideo from './asset-video'
+import AssetApplication from './asset-application'
+import AssetText from './asset-text'
 import IconClickable from '../buttons/icon-clickable'
 import Button from '../buttons/button'
 import DetailOverlay from './detail-overlay'
@@ -57,6 +59,8 @@ const AssetThumbail = ({
           }
           {asset.type === 'image' && <AssetImg assetImg={thumbailUrl} type={asset.type} name={asset.name} opaque={isUploading} />}
           {asset.type === 'video' && <AssetVideo asset={asset} realUrl={realUrl} additionalClass={styles['video-wrapper']} />}
+          {asset.type === 'application' && <AssetApplication extension={asset.extension} />}
+          {asset.type === 'text' && <AssetText extension={asset.extension} />}
           {!isUploading && !isLoading &&
             <>
               <div className={`${styles['selectable-wrapper']} ${isSelected && styles['selected-wrapper']}`}>
