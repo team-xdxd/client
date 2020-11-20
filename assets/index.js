@@ -54,7 +54,7 @@ export const Utilities = {
   listView: require('./Icons/Utilities/View List/icn-utilities-listview.svg'),
   info: require('./Icons/Utilities/Information/icn-utilities-information.svg'),
   filter: require('./Icons/External/filter.svg'),
-  calendar:  require('./Icons/Navigation/icn-nav-schedule-alt.svg')
+  calendar: require('./Icons/Navigation/icn-nav-schedule-alt.svg')
 }
 
 export const ProjectTypes = {
@@ -119,6 +119,12 @@ export const Assets = {
   videoThumbnail: require('./general/thumbnail-video.png'),
   dropbox: require('./Icons/Assets/Dropbox_Icon.svg'),
   gdrive: require('./Icons/Assets/icons8-google-drive-1.svg'),
+  msword: require('./Icons/Assets/msword.svg'),
+  msexcel: require('./Icons/Assets/msexcel.svg'),
+  msppt: require('./Icons/Assets/msppt.svg'),
+  pdf: require('./Icons/Assets/pdf.svg'),
+  html: require('./Icons/Assets/html.svg'),
+  unknown: require('./Icons/Assets/unknown.svg')
 }
 
 export const Comments = {

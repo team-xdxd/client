@@ -19,13 +19,13 @@ import FolderModal from "../folder/folder-modal";
 import IconClickable from "../buttons/icon-clickable";
 
 const ALLOWED_TYPES =
-  "image/png, image/jpeg, application/pdf, image/gif, video/mp4, video/mov, video/wmv, application/vnd.ms-powerpoint, application/vnd.openxmlformats-officedocument.presentationml.presentation";
+  "image/png, image/jpeg, application/pdf, image/gif, video/mp4, video/mov, video/wmv, application/vnd.ms-powerpoint, application/vnd.openxmlformats-officedocument.presentationml.presentation, application/vnd.ms-powerpoint, application/msword, application/vnd.openxmlformats-officedocument.wordprocessingml.document, text/html, application/vnd.ms-excel, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
 
 const AssetAddition = ({
   activeFolder = "",
-  getFolders = () => {},
+  getFolders = () => { },
   activeSearchOverlay = false,
-  setActiveSearchOverlay = (active) => {},
+  setActiveSearchOverlay = (active) => { },
   folderAdd = true,
   type = "",
   itemId = "",
@@ -265,7 +265,7 @@ const AssetAddition = ({
     {
       label: "Google Drive",
       text: "Import files",
-      onClick: () => {},
+      onClick: () => { },
       icon: Assets.gdrive,
       CustomContent: ({ children }) => (
         <DriveSelector onFilesSelect={onDriveFilesSelection}>
@@ -313,7 +313,7 @@ const AssetAddition = ({
     <div
       className={`${styles["button-wrapper"]} ${
         !folderAdd && styles["button-wrapper-displaced"]
-      }`}
+        }`}
     >
       <SimpleButton text="+" />
       {children}
@@ -340,8 +340,8 @@ const AssetAddition = ({
                 <Content {...option} />
               </option.CustomContent>
             ) : (
-              <Content {...option} />
-            )}
+                <Content {...option} />
+              )}
           </>
         ))}
       </ul>
@@ -359,7 +359,7 @@ const AssetAddition = ({
         type="file"
         onChange={onFileChange}
         accept={ALLOWED_TYPES}
-        // {...getInputProps()}
+      // {...getInputProps()}
       />
       <input
         multiple={true}
@@ -378,8 +378,8 @@ const AssetAddition = ({
           Content={DropDownOptions}
         />
       ) : (
-        <DropDownOptions />
-      )}
+          <DropDownOptions />
+        )}
       <FolderModal
         modalIsOpen={activeModal === "folder"}
         closeModal={() => setActiveModal("")}
