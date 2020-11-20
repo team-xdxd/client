@@ -57,7 +57,8 @@ const AssetUpload = ({
 
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
     onDrop,
-    accept: ['image/png', 'image/jpeg', 'image/gif', 'video/mp4']
+    // accept: ['image/png', 'image/jpeg', 'image/gif', 'video/mp4']
+    accept: 'image/png, image/jpeg, application/pdf, image/gif, video/mp4, video/mov, video/wmv, application/vnd.ms-powerpoint, application/vnd.openxmlformats-officedocument.presentationml.presentation, application/vnd.ms-powerpoint, application/msword, application/vnd.openxmlformats-officedocument.wordprocessingml.document, text/html, application/vnd.ms-excel, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
   })
 
   const Content = () => (

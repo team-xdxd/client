@@ -119,6 +119,12 @@ export const Assets = {
   videoThumbnail: require('./general/thumbnail-video.png'),
   dropbox: require('./Icons/Assets/Dropbox_Icon.svg'),
   gdrive: require('./Icons/Assets/icons8-google-drive-1.svg'),
+  msword: require('./Icons/Assets/msword.svg'),
+  msexcel: require('./Icons/Assets/msexcel.svg'),
+  msppt: require('./Icons/Assets/msppt.svg'),
+  pdf: require('./Icons/Assets/pdf.svg'),
+  html: require('./Icons/Assets/html.svg'),
+  unknown: require('./Icons/Assets/unknown.svg')
 }
 
 export const Comments = {
