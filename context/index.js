@@ -83,3 +83,8 @@ export const LocationContext = createContext({
     cities: [],
     loadCities: (stateId) => { },
 })
+
+export const ScheduleContext = createContext({
+    newItem: undefined,
+    setNewItem: (item) => { }
+})

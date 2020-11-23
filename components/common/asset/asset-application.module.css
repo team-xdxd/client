@@ -6,5 +6,13 @@
 }
 
 .icon {
-  width: 90%;
+  width: 10rem;
+}
+
+.small{
+  margin: 0;
+}
+
+.small .icon{
+  width: 30px;
 }

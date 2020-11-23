@@ -4,6 +4,9 @@ import { useState, useEffect } from 'react'
 
 // Component
 import AssetImg from '../common/asset/asset-img'
+import AssetVideo from './asset-video'
+import AssetApplication from './asset-application'
+import AssetText from './asset-text'
 import Button from '../common/buttons/button'
 import DetailOverlay from '../common/asset/detail-overlay'
 
@@ -27,7 +30,10 @@ const ShareItem = ({
 		<>
 			<div className={styles.container}>
 				<div className={styles['image-wrapper']}>
-					<AssetImg assetImg={thumbailUrl} type={asset.type} name={asset.name} />
+					{asset.type === 'image' && <AssetImg assetImg={thumbailUrl} type={asset.type} name={asset.name} opaque={isUploading} />}
+					{asset.type === 'video' && <AssetVideo asset={asset} realUrl={realUrl} additionalClass={styles['video-wrapper']} />}
+					{asset.type === 'application' && <AssetApplication extension={asset.extension} />}
+					{asset.type === 'text' && <AssetText extension={asset.extension} />}
 					<div className={styles['image-button-wrapper']}>
 						<Button styleType={'primary'} text={'View Details'} type={'button'}
 							onClick={() => setVisibleOVerlay(true)} />

@@ -1,5 +1,6 @@
 import styles from './create-task.module.css'
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useContext } from 'react'
+import { ScheduleContext } from '../../../context'
 import { useForm } from 'react-hook-form'
 import Router from 'next/router'
 import taskApi from '../../../server-api/task'
@@ -10,11 +11,11 @@ import Button from '../../common/buttons/button'
 import FormInput from '../../common/inputs/form-input'
 import Input from '../../common/inputs/input'
 
-const CreateTask = ({ endDate, alertnewItem }) => {
+const CreateTask = ({ endDate }) => {
 
   const { control, handleSubmit, errors } = useForm()
   const [submitError, setSubmitError] = useState('')
-
+  const { setNewItem } = useContext(ScheduleContext)
   const [taskNames, setTaskNames] = useState([])
 
   useEffect(() => {
@@ -34,7 +35,7 @@ const CreateTask = ({ endDate, alertnewItem }) => {
       if (!endDate) {
         Router.replace(`/main/tasks/${data.id}`)
       } else {
-        alertnewItem({ item: data, type: 'task' })
+        setNewItem({ item: data, type: 'task' })
       }
 
     } catch (err) {

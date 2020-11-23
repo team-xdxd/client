@@ -4,11 +4,14 @@ import { Utilities, Assets } from '../../../assets'
 import filesize from 'filesize'
 import { format } from 'date-fns'
 import { useState, useEffect } from 'react'
+import { getParsedExtension } from '../../../utils/asset'
 
 import StatusBadge from '../../common/misc/status-badge'
 
 // Components
 import AssetImg from './asset-img'
+import AssetApplication from './asset-application'
+import AssetText from './asset-text'
 import IconClickable from '../buttons/icon-clickable'
 import Button from '../buttons/button'
 import DetailOverlay from './detail-overlay'
@@ -94,6 +97,8 @@ const ListItem = ({
                     type={`video/${asset.extension}`} />
                 </video>
               }
+              {asset.type === 'application' && <AssetApplication extension={asset.extension} onList={true} />}
+              {asset.type === 'text' && <AssetText extension={asset.extension} onList={true} />}
             </div>
           </div>
           <div className={styles.info}>
@@ -108,7 +113,7 @@ const ListItem = ({
               {!isUploading && asset.type}
             </div>
             <div className={styles.field_name}>
-              {!isLoading && asset.extension}
+              {!isLoading && getParsedExtension(asset.extension)}
             </div>
             <div className={styles.field_name}>
               {asset.size && filesize(asset.size)}

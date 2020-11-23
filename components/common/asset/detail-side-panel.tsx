@@ -7,7 +7,7 @@ import { useEffect, useState, useContext } from 'react'
 import { format } from 'date-fns'
 import { capitalCase } from 'change-case'
 import filesize from 'filesize'
-import { getAssociatedCampaigns, getAssociatedChannels } from '../../../utils/asset'
+import { getAssociatedCampaigns, getAssociatedChannels, getParsedExtension } from '../../../utils/asset'
 import tagApi from '../../../server-api/tag'
 import assetApi from '../../../server-api/asset'
 import projectApi from '../../../server-api/project'
@@ -168,7 +168,7 @@ const SidePanel = ({ asset, updateAsset, isShare }) => {
     },
     {
       field: 'Extension',
-      value: extension
+      value: getParsedExtension(extension)
     },
     {
       field: 'Dimension',
