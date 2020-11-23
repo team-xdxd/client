@@ -5,10 +5,13 @@ import { format } from 'date-fns'
 import Highlighter from "react-highlight-words"
 import { getAssociatedCampaigns } from '../../../utils/asset'
 import { useState } from 'react'
+import { getParsedExtension } from '../../../utils/asset'
 
 // Components
 import AssetImg from '../../common/asset/asset-img'
 import AssetVideo from '../../common/asset/asset-video'
+import AssetApplication from '../../common/asset/asset-application'
+import AssetText from '../../common/asset/asset-text'
 import DetailOverlay from '../../common/asset/detail-overlay'
 import IconClickable from '../../common/buttons/icon-clickable'
 
@@ -33,6 +36,8 @@ const SearchItem = ({ assetItem, term, openShareAsset, openDeleteAsset, toggleSe
         <div className={`${styles['image-wrapper']} ${isLoading && 'loadable'} ${enabledSelect && styles['image-selectable']}`}>
           {asset.type === 'image' && <AssetImg assetImg={thumbailUrl} type={asset.type} name={asset.name} />}
           {asset.type === 'video' && <AssetVideo asset={asset} realUrl={realUrl} additionalClass={styles['video-wrapper']} />}
+          {asset.type === 'application' && <AssetApplication extension={asset.extension} onList={true} />}
+          {asset.type === 'text' && <AssetText extension={asset.extension} onList={true} />}
         </div>
         <div className={`${styles.name} ${isLoading && 'loadable'}`} onClick={() => !isLoading ? setVisibleOVerlay(true) : () => { }}>
           <Highlighter
@@ -57,7 +62,7 @@ const SearchItem = ({ assetItem, term, openShareAsset, openDeleteAsset, toggleSe
             highlightClassName={'search-highlight'}
             searchWords={[term]}
             autoEscape={true}
-            textToHighlight={asset.extension}
+            textToHighlight={getParsedExtension(asset.extension)}
           />
         </div>
         <div className={styles.folder}>

@@ -23,7 +23,7 @@ import RenameModal from '../modals/rename-modal'
 
 const DetailOverlay = ({ asset, realUrl, closeOverlay, openShareAsset = () => { }, openDeleteAsset = () => { }, isShare = false, initiaParams }) => {
 
-  const [assetDetail, setAssetDetail] = useState()
+  const [assetDetail, setAssetDetail] = useState(undefined)
 
   const [renameModalOpen, setRenameModalOpen] = useState(false)
 

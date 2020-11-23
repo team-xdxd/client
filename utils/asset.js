@@ -59,3 +59,22 @@ export const getAssociatedChannels = (asset) => {
     else
         return 'No Channels'
 }
+
+export const getParsedExtension = (extension) => {
+    switch (extension) {
+        case 'msword':
+            return 'doc'
+        case 'vnd.openxmlformats-officedocument.wordprocessingml.document':
+            return 'doc'
+        case 'vnd.ms-powerpoint':
+            return 'ppt'
+        case 'vnd.openxmlformats-officedocument.presentationml.presentation':
+            return 'ppt'
+        case 'vnd.ms-excel':
+            return '.xlsx'
+        case 'vnd.openxmlformats-officedocument.spreadsheetml.sheet':
+            return '.xlsx'
+        default:
+            return extension
+    }
+}

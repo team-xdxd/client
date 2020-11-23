@@ -1,5 +1,6 @@
 import styles from './index.module.css'
-import { useState, useRef, useEffect } from 'react'
+import { useState, useRef, useEffect, useContext } from 'react'
+import { ScheduleContext } from '../../../context'
 import campaignApi from '../../../server-api/campaign'
 import projectApi from '../../../server-api/project'
 import taskApi from '../../../server-api/task'
@@ -16,7 +17,6 @@ import TopBar from './top-bar'
 import List from './list'
 import Week from './week'
 import Month from './month'
-import Router from 'next/router'
 
 const Schedule = () => {
 
@@ -35,7 +35,7 @@ const Schedule = () => {
   const [createType, setCreateType] = useState('')
   const [createEndDate, setCreateEndDate] = useState('')
 
-  const [newItem, setNewItem] = useState(undefined)
+  const { newItem, setNewItem } = useContext(ScheduleContext)
 
   const [campaigns, setCampaigns] = useState([])
   const [projects, setProjects] = useState([])
@@ -88,21 +88,26 @@ const Schedule = () => {
   useEffect(() => {
     if (newItem) {
       setCreateVisible(false)
-      let newMappedItem
-      switch (newItem.type) {
-        case 'task':
-          newMappedItem = mapTaskMixed(newItem.item)
-          break
-        default:
-          // Default is project
-          newMappedItem = mapProjectsMixed(newItem.item)
-          break
-      }
-      const newMixedList = [...mixedList, newMappedItem]
-      sortMixed(newMixedList)
-      setMixedList(newMixedList)
+      addNewItem(newItem)
+      setNewItem(undefined)
     }
   }, [newItem])
+
+  const addNewItem = (addedItem) => {
+    let newMappedItem
+    switch (addedItem.type) {
+      case 'task':
+        newMappedItem = mapTaskMixed(addedItem.item)
+        break
+      default:
+        // Default is project
+        newMappedItem = mapProjectsMixed(addedItem.item)
+        break
+    }
+    const newMixedList = [...mixedList, newMappedItem]
+    sortMixed(newMixedList)
+    setMixedList(newMixedList)
+  }
 
   const getAllCampaigns = async () => {
     try {
@@ -295,7 +300,7 @@ const Schedule = () => {
           onClick: async () => {
             try {
               const { data } = await projectApi.createDuplicatedProject(item.id)
-              Router.replace(`/main/projects/${data.id}`)
+              setNewItem({ type: 'project', item: data })
             } catch (err) {
               toastUtils.error('Could not duplciate project')
             }
@@ -396,7 +401,6 @@ const Schedule = () => {
           setType={setCreateType}
           endDate={createEndDate}
           closeOverlay={() => setCreateVisible(false)}
-          alertnewItem={setNewItem}
         />
       }
       {searchVisible &&
@@ -404,7 +408,6 @@ const Schedule = () => {
           closeOverlay={() => setSearchVisible(false)}
         />
       }
-
     </>
   )
 }

@@ -1,5 +1,6 @@
 import styles from "./create-project.module.css";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from 'react'
+import { ScheduleContext } from '../../../context'
 import { useForm } from "react-hook-form";
 import Router from "next/router";
 import projectApi from "../../../server-api/project";
@@ -14,9 +15,10 @@ import Select from "../../common/inputs/select";
 
 import projectTypes from "../../../resources/data/project-types.json";
 
-const CreateProject = ({ publishDate, alertnewItem }) => {
+const CreateProject = ({ publishDate }) => {
   const { control, handleSubmit, errors } = useForm();
   const [submitError, setSubmitError] = useState("");
+  const { setNewItem } = useContext(ScheduleContext)
   const [type, setType] = useState();
 
   const [projectNames, setProjectNames] = useState([]);
@@ -44,7 +46,7 @@ const CreateProject = ({ publishDate, alertnewItem }) => {
       if (!publishDate) {
         Router.replace(`/main/projects/${data.id}`);
       } else {
-        alertnewItem({ item: data, type: 'project' })
+        setNewItem({ item: data, type: 'project' })
       }
 
     } catch (err) {
