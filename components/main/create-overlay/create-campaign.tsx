@@ -25,6 +25,7 @@ const CreateCampaign = () => {
     deadLineDate: null,
     collaborators: [],
     status: null,
+    id: 0,
   });
   // Array projects
   const [projects, setProject] = useState([]);
