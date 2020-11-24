@@ -20,6 +20,7 @@ Container for modifying campaigns
   flex-wrap: wrap;
   max-width: 100rem;
   padding: 30px 0 30px 0;
+  flex-direction: column;
 }
 .item-detail-cont img {
   width: 20px;

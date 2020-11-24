@@ -3,12 +3,12 @@ import { Utilities } from "../../../assets";
 
 const ItemDropdownWrapper = ({
   image,
-  title,
-  data,
+  data = null,
   optionOnClick = () => {},
   hasOption = false,
-  overrideIcon = true,
+  overrideIcon = false,
   OverrideIconComp = () => <></>,
+  children,
 }) => (
   <div className={styles["container"]}>
     {overrideIcon ? (
@@ -20,7 +20,8 @@ const ItemDropdownWrapper = ({
       <span
         className={`${data ? styles["data-text"] : styles["text-placeholder"]}`}
       >
-        {!data ? title : data}
+        {data}
+        {children}
       </span>
     </div>
     {hasOption && (
