@@ -1,0 +1,25 @@
+.container {
+  /* background-color: green; */
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  align-items: center;
+}
+
+.data-dropdown {
+  margin: 0 5px 0 5px;
+}
+
+.text-placeholder {
+  color: var(--color-sec-text);
+}
+.data-text {
+  color: var(--color-prim-navy);
+}
+.icon-container {
+  /* background-color: tomato; */
+}
+
+.icon-left {
+  width: 20px;
+}

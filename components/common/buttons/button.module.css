@@ -8,7 +8,8 @@
 }
 
 .submit {
-  min-height: 70px;
+  /* min-height: 70px; */
+  min-height: 40px;
 }
 
 .normal-height,
@@ -74,6 +75,6 @@
 }
 
 /* Used for multi usually */
-.round-corners{
+.round-corners {
   border-radius: 50px;
 }

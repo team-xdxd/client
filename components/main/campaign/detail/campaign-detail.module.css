@@ -1,0 +1,15 @@
+.table {
+  width: 90%;
+  /* background-color: green; */
+}
+.header-row th {
+  border-bottom: 3px solid var(--color-sec-lightivory);
+  padding: 20px;
+  color: var(--color-prim-turquoise);
+}
+
+.table-cells td {
+  /* background-color: slateblue; */
+  text-align: center;
+  padding: 20px;
+}
