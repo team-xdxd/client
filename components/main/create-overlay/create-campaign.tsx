@@ -33,7 +33,12 @@ const CreateCampaign = () => {
   useEffect(() => {
     getCampaignNames();
   }, []);
-
+  const editFields = (field, value) => {
+    setEditableProjectFields({
+      ...editableProjectFields,
+      [field]: value,
+    });
+  };
   const onSubmit = async (campaignData) => {
     if (campaignNames.includes(campaignData.name)) {
       return toastUtils.error("A campaign with that name already exists");
