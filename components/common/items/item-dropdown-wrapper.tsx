@@ -12,7 +12,7 @@ const ItemDropdownWrapper = ({
   styleType = false
 }) => (
 
-    <div className={styles["container"]}>
+    <div className={styles["container"]} onClick={optionOnClick}>
       {overrideIcon ? (
         <OverrideIconComp />
       ) : (
@@ -27,7 +27,7 @@ const ItemDropdownWrapper = ({
         {children}
       </div>
       {hasOption && (
-        <div className={styles["icon-container"]} onClick={optionOnClick}>
+        <div className={styles["icon-container"]}>
           <img src={Utilities.arrowDark} />
         </div>
       )}
