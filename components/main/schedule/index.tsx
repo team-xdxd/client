@@ -189,7 +189,7 @@ const Schedule = () => {
 
   const mixAndOrderData = (campaignsData, projectsData, tasksData) => {
     const mixed = [
-      ...campaignsData.map(mapCampaignMixed),
+      // ...campaignsData.map(mapCampaignMixed),
       ...projectsData.map(mapProjectsMixed),
       ...tasksData.map(mapTaskMixed),
     ];
@@ -477,20 +477,20 @@ const Schedule = () => {
             )}
           </div>
         ) : (
-          <Month
-            displayDate={displayDate}
-            setDisplayDate={setDisplayDate}
-            currentDate={currentDate}
-            mixedList={mixedList}
-            updateItem={updateItem}
-            setCurrentDate={setCurrentDate}
-            setActiveView={setActiveView}
-            monthRange={monthRange}
-            setCreateType={setCreateType}
-            setCreateVisible={setCreateVisible}
-            setCreateEndDate={setCreateEndDate}
-          />
-        )}
+            <Month
+              displayDate={displayDate}
+              setDisplayDate={setDisplayDate}
+              currentDate={currentDate}
+              mixedList={mixedList}
+              updateItem={updateItem}
+              setCurrentDate={setCurrentDate}
+              setActiveView={setActiveView}
+              monthRange={monthRange}
+              setCreateType={setCreateType}
+              setCreateVisible={setCreateVisible}
+              setCreateEndDate={setCreateEndDate}
+            />
+          )}
       </main>
       {createVisible && (
         <CreateOverlay

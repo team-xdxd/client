@@ -13,8 +13,14 @@
   /* background-color: slateblue; */
   text-align: center;
   padding: 20px;
+  
 }
-
+.text-selected {
+  color: var(--color-prim-navy);
+}
+.text-placeholder {
+  color: var(--color-sec-text);
+}
 .button-container {
   width: 50px;
 }
@@ -37,4 +43,6 @@
 
 .input-name {
   border: none;
+  color: var(--color-prim-navy);
+  font-weight: 500;
 }

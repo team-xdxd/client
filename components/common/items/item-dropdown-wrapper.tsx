@@ -4,32 +4,34 @@ import { Utilities } from "../../../assets";
 const ItemDropdownWrapper = ({
   image,
   data = null,
-  optionOnClick = () => {},
+  optionOnClick = () => { },
   hasOption = false,
   overrideIcon = false,
   OverrideIconComp = () => <></>,
   children,
+  styleType = false
 }) => (
-  <div className={styles["container"]}>
-    {overrideIcon ? (
-      <OverrideIconComp />
-    ) : (
-      <img className={styles["icon-left"]} src={image} />
-    )}
-    <div className={styles["data-dropdown"]}>
-      <span
-        className={`${data ? styles["data-text"] : styles["text-placeholder"]}`}
-      >
-        {data}
+
+    <div className={styles["container"]}>
+      {overrideIcon ? (
+        <OverrideIconComp />
+      ) : (
+          <img className={styles["icon-left"]} src={image} />
+        )}
+      <div className={styles["data-dropdown"]}>
+        <span
+          className={`${styleType ? styles["data-text"] : styles["text-placeholder"]}`}
+        >
+          {data}
+        </span>
         {children}
-      </span>
-    </div>
-    {hasOption && (
-      <div className={styles["icon-container"]} onClick={optionOnClick}>
-        <img src={Utilities.arrowDark} />
       </div>
-    )}
-  </div>
-);
+      {hasOption && (
+        <div className={styles["icon-container"]} onClick={optionOnClick}>
+          <img src={Utilities.arrowDark} />
+        </div>
+      )}
+    </div>
+  );
 
 export default ItemDropdownWrapper;

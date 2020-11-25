@@ -26,11 +26,12 @@ const CreateCampaign = () => {
   const [editableProjectFields, setEditableProjectFields] = useState({
     channel: "Select Channel",
     name: "",
-    deadLineDate: null,
     startDate: null,
+    publishDate: null,
     collaborators: [],
     status: "draft",
   });
+  // const [startDate, setStartDate] = useState(null);
   // Array projects
   const [projects, setProject] = useState([]);
 

@@ -12,9 +12,13 @@
 
 .text-placeholder {
   color: var(--color-sec-text);
+  /* color:red; */
+
 }
 .data-text {
   color: var(--color-prim-navy);
+  font-weight: 800;
+  /* color:blue; */
 }
 .icon-container {
   /* background-color: tomato; */

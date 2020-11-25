@@ -24,12 +24,21 @@ const CampaignDetail = ({
   addCollaborator,
 }) => {
   const [activeInput, setActiveInput] = useState("");
+  const [activeIndex, setActiveIndex] = useState(null);
 
   const toggleActiveInput = (input) => {
     if (input === activeInput) setActiveInput("");
     else setActiveInput(input);
   };
-
+  const toggleActiveInputDeadlineDate = (input, index) => {
+    if (input === activeInput && index === activeIndex) {
+      setActiveInput("");
+      setActiveIndex(null);
+    } else {
+      setActiveInput(input);
+      setActiveIndex(index);
+    }
+  };
   const handleChannelChange = (index, value) => {
     console.log("value", value);
     toggleActiveInput("channel");
@@ -41,7 +50,7 @@ const CampaignDetail = ({
   };
   const handleDeadlineDateChange = (index, value) => {
     toggleActiveInput("deadlineDate");
-    editFields(index, { deadlineDate: value });
+    editFields(index, { publishDate: value });
   };
 
   return (
@@ -71,6 +80,8 @@ const CampaignDetail = ({
                           data={capitalCase(project.channel)}
                           hasOption={true}
                           optionOnClick={() => toggleActiveInput("channel")}
+                          styleType={project.channel === 'Select Channel' ? false : true}
+                        // styleType={true}
                         >
                           {children}
                         </ItemDropdownWrapper>
@@ -82,7 +93,6 @@ const CampaignDetail = ({
                           label: option,
                           onClick: () => {
                             handleChannelChange(index, option);
-                            console.log(index);
                           },
                         }))}
                       />
@@ -105,21 +115,23 @@ const CampaignDetail = ({
                   <ItemDropdownWrapper
                     image="/"
                     data={
-                      project.deadlineDate
-                        ? format(new Date(project.deadlineDate), "MMM d, yyyy")
+                      project.publishDate
+                        ? format(new Date(project.publishDate), "MMM d, yyyy")
                         : "Select Deadline"
                     }
                     overrideIcon={true}
                     hasOption={true}
-                    optionOnClick={() => toggleActiveInput("deadlineDate")}
+                    optionOnClick={() =>
+                      toggleActiveInputDeadlineDate("deadlineDate", index)
+                    }
+                    styleType={!project.publishDate ? false : true}
                   >
-                    {activeInput === "deadlineDate" && (
+                    {activeInput === "deadlineDate" && index === activeIndex && (
                       <div className={styles["day-picker"]}>
                         <DayPicker
-                          selectedDays={project.deadlineDate}
+                          selectedDays={project.publishDate}
                           disabledDays={{
-                            before:
-                              project.startDate && new Date(project.startDate),
+                            before: project.startDate && new Date(project.startDate),
                           }}
                           onDayClick={(day) =>
                             handleDeadlineDateChange(index, day)
@@ -135,6 +147,7 @@ const CampaignDetail = ({
                     Wrapper={({ children }) => (
                       <ItemDropdownWrapper
                         image={Utilities.add}
+                        data='Add Collaborators'
                         hasOption={true}
                         optionOnClick={() => toggleActiveInput("collaborators")}
                       >
@@ -177,6 +190,7 @@ const CampaignDetail = ({
                           overrideIcon={true}
                           hasOption={true}
                           optionOnClick={() => toggleActiveInput("status")}
+                          styleType={project.status === 'draft' || 'schedule' && true}
                         >
                           {children}
                         </ItemDropdownWrapper>
