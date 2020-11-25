@@ -13,7 +13,21 @@
   outline: none;
   position: relative;
 }
+.container-gray {
+  display: flex;
+  align-items: center;
+  border-radius: 50px;
+  height: 48px;
+  min-width: 200px;
+  padding: 0 25px;
+  color: var(--color-prim-navy);
+  background-color: white;
 
+  font-weight: 600;
+  cursor: pointer;
+  outline: none;
+  position: relative;
+}
 .container:hover {
   opacity: 0.5;
 }
@@ -26,7 +40,6 @@
 .container span {
   display: inline-flex;
 }
-
 
 .icon img {
   width: 25px;

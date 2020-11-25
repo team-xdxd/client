@@ -1,0 +1,48 @@
+.table {
+  width: 90%;
+  max-width: 90rem;
+  /* background-color: green; */
+}
+.header-row th {
+  border-bottom: 3px solid var(--color-sec-lightivory);
+  padding: 20px;
+  color: var(--color-prim-turquoise);
+}
+
+.table-cells td {
+  /* background-color: slateblue; */
+  text-align: center;
+  padding: 20px;
+  
+}
+.text-selected {
+  color: var(--color-prim-navy);
+}
+.text-placeholder {
+  color: var(--color-sec-text);
+}
+.button-container {
+  width: 50px;
+}
+
+.day-picker {
+  position: absolute;
+  border: 1px solid var(--color-secondary-border);
+  z-index: 500;
+  background-color: white;
+  border-radius: 10px;
+}
+.collaborator-list {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.collaborator-list li {
+  margin-right: 0.7rem;
+}
+
+.input-name {
+  border: none;
+  color: var(--color-prim-navy);
+  font-weight: 500;
+}

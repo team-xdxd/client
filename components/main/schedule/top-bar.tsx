@@ -15,7 +15,7 @@ import IconClickable from '../../common/buttons/icon-clickable'
 import FiltersSelect from '../../common/inputs/filters-select'
 
 const typeOptions = [
-  'campaigns',
+  // 'campaigns',
   'tasks',
   ...projectTypes
 ]
@@ -81,14 +81,14 @@ const TopBar = ({ activeView, setActiveView, setCurrentDate, filters, setFilters
       <IconClickable src={Utilities.filter} additionalClass={styles.filter} onClick={toggleHamurgerList} />
       <div className={styles.filters} ref={filtersRef}>
         <div>
-          <FiltersSelect
+          {/* <FiltersSelect
             options={allCampaigns.map(campaign => ({ label: campaign.name, value: campaign.id }))}
             placeholder='Campaign'
             styleType='filter filter-schedule'
             onChange={(selected) => setFilters({ ...filters, campaign: selected })}
             value={filters.campaign}
             isClearable={true}
-          />
+          /> */}
         </div>
         <div>
           <FiltersSelect

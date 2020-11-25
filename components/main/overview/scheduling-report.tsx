@@ -70,10 +70,11 @@ const SchedulingReport = () => {
       return compDate >= startDate && compDate <= endDate
     }
     itemStatuses.forEach(status => {
-      const filteredCampaignsLength = campaignsData.filter(campaign => campaign.status === status && isInDateRange(campaign.endDate)).length
+      // const filteredCampaignsLength = campaignsData.filter(campaign => campaign.status === status && isInDateRange(campaign.endDate)).length
       const filteredProjectsLength = projectsData.filter(project => project.status === status && isInDateRange(project.publishDate)).length
       const filteredTasksLength = tasksData.filter(task => task.status === status && isInDateRange(task.endDate)).length
-      const currentTotal = filteredCampaignsLength + filteredProjectsLength + filteredTasksLength
+      // const currentTotal = filteredCampaignsLength + filteredProjectsLength + filteredTasksLength
+      const currentTotal = filteredProjectsLength + filteredTasksLength
       totalCount += currentTotal
       totalsObj[status] = { total: currentTotal }
     })

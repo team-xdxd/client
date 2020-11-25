@@ -1,4 +1,5 @@
-.create-overlay-form{
-  max-width: 40rem;
+.create-overlay-form {
+  max-width: 80rem;
   width: 100%;
+  /* background-color: green; */
 }

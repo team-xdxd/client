@@ -7,7 +7,21 @@
   width: 70%;
   max-width: 70rem;
 }
-
+/*
+Container for modifying campaigns
+*/
+.item-detail-new-campaign {
+  /* background-color: red; */
+  width: 100%;
+  /* height: 20px; */
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: center;
+  flex-wrap: wrap;
+  max-width: 100rem;
+  padding: 30px 0 30px 0;
+  flex-direction: column;
+}
 .item-detail-cont img {
   width: 20px;
   height: 20px;
@@ -89,17 +103,19 @@
 }
 
 @media screen and (max-width: 900px) {
-  .item-detail-cont .field, .item-detail-cont .field-wide {
+  .item-detail-cont .field,
+  .item-detail-cont .field-wide {
     width: 100%;
     border: 1px solid var(--color-secondary-border);
     border-bottom: none;
   }
 
-  .item-detail-cont .field:last-child, .item-detail-cont .field-wide:last-child {
+  .item-detail-cont .field:last-child,
+  .item-detail-cont .field-wide:last-child {
     border-bottom: 1px solid var(--color-secondary-border);
   }
 
-  .pad-div{
+  .pad-div {
     display: none;
   }
 }
