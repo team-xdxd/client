@@ -93,32 +93,34 @@ const TopBar = ({
         ))}
       </div>
       <IconClickable src={Utilities.filter} additionalClass={styles.filter} onClick={toggleHamurgerList} />
+      <div className={styles['row-nested']}>
+        <NestedSelect
+          selectList={[
+            {
+              options: tagsFilter,
+              placeholder: 'Tags',
+              value: activeSortFilter.filterTags
+            },
+            {
+              options: campaignsFilter,
+              placeholder: 'Campaigns',
+              value: activeSortFilter.filterCampaigns,
+              hidden: !hasPermission([CALENDAR_ACCESS])
+            },
+            {
+              options: selectOptions.channels,
+              placeholder: 'Channels',
+              value: activeSortFilter.filterChannels
+            }
+          ]}
+          onApplyFilters={applyFilters}
+        />
+      </div>
       <div className={styles['sec-filters']} ref={filtersRef}>
         {activeSortFilter.mainFilter !== 'folders' && <Button type='button' text='Select All' styleType='secondary' onClick={selectAll} />}
         <img src={Utilities.gridView} onClick={() => setActiveView('grid')} />
         <img src={Utilities.listView} onClick={() => setActiveView('list')} />
         <div className={styles['nested-wrapper']}>
-          <NestedSelect
-            selectList={[
-              {
-                options: campaignsFilter,
-                placeholder: 'Campaigns',
-                value: activeSortFilter.filterCampaigns,
-                hidden: !hasPermission([CALENDAR_ACCESS])
-              },
-              {
-                options: selectOptions.channels,
-                placeholder: 'Channels',
-                value: activeSortFilter.filterChannels
-              },
-              {
-                options: tagsFilter,
-                placeholder: 'Tags',
-                value: activeSortFilter.filterTags
-              }
-            ]}
-            onApplyFilters={applyFilters}
-          />
         </div>
         <div className={styles['sort-wrapper']}>
           <Select

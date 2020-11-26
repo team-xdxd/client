@@ -54,42 +54,42 @@ const NestedSelect = ({ selectList, onApplyFilters }) => {
 
   return (
     <div ref={wrapperRef} className={styles.wrapper}>
-      <Button
+      {/* <Button
         text='Filters'
         type='button'
         styleType='secondary'
         onClick={(e) => {
           setDropdownOpen(e, true)
+        }} /> */}
+      {/* {isOpen && */}
+      {/* <div ref={contentRef} className={styles.content}> */}
+      <div className={styles['select-list']}>
+        {selectList.map((selectData, index) => (
+          <div key={index} >
+            {!selectData.hidden &&
+              <FiltersSelect
+                options={selectData.options}
+                placeholder={selectData.placeholder}
+                isClearable={true}
+                styleType='filter filter-schedule'
+                value={tempSelections[index]}
+                closeMenuOnSelect={true}
+                onChange={(selected) => setSelection(selected, index)}
+              />
+            }
+          </div>
+        ))}
+      </div>
+      {/* <div className={styles['button-wrapper']}>
+        <Button text='Apply' type='button' styleType='primary' onClick={applyFilters} />
+      </div>
+      <div className={styles['button-wrapper']}>
+        <Button text='Cancel' type='button' styleType='secondary' onClick={(e) => {
+          setDropdownOpen(e, false)
         }} />
-      {isOpen &&
-        <div ref={contentRef} className={styles.content}>
-          <div className={styles['select-list']}>
-            {selectList.map((selectData, index) => (
-              <div key={index}>
-                {!selectData.hidden &&
-                  <FiltersSelect
-                    options={selectData.options}
-                    placeholder={selectData.placeholder}
-                    isClearable={true}
-                    styleType='filter filter-schedule'
-                    value={tempSelections[index]}
-                    closeMenuOnSelect={true}
-                    onChange={(selected) => setSelection(selected, index)}
-                  />
-                }
-              </div>
-            ))}
-          </div>
-          <div className={styles['button-wrapper']}>
-            <Button text='Apply' type='button' styleType='primary' onClick={applyFilters} />
-          </div>
-          <div className={styles['button-wrapper']}>
-            <Button text='Cancel' type='button' styleType='secondary' onClick={(e) => {
-              setDropdownOpen(e, false)
-            }} />
-          </div>
-        </div>
-      }
+      </div> */}
+      {/* </div> */}
+      {/* } */}
     </div >
   )
 }

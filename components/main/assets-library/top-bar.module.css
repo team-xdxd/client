@@ -98,4 +98,7 @@
   .print {
     display: none;
   }
+  .row-nested {
+    display: flex;
+  }
 }
