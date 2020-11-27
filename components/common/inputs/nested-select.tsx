@@ -80,10 +80,10 @@ const NestedSelect = ({ selectList, onApplyFilters }) => {
           </div>
         ))}
       </div>
-      {/* <div className={styles['button-wrapper']}>
+      <div className={styles['button-wrapper']}>
         <Button text='Apply' type='button' styleType='primary' onClick={applyFilters} />
       </div>
-      <div className={styles['button-wrapper']}>
+      {/* <div className={styles['button-wrapper']}>
         <Button text='Cancel' type='button' styleType='secondary' onClick={(e) => {
           setDropdownOpen(e, false)
         }} />

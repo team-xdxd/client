@@ -4,6 +4,7 @@
     font-size: 12px;
     font-weight: 500;
     display: flex;
+    align-items: center;
 }
 
 .content {
@@ -29,5 +30,9 @@
 .button-wrapper {
     display: flex;
     justify-content: center;
-    margin-bottom: 0.5rem;
+    align-items: center;
+    /* margin-bottom: 0.5rem; */
+    /* background-color: red; */
+    margin-right: 0.5rem;
+
 }

@@ -1,0 +1,136 @@
+.container {
+    border-radius: 5px;
+    border: 1px solid var(--color-secondary-border);
+    width: 100%;
+    display: flex;
+    /* justify-content: center; */
+    align-items: center;
+    padding-left: 1rem;
+    font-weight: 600;
+  }
+  
+  .filter {
+    min-width: 170px;
+    font-size: 13px;
+    border: 2px solid var(--color-secondary-border);
+  }
+  
+  .option {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .option span{
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+    flex: 1;
+  }
+  
+  .option img {
+    width: 15px;
+    height: 15px;
+  }
+  
+  @media screen and (max-width: 1000px) {
+    .filter {
+      min-width: 0;
+    }
+  }
+
+  .wrapper {
+    /* position: relative; */
+    cursor: pointer;
+    font-size: 12px;
+    font-weight: 500;
+    display: flex;
+}
+
+.content {
+    position: absolute;
+    margin-top: 0.7rem;
+    width: 11rem;
+    padding: 0.5rem;
+    z-index: 300;
+    background-color: hsl(0, 0%, 100%);
+    border-radius: 4px;
+    box-shadow: 0 0 0 1px hsla(0, 0%, 0%, 0.1), 0 4px 11px hsla(0, 0%, 0%, 0.1)
+}
+
+.select-list>div  {
+    margin: 0 0.5rem 0 0.5rem;
+    width: 8rem;
+}
+.select-list {
+    display: flex;
+    /* margin-right: 1rem; */
+}
+
+.button-wrapper {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 0.5rem;
+}
+
+/*
+divs most used tags
+*/
+
+.container-most-used   {
+ /* padding: 100px; */
+ position: absolute;
+ width: 25rem;
+ display: flex;
+ flex-direction: column;
+ align-items: center;
+ /* justify-content: center; */
+ padding: 1rem 0 1rem 0;
+ background-color: white;
+ z-index: 100;
+ margin-top: 3rem;
+ border: 1px solid var(--color-secondary-border);
+
+}
+.title-most-used {
+    color: var(--color-prim-navy);
+    font-weight: 900;
+
+}
+.container-data {
+    display: flex;
+    flex-wrap:  wrap;
+    justify-content: space-between;
+    /* background-color: red; */
+    width: 100%;
+}
+.container-data-row {
+    display: flex;
+    justify-content: space-around;
+    width: 40%;
+    padding: 0.4rem 0 0.4rem 0;
+    /* background-color: green; */
+}
+.data-top{
+    /* background-color: royalblue; */
+    width: 60%;
+    padding-left: 1rem;
+    /* display: flex; */
+    /* justify-content:center; */
+}
+.number-top {
+    width: 40%;
+    /* background-color: green; */
+    display: flex;
+    justify-content: center;
+}
+.search-filter {
+    border-radius: 5px;
+    border: 1px solid var(--color-secondary-border);
+    /* width: 100%; */
+    display: flex;
+    /* justify-content: center; */
+    align-items: center;
+    padding-left: 1rem;
+    min-height: 40px;
+}

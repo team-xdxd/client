@@ -47,6 +47,12 @@
 .filter {
   display: none;
 }
+.row-nested {
+  display: flex;
+  flex-direction: row;
+  /* width: 8rem; */
+
+}
 
 @media screen and (max-width: 1200px) {
   .container {
@@ -98,7 +104,9 @@
   .print {
     display: none;
   }
-  .row-nested {
+
+  /* .row-nested >div  {
     display: flex;
-  }
+    flex-direction: row;
+  } */
 }
